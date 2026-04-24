@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(git:status)",
+      "Bash(git:diff)",
+      "Bash(git:log)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(sudo:*)"
+    ],
+    "ask": [
+      "Bash(git:push)",
+      "Bash(npm:publish)"
+    ]
+  }
+}

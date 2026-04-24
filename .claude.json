@@ -1,0 +1,24 @@
+{
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".git",
+    "public",
+    "*.log",
+    "*.lock",
+    "*.min.js",
+    "coverage",
+    ".vscode",
+    "*.d.ts",
+    "*.png",
+    "*.jpg",
+    "*.svg",
+    "*.ico",
+    "pnpm-lock.yaml"   
+  ],
+  "maxContextFiles": 6,
+  "enableGitIntegration": true,
+  "enableIndexing": false,
+  "autoLoadPaths": []
+}
