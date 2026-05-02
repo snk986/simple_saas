@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "create": {
+    "title": "Turn Your Story Into a Hit Song",
+    "inputPlaceholder": "Tell your story... (up to 200 words)",
+    "generateLyrics": "Generate Lyrics",
+    "generateMusic": "Generate Music",
+    "regenerate": "Regenerate",
+    "regenerateLimit": "Max 3 regenerations reached"
+  },
+  "song": {
+    "play": "Play",
+    "pause": "Pause",
+    "share": "Share",
+    "viewReport": "View Report"
+  },
+  "dashboard": {
+    "title": "My Songs",
+    "noSongs": "No songs yet. Create your first hit!"
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "getStarted": "Get Started"
+  },
+  "errors": {
+    "insufficientCredits": "Not enough credits. Please top up.",
+    "generationFailed": "Generation failed. Please try again.",
+    "contentFlagged": "This story can't be written. Try a different one?"
+  }
+}

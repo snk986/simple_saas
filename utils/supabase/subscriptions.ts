@@ -158,7 +158,7 @@ export async function getUserSubscription(userId: string) {
 
 export async function addCreditsToCustomer(
   customerId: string,
-  credits: number,
+  credits_balance: number,
   creemOrderId?: string,
   description?: string
 ) {
@@ -166,18 +166,18 @@ export async function addCreditsToCustomer(
   // Start a transaction
   const { data: client } = await supabase
     .from("customers")
-    .select("credits")
+    .select("credits_balance")
     .eq("id", customerId)
     .single();
   if (!client) throw new Error("Customer not found");
   console.log("🚀 ~ 1client:", client);
-  console.log("🚀 ~ 1credits:", credits);
-  const newCredits = (client.credits || 0) + credits;
+  console.log("🚀 ~ 1credits:", credits_balance);
+  const newCredits = (client.credits_balance || 0) + credits_balance;
 
-  // Update customer credits
+  // Update customer credits_balance
   const { error: updateError } = await supabase
     .from("customers")
-    .update({ credits: newCredits, updated_at: new Date().toISOString() })
+    .update({ credits_balance: newCredits, updated_at: new Date().toISOString() })
     .eq("id", customerId);
 
   if (updateError) throw updateError;
@@ -187,7 +187,7 @@ export async function addCreditsToCustomer(
     .from("credits_history")
     .insert({
       customer_id: customerId,
-      amount: credits,
+      amount: credits_balance,
       type: "add",
       description: description || "Credits purchase",
       creem_order_id: creemOrderId,
@@ -200,7 +200,7 @@ export async function addCreditsToCustomer(
 
 export async function useCredits(
   customerId: string,
-  credits: number,
+  credits_balance: number,
   description: string
 ) {
   const supabase = createServiceRoleClient();
@@ -208,18 +208,18 @@ export async function useCredits(
   // Start a transaction
   const { data: client } = await supabase
     .from("customers")
-    .select("credits")
+    .select("credits_balance")
     .eq("id", customerId)
     .single();
   if (!client) throw new Error("Customer not found");
-  if ((client.credits || 0) < credits) throw new Error("Insufficient credits");
+  if ((client.credits_balance || 0) < credits_balance) throw new Error("Insufficient credits_balance");
 
-  const newCredits = client.credits - credits;
+  const newCredits = client.credits_balance - credits_balance;
 
-  // Update customer credits
+  // Update customer credits_balance
   const { error: updateError } = await supabase
     .from("customers")
-    .update({ credits: newCredits, updated_at: new Date().toISOString() })
+    .update({ credits_balance: newCredits, updated_at: new Date().toISOString() })
     .eq("id", customerId);
 
   if (updateError) throw updateError;
@@ -229,7 +229,7 @@ export async function useCredits(
     .from("credits_history")
     .insert({
       customer_id: customerId,
-      amount: credits,
+      amount: credits_balance,
       type: "subtract",
       description,
     });
@@ -244,12 +244,12 @@ export async function getCustomerCredits(customerId: string) {
 
   const { data, error } = await supabase
     .from("customers")
-    .select("credits")
+    .select("credits_balance")
     .eq("id", customerId)
     .single();
 
   if (error) throw error;
-  return data?.credits || 0;
+  return data?.credits_balance || 0;
 }
 
 export async function getCreditsHistory(customerId: string) {
