@@ -758,38 +758,85 @@ SKIP_CREDIT_CHECK=true      # dev/preview 环境跳过积分检查，production 
   - 选择音频后调 `POST /api/song/[id]/select`
 - 验证：确认歌词 → 等待生成动画 → 听到两首歌 → 选择一首
 
-#### Task 4: 歌曲公开页 + SEO 基础 (~100K tokens)
+#### Task 4: 歌曲公开页 + SEO 闭环 MVP (~100K tokens)
 
-- `/song/[id]` SSR 页面（SEO 落地页）
-  - 音频播放器 (`components/song/song-player.tsx`)
-  - 歌词全文展示 (`components/song/lyrics-display.tsx`，语义化 HTML）
-      歌词同步高亮实现方案：
-        Step 1：联调时检查 kie.ai 任务结果中是否含 timestamps 字段
-        - 有 → 把时间戳数组存入 songs.report_data.timestamps
-        - 无 → 用降级方案，不存时间戳
+目标：把每首公开歌曲变成可被搜索、可分享、可转化的 SEO 落地页。优先完成“公开访问 → 搜索收录 → 播放试听 → CTA 创建 → 数据回收”的闭环，而不是只做展示页。
 
-        Step 2（有时间戳）：
-        audio.ontimeupdate → 对比当前 currentTime 与时间戳数组
-        → 找到对应段落 index → 设置 activeSection state → CSS 高亮
+实现原则：SEO 闭环第一，视觉第二但必须精致。公开歌曲页的核心目标是让歌曲被 Google 收录、被用户点击、试听、分享，并通过 CTA 回流到 `/create`。页面设计参考 `app.superdesign.dev` 的现代工具感，采用 Google / Material 3 风格：清晰、克制、响应式、可读性强、交互细腻。任何视觉设计都不能牺牲 SSR 可索引内容、结构化数据、内链、首屏试听和 CTA 转化。
 
-        Step 3（降级，无时间戳）：
-        均分方案：activeSectionIndex = Math.floor(currentTime / sectionDuration)
-        其中 sectionDuration = audio.duration / sections.length
-        段落切换加 CSS transition: 0.3s ease
+- `/song/[id]` SSR 公开页
+  - Server Component 读取公开歌曲投影字段，禁止匿名客户端直接读取 Supabase 整行
+  - 公开字段仅包含：`title`、`style`、`mood`、`story_summary`、`lyrics_preview` 或允许公开的 `lyrics`、`audio_url`、`cover_url`、`created_at`、`play_count`、`share_count`
+  - 作者登录后可查看完整歌词、完整报告、私有数据
+  - 非公开 / 过期 / 删除歌曲返回 404，不暴露存在性细节
 
-        前端实现：
-        用 useRef 存 audio element，useEffect 绑定 timeupdate 事件
-        每次触发检查 activeSection 是否需要更新（避免频繁 setState）
-        高亮段落自动 scrollIntoView({ behavior: 'smooth', block: 'center' })
+- 页面信息架构
+  - 第一屏必须包含：歌曲标题、情绪 / 风格标签、音频播放器、歌词摘要或前几段、主 CTA “Create your own song”
+  - 第二屏展示完整公开歌词或预览歌词
+  - 第三屏展示 AI 创作摘要 / 歌曲故事 / 推荐相关歌曲
+  - 页面底部提供内链：同风格歌曲、同情绪歌曲、创建页
 
-- 结构化数据 (MusicRecording JSON-LD schema)
-- SEO meta：动态 title/description/OG tags
-- CTA 按钮："做你自己的歌 →"
-- 公开页数据读取：Server Component / Route Handler 使用 service role 查询 `songs`，但必须显式 select 公开投影字段；匿名客户端不得直接调用 Supabase 读取整行
-- 播放/完整播放/分享计数 API (`POST /api/song/[id]/count`，调用 increment_song_counter RPC)
-- Dashboard 改造：歌曲列表 (`components/dashboard/song-list.tsx`)
-- 动态 sitemap.xml（包含所有公开歌曲）
-- 验证：公开页面可访问，匿名页面源码只包含预览歌词和公开摘要；作者登录后可查看完整歌词/报告；结构化数据正确
+- 组件
+  - `components/song/song-player.tsx`
+  - `components/song/lyrics-display.tsx`
+  - `components/song/song-hero.tsx`
+  - `components/song/song-seo-summary.tsx`
+  - `components/song/related-songs.tsx`
+  - `components/song/song-cta.tsx`
+
+- 歌词同步高亮
+  - 联调 kie.ai 任务结果是否包含 `timestamps` 字段
+  - 有 `timestamps`：存入 `songs.report_data.timestamps`
+  - 无 `timestamps`：按音频时长和歌词段落数均分降级
+  - `timeupdate` 更新 `activeSection`，避免频繁 `setState`
+  - 当前段落自动居中滚动，动画 `0.3s ease`
+
+- SEO 基础
+  - 动态 `generateMetadata`
+  - title 模板：`{songTitle} - AI Generated {style} Song | Hit-Song`
+  - description 包含 `mood`、`style`、`story_summary`、CTA
+  - canonical URL
+  - robots `index, follow`，仅公开歌曲允许索引
+  - OG tags：title、description、cover image、audio preview URL
+  - Twitter Card
+  - `MusicRecording` JSON-LD
+  - `BreadcrumbList` JSON-LD
+  - 动态 `sitemap.xml` 包含所有公开歌曲
+  - 后续多语言阶段再补 `hreflang`
+
+- SEO 闭环事件
+  - `POST /api/song/[id]/count`
+    - `play_start`
+    - `play_complete`
+    - `share`
+    - `cta_click`
+  - 统一调用 `increment_song_counter` RPC 或专用 analytics RPC
+  - 匿名请求只记录聚合数据，不记录敏感用户信息
+  - CTA 点击跳转 `/create?ref=song&id={id}`
+
+- 设计方向
+  - 参考 `app.superdesign.dev` 的现代工具感和模块化体验，但不复制视觉
+  - Google / Material 3 启发：清晰层级、留白克制、可读性优先、轻动效、强响应式
+  - 不做传统营销 landing page
+  - 不使用大面积渐变、装饰性 orb、过度卡片堆叠
+  - 移动端优先，播放器和 CTA 必须固定在高可见区域
+  - 页面应像一个精致的音乐作品详情页，而不是博客文章
+
+- Dashboard 改造
+  - `components/dashboard/song-list.tsx`
+  - 每首歌显示公开状态、播放数、分享数、公开链接
+  - 支持复制公开链接
+  - 支持进入公开页预览
+
+- 验证
+  - 匿名用户可访问公开歌曲页
+  - 私有字段不会出现在 HTML 源码中
+  - 作者登录后可查看完整歌词 / 报告
+  - JSON-LD 通过 Rich Results 测试结构校验
+  - `sitemap.xml` 包含公开歌曲，不包含私有歌曲
+  - CTA 带 `ref` 参数进入创建页
+  - 播放、完整播放、分享、CTA 点击能被计数
+  - 移动端第一屏可完成试听和点击创建
 
 ### Phase 2: 评判 + 情绪价值
 

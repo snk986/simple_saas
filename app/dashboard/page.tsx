@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubscriptionStatusCard } from "@/components/dashboard/subscription-status-card";
 import { CreditsBalanceCard } from "@/components/dashboard/credits-balance-card";
+import { SongList, type DashboardSong } from "@/components/dashboard/song-list";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -38,8 +39,30 @@ export default async function DashboardPage() {
     .single();
 
   const subscription = customerData?.subscriptions?.[0];
-  const credits = customerData?.credits || 0;
+  const credits = customerData?.credits_balance || 0;
   const recentCreditsHistory = customerData?.credits_history?.slice(0, 2) || [];
+  const { data: songsData } = await supabase
+    .from("songs")
+    .select(
+      "id,title,status,is_public,cover_url,play_count,complete_count,share_count,cta_click_count,created_at",
+    )
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  const songs: DashboardSong[] = (songsData ?? []).map((song) => ({
+    id: song.id,
+    title: song.title,
+    status: song.status,
+    isPublic: Boolean(song.is_public),
+    coverUrl: song.cover_url,
+    playCount: song.play_count ?? 0,
+    completeCount: song.complete_count ?? 0,
+    shareCount: song.share_count ?? 0,
+    ctaClickCount: song.cta_click_count ?? 0,
+    publicHref: `/song/${song.id}`,
+    createdAt: song.created_at,
+  }));
 
   return (
     <div className="flex-1 w-full flex flex-col gap-6 sm:gap-8 px-4 sm:px-8 container">
@@ -49,7 +72,7 @@ export default async function DashboardPage() {
           Welcome back, {customerData?.name || user.email?.split("@")[0]}
         </h1>
         <p className="text-muted-foreground">
-          Manage your subscription, check your credits, and access your dashboard features.
+          Manage your subscription, check your credits_balance, and access your dashboard features.
         </p>
       </div>
 
@@ -63,10 +86,7 @@ export default async function DashboardPage() {
 
       </div>
 
-      {/* Placeholder for New Business Logic */}
-      <div className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center text-center text-muted-foreground bg-muted/20">
-
-      </div>
+      <SongList songs={songs} />
     </div>
   );
 }

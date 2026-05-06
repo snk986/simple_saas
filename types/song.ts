@@ -24,6 +24,7 @@ export interface Song {
   play_count: number;
   complete_count: number;
   share_count: number;
+  cta_click_count: number;
   like_count: number;
   expires_at: string | null;
   created_at: string;
