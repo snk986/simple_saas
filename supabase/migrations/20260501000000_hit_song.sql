@@ -25,6 +25,7 @@ create table public.songs (
   report_data   jsonb,
   kie_task_id   text,
   play_count    integer default 0,
+  complete_count integer default 0,
   share_count   integer default 0,
   like_count    integer default 0,
   expires_at    timestamptz,
@@ -67,6 +68,8 @@ returns void as $$
 begin
   if p_counter = 'play_count' then
     update public.songs set play_count = play_count + 1, updated_at = now() where id = p_song_id;
+  elsif p_counter = 'complete_count' then
+    update public.songs set complete_count = complete_count + 1, updated_at = now() where id = p_song_id;
   elsif p_counter = 'share_count' then
     update public.songs set share_count = share_count + 1, updated_at = now() where id = p_song_id;
   elsif p_counter = 'like_count' then
@@ -104,7 +107,7 @@ $$ language plpgsql security definer;
 -- Unfreeze credit (refund on failure)
 create or replace function public.unfreeze_credit(
   p_user_id uuid,
-  p_amount integer default 1
+  p_amount integer default 100
 )
 returns void as $$
 begin
@@ -124,9 +127,6 @@ alter table public.email_log enable row level security;
 
 create policy "Users can manage own songs"
   on public.songs for all using (auth.uid() = user_id);
-
-create policy "Public songs are viewable by anyone"
-  on public.songs for select using (is_public = true);
 
 create policy "Users can view own achievements"
   on public.achievements for select using (auth.uid() = user_id);

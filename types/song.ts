@@ -22,6 +22,7 @@ export interface Song {
   report_data: Record<string, unknown> | null;
   kie_task_id: string | null;
   play_count: number;
+  complete_count: number;
   share_count: number;
   like_count: number;
   expires_at: string | null;

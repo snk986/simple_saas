@@ -43,7 +43,7 @@
 
 **初始积分**
 ```
-用户注册成功 → 自动发放3积分
+用户注册成功 → 自动发放300积分
 ```
 
 **消耗规则**
@@ -110,7 +110,7 @@ async function unfreezeCredit(userId: string) {
 
 **扣积分时机（冻结-退回模式）**
 ```
-调用Suno API前 → 先冻结1积分（原子操作，防并发）
+调用Suno API前 → 先冻结100积分（原子操作，防并发）
 API生成成功   → 积分已扣，无需额外操作
 API生成失败   → 退回冻结的积分，用户无损失
 并发防护：两个请求同时冻结，只有积分足够的那个能成功
@@ -120,7 +120,7 @@ API生成失败   → 退回冻结的积分，用户无损失
 
 **积分显示**
 ```
-导航栏右上角常驻显示：⚡ 3积分
+导航栏右上角常驻显示：⚡ 300积分
 点击跳转充值页
 积分不足时变红色提示
 ```
@@ -159,7 +159,7 @@ placeholder："失恋了/想念某人/今天很开心...什么都可以说"
 字数限制：200字以内
 
 按钮：
-"生成我的歌 ⚡1积分"
+"生成我的歌 ⚡100积分"
 
 积分不足时按钮变成：
 "生成我的歌 → 去充值"
@@ -721,6 +721,12 @@ URL：https://hit-song.ai/song/{song_id}
 - 评判报告：只显示综合评分和 一句话headline，详细报告需登录
 - 目的：给够钩子让用户注册，但不白送全部内容
 
+公开页数据边界：
+- `songs` 表不对匿名用户直接开放整行读取
+- 公开页由服务端按显式字段投影读取：标题、封面、选中音频URL、前两段歌词、评分摘要、公开计数
+- 完整歌词、完整 report_data、用户原始输入等字段仅作者登录后可读取
+- 前端匿名态不能直接用 Supabase client 查询 `songs`
+
 SEO设置：
 title: {歌曲名} - 我用AI做了一首歌
 description: {制作人评语第一句}
@@ -951,13 +957,13 @@ const emailRateLimit = {
 **Google登录**
 ```
 点击"Google登录"→ 授权弹窗 → 授权成功
-→ 自动创建账户 → 发放3积分 → 进入生成页面
+→ 自动创建账户 → 发放300积分 → 进入生成页面
 ```
 
 **邮箱注册**
 ```
 输入邮箱+密码 → 发送验证邮件 → 点击验证链接
-→ 账户激活 → 发放3积分 → 进入生成页面
+→ 账户激活 → 发放300积分 → 进入生成页面
 ```
 
 ### 技术实现
@@ -979,7 +985,7 @@ const onAuthCallback = async (userId: string) => {
   if (isNewUser) {
     await supabase.from('credits').insert({
       user_id: userId,
-      credits_balance: 3,
+      credits_balance: 300,
       credits_used: 0
     })
     redirect('/create')
@@ -1037,10 +1043,11 @@ create table customers (
 -- 积分表
 create table credits (
   user_id          uuid references customers primary key,
-  credits_balance  int default 3,
+  credits_balance  int default 300,
   credits_used     int default 0,
   updated_at       timestamp default now()
 );
+```
 
 ### 账户安全
 
@@ -1177,18 +1184,18 @@ create table songs (
   style_params jsonb,
   total_score  int,
   report_data  jsonb,
+  play_count    int default 0,
+  complete_count int default 0,
+  share_count   int default 0,
+  like_count    int default 0,
   is_public    boolean default true,
   created_at   timestamp default now(),
   expires_at   timestamp
 );
 
-create table play_events (
-  id         uuid primary key default gen_random_uuid(),
-  song_id    uuid references songs,
-  user_id    uuid,
-  type       text,  -- play/complete/loop/share
-  created_at timestamp default now()
-);
+-- MVP 阶段先不用 play_events 表，直接在 songs 上维护计数字段：
+-- play_count / complete_count / share_count / like_count
+-- 增长阶段需要分析循环、来源渠道、留存路径时，再引入 play_events(type: play/complete/loop/share)。
 
 create table achievements (
   id           uuid primary key default gen_random_uuid(),
@@ -1312,7 +1319,7 @@ const onPaymentSuccess = async (event: CreemEvent) => {
 ```
 不跳转"支付成功"页面
 跳转到生成页面，顶部提示：
-"积分已到账 ⚡ 你现在有30积分，开始做下一首歌吧"
+"积分已到账 ⚡ 你现在有3000积分，开始做下一首歌吧"
 ```
 
 ### 退款政策

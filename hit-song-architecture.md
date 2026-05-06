@@ -244,6 +244,7 @@ create table public.songs (
   report_data   jsonb,                      -- 完整评判报告 JSON
   kie_task_id   text,                       -- kie.ai 异步任务ID
   play_count    integer default 0,          -- 播放数 (RPC 原子更新)
+  complete_count integer default 0,         -- 完整播放数 (RPC 原子更新)
   share_count   integer default 0,          -- 分享数 (RPC 原子更新)
   like_count    integer default 0,          -- 点赞次数 (RPC 原子更新)
   expires_at    timestamptz,                -- 免费用户30天后过期
@@ -277,16 +278,20 @@ create index achievements_user_id_idx on public.achievements(user_id);
 create index email_log_user_id_idx on public.email_log(user_id);
 create index email_log_sent_at_idx on public.email_log(sent_at);
 
--- 播放/分享计数 RPC（替代 play_events 表，直接原子更新 songs 计数）
+-- 播放/完整播放/分享/点赞计数 RPC（MVP 替代 play_events 表，直接原子更新 songs 计数）
 create or replace function public.increment_song_counter(
   p_song_id uuid,
-  p_counter text -- 'play_count' 或 'share_count' 或 'like_count' 
+  p_counter text -- 'play_count' 或 'complete_count' 或 'share_count' 或 'like_count'
 )
 returns void as $$
 begin
   if p_counter = 'play_count' then
     update public.songs
     set play_count = play_count + 1, updated_at = now()
+    where id = p_song_id;
+  elsif p_counter = 'complete_count' then
+    update public.songs
+    set complete_count = complete_count + 1, updated_at = now()
     where id = p_song_id;
   elsif p_counter = 'share_count' then
     update public.songs
@@ -305,12 +310,9 @@ alter table public.songs enable row level security;
 alter table public.achievements enable row level security;
 alter table public.email_log enable row level security;
 
--- Songs: 作者读写 + 公开歌曲任何人可读
+-- Songs: 仅作者直接读写。公开页由服务端显式字段投影读取，禁止匿名直接读取整行 songs。
 create policy "Users can manage own songs"
   on public.songs for all using (auth.uid() = user_id);
-
-create policy "Public songs are viewable by anyone"
-  on public.songs for select using (is_public = true);
 
 -- Achievements: 用户只读自己的
 create policy "Users can view own achievements"
@@ -458,7 +460,7 @@ $$ language plpgsql security definer;
 -- 退回冻结的积分（API 失败时调用）
 create or replace function public.unfreeze_credit(
   p_user_id uuid,
-  p_amount integer default 1
+  p_amount integer default 100
 )
 returns void as $$
 begin
@@ -581,7 +583,7 @@ Vercel Cron Job (每天 UTC 00:00)
   │
   ├── 3天数据播报
   │   查询 songs WHERE created_at = now() - 3 days
-  │   读取 songs.play_count / share_count 统计
+  │   读取 songs.complete_count / play_count / share_count 统计
   │   检查 email_log 频率控制 (≤2封/周, 间隔≥48h)
   │   发送 Resend
   │
@@ -676,11 +678,13 @@ SKIP_CREDIT_CHECK=true      # dev/preview 环境跳过积分检查，production 
 - Webhook 验证 Creem 签名
 - 用户输入经 Claude 内容审核（prompt 中包含违规检测指令）
 - 音频文件通过 Supabase Storage RLS 控制访问
+- 公开 song 页只通过服务端显式投影返回公开字段，匿名请求不得直接读取 `songs` 整行或完整 `report_data`
 - 敏感 key 仅在 server-side 使用，不暴露给客户端
 
 ### 8.3 SEO
 
 - 每首公开歌曲 `/song/[id]` 是 SSR 页面，含完整歌词文本
+- 匿名访客只接收公开投影数据：音频 URL、标题、封面、前两段歌词、评分摘要、公开计数；作者登录后才读取完整歌词和完整报告
 - Satori 生成 OG 图，社交分享时展示封面 + 标题 + 评分
 - `title` 按词簇优化（Cover/Hum/Lyrics 三种模板）
 - sitemap.xml 动态生成，包含所有公开歌曲
@@ -781,10 +785,11 @@ SKIP_CREDIT_CHECK=true      # dev/preview 环境跳过积分检查，production 
 - 结构化数据 (MusicRecording JSON-LD schema)
 - SEO meta：动态 title/description/OG tags
 - CTA 按钮："做你自己的歌 →"
-- 播放/分享计数 API (`POST /api/song/[id]/count`，调用 increment_song_counter RPC)
+- 公开页数据读取：Server Component / Route Handler 使用 service role 查询 `songs`，但必须显式 select 公开投影字段；匿名客户端不得直接调用 Supabase 读取整行
+- 播放/完整播放/分享计数 API (`POST /api/song/[id]/count`，调用 increment_song_counter RPC)
 - Dashboard 改造：歌曲列表 (`components/dashboard/song-list.tsx`)
 - 动态 sitemap.xml（包含所有公开歌曲）
-- 验证：公开页面可访问，查看页面源码确认歌词文本在 HTML 中，结构化数据正确
+- 验证：公开页面可访问，匿名页面源码只包含预览歌词和公开摘要；作者登录后可查看完整歌词/报告；结构化数据正确
 
 ### Phase 2: 评判 + 情绪价值
 
@@ -796,7 +801,7 @@ SKIP_CREDIT_CHECK=true      # dev/preview 环境跳过积分检查，production 
 ### Phase 3: 召回 + 多语言
 
 9. 邮件系统 (Resend + Cron)
-10. 多语言翻译 (es/pt/ja/ko)
+10. 多语言翻译 (es/pt/ja/ko)  用DeepL API翻译
 11. SEO 深度优化 (hreflang/structured data/词簇优化)
 
 ### Phase 4: 商业化 + 增长
