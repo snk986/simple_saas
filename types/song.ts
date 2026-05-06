@@ -55,10 +55,12 @@ export interface GenerateLyricsResponse {
 
 export interface GenerateAudioResponse {
   taskId: string;
+  songId: string;
 }
 
 export interface AudioStatusResponse {
   status: "processing" | "completed" | "failed";
+  songId?: string;
   audio_url?: string;
   audio_url_alt?: string;
   cover_url?: string;

@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Wand2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { AudioPlayer } from "./audio-player";
+import { GenerationStatus } from "./generation-status";
 import { LyricsEditor } from "./lyrics-editor";
-import type { StyleParams } from "@/types/song";
+import type { SelectedAudio, StyleParams } from "@/types/song";
 
 interface LyricsResult {
   songId: string;
@@ -19,6 +21,14 @@ interface LyricsResult {
   lyrics_regen_count: number;
 }
 
+interface AudioResult {
+  taskId?: string;
+  songId: string;
+  audio_url?: string | null;
+  audio_url_alt?: string | null;
+  cover_url?: string | null;
+}
+
 export function StoryInput() {
   const t = useTranslations();
   const params = useParams<{ locale?: string }>();
@@ -28,6 +38,25 @@ export function StoryInput() {
   const [error, setError] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [audioStatus, setAudioStatus] = useState<
+    "idle" | "processing" | "completed" | "failed" | "timeout"
+  >("idle");
+  const [audioResult, setAudioResult] = useState<AudioResult | null>(null);
+  const [selectedAudio, setSelectedAudio] = useState<SelectedAudio>("primary");
+  const [isSelectingAudio, setIsSelectingAudio] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  useEffect(() => {
+    if (audioStatus !== "processing") {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setElapsedSeconds((current) => current + 1);
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [audioStatus]);
 
   async function submitLyrics(options?: { regenerate?: boolean }) {
     const regenerate = options?.regenerate ?? false;
@@ -60,6 +89,9 @@ export function StoryInput() {
 
       setResult(data);
       setEditableLyrics(data.lyrics);
+      setAudioStatus("idle");
+      setAudioResult(null);
+      setElapsedSeconds(0);
     } catch (caught) {
       const message =
         caught instanceof Error ? caught.message : t("errors.generationFailed");
@@ -68,6 +100,106 @@ export function StoryInput() {
       );
     } finally {
       regenerate ? setIsRegenerating(false) : setIsGenerating(false);
+    }
+  }
+
+  async function generateMusic() {
+    if (!result) {
+      return;
+    }
+
+    setError("");
+    setElapsedSeconds(0);
+    setAudioStatus("processing");
+    setAudioResult(null);
+
+    try {
+      const response = await fetch("/api/generate/audio", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          songId: result.songId,
+          lyrics: editableLyrics,
+        }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Audio generation failed");
+      }
+
+      setAudioResult({ songId: data.songId, taskId: data.taskId });
+      await pollAudioStatus(data.taskId, data.songId);
+    } catch (caught) {
+      const message =
+        caught instanceof Error ? caught.message : "Audio generation failed";
+      setError(message);
+      setAudioStatus("failed");
+    }
+  }
+
+  async function pollAudioStatus(taskId: string, songId: string) {
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      const response = await fetch(
+        `/api/generate/audio/status?taskId=${encodeURIComponent(taskId)}`,
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Failed to check audio status");
+      }
+
+      if (data.status === "completed") {
+        setAudioResult({
+          songId,
+          taskId,
+          audio_url: data.audio_url,
+          audio_url_alt: data.audio_url_alt,
+          cover_url: data.cover_url,
+        });
+        setSelectedAudio("primary");
+        setAudioStatus("completed");
+        return;
+      }
+
+      if (data.status === "failed") {
+        throw new Error(data.error ?? "Audio generation failed");
+      }
+
+      await new Promise((resolve) => window.setTimeout(resolve, 3000));
+    }
+
+    setAudioResult({ songId, taskId });
+    setAudioStatus("timeout");
+  }
+
+  async function selectAudio(nextSelectedAudio: SelectedAudio) {
+    if (!audioResult) {
+      return;
+    }
+
+    setIsSelectingAudio(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/song/${audioResult.songId}/select`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ selectedAudio: nextSelectedAudio }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Failed to select audio");
+      }
+
+      setSelectedAudio(nextSelectedAudio);
+    } catch (caught) {
+      const message =
+        caught instanceof Error ? caught.message : "Failed to select audio";
+      setError(message);
+    } finally {
+      setIsSelectingAudio(false);
     }
   }
 
@@ -104,7 +236,7 @@ export function StoryInput() {
         <Button
           type="button"
           size="lg"
-          disabled={isGenerating || isRegenerating}
+          disabled={isGenerating || isRegenerating || audioStatus === "processing"}
           onClick={() => submitLyrics()}
           className="mt-5 w-full gap-2"
         >
@@ -114,16 +246,36 @@ export function StoryInput() {
       </section>
 
       {result ? (
-        <LyricsEditor
-          title={result.title}
-          lyrics={editableLyrics}
-          styleTags={result.style_tags}
-          styleParams={result.style_params}
-          regenCount={result.lyrics_regen_count}
-          isRegenerating={isRegenerating}
-          onLyricsChange={setEditableLyrics}
-          onRegenerate={() => submitLyrics({ regenerate: true })}
-        />
+        <div className="grid gap-6">
+          <LyricsEditor
+            title={result.title}
+            lyrics={editableLyrics}
+            styleTags={result.style_tags}
+            styleParams={result.style_params}
+            regenCount={result.lyrics_regen_count}
+            isRegenerating={isRegenerating}
+            isGeneratingMusic={audioStatus === "processing"}
+            onLyricsChange={setEditableLyrics}
+            onRegenerate={() => submitLyrics({ regenerate: true })}
+            onGenerateMusic={generateMusic}
+          />
+          <GenerationStatus
+            status={audioStatus}
+            elapsedSeconds={elapsedSeconds}
+          />
+          {audioResult?.audio_url && audioStatus === "completed" ? (
+            <AudioPlayer
+              songId={audioResult.songId}
+              title={result.title}
+              coverUrl={audioResult.cover_url}
+              audioUrl={audioResult.audio_url}
+              audioUrlAlt={audioResult.audio_url_alt}
+              selectedAudio={selectedAudio}
+              isSelecting={isSelectingAudio}
+              onSelect={selectAudio}
+            />
+          ) : null}
+        </div>
       ) : (
         <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed bg-muted/30 p-8 text-center text-sm text-muted-foreground">
           {t("create.emptyState")}

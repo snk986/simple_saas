@@ -41,6 +41,15 @@ export async function uploadRemoteMedia(input: {
   const supabase = createServiceRoleClient();
   const bucket = getBucketName();
 
+  const { data: bucketInfo } = await supabase.storage.getBucket(bucket);
+
+  if (!bucketInfo) {
+    await supabase.storage.createBucket(bucket, {
+      public: true,
+      fileSizeLimit: "50MB",
+    });
+  }
+
   const { error } = await supabase.storage
     .from(bucket)
     .upload(path, body, {
