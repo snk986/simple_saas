@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubscriptionStatusCard } from "@/components/dashboard/subscription-status-card";
-import { CreditsBalanceCard } from "@/components/dashboard/credits_balance-balance-card";
+import { CreditsBalanceCard } from "@/components/dashboard/credits-balance-card";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -56,7 +56,7 @@ export default async function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Credits Card */}
-        <CreditsBalanceCard credits_balance={credits_balance} recentHistory={recentCreditsHistory} />
+        <CreditsBalanceCard credits={credits_balance} recentHistory={recentCreditsHistory} />
         
         {/* Subscription Status */}
         <SubscriptionStatusCard subscription={subscription} />

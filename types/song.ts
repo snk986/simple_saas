@@ -50,6 +50,7 @@ export interface GenerateLyricsResponse {
   style_key: string;
   style_params: StyleParams;
   style_tags: string[];
+  lyrics_regen_count: number;
 }
 
 export interface GenerateAudioResponse {

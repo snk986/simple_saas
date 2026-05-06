@@ -10,11 +10,16 @@
   },
   "create": {
     "title": "Turn Your Story Into a Hit Song",
+    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into a structured lyric draft.",
     "inputPlaceholder": "Tell your story... (up to 200 words)",
+    "inputHint": "A few vivid details help the song feel personal.",
     "generateLyrics": "Generate Lyrics",
+    "generating": "Writing lyrics...",
     "generateMusic": "Generate Music",
     "regenerate": "Regenerate",
-    "regenerateLimit": "Max 3 regenerations reached"
+    "regenerateLimit": "Max 3 regenerations reached",
+    "inputTooShort": "Tell a little more of the story first.",
+    "emptyState": "Your lyrics will appear here after the first draft."
   },
   "song": {
     "play": "Play",
