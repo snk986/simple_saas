@@ -64,6 +64,11 @@ export async function generateMetadata({ params }: SongPageProps): Promise<Metad
   const description = buildDescription(song);
   const url = songUrl(locale, song.id);
 
+  const ogImageUrl =
+    song.reportData && song.totalScore !== null
+      ? `${baseUrl}/api/share/og?songId=${song.id}`
+      : song.coverUrl;
+
   return {
     title,
     description,
@@ -80,11 +85,11 @@ export async function generateMetadata({ params }: SongPageProps): Promise<Metad
       type: "music.song",
       url,
       siteName: "Hit-Song",
-      images: song.coverUrl
+      images: ogImageUrl
         ? [
             {
-              url: song.coverUrl,
-              alt: `${song.title} cover art`,
+              url: ogImageUrl,
+              alt: `${song.title} share image`,
             },
           ]
         : undefined,
@@ -98,7 +103,7 @@ export async function generateMetadata({ params }: SongPageProps): Promise<Metad
       card: "summary_large_image",
       title,
       description,
-      images: song.coverUrl ? [song.coverUrl] : undefined,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 }

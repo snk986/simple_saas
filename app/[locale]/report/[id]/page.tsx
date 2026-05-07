@@ -6,6 +6,8 @@ import { ReportActions } from "@/components/report/report-actions";
 import { ProducerComment } from "@/components/report/producer-comment";
 import { ReportSection } from "@/components/report/report-section";
 import { ScoreDisplay } from "@/components/report/score-display";
+import { ShareCard } from "@/components/report/share-card";
+import { ShareCardExport } from "@/components/report/share-card-export";
 import { defaultLocale, locales, type Locale } from "@/config/i18n";
 import { createClient } from "@/utils/supabase/server";
 import type { JudgeReport, ScoreDimension } from "@/types/judge";
@@ -192,10 +194,30 @@ export default async function ReportPage({ params }: ReportPageProps) {
               </div>
 
               <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-6">
-                <h2 className="text-lg font-semibold">{t("shareSummary")}</h2>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <h2 className="text-lg font-semibold">{t("shareSummary")}</h2>
+                  <ShareCardExport
+                    songId={song.id}
+                    title={song.title}
+                    publicHref={publicSongHref(locale, song.id)}
+                  />
+                </div>
                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
                   {report.share_summary}
                 </p>
+                <div className="mt-5">
+                  <ShareCard
+                    title={song.title}
+                    coverUrl={song.cover_url}
+                    styleTags={song.style_tags ?? []}
+                    report={report}
+                    labels={{
+                      badge: t("badge"),
+                      totalScore: t("totalScore"),
+                      summary: t("shareSummary"),
+                    }}
+                  />
+                </div>
               </section>
             </>
           )}

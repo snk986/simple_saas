@@ -96,10 +96,6 @@ export function ReportActions({
         {t("copyPublicLink")}
       </Button>
 
-      <Button type="button" variant="secondary" className="gap-2" disabled>
-        <Sparkles className="h-4 w-4" />
-        {t("shareCardSoon")}
-      </Button>
     </div>
   );
 }

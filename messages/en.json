@@ -71,7 +71,8 @@
       "publicPage": "Public Page",
       "copyPublicLink": "Copy Public Link",
       "copied": "Public link copied",
-      "shareCardSoon": "Share Card in Task 7"
+      "downloadShareCard": "Download Share Card",
+      "shareSong": "Share Song"
     }
   },
   "pricing": {
