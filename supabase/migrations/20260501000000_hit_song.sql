@@ -145,7 +145,3 @@ create policy "Service role manages email log"
 grant all on public.songs to service_role;
 grant all on public.achievements to service_role;
 grant all on public.email_log to service_role;
-
--- Dev: set all existing users to 9999 credits_balance
--- Only run in development environment
-update public.customers set credits_balance = 9999 where true;

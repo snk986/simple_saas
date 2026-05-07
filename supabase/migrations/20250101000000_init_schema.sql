@@ -89,13 +89,13 @@ BEGIN
   ) VALUES (
     NEW.id,
     NEW.email,
-    3, -- Default 3 credits for new users
+    300,
     'auto_' || NEW.id::text,
     NOW(),
     NOW(),
     jsonb_build_object(
       'source', 'auto_registration',
-      'initial_credits', 3,
+      'initial_credits', 300,
       'registration_date', NOW()
     )
   );
@@ -110,7 +110,7 @@ BEGIN
     metadata
   ) VALUES (
     (SELECT id FROM public.customers WHERE user_id = NEW.id),
-    3,
+    300,
     'add',
     'Welcome bonus for new user registration',
     NOW(),

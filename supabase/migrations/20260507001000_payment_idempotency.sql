@@ -10,6 +10,56 @@ update public.customers
 set credits_balance = greatest(coalesce(credits_balance, 0), coalesce(credits, 0))
 where true;
 
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.customers (
+    user_id,
+    email,
+    credits,
+    credits_balance,
+    creem_customer_id,
+    created_at,
+    updated_at,
+    metadata
+  ) values (
+    new.id,
+    new.email,
+    300,
+    300,
+    'auto_' || new.id::text,
+    now(),
+    now(),
+    jsonb_build_object(
+      'source', 'auto_registration',
+      'initial_credits', 300,
+      'registration_date', now()
+    )
+  );
+
+  insert into public.credits_history (
+    customer_id,
+    amount,
+    type,
+    description,
+    created_at,
+    metadata
+  ) values (
+    (select id from public.customers where user_id = new.id),
+    300,
+    'add',
+    'Welcome bonus for new user registration',
+    now(),
+    jsonb_build_object(
+      'source', 'welcome_bonus',
+      'user_registration', true
+    )
+  );
+
+  return new;
+end;
+$$ language plpgsql security definer;
+
 create unique index if not exists credits_history_creem_order_id_unique
   on public.credits_history (creem_order_id)
   where creem_order_id is not null;
