@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Check, Sparkles, Zap, Shield } from "lucide-react";
+import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/use-user";
 import { useToast } from "@/hooks/use-toast";
-import { SUBSCRIPTION_TIERS, CREDITS_TIERS } from "@/config/subscriptions";
+import { SUBSCRIPTION_TIERS, CREDIT_PACKS } from "@/config/subscriptions";
 import { ProductTier } from "@/types/subscriptions";
 
 interface PricingSectionProps {
@@ -27,43 +26,35 @@ export function PricingSection({ className }: PricingSectionProps) {
     if (!user) {
       toast({
         title: "Sign In Required",
-        description: "Please sign in to subscribe.",
+        description: "Please sign in to purchase.",
         variant: "destructive",
       });
-      router.push('/sign-in');
+      router.push("/sign-in");
       return;
     }
 
     setIsProcessing(tier.id);
-    
+
     try {
-      const response = await fetch('/api/creem/create-checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: tier.productId,
-          productType: tier.creditAmount ? 'credits' : 'subscription',
-          userId: user.id,
-          credits: tier.creditAmount, 
-        }),
+      const response = await fetch("/api/creem/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tierId: tier.id }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session');
+        throw new Error("Failed to create checkout session");
       }
 
       const { checkoutUrl } = await response.json();
-      
+
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
       } else {
-        throw new Error('No checkout URL received');
+        throw new Error("No checkout URL received");
       }
-      
     } catch (error) {
-      console.error('Payment error:', error);
+      console.error("Payment error:", error);
       toast({
         title: "Payment Failed",
         description: "Failed to process payment. Please try again.",
@@ -73,6 +64,10 @@ export function PricingSection({ className }: PricingSectionProps) {
       setIsProcessing(null);
     }
   };
+
+  const monthlyTiers = SUBSCRIPTION_TIERS.filter(
+    (t) => t.billingPeriod === "monthly"
+  );
 
   return (
     <section id="pricing" className={`w-full py-16 bg-muted/30 ${className}`}>
@@ -86,37 +81,35 @@ export function PricingSection({ className }: PricingSectionProps) {
           </p>
         </div>
 
-        <Tabs defaultValue="subscription" className="w-full flex flex-col items-center">
+        <Tabs defaultValue="credits" className="w-full flex flex-col items-center">
           <TabsList className="mb-8">
-            <TabsTrigger value="subscription">Subscriptions</TabsTrigger>
             <TabsTrigger value="credits">Credit Packs</TabsTrigger>
+            <TabsTrigger value="subscription">Subscriptions</TabsTrigger>
           </TabsList>
-          
-          <TabsContent value="subscription" className="w-full">
+
+          <TabsContent value="credits" className="w-full">
             <div className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto">
-              {SUBSCRIPTION_TIERS.map((tier, index) => (
-                <PricingCard 
-                  key={tier.id} 
-                  tier={tier} 
-                  index={index} 
-                  isProcessing={isProcessing} 
-                  onPurchase={handlePurchase} 
-                  type="subscription"
+              {CREDIT_PACKS.map((tier, index) => (
+                <PricingCard
+                  key={tier.id}
+                  tier={tier}
+                  index={index}
+                  isProcessing={isProcessing}
+                  onPurchase={handlePurchase}
                 />
               ))}
             </div>
           </TabsContent>
-          
-          <TabsContent value="credits" className="w-full">
-            <div className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto">
-              {CREDITS_TIERS.map((tier, index) => (
-                <PricingCard 
-                  key={tier.id} 
-                  tier={tier} 
-                  index={index} 
-                  isProcessing={isProcessing} 
-                  onPurchase={handlePurchase} 
-                  type="credits"
+
+          <TabsContent value="subscription" className="w-full">
+            <div className="grid gap-8 lg:grid-cols-2 max-w-4xl mx-auto">
+              {monthlyTiers.map((tier, index) => (
+                <PricingCard
+                  key={tier.id}
+                  tier={tier}
+                  index={index}
+                  isProcessing={isProcessing}
+                  onPurchase={handlePurchase}
                 />
               ))}
             </div>
@@ -127,46 +120,41 @@ export function PricingSection({ className }: PricingSectionProps) {
   );
 }
 
-function PricingCard({ 
-  tier, 
-  index, 
-  isProcessing, 
+function PricingCard({
+  tier,
+  index,
+  isProcessing,
   onPurchase,
-  type
-}: { 
-  tier: ProductTier; 
-  index: number; 
-  isProcessing: string | null; 
+}: {
+  tier: ProductTier;
+  index: number;
+  isProcessing: string | null;
   onPurchase: (tier: ProductTier) => void;
-  type: 'subscription' | 'credits';
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative"
-    >
-      <Card className={`h-full flex flex-col ${
-        tier.featured 
-          ? 'border-primary shadow-lg scale-105 z-10' 
-          : 'border-border'
-      }`}>
+    <div className="relative">
+      <Card
+        className={`h-full flex flex-col ${
+          tier.featured
+            ? "border-primary shadow-lg scale-105 z-10"
+            : "border-border"
+        }`}
+      >
         {tier.featured && (
           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <Badge className="bg-primary px-3 py-1">Most Popular</Badge>
           </div>
         )}
-        
+
         <CardHeader>
           <CardTitle className="text-2xl">{tier.name}</CardTitle>
           <CardDescription>{tier.description}</CardDescription>
           <div className="mt-4 flex items-baseline">
-            <span className="text-4xl font-bold">{tier.priceMonthly}</span>
-            <span className="text-muted-foreground ml-1">
-              {type === 'subscription' ? '/month' : ' one-time'}
-            </span>
+            <span className="text-4xl font-bold">{tier.price}</span>
           </div>
+          <p className="text-sm text-muted-foreground">
+            {tier.creditAmount} credits
+          </p>
         </CardHeader>
 
         <CardContent className="flex-1">
@@ -181,8 +169,8 @@ function PricingCard({
         </CardContent>
 
         <CardFooter>
-          <Button 
-            className="w-full" 
+          <Button
+            className="w-full"
             variant={tier.featured ? "default" : "outline"}
             onClick={() => onPurchase(tier)}
             disabled={isProcessing === tier.id}
@@ -191,6 +179,6 @@ function PricingCard({
           </Button>
         </CardFooter>
       </Card>
-    </motion.div>
+    </div>
   );
 }

@@ -1,106 +1,118 @@
 import { ProductTier } from "@/types/subscriptions";
 
-export const SUBSCRIPTION_TIERS: ProductTier[] = [
+export const CREDIT_PACKS: ProductTier[] = [
   {
-    name: "Starter",
-    id: "tier-hobby",
-    productId: "prod_6E43JxQebqP1JmRXdM5OmQ", // $11 monthly subscription
-    priceMonthly: "$11",
-    description: "Perfect for individual developers and small projects.",
-    features: [
-      "Global authentication system",
-      "Database integration",
-      "Secure API routes",
-      "Modern UI components",
-      "Dark/Light mode",
-      "Community forum access",
-    ],
+    name: "Mini",
+    id: "mini",
+    productId: process.env.NEXT_PUBLIC_CREEM_MINI_PRODUCT_ID ?? "",
+    price: "$5",
+    priceValue: 5,
+    billingPeriod: "one_time",
+    plan: "free",
+    description: "Try a single song creation.",
+    creditAmount: 1,
+    songRetentionDays: 30,
+    priorityGeneration: false,
+    reportCreditsIncluded: false,
     featured: false,
-    discountCode: "", // Optional discount code
   },
   {
-    name: "Business",
-    id: "tier-pro",
-    productId: "prod_6E43JxQebqP1JmRXdM5OmQ", // $29 monthly subscription
-    priceMonthly: "$29",
-    description: "Ideal for growing businesses and development teams.",
-    features: [
-      "Everything in Starter",
-      "Multi-currency payments",
-      "Priority support",
-      "Advanced analytics",
-      "Custom branding options",
-      "API usage dashboard",
-    ],
+    name: "Standard",
+    id: "standard",
+    productId: process.env.NEXT_PUBLIC_CREEM_STANDARD_PRODUCT_ID ?? "",
+    price: "$12",
+    priceValue: 12,
+    billingPeriod: "one_time",
+    plan: "free",
+    description: "Create multiple songs at a better rate.",
+    creditAmount: 3,
+    songRetentionDays: 30,
+    priorityGeneration: false,
+    reportCreditsIncluded: false,
     featured: true,
-    discountCode: "", // Optional discount code
   },
   {
-    name: "Enterprise",
-    id: "tier-enterprise",
-    productId: "prod_6E43JxQebqP1JmRXdM5OmQ", // $99 monthly subscription
-    priceMonthly: "$99",
-    description: "For large organizations with advanced requirements.",
-    features: [
-      "Everything in Business",
-      "Dedicated account manager",
-      "Custom implementation support",
-      "High-volume transaction processing",
-      "Advanced security features",
-      "Service Level Agreement (SLA)",
-    ],
+    name: "Pro Pack",
+    id: "pro_pack",
+    productId: process.env.NEXT_PUBLIC_CREEM_PRO_PACK_PRODUCT_ID ?? "",
+    price: "$25",
+    priceValue: 25,
+    billingPeriod: "one_time",
+    plan: "free",
+    description: "Best value for serious creators.",
+    creditAmount: 7,
+    songRetentionDays: 30,
+    priorityGeneration: false,
+    reportCreditsIncluded: true,
     featured: false,
-    discountCode: "", // Optional discount code
   },
 ];
 
-export const CREDITS_TIERS: ProductTier[] = [
+export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
-    name: "Basic Package",
-    id: "tier-3-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $9 one-time purchase
-    priceMonthly: "$9",
-    description: "3 credits for testing and small-scale projects.",
+    name: "Basic Monthly",
+    id: "basic_monthly",
+    productId: process.env.NEXT_PUBLIC_CREEM_BASIC_MONTHLY_PRODUCT_ID ?? "",
+    price: "$9/mo",
+    priceValue: 9,
+    billingPeriod: "monthly",
+    plan: "basic",
+    description: "For regular creators who want songs that last.",
     creditAmount: 3,
-    features: [
-      "3 credits for use across all features",
-      "No expiration date",
-      "Access to standard features",
-      "Community support"
-    ],
+    songRetentionDays: null,
+    priorityGeneration: false,
+    reportCreditsIncluded: true,
     featured: false,
-    discountCode: "", // Optional discount code
   },
   {
-    name: "Standard Package",
-    id: "tier-6-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $13 one-time purchase
-    priceMonthly: "$13",
-    description: "6 credits for medium-sized applications.",
-    creditAmount: 6,
-    features: [
-      "6 credits for use across all features",
-      "No expiration date",
-      "Priority processing",
-      "Basic email support"
-    ],
+    name: "Pro Monthly",
+    id: "pro_monthly",
+    productId: process.env.NEXT_PUBLIC_CREEM_PRO_MONTHLY_PRODUCT_ID ?? "",
+    price: "$19/mo",
+    priceValue: 19,
+    billingPeriod: "monthly",
+    plan: "pro",
+    description: "Priority generation and maximum creative output.",
+    creditAmount: 8,
+    songRetentionDays: null,
+    priorityGeneration: true,
+    reportCreditsIncluded: true,
     featured: true,
-    discountCode: "", // Optional discount code
   },
   {
-    name: "Premium Package",
-    id: "tier-9-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $29 one-time purchase
-    priceMonthly: "$29",
-    description: "9 credits for larger applications and production use.",
-    creditAmount: 9,
-    features: [
-      "9 credits for use across all features",
-      "No expiration date",
-      "Premium support",
-      "Advanced analytics access"
-    ],
+    name: "Basic Yearly",
+    id: "basic_yearly",
+    productId: process.env.NEXT_PUBLIC_CREEM_BASIC_YEARLY_PRODUCT_ID ?? "",
+    price: "$79/yr",
+    priceValue: 79,
+    billingPeriod: "yearly",
+    plan: "basic",
+    description: "Save 27% with annual billing.",
+    creditAmount: 36,
+    songRetentionDays: null,
+    priorityGeneration: false,
+    reportCreditsIncluded: true,
     featured: false,
-    discountCode: "", // Optional discount code
+  },
+  {
+    name: "Pro Yearly",
+    id: "pro_yearly",
+    productId: process.env.NEXT_PUBLIC_CREEM_PRO_YEARLY_PRODUCT_ID ?? "",
+    price: "$169/yr",
+    priceValue: 169,
+    billingPeriod: "yearly",
+    plan: "pro",
+    description: "Best value for dedicated creators. Save 26%.",
+    creditAmount: 96,
+    songRetentionDays: null,
+    priorityGeneration: true,
+    reportCreditsIncluded: true,
+    featured: true,
   },
 ];
+
+export const ALL_TIERS = [...CREDIT_PACKS, ...SUBSCRIPTION_TIERS];
+
+export function getTierById(id: string): ProductTier | undefined {
+  return ALL_TIERS.find((tier) => tier.id === id);
+}

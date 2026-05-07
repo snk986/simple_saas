@@ -1,12 +1,21 @@
+export type BillingPeriod = "one_time" | "monthly" | "yearly";
+export type PlanTier = "free" | "basic" | "pro";
+
 export interface ProductTier {
   name: string;
   id: string;
   productId: string;
-  priceMonthly: string;
+  price: string;
+  priceValue: number;
+  billingPeriod: BillingPeriod;
+  plan: PlanTier;
   description: string;
   featured: boolean;
   features?: string[];
-  creditAmount?: number;
+  creditAmount: number;
+  songRetentionDays: number | null;
+  priorityGeneration: boolean;
+  reportCreditsIncluded: boolean;
   discountCode?: string;
 }
 
@@ -28,7 +37,6 @@ export type SubscriptionState =
   | "incomplete"
   | "expired";
 
-// Constants for subscription status checks
 export const ACTIVE_STATUSES = ["active", "trialing"] as const;
 export const GRACE_PERIOD_STATUSES = [
   "canceled",

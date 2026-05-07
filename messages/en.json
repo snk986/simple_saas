@@ -181,46 +181,91 @@
     }
   },
   "pricing": {
-    "title": "Simple Pricing",
-    "getStarted": "Get Started"
+    "title": "Pricing",
+    "getStarted": "Get Started",
+    "buyCredits": "Buy Credits",
+    "subscribe": "Subscribe",
+    "managePlan": "Manage Plan",
+    "currentPlan": "Current Plan",
+    "perMonth": "/mo",
+    "perYear": "/yr",
+    "oneTime": "one-time",
+    "credits": "credits",
+    "mostPopular": "Most Popular",
+    "signInToBuy": "Sign in to purchase"
   },
   "pricingPage": {
     "seo": {
       "title": "Hit-Song Pricing - AI Song Creation Plans",
-      "description": "Choose a Hit-Song plan for creating AI lyrics, audio, producer reports, and shareable public song pages."
+      "description": "Choose a Hit-Song plan for creating AI lyrics, audio, producer reports, and shareable public song pages. Credits never expire."
     },
     "eyebrow": "Pricing",
-    "title": "Simple plans for turning stories into songs",
-    "subtitle": "Start small, generate complete songs, and upgrade when you need more creation volume.",
-    "planCta": "Create a song",
-    "plans": {
-      "starter": {
-        "name": "Starter",
-        "description": "For trying a personal song idea.",
-        "price": "Free to start",
-        "priceValue": "0",
-        "feature1": "Story-to-lyrics workflow",
-        "feature2": "AI audio generation entry point",
-        "feature3": "Share-ready public page"
+    "title": "Turn your stories into songs",
+    "subtitle": "Each credit creates one complete song: lyrics, audio, and a shareable public page. Buy credits once or subscribe for ongoing creation.",
+    "creditPacksTitle": "Credit Packs",
+    "creditPacksSubtitle": "One-time purchase. Credits never expire.",
+    "subscriptionsTitle": "Subscriptions",
+    "subscriptionsSubtitle": "Monthly credits, permanent song storage, and priority features.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "planCta": "Get Started",
+    "creditPacks": {
+      "mini": {
+        "name": "Mini",
+        "description": "Try a single song creation.",
+        "feature1": "1 credit for one complete song",
+        "feature2": "Lyrics + audio generation",
+        "feature3": "Public shareable page"
       },
-      "creator": {
-        "name": "Creator",
-        "description": "For regular song drafts and reports.",
-        "price": "Credit based",
-        "priceValue": "9",
-        "feature1": "Generate lyrics and audio",
-        "feature2": "Unlock producer-style reports",
-        "feature3": "Track plays, shares, and CTA clicks"
+      "standard": {
+        "name": "Standard",
+        "description": "Create multiple songs at a better rate.",
+        "feature1": "3 credits for complete songs",
+        "feature2": "Lyrics + audio generation",
+        "feature3": "Public shareable pages"
       },
-      "studio": {
-        "name": "Studio",
-        "description": "For teams and higher creation volume.",
-        "price": "Custom",
-        "priceValue": "99",
-        "feature1": "More creation capacity",
-        "feature2": "Public SEO song pages",
-        "feature3": "Built for campaign workflows"
+      "pro_pack": {
+        "name": "Pro Pack",
+        "description": "Best value for serious creators.",
+        "feature1": "7 credits for complete songs",
+        "feature2": "Producer reports included",
+        "feature3": "Public shareable pages"
       }
+    },
+    "subscriptions": {
+      "basic": {
+        "name": "Basic",
+        "description": "For regular creators who want songs that last.",
+        "feature1": "3 credits per month",
+        "feature2": "Songs stored permanently",
+        "feature3": "Producer reports included"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Priority generation and maximum creative output.",
+        "feature1": "8 credits per month",
+        "feature2": "Songs stored permanently",
+        "feature3": "Priority audio generation"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "What is a credit?",
+      "a1": "One credit generates one complete song: AI lyrics, full audio, and a public shareable page.",
+      "q2": "Do credits expire?",
+      "a2": "No. Credits never expire, whether purchased as a pack or received through a subscription.",
+      "q3": "What happens to my songs if I cancel?",
+      "a3": "Free users' songs are removed after 30 days. Subscribers' songs are stored permanently, even after cancellation for songs created during the subscription.",
+      "q4": "Can I get a refund?",
+      "a4": "Yes. We offer a 7-day refund policy for unused credits. Contact support within 7 days of purchase.",
+      "q5": "What payment methods are accepted?",
+      "a5": "We accept all major credit cards. Prices are in USD."
+    },
+    "trust": {
+      "refund": "7-day refund policy",
+      "noExpiry": "Credits never expire",
+      "cancel": "Cancel anytime",
+      "currency": "Prices in USD"
     }
   },
   "email": {

@@ -181,46 +181,91 @@
     }
   },
   "pricing": {
-    "title": "シンプルな料金",
-    "getStarted": "はじめる"
+    "title": "料金",
+    "getStarted": "はじめる",
+    "buyCredits": "クレジットを購入",
+    "subscribe": "サブスクリプション登録",
+    "managePlan": "プラン管理",
+    "currentPlan": "現在のプラン",
+    "perMonth": "/月",
+    "perYear": "/年",
+    "oneTime": "一回払い",
+    "credits": "クレジット",
+    "mostPopular": "人気No.1",
+    "signInToBuy": "購入するにはログイン"
   },
   "pricingPage": {
     "seo": {
       "title": "Hit-Song 料金 - AIソング制作プラン",
-      "description": "AI歌詞、音声、プロデューサーレポート、共有可能な公開曲ページを作成するHit-Songプランを選べます。"
+      "description": "AI歌詞、音声、プロデューサーレポート、公開ページを作成するHit-Songプランを選べます。クレジットは無期限です。"
     },
     "eyebrow": "料金",
-    "title": "物語を曲にするシンプルなプラン",
-    "subtitle": "小さく始め、完成した曲を生成し、制作量が増えたらアップグレードできます。",
-    "planCta": "曲を作成",
-    "plans": {
-      "starter": {
-        "name": "Starter",
-        "description": "個人的な曲のアイデアを試す方向け。",
-        "price": "無料で開始",
-        "priceValue": "0",
-        "feature1": "物語から歌詞へのワークフロー",
-        "feature2": "AI音声生成の入口",
+    "title": "あなたの物語を曲にしよう",
+    "subtitle": "1クレジットで1曲完成：歌詞、音声、共有可能な公開ページ。クレジットを購入するか、サブスクリプションで継続的に制作できます。",
+    "creditPacksTitle": "クレジットパック",
+    "creditPacksSubtitle": "一回払い。クレジットは無期限です。",
+    "subscriptionsTitle": "サブスクリプション",
+    "subscriptionsSubtitle": "毎月クレジット付与、永久保存、優先機能。",
+    "monthly": "月額",
+    "yearly": "年額",
+    "planCta": "はじめる",
+    "creditPacks": {
+      "mini": {
+        "name": "Mini",
+        "description": "1曲だけ試してみる。",
+        "feature1": "1クレジットで1曲完成",
+        "feature2": "歌詞 + 音声生成",
         "feature3": "共有可能な公開ページ"
       },
-      "creator": {
-        "name": "Creator",
-        "description": "定期的な曲ドラフトとレポート向け。",
-        "price": "クレジット制",
-        "priceValue": "9",
-        "feature1": "歌詞と音声を生成",
-        "feature2": "プロデューサー風レポートを解放",
-        "feature3": "再生、共有、CTAクリックを確認"
+      "standard": {
+        "name": "Standard",
+        "description": "お得に複数曲を制作。",
+        "feature1": "3クレジットで曲を制作",
+        "feature2": "歌詞 + 音声生成",
+        "feature3": "共有可能な公開ページ"
       },
-      "studio": {
-        "name": "Studio",
-        "description": "チームや多めの制作量向け。",
-        "price": "カスタム",
-        "priceValue": "99",
-        "feature1": "より多くの制作容量",
-        "feature2": "SEO対応の公開曲ページ",
-        "feature3": "キャンペーン運用に対応"
+      "pro_pack": {
+        "name": "Pro Pack",
+        "description": "本格クリエイター向けの最高コスパ。",
+        "feature1": "7クレジットで曲を制作",
+        "feature2": "プロデューサーレポート付き",
+        "feature3": "共有可能な公開ページ"
       }
+    },
+    "subscriptions": {
+      "basic": {
+        "name": "Basic",
+        "description": "曲を永久保存したい定期クリエイター向け。",
+        "feature1": "毎月3クレジット",
+        "feature2": "曲を永久保存",
+        "feature3": "プロデューサーレポート付き"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "優先生成と最大限のクリエイティブ出力。",
+        "feature1": "毎月8クレジット",
+        "feature2": "曲を永久保存",
+        "feature3": "音声の優先生成"
+      }
+    },
+    "faq": {
+      "title": "よくある質問",
+      "q1": "クレジットとは？",
+      "a1": "1クレジットで1曲完成します：AI歌詞、フル音声、共有可能な公開ページ。",
+      "q2": "クレジットに有効期限はありますか？",
+      "a2": "いいえ。パック購入でもサブスクリプション付与でも、クレジットは無期限です。",
+      "q3": "解約したら曲はどうなりますか？",
+      "a3": "無料ユーザーの曲は30日後に削除されます。サブスクリプション中に作成した曲は解約後も永久保存されます。",
+      "q4": "返金はできますか？",
+      "a4": "はい。未使用クレジットについて7日間の返金ポリシーがあります。購入後7日以内にサポートへご連絡ください。",
+      "q5": "どの支払い方法が使えますか？",
+      "a5": "主要なクレジットカードに対応しています。価格はUSD表示です。"
+    },
+    "trust": {
+      "refund": "7日間返金保証",
+      "noExpiry": "クレジット無期限",
+      "cancel": "いつでも解約可能",
+      "currency": "USD表示"
     }
   },
   "email": {

@@ -181,46 +181,91 @@
     }
   },
   "pricing": {
-    "title": "Precos simples",
-    "getStarted": "Comecar"
+    "title": "Precos",
+    "getStarted": "Comecar",
+    "buyCredits": "Comprar creditos",
+    "subscribe": "Assinar",
+    "managePlan": "Gerenciar plano",
+    "currentPlan": "Plano atual",
+    "perMonth": "/mes",
+    "perYear": "/ano",
+    "oneTime": "pagamento unico",
+    "credits": "creditos",
+    "mostPopular": "Mais popular",
+    "signInToBuy": "Entre para comprar"
   },
   "pricingPage": {
     "seo": {
       "title": "Precos do Hit-Song - Planos para criar musicas com IA",
-      "description": "Escolha um plano do Hit-Song para criar letras, audio, relatorios de produtor e paginas publicas de musicas."
+      "description": "Escolha um plano do Hit-Song para criar letras, audio, relatorios de produtor e paginas publicas. Creditos nunca expiram."
     },
     "eyebrow": "Precos",
-    "title": "Planos simples para transformar historias em musicas",
-    "subtitle": "Comece pequeno, gere musicas completas e evolua quando precisar de mais volume de criacao.",
-    "planCta": "Criar uma musica",
-    "plans": {
-      "starter": {
-        "name": "Starter",
-        "description": "Para testar uma ideia pessoal de musica.",
-        "price": "Gratis para comecar",
-        "priceValue": "0",
-        "feature1": "Fluxo de historia para letra",
-        "feature2": "Entrada para geracao de audio com IA",
-        "feature3": "Pagina publica pronta para compartilhar"
+    "title": "Transforme suas historias em musicas",
+    "subtitle": "Cada credito cria uma musica completa: letra, audio e uma pagina publica para compartilhar. Compre creditos ou assine para criar continuamente.",
+    "creditPacksTitle": "Pacotes de creditos",
+    "creditPacksSubtitle": "Compra unica. Creditos nunca expiram.",
+    "subscriptionsTitle": "Assinaturas",
+    "subscriptionsSubtitle": "Creditos mensais, armazenamento permanente e recursos prioritarios.",
+    "monthly": "Mensal",
+    "yearly": "Anual",
+    "planCta": "Comecar",
+    "creditPacks": {
+      "mini": {
+        "name": "Mini",
+        "description": "Experimente com uma unica musica.",
+        "feature1": "1 credito para uma musica completa",
+        "feature2": "Geracao de letra + audio",
+        "feature3": "Pagina publica para compartilhar"
       },
-      "creator": {
-        "name": "Creator",
-        "description": "Para rascunhos e relatorios frequentes.",
-        "price": "Baseado em creditos",
-        "priceValue": "9",
-        "feature1": "Gere letras e audio",
-        "feature2": "Desbloqueie relatorios estilo produtor",
-        "feature3": "Acompanhe reproducoes, compartilhamentos e cliques CTA"
+      "standard": {
+        "name": "Standard",
+        "description": "Crie varias musicas com melhor preco.",
+        "feature1": "3 creditos para musicas completas",
+        "feature2": "Geracao de letra + audio",
+        "feature3": "Paginas publicas para compartilhar"
       },
-      "studio": {
-        "name": "Studio",
-        "description": "Para equipes e maior volume de criacao.",
-        "price": "Personalizado",
-        "priceValue": "99",
-        "feature1": "Mais capacidade de criacao",
-        "feature2": "Paginas publicas SEO para musicas",
-        "feature3": "Criado para fluxos de campanha"
+      "pro_pack": {
+        "name": "Pro Pack",
+        "description": "Melhor valor para criadores dedicados.",
+        "feature1": "7 creditos para musicas completas",
+        "feature2": "Relatorios de produtor incluidos",
+        "feature3": "Paginas publicas para compartilhar"
       }
+    },
+    "subscriptions": {
+      "basic": {
+        "name": "Basic",
+        "description": "Para criadores regulares que querem musicas permanentes.",
+        "feature1": "3 creditos por mes",
+        "feature2": "Musicas armazenadas permanentemente",
+        "feature3": "Relatorios de produtor incluidos"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Geracao prioritaria e maxima producao criativa.",
+        "feature1": "8 creditos por mes",
+        "feature2": "Musicas armazenadas permanentemente",
+        "feature3": "Geracao de audio prioritaria"
+      }
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "q1": "O que e um credito?",
+      "a1": "Um credito gera uma musica completa: letra com IA, audio completo e uma pagina publica para compartilhar.",
+      "q2": "Os creditos expiram?",
+      "a2": "Nao. Creditos nunca expiram, seja comprando como pacote ou recebendo pela assinatura.",
+      "q3": "O que acontece com minhas musicas se eu cancelar?",
+      "a3": "Musicas de usuarios gratuitos sao removidas apos 30 dias. Musicas de assinantes sao armazenadas permanentemente, mesmo apos o cancelamento.",
+      "q4": "Posso obter reembolso?",
+      "a4": "Sim. Oferecemos politica de reembolso de 7 dias para creditos nao utilizados. Contate o suporte dentro de 7 dias apos a compra.",
+      "q5": "Quais metodos de pagamento sao aceitos?",
+      "a5": "Aceitamos todos os principais cartoes de credito. Precos em USD."
+    },
+    "trust": {
+      "refund": "Reembolso em 7 dias",
+      "noExpiry": "Creditos nunca expiram",
+      "cancel": "Cancele quando quiser",
+      "currency": "Precos em USD"
     }
   },
   "email": {
