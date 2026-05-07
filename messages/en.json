@@ -192,7 +192,11 @@
     "oneTime": "one-time",
     "credits": "credits",
     "mostPopular": "Most Popular",
-    "signInToBuy": "Sign in to purchase"
+    "signInToBuy": "Sign in to purchase",
+    "freePlan": "Free",
+    "basicPlan": "Basic",
+    "proPlan": "Pro",
+    "enterprisePlan": "Enterprise"
   },
   "pricingPage": {
     "seo": {

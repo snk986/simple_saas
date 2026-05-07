@@ -6,13 +6,21 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/use-user";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
 
 interface PricingBuyButtonProps {
   tierId: string;
+  locale: Locale;
   featured?: boolean;
+  managePlan?: boolean;
 }
 
-export function PricingBuyButton({ tierId, featured }: PricingBuyButtonProps) {
+export function PricingBuyButton({
+  tierId,
+  locale,
+  featured,
+  managePlan,
+}: PricingBuyButtonProps) {
   const router = useRouter();
   const { user } = useUser();
   const { toast } = useToast();
@@ -21,26 +29,29 @@ export function PricingBuyButton({ tierId, featured }: PricingBuyButtonProps) {
 
   const handlePurchase = async () => {
     if (!user) {
-      router.push("/sign-in");
+      router.push(locale === "en" ? "/sign-in" : `/${locale}/sign-in`);
       return;
     }
 
     setIsProcessing(true);
     try {
-      const response = await fetch("/api/creem/create-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tierId }),
-      });
+      const response = managePlan
+        ? await fetch("/api/creem/customer-portal")
+        : await fetch("/api/creem/create-checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tierId, locale }),
+          });
 
       if (!response.ok) {
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
         throw new Error(data.error || "Failed to create checkout");
       }
 
-      const { checkoutUrl } = await response.json();
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
+      const data = await response.json();
+      const redirectUrl = managePlan ? data.customer_portal_link : data.checkoutUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
       }
     } catch (error) {
       toast({
@@ -60,7 +71,13 @@ export function PricingBuyButton({ tierId, featured }: PricingBuyButtonProps) {
       onClick={handlePurchase}
       disabled={isProcessing}
     >
-      {isProcessing ? "..." : user ? t("getStarted") : t("signInToBuy")}
+      {isProcessing
+        ? "..."
+        : managePlan && user
+          ? t("managePlan")
+          : user
+            ? t("getStarted")
+            : t("signInToBuy")}
     </Button>
   );
 }

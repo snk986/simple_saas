@@ -192,7 +192,11 @@
     "oneTime": "pago unico",
     "credits": "creditos",
     "mostPopular": "Mas popular",
-    "signInToBuy": "Inicia sesion para comprar"
+    "signInToBuy": "Inicia sesion para comprar",
+    "freePlan": "Gratis",
+    "basicPlan": "Basic",
+    "proPlan": "Pro",
+    "enterprisePlan": "Enterprise"
   },
   "pricingPage": {
     "seo": {

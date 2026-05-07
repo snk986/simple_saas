@@ -5,6 +5,8 @@ import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { locales, type Locale } from "@/i18n/routing";
 import { CREDIT_PACKS, SUBSCRIPTION_TIERS } from "@/config/subscriptions";
 import { PricingBuyButton } from "@/components/pricing/pricing-buy-button";
+import { createClient } from "@/utils/supabase/server";
+import type { PlanTier } from "@/types/subscriptions";
 
 interface PricingPageProps {
   params: Promise<{ locale: Locale }>;
@@ -48,6 +50,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const { locale } = await params;
   const t = await getTranslations("pricingPage");
   const tp = await getTranslations("pricing");
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const creditPackKeys = ["mini", "standard", "pro_pack"] as const;
   const subscriptionMonthly = SUBSCRIPTION_TIERS.filter(
@@ -56,6 +62,51 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const subscriptionYearly = SUBSCRIPTION_TIERS.filter(
     (tier) => tier.billingPeriod === "yearly"
   );
+  let accountSummary: {
+    credits: number;
+    plan: PlanTier;
+    hasActiveSubscription: boolean;
+  } | null = null;
+
+  if (user) {
+    const { data: customer } = await supabase
+      .from("customers")
+      .select(
+        `
+        credits,
+        credits_balance,
+        subscriptions (
+          status,
+          creem_product_id,
+          current_period_end,
+          metadata
+        )
+      `
+      )
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    const activeSubscription = customer?.subscriptions?.find((subscription) =>
+      ["active", "trialing"].includes(subscription.status)
+    );
+    const metadataPlan =
+      typeof activeSubscription?.metadata?.plan === "string"
+        ? activeSubscription.metadata.plan
+        : undefined;
+    const matchedTier = SUBSCRIPTION_TIERS.find(
+      (tier) => tier.productId && tier.productId === activeSubscription?.creem_product_id
+    );
+    const plan =
+      metadataPlan === "basic" || metadataPlan === "pro"
+        ? metadataPlan
+        : matchedTier?.plan ?? "free";
+
+    accountSummary = {
+      credits: customer?.credits_balance ?? customer?.credits ?? 0,
+      plan,
+      hasActiveSubscription: Boolean(activeSubscription),
+    };
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -115,6 +166,26 @@ export default async function PricingPage({ params }: PricingPageProps) {
               {t("subtitle")}
             </p>
           </div>
+          {accountSummary && (
+            <div className="mx-auto mt-8 grid max-w-2xl gap-3 rounded-lg border bg-card p-4 text-left shadow-sm sm:grid-cols-2">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
+                  {tp("currentPlan")}
+                </p>
+                <p className="mt-1 text-lg font-semibold">
+                  {tp(`${accountSummary.plan}Plan`)}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
+                  {tp("credits")}
+                </p>
+                <p className="mt-1 text-lg font-semibold">
+                  {accountSummary.credits} {tp("credits")}
+                </p>
+              </div>
+            </div>
+          )}
           {/* Trust badges */}
           <div className="mx-auto mt-8 flex max-w-2xl flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
@@ -186,7 +257,11 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     )}
                   </ul>
                   <div className="mt-6">
-                    <PricingBuyButton tierId={pack.id} featured={pack.featured} />
+                    <PricingBuyButton
+                      tierId={pack.id}
+                      locale={locale}
+                      featured={pack.featured}
+                    />
                   </div>
                 </article>
               );
@@ -255,7 +330,12 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     <div className="mt-6">
                       <PricingBuyButton
                         tierId={tier.id}
+                        locale={locale}
                         featured={tier.featured}
+                        managePlan={
+                          accountSummary?.hasActiveSubscription &&
+                          accountSummary.plan === tier.plan
+                        }
                       />
                     </div>
                   </article>
@@ -315,7 +395,12 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     <div className="mt-6">
                       <PricingBuyButton
                         tierId={tier.id}
+                        locale={locale}
                         featured={tier.featured}
+                        managePlan={
+                          accountSummary?.hasActiveSubscription &&
+                          accountSummary.plan === tier.plan
+                        }
                       />
                     </div>
                   </article>

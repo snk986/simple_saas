@@ -192,7 +192,11 @@
     "oneTime": "一回払い",
     "credits": "クレジット",
     "mostPopular": "人気No.1",
-    "signInToBuy": "購入するにはログイン"
+    "signInToBuy": "購入するにはログイン",
+    "freePlan": "無料",
+    "basicPlan": "Basic",
+    "proPlan": "Pro",
+    "enterprisePlan": "Enterprise"
   },
   "pricingPage": {
     "seo": {

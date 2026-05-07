@@ -192,7 +192,11 @@
     "oneTime": "일회성",
     "credits": "크레딧",
     "mostPopular": "가장 인기",
-    "signInToBuy": "구매하려면 로그인"
+    "signInToBuy": "구매하려면 로그인",
+    "freePlan": "무료",
+    "basicPlan": "Basic",
+    "proPlan": "Pro",
+    "enterprisePlan": "Enterprise"
   },
   "pricingPage": {
     "seo": {

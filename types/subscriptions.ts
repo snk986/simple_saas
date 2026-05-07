@@ -1,5 +1,5 @@
 export type BillingPeriod = "one_time" | "monthly" | "yearly";
-export type PlanTier = "free" | "basic" | "pro";
+export type PlanTier = "free" | "basic" | "pro" | "enterprise";
 
 export interface ProductTier {
   name: string;

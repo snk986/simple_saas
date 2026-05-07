@@ -4,7 +4,7 @@ export const CREDIT_PACKS: ProductTier[] = [
   {
     name: "Mini",
     id: "mini",
-    productId: process.env.NEXT_PUBLIC_CREEM_MINI_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_MINI_PRODUCT_ID ?? "",
     price: "$5",
     priceValue: 5,
     billingPeriod: "one_time",
@@ -19,7 +19,7 @@ export const CREDIT_PACKS: ProductTier[] = [
   {
     name: "Standard",
     id: "standard",
-    productId: process.env.NEXT_PUBLIC_CREEM_STANDARD_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_STANDARD_PRODUCT_ID ?? "",
     price: "$12",
     priceValue: 12,
     billingPeriod: "one_time",
@@ -34,7 +34,7 @@ export const CREDIT_PACKS: ProductTier[] = [
   {
     name: "Pro Pack",
     id: "pro_pack",
-    productId: process.env.NEXT_PUBLIC_CREEM_PRO_PACK_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_PRO_PACK_PRODUCT_ID ?? "",
     price: "$25",
     priceValue: 25,
     billingPeriod: "one_time",
@@ -52,7 +52,7 @@ export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
     name: "Basic Monthly",
     id: "basic_monthly",
-    productId: process.env.NEXT_PUBLIC_CREEM_BASIC_MONTHLY_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_BASIC_MONTHLY_PRODUCT_ID ?? "",
     price: "$9/mo",
     priceValue: 9,
     billingPeriod: "monthly",
@@ -67,7 +67,7 @@ export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
     name: "Pro Monthly",
     id: "pro_monthly",
-    productId: process.env.NEXT_PUBLIC_CREEM_PRO_MONTHLY_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_PRO_MONTHLY_PRODUCT_ID ?? "",
     price: "$19/mo",
     priceValue: 19,
     billingPeriod: "monthly",
@@ -82,7 +82,7 @@ export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
     name: "Basic Yearly",
     id: "basic_yearly",
-    productId: process.env.NEXT_PUBLIC_CREEM_BASIC_YEARLY_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_BASIC_YEARLY_PRODUCT_ID ?? "",
     price: "$79/yr",
     priceValue: 79,
     billingPeriod: "yearly",
@@ -97,7 +97,7 @@ export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
     name: "Pro Yearly",
     id: "pro_yearly",
-    productId: process.env.NEXT_PUBLIC_CREEM_PRO_YEARLY_PRODUCT_ID ?? "",
+    productId: process.env.CREEM_PRO_YEARLY_PRODUCT_ID ?? "",
     price: "$169/yr",
     priceValue: 169,
     billingPeriod: "yearly",
