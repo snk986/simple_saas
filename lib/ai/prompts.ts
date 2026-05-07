@@ -15,6 +15,15 @@ export interface LyricsDraft {
   lyrics: string;
 }
 
+export interface JudgeReportPromptInput {
+  title: string;
+  lyrics: string;
+  userInput: string;
+  styleParams: Record<string, unknown>;
+  styleTags: string[];
+  locale: string;
+}
+
 export function buildAnalyzeInputPrompt(userInput: string, locale: string) {
   return `Analyze this user story for an AI song creation flow.
 
@@ -75,4 +84,56 @@ Musical direction:
 ${input.style.prompt}
 
 ${previous}`;
+}
+
+export function buildJudgeReportPrompt(input: JudgeReportPromptInput) {
+  return `Evaluate this song for an AI music creation report.
+
+Return only valid JSON with this exact shape:
+{
+  "total_score": number,
+  "dimensions": [
+    {
+      "dimension": "melody_potential" | "lyric_quality" | "emotional_resonance" | "commercial_appeal" | "originality",
+      "score": number,
+      "comment": string
+    }
+  ],
+  "producer_comment": string,
+  "emotional_value": string,
+  "market_positioning": string,
+  "hook_analysis": string,
+  "strengths": string[],
+  "improvements": string[],
+  "recommended_next_steps": string[],
+  "share_summary": string,
+  "generated_at": string
+}
+
+Rules:
+- Write the report in locale "${input.locale}".
+- Include exactly these five dimensions: melody_potential, lyric_quality, emotional_resonance, commercial_appeal, originality.
+- Every score must be an integer from 0 to 100.
+- total_score must be an integer from 0 to 100 and should reflect the dimension scores.
+- Be specific to the user's story and lyrics.
+- Keep comments useful for a songwriter or producer.
+- Do not make medical, legal, financial, or guaranteed commercial success claims.
+- Do not mention prompts, API calls, hidden scoring logic, or that this is generated.
+- Do not include markdown fences.
+- Use generated_at as an ISO timestamp.
+
+Song title:
+${input.title}
+
+Original user story:
+${input.userInput}
+
+Lyrics:
+${input.lyrics}
+
+Style params:
+${JSON.stringify(input.styleParams)}
+
+Style tags:
+${input.styleTags.join(", ")}`;
 }
