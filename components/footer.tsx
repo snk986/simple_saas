@@ -1,32 +1,32 @@
 "use client";
 
 import { Logo } from "./logo";
-import Link from "next/link";
-
-const footerLinks = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "/#features" },
-      { label: "Pricing", href: "/#pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
-    ],
-  },
-];
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
+  const t = useTranslations("footer");
+  const footerLinks = [
+    {
+      title: t("product"),
+      links: [
+        { label: t("features"), href: "/#how-it-works" },
+        { label: t("pricing"), href: "/pricing" },
+      ],
+    },
+    {
+      title: t("company"),
+      links: [{ label: t("about"), href: "/about" }],
+    },
+    {
+      title: t("legal"),
+      links: [
+        { label: t("privacy"), href: "/privacy" },
+        { label: t("terms"), href: "/terms" },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t">
       <div className="container px-4 py-8 md:py-12">
@@ -34,8 +34,7 @@ export function Footer() {
           <div className="col-span-full lg:col-span-2">
             <Logo />
             <p className="mt-4 text-sm text-muted-foreground">
-              Starter kit for your next project. Built with Next.js and
-              Creem.io.
+              {t("tagline")}
             </p>
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">

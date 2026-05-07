@@ -12,6 +12,16 @@ interface SongSeoSummaryProps {
   completeCount: number;
   shareCount: number;
   createdAt: string;
+  locale: string;
+  labels: {
+    sectionLabel: string;
+    title: string;
+    plays: string;
+    complete: string;
+    shares: string;
+    published: string;
+    aiScore: string;
+  };
 }
 
 export function SongSeoSummary({
@@ -25,14 +35,16 @@ export function SongSeoSummary({
   completeCount,
   shareCount,
   createdAt,
+  locale,
+  labels,
 }: SongSeoSummaryProps) {
   const stats = [
-    { label: "Plays", value: playCount.toLocaleString(), icon: Headphones },
-    { label: "Full listens", value: completeCount.toLocaleString(), icon: LineChart },
-    { label: "Shares", value: shareCount.toLocaleString(), icon: Share2 },
+    { label: labels.plays, value: playCount.toLocaleString(locale), icon: Headphones },
+    { label: labels.complete, value: completeCount.toLocaleString(locale), icon: LineChart },
+    { label: labels.shares, value: shareCount.toLocaleString(locale), icon: Share2 },
     {
-      label: "Published",
-      value: new Intl.DateTimeFormat("en", {
+      label: labels.published,
+      value: new Intl.DateTimeFormat(locale, {
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -46,10 +58,10 @@ export function SongSeoSummary({
       <div className="grid gap-7 lg:grid-cols-[1fr_320px]">
         <div>
           <p className="text-sm font-medium uppercase tracking-normal text-emerald-600 dark:text-emerald-400">
-            Song story
+            {labels.sectionLabel}
           </p>
           <h2 className="mt-1 text-2xl font-semibold text-slate-950 dark:text-white">
-            Built from a real prompt
+            {labels.title}
           </h2>
           <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
             {storySummary}
@@ -58,7 +70,7 @@ export function SongSeoSummary({
             <Badge variant="secondary">{genre}</Badge>
             <Badge variant="secondary">{mood}</Badge>
             {bpm ? <Badge variant="secondary">{bpm} BPM</Badge> : null}
-            {totalScore ? <Badge variant="secondary">AI score {totalScore}</Badge> : null}
+            {totalScore ? <Badge variant="secondary">{labels.aiScore} {totalScore}</Badge> : null}
             {styleTags.map((tag) => (
               <Badge key={tag} variant="outline">
                 {tag}

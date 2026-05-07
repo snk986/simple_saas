@@ -9,6 +9,7 @@ interface SongHeroProps {
   mood: string;
   playCount: number;
   lyricsPreview: string;
+  previewLabel: string;
 }
 
 export function SongHero({
@@ -20,6 +21,7 @@ export function SongHero({
   mood,
   playCount,
   lyricsPreview,
+  previewLabel,
 }: SongHeroProps) {
   return (
     <div className="space-y-5">
@@ -34,7 +36,7 @@ export function SongHero({
       />
       <section className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950 sm:p-6">
         <p className="text-sm font-medium uppercase tracking-normal text-emerald-600 dark:text-emerald-400">
-          Preview lyrics
+          {previewLabel}
         </p>
         <p className="mt-3 whitespace-pre-line text-base leading-8 text-slate-600 dark:text-slate-300">
           {lyricsPreview}

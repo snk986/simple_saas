@@ -6,7 +6,69 @@
     "dashboard": "Panel",
     "signIn": "Iniciar sesion",
     "signUp": "Registrarse",
-    "signOut": "Cerrar sesion"
+    "signOut": "Cerrar sesion",
+    "language": "Idioma",
+    "navigation": "Navegacion",
+    "toggleMenu": "Abrir menu"
+  },
+  "footer": {
+    "tagline": "Convierte historias personales en letras, audio e informes estilo productor.",
+    "product": "Producto",
+    "features": "Como funciona",
+    "pricing": "Precios",
+    "company": "Empresa",
+    "about": "Acerca de",
+    "legal": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Terminos"
+  },
+  "home": {
+    "seo": {
+      "title": "Hit-Song - Convierte tu historia en una cancion con IA",
+      "description": "Crea letras, audio e informes estilo productor con IA a partir de una historia personal en minutos."
+    },
+    "eyebrow": "Creacion musical con IA desde tu historia",
+    "hero": {
+      "title": "Hit-Song convierte tu historia en letras, audio y un informe para compartir",
+      "subtitle": "Describe una emocion, recuerdo o mensaje. Hit-Song lo transforma en letras estructuradas, genera audio con IA, evalua el resultado y crea una pagina publica para compartir.",
+      "primaryCta": "Crear mi cancion",
+      "secondaryCta": "Ver como funciona"
+    },
+    "proof": {
+      "lyrics": "Letras personales",
+      "audio": "Audio con IA",
+      "report": "Informe de productor"
+    },
+    "demo": {
+      "label": "Ejemplo de prompt",
+      "prompt": "Un viaje nocturno en tren despues de una ruptura, intentando volver a sentirse valiente.",
+      "outputTitle": "Direccion generada",
+      "output": "Verso, coro y arco emocional listos para generar audio."
+    },
+    "howItWorks": {
+      "title": "Como funciona",
+      "subtitle": "Tres pasos enfocados desde una historia cruda hasta una cancion para compartir.",
+      "step": "Paso {number}"
+    },
+    "steps": {
+      "story": {
+        "title": "Comparte tu historia",
+        "description": "Escribe el momento, animo o mensaje que quieres que lleve la cancion."
+      },
+      "lyrics": {
+        "title": "Recibe letras estructuradas",
+        "description": "La IA convierte la historia en versos, coro y direccion de estilo."
+      },
+      "song": {
+        "title": "Genera y comparte",
+        "description": "Crea audio, revisa el informe de productor y publica una pagina de cancion."
+      }
+    },
+    "finalCta": {
+      "title": "Listo para hacer cantar tu historia?",
+      "subtitle": "Empieza con un detalle real. Hit-Song ayuda a dar forma al resto.",
+      "button": "Empezar a crear"
+    }
   },
   "create": {
     "title": "Convierte tu historia en una cancion exitosa",
@@ -26,6 +88,39 @@
     "pause": "Pausar",
     "share": "Compartir",
     "viewReport": "Ver informe"
+  },
+  "songPublic": {
+    "seo": {
+      "title": "{title} - Cancion {style} generada con IA | Hit-Song",
+      "description": "Escucha \"{title}\", una cancion {style} generada con IA y un animo {mood}. {story} Crea tu propia cancion con Hit-Song.",
+      "notFoundTitle": "Cancion no encontrada | Hit-Song",
+      "ogImageAlt": "Imagen para compartir de {title}"
+    },
+    "previewLyrics": "Vista previa de la letra",
+    "breadcrumbCreate": "Crear",
+    "creatorReport": "Informe del creador",
+    "summary": {
+      "sectionLabel": "Historia de la cancion",
+      "title": "Creada desde un prompt real",
+      "plays": "Reproducciones",
+      "complete": "Escuchas completas",
+      "shares": "Compartidos",
+      "published": "Publicado",
+      "aiScore": "Puntuacion IA"
+    },
+    "related": {
+      "sectionLabel": "Canciones relacionadas",
+      "title": "Sigue escuchando",
+      "playCount": "reproducciones",
+      "coverAlt": "Portada de {title}",
+      "styleMoodSeparator": "-"
+    },
+    "cta": {
+      "title": "Convierte tu historia en una cancion",
+      "description": "Empieza con un recuerdo, animo o mensaje. Hit-Song lo convierte en letras, audio y una pagina publica lista para compartir.",
+      "create": "Crear mi propia cancion",
+      "copy": "Copiar enlace"
+    }
   },
   "dashboard": {
     "title": "Mis canciones",
@@ -78,6 +173,45 @@
   "pricing": {
     "title": "Precios simples",
     "getStarted": "Empezar"
+  },
+  "pricingPage": {
+    "seo": {
+      "title": "Precios de Hit-Song - Planes para crear canciones con IA",
+      "description": "Elige un plan de Hit-Song para crear letras, audio, informes de productor y paginas publicas de canciones."
+    },
+    "eyebrow": "Precios",
+    "title": "Planes simples para convertir historias en canciones",
+    "subtitle": "Empieza pequeno, genera canciones completas y sube de nivel cuando necesites mas volumen creativo.",
+    "planCta": "Crear una cancion",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Para probar una idea de cancion personal.",
+        "price": "Gratis para empezar",
+        "priceValue": "0",
+        "feature1": "Flujo de historia a letra",
+        "feature2": "Entrada a generacion de audio con IA",
+        "feature3": "Pagina publica lista para compartir"
+      },
+      "creator": {
+        "name": "Creator",
+        "description": "Para borradores e informes frecuentes.",
+        "price": "Por creditos",
+        "priceValue": "9",
+        "feature1": "Genera letras y audio",
+        "feature2": "Desbloquea informes estilo productor",
+        "feature3": "Mide reproducciones, compartidos y clics CTA"
+      },
+      "studio": {
+        "name": "Studio",
+        "description": "Para equipos y mayor volumen creativo.",
+        "price": "Personalizado",
+        "priceValue": "99",
+        "feature1": "Mas capacidad de creacion",
+        "feature2": "Paginas publicas SEO para canciones",
+        "feature3": "Pensado para flujos de campana"
+      }
+    }
   },
   "errors": {
     "insufficientCredits": "No tienes creditos suficientes. Recarga tu saldo.",

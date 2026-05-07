@@ -6,7 +6,69 @@
     "dashboard": "ダッシュボード",
     "signIn": "ログイン",
     "signUp": "登録",
-    "signOut": "ログアウト"
+    "signOut": "ログアウト",
+    "language": "言語",
+    "navigation": "ナビゲーション",
+    "toggleMenu": "メニューを開く"
+  },
+  "footer": {
+    "tagline": "個人の物語を歌詞、音声、プロデューサー風レポートに変えます。",
+    "product": "プロダクト",
+    "features": "使い方",
+    "pricing": "料金",
+    "company": "会社",
+    "about": "概要",
+    "legal": "法務",
+    "privacy": "プライバシー",
+    "terms": "利用規約"
+  },
+  "home": {
+    "seo": {
+      "title": "Hit-Song - あなたの物語をAIソングへ",
+      "description": "個人の物語から、AI生成の歌詞、音声、プロデューサー風レポートを数分で作成します。"
+    },
+    "eyebrow": "物語から始めるAI音楽制作",
+    "hero": {
+      "title": "Hit-Songは物語を歌詞、音声、共有できるレポートに変えます",
+      "subtitle": "感情、思い出、メッセージを入力してください。Hit-Songが構成された歌詞を作り、AI音声を生成し、結果を評価して共有用の公開ページを用意します。",
+      "primaryCta": "曲を作成",
+      "secondaryCta": "使い方を見る"
+    },
+    "proof": {
+      "lyrics": "パーソナルな歌詞",
+      "audio": "AI音声",
+      "report": "プロデューサーレポート"
+    },
+    "demo": {
+      "label": "プロンプト例",
+      "prompt": "別れの後の深夜列車。もう一度勇気を感じようとしている。",
+      "outputTitle": "生成された方向性",
+      "output": "音声生成に向けた verse、chorus、感情の流れ。"
+    },
+    "howItWorks": {
+      "title": "使い方",
+      "subtitle": "生の物語から共有できる曲まで、3つのステップで進みます。",
+      "step": "ステップ {number}"
+    },
+    "steps": {
+      "story": {
+        "title": "物語を共有",
+        "description": "曲に込めたい瞬間、ムード、メッセージを書きます。"
+      },
+      "lyrics": {
+        "title": "構成された歌詞を取得",
+        "description": "AIが物語を verse、chorus、スタイル方針に変換します。"
+      },
+      "song": {
+        "title": "生成して共有",
+        "description": "音声を作成し、プロデューサーレポートを確認し、公開ページを共有します。"
+      }
+    },
+    "finalCta": {
+      "title": "あなたの物語を歌にしませんか?",
+      "subtitle": "ひとつの本当のディテールから始めましょう。Hit-Songが形にします。",
+      "button": "作成を始める"
+    }
   },
   "create": {
     "title": "あなたの物語をヒット曲へ",
@@ -26,6 +88,39 @@
     "pause": "一時停止",
     "share": "共有",
     "viewReport": "レポートを見る"
+  },
+  "songPublic": {
+    "seo": {
+      "title": "{title} - AI生成 {style} ソング | Hit-Song",
+      "description": "\"{title}\" を聴く。{mood} なムードのAI生成 {style} ソングです。{story} Hit-Songで自分の曲を作成できます。",
+      "notFoundTitle": "曲が見つかりません | Hit-Song",
+      "ogImageAlt": "{title} の共有画像"
+    },
+    "previewLyrics": "歌詞プレビュー",
+    "breadcrumbCreate": "作成",
+    "creatorReport": "クリエイターレポート",
+    "summary": {
+      "sectionLabel": "曲の物語",
+      "title": "実際のプロンプトから作成",
+      "plays": "再生",
+      "complete": "完了再生",
+      "shares": "共有",
+      "published": "公開日",
+      "aiScore": "AIスコア"
+    },
+    "related": {
+      "sectionLabel": "関連する曲",
+      "title": "続けて聴く",
+      "playCount": "再生",
+      "coverAlt": "{title} のカバーアート",
+      "styleMoodSeparator": "-"
+    },
+    "cta": {
+      "title": "あなたの物語を曲に",
+      "description": "思い出、ムード、メッセージから始めましょう。Hit-Songが歌詞、音声、共有用の公開ページに変えます。",
+      "create": "自分の曲を作成",
+      "copy": "リンクをコピー"
+    }
   },
   "dashboard": {
     "title": "マイソング",
@@ -78,6 +173,45 @@
   "pricing": {
     "title": "シンプルな料金",
     "getStarted": "はじめる"
+  },
+  "pricingPage": {
+    "seo": {
+      "title": "Hit-Song 料金 - AIソング制作プラン",
+      "description": "AI歌詞、音声、プロデューサーレポート、共有可能な公開曲ページを作成するHit-Songプランを選べます。"
+    },
+    "eyebrow": "料金",
+    "title": "物語を曲にするシンプルなプラン",
+    "subtitle": "小さく始め、完成した曲を生成し、制作量が増えたらアップグレードできます。",
+    "planCta": "曲を作成",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "個人的な曲のアイデアを試す方向け。",
+        "price": "無料で開始",
+        "priceValue": "0",
+        "feature1": "物語から歌詞へのワークフロー",
+        "feature2": "AI音声生成の入口",
+        "feature3": "共有可能な公開ページ"
+      },
+      "creator": {
+        "name": "Creator",
+        "description": "定期的な曲ドラフトとレポート向け。",
+        "price": "クレジット制",
+        "priceValue": "9",
+        "feature1": "歌詞と音声を生成",
+        "feature2": "プロデューサー風レポートを解放",
+        "feature3": "再生、共有、CTAクリックを確認"
+      },
+      "studio": {
+        "name": "Studio",
+        "description": "チームや多めの制作量向け。",
+        "price": "カスタム",
+        "priceValue": "99",
+        "feature1": "より多くの制作容量",
+        "feature2": "SEO対応の公開曲ページ",
+        "feature3": "キャンペーン運用に対応"
+      }
+    }
   },
   "errors": {
     "insufficientCredits": "クレジットが不足しています。チャージしてください。",

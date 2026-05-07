@@ -6,7 +6,69 @@
     "dashboard": "Dashboard",
     "signIn": "Sign in",
     "signUp": "Sign up",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "language": "Language",
+    "navigation": "Navigation",
+    "toggleMenu": "Toggle menu"
+  },
+  "footer": {
+    "tagline": "Turn personal stories into lyrics, audio, and producer-style reports.",
+    "product": "Product",
+    "features": "How it works",
+    "pricing": "Pricing",
+    "company": "Company",
+    "about": "About",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "home": {
+    "seo": {
+      "title": "Hit-Song - Turn Your Story Into an AI Song",
+      "description": "Create AI-generated lyrics, audio, and producer-style song reports from a personal story in minutes."
+    },
+    "eyebrow": "AI music creation from your story",
+    "hero": {
+      "title": "Hit-Song turns your story into lyrics, audio, and a shareable report",
+      "subtitle": "Describe a feeling, memory, or message. Hit-Song shapes it into structured lyrics, generates AI audio, scores the result, and gives you a public page to share.",
+      "primaryCta": "Create your song",
+      "secondaryCta": "See how it works"
+    },
+    "proof": {
+      "lyrics": "Personal lyrics",
+      "audio": "AI audio",
+      "report": "Producer report"
+    },
+    "demo": {
+      "label": "Example prompt",
+      "prompt": "A late-night train ride after a breakup, trying to feel brave again.",
+      "outputTitle": "Generated direction",
+      "output": "Verse, chorus, and emotional arc ready for audio generation."
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Three focused steps from raw story to a song you can share.",
+      "step": "Step {number}"
+    },
+    "steps": {
+      "story": {
+        "title": "Share your story",
+        "description": "Write the moment, mood, or message you want the song to carry."
+      },
+      "lyrics": {
+        "title": "Get structured lyrics",
+        "description": "AI turns the story into verses, chorus, and style direction."
+      },
+      "song": {
+        "title": "Generate and share",
+        "description": "Create audio, review the producer report, and publish a public song page."
+      }
+    },
+    "finalCta": {
+      "title": "Ready to make your story sing?",
+      "subtitle": "Start with one real detail. Hit-Song will help shape the rest.",
+      "button": "Start creating"
+    }
   },
   "create": {
     "title": "Turn Your Story Into a Hit Song",
@@ -26,6 +88,39 @@
     "pause": "Pause",
     "share": "Share",
     "viewReport": "View Report"
+  },
+  "songPublic": {
+    "seo": {
+      "title": "{title} - AI Generated {style} Song | Hit-Song",
+      "description": "Listen to \"{title}\", an AI-generated {style} song with a {mood} mood. {story} Create your own song with Hit-Song.",
+      "notFoundTitle": "Song not found | Hit-Song",
+      "ogImageAlt": "{title} share image"
+    },
+    "previewLyrics": "Preview lyrics",
+    "breadcrumbCreate": "Create",
+    "creatorReport": "Creator report",
+    "summary": {
+      "sectionLabel": "Song story",
+      "title": "Built from a real prompt",
+      "plays": "Plays",
+      "complete": "Full listens",
+      "shares": "Shares",
+      "published": "Published",
+      "aiScore": "AI score"
+    },
+    "related": {
+      "sectionLabel": "Related songs",
+      "title": "Keep listening",
+      "playCount": "plays",
+      "coverAlt": "{title} cover art",
+      "styleMoodSeparator": "-"
+    },
+    "cta": {
+      "title": "Turn your story into a song",
+      "description": "Start with a memory, mood, or message. Hit-Song turns it into lyrics, audio, and a public page built for sharing.",
+      "create": "Create your own song",
+      "copy": "Copy link"
+    }
   },
   "dashboard": {
     "title": "My Songs",
@@ -78,6 +173,45 @@
   "pricing": {
     "title": "Simple Pricing",
     "getStarted": "Get Started"
+  },
+  "pricingPage": {
+    "seo": {
+      "title": "Hit-Song Pricing - AI Song Creation Plans",
+      "description": "Choose a Hit-Song plan for creating AI lyrics, audio, producer reports, and shareable public song pages."
+    },
+    "eyebrow": "Pricing",
+    "title": "Simple plans for turning stories into songs",
+    "subtitle": "Start small, generate complete songs, and upgrade when you need more creation volume.",
+    "planCta": "Create a song",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "For trying a personal song idea.",
+        "price": "Free to start",
+        "priceValue": "0",
+        "feature1": "Story-to-lyrics workflow",
+        "feature2": "AI audio generation entry point",
+        "feature3": "Share-ready public page"
+      },
+      "creator": {
+        "name": "Creator",
+        "description": "For regular song drafts and reports.",
+        "price": "Credit based",
+        "priceValue": "9",
+        "feature1": "Generate lyrics and audio",
+        "feature2": "Unlock producer-style reports",
+        "feature3": "Track plays, shares, and CTA clicks"
+      },
+      "studio": {
+        "name": "Studio",
+        "description": "For teams and higher creation volume.",
+        "price": "Custom",
+        "priceValue": "99",
+        "feature1": "More creation capacity",
+        "feature2": "Public SEO song pages",
+        "feature3": "Built for campaign workflows"
+      }
+    }
   },
   "errors": {
     "insufficientCredits": "Not enough credits. Please top up.",

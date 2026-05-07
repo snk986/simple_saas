@@ -215,6 +215,7 @@ export async function getPublicSongsForSitemap() {
     .eq("is_public", true)
     .eq("status", "ready")
     .not("audio_url", "is", null)
+    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
     .order("updated_at", { ascending: false })
     .limit(5000);
 
