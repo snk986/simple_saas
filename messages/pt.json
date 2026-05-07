@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "features": "Recursos",
+    "pricing": "Precos",
+    "dashboard": "Painel",
+    "signIn": "Entrar",
+    "signUp": "Criar conta",
+    "signOut": "Sair"
+  },
+  "create": {
+    "title": "Transforme sua historia em um hit",
+    "subtitle": "Comece com um momento, uma confissao, uma memoria ou um sentimento. Vamos moldar isso em um rascunho de letra estruturado.",
+    "inputPlaceholder": "Conte sua historia... (ate 200 palavras)",
+    "inputHint": "Alguns detalhes vivos ajudam a musica a parecer pessoal.",
+    "generateLyrics": "Gerar letra",
+    "generating": "Escrevendo a letra...",
+    "generateMusic": "Gerar musica",
+    "regenerate": "Regenerar",
+    "regenerateLimit": "Limite maximo de 3 regeneracoes atingido",
+    "inputTooShort": "Conte um pouco mais da historia primeiro.",
+    "emptyState": "Sua letra aparecera aqui depois do primeiro rascunho."
+  },
+  "song": {
+    "play": "Tocar",
+    "pause": "Pausar",
+    "share": "Compartilhar",
+    "viewReport": "Ver relatorio"
+  },
+  "dashboard": {
+    "title": "Minhas musicas",
+    "noSongs": "Ainda nao ha musicas. Crie seu primeiro hit."
+  },
+  "achievements": {
+    "title": "Conquistas",
+    "progress": "{unlocked} de {total} desbloqueadas"
+  },
+  "report": {
+    "badge": "Relatorio do criador",
+    "subtitleReady": "Gerado em {date}. Use este relatorio para entender as melhores oportunidades emocionais e de producao da musica.",
+    "subtitleMissing": "Gere um relatorio no estilo de produtor quando sua musica estiver pronta. O relatorio custa 100 creditos, exceto quando a checagem de creditos estiver desativada neste ambiente.",
+    "coverAlt": "Capa de {title}",
+    "noCover": "Ainda sem capa",
+    "emptyTitle": "Ainda nao ha relatorio",
+    "emptyBody": "Gere o relatorio para desbloquear pontuacoes, notas de produtor, valor emocional, analise do hook e um resumo pronto para compartilhar.",
+    "totalScore": "Pontuacao total",
+    "shareSummary": "Resumo para compartilhar",
+    "dimensions": {
+      "melody_potential": "Potencial melodico",
+      "lyric_quality": "Qualidade da letra",
+      "emotional_resonance": "Ressonancia emocional",
+      "commercial_appeal": "Apelo comercial",
+      "originality": "Originalidade"
+    },
+    "producer": {
+      "title": "Comentario do produtor",
+      "strengths": "Pontos fortes",
+      "improvements": "Melhorias",
+      "nextSteps": "Proximos passos"
+    },
+    "sections": {
+      "emotionalValue": "Valor emocional",
+      "hookAnalysis": "Analise do hook",
+      "marketPositioning": "Posicionamento de mercado"
+    },
+    "actions": {
+      "generate": "Gerar relatorio",
+      "generating": "Gerando relatorio",
+      "generated": "Relatorio gerado",
+      "generateFailed": "Falha ao gerar relatorio",
+      "publicPage": "Pagina publica",
+      "copyPublicLink": "Copiar link publico",
+      "copied": "Link publico copiado",
+      "downloadShareCard": "Baixar cartao",
+      "shareSong": "Compartilhar musica"
+    }
+  },
+  "pricing": {
+    "title": "Precos simples",
+    "getStarted": "Comecar"
+  },
+  "errors": {
+    "insufficientCredits": "Creditos insuficientes. Recarregue seu saldo.",
+    "generationFailed": "A geracao falhou. Tente novamente.",
+    "contentFlagged": "Esta historia nao pode ser escrita. Tente outra."
+  }
+}

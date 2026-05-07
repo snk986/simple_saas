@@ -1,17 +1,32 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { defaultLocale, isLocale } from "@/i18n/routing";
 
-export const updateSession = async (request: NextRequest) => {
-  // This `try/catch` block is only here for the interactive tutorial.
-  // Feel free to remove once you have Supabase connected.
+const getDashboardRedirectPath = (pathname: string) => {
+  const [, maybeLocale, segment] = pathname.split("/");
+
+  if (maybeLocale === "dashboard") {
+    return "/sign-in";
+  }
+
+  if (isLocale(maybeLocale) && segment === "dashboard") {
+    return maybeLocale === defaultLocale
+      ? "/sign-in"
+      : `/${maybeLocale}/sign-in`;
+  }
+
+  return null;
+};
+
+export const updateSession = async (
+  request: NextRequest,
+  response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
+) => {
   try {
-    // Create an unmodified response
-    let response = NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
-
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -24,9 +39,6 @@ export const updateSession = async (request: NextRequest) => {
             cookiesToSet.forEach(({ name, value }) =>
               request.cookies.set(name, value)
             );
-            response = NextResponse.next({
-              request,
-            });
             cookiesToSet.forEach(({ name, value, options }) =>
               response.cookies.set(name, value, options)
             );
@@ -35,28 +47,23 @@ export const updateSession = async (request: NextRequest) => {
       }
     );
 
-    // This will refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
 
-    // Only protect dashboard routes
-    if (request.nextUrl.pathname.startsWith("/dashboard") && user.error) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+    const signInPath = getDashboardRedirectPath(request.nextUrl.pathname);
+    if (signInPath && user.error) {
+      const redirectUrl = new URL(signInPath, request.url);
+      redirectUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+
+      const redirectResponse = NextResponse.redirect(redirectUrl);
+      response.headers.getSetCookie().forEach((cookie) => {
+        redirectResponse.headers.append("set-cookie", cookie);
+      });
+
+      return redirectResponse;
     }
-    // Redirect to dashboard all the time if user is logged in
-    // if (request.nextUrl.pathname === "/" && !user.error) {
-    //   return NextResponse.redirect(new URL("/dashboard", request.url));
-    // }
 
     return response;
-  } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
-    return NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
+  } catch {
+    return response;
   }
 };

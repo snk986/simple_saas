@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "features": "Funciones",
+    "pricing": "Precios",
+    "dashboard": "Panel",
+    "signIn": "Iniciar sesion",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesion"
+  },
+  "create": {
+    "title": "Convierte tu historia en una cancion exitosa",
+    "subtitle": "Empieza con un momento, una confesion, un recuerdo o una emocion. Lo transformaremos en un borrador de letra estructurado.",
+    "inputPlaceholder": "Cuenta tu historia... (hasta 200 palabras)",
+    "inputHint": "Unos detalles vivos ayudan a que la cancion se sienta personal.",
+    "generateLyrics": "Generar letra",
+    "generating": "Escribiendo la letra...",
+    "generateMusic": "Generar musica",
+    "regenerate": "Regenerar",
+    "regenerateLimit": "Llegaste al maximo de 3 regeneraciones",
+    "inputTooShort": "Cuenta un poco mas de la historia primero.",
+    "emptyState": "Tu letra aparecera aqui despues del primer borrador."
+  },
+  "song": {
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "share": "Compartir",
+    "viewReport": "Ver informe"
+  },
+  "dashboard": {
+    "title": "Mis canciones",
+    "noSongs": "Aun no hay canciones. Crea tu primer hit."
+  },
+  "achievements": {
+    "title": "Logros",
+    "progress": "{unlocked} de {total} desbloqueados"
+  },
+  "report": {
+    "badge": "Informe del creador",
+    "subtitleReady": "Generado el {date}. Usa este informe para entender las mejores oportunidades emocionales y de produccion de la cancion.",
+    "subtitleMissing": "Genera un informe estilo productor cuando tu cancion este lista. El informe cuesta 100 creditos salvo que la comprobacion de creditos este omitida en este entorno.",
+    "coverAlt": "Portada de {title}",
+    "noCover": "Sin portada aun",
+    "emptyTitle": "Aun no hay informe",
+    "emptyBody": "Genera el informe para desbloquear puntuaciones, notas de productor, valor emocional, analisis del hook y un resumen listo para compartir.",
+    "totalScore": "Puntuacion total",
+    "shareSummary": "Resumen para compartir",
+    "dimensions": {
+      "melody_potential": "Potencial melodico",
+      "lyric_quality": "Calidad de la letra",
+      "emotional_resonance": "Resonancia emocional",
+      "commercial_appeal": "Atractivo comercial",
+      "originality": "Originalidad"
+    },
+    "producer": {
+      "title": "Comentario del productor",
+      "strengths": "Fortalezas",
+      "improvements": "Mejoras",
+      "nextSteps": "Proximos pasos"
+    },
+    "sections": {
+      "emotionalValue": "Valor emocional",
+      "hookAnalysis": "Analisis del hook",
+      "marketPositioning": "Posicionamiento de mercado"
+    },
+    "actions": {
+      "generate": "Generar informe",
+      "generating": "Generando informe",
+      "generated": "Informe generado",
+      "generateFailed": "No se pudo generar el informe",
+      "publicPage": "Pagina publica",
+      "copyPublicLink": "Copiar enlace publico",
+      "copied": "Enlace publico copiado",
+      "downloadShareCard": "Descargar tarjeta",
+      "shareSong": "Compartir cancion"
+    }
+  },
+  "pricing": {
+    "title": "Precios simples",
+    "getStarted": "Empezar"
+  },
+  "errors": {
+    "insufficientCredits": "No tienes creditos suficientes. Recarga tu saldo.",
+    "generationFailed": "La generacion fallo. Intentalo de nuevo.",
+    "contentFlagged": "Esta historia no se puede escribir. Prueba con otra."
+  }
+}

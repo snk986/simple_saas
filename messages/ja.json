@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "features": "機能",
+    "pricing": "料金",
+    "dashboard": "ダッシュボード",
+    "signIn": "ログイン",
+    "signUp": "登録",
+    "signOut": "ログアウト"
+  },
+  "create": {
+    "title": "あなたの物語をヒット曲へ",
+    "subtitle": "出来事、告白、思い出、感情から始めましょう。構成された歌詞ドラフトへ整えます。",
+    "inputPlaceholder": "物語を書いてください... (200語まで)",
+    "inputHint": "具体的なディテールがあるほど、自分らしい曲になります。",
+    "generateLyrics": "歌詞を生成",
+    "generating": "歌詞を書いています...",
+    "generateMusic": "音楽を生成",
+    "regenerate": "再生成",
+    "regenerateLimit": "再生成は最大3回までです",
+    "inputTooShort": "まずはもう少し物語を聞かせてください。",
+    "emptyState": "最初のドラフト生成後、ここに歌詞が表示されます。"
+  },
+  "song": {
+    "play": "再生",
+    "pause": "一時停止",
+    "share": "共有",
+    "viewReport": "レポートを見る"
+  },
+  "dashboard": {
+    "title": "マイソング",
+    "noSongs": "まだ曲がありません。最初のヒット曲を作りましょう。"
+  },
+  "achievements": {
+    "title": "実績",
+    "progress": "{total}個中{unlocked}個を解除"
+  },
+  "report": {
+    "badge": "クリエイターレポート",
+    "subtitleReady": "{date} に生成されました。このレポートで、曲の感情面とプロダクション面の強みを把握できます。",
+    "subtitleMissing": "曲の準備ができたら、プロデューサー視点のレポートを生成できます。この環境でクレジット確認がスキップされていない場合、レポートには100クレジットが必要です。",
+    "coverAlt": "{title} のカバーアート",
+    "noCover": "カバーはまだありません",
+    "emptyTitle": "レポートはまだありません",
+    "emptyBody": "レポートを生成すると、スコア、プロデューサーノート、感情価値、フック分析、共有用サマリーが表示されます。",
+    "totalScore": "総合スコア",
+    "shareSummary": "共有用サマリー",
+    "dimensions": {
+      "melody_potential": "メロディの可能性",
+      "lyric_quality": "歌詞の品質",
+      "emotional_resonance": "感情的な響き",
+      "commercial_appeal": "商業的魅力",
+      "originality": "独創性"
+    },
+    "producer": {
+      "title": "プロデューサーコメント",
+      "strengths": "強み",
+      "improvements": "改善点",
+      "nextSteps": "次のステップ"
+    },
+    "sections": {
+      "emotionalValue": "感情価値",
+      "hookAnalysis": "フック分析",
+      "marketPositioning": "市場ポジショニング"
+    },
+    "actions": {
+      "generate": "レポートを生成",
+      "generating": "レポート生成中",
+      "generated": "レポートを生成しました",
+      "generateFailed": "レポート生成に失敗しました",
+      "publicPage": "公開ページ",
+      "copyPublicLink": "公開リンクをコピー",
+      "copied": "公開リンクをコピーしました",
+      "downloadShareCard": "共有カードをダウンロード",
+      "shareSong": "曲を共有"
+    }
+  },
+  "pricing": {
+    "title": "シンプルな料金",
+    "getStarted": "はじめる"
+  },
+  "errors": {
+    "insufficientCredits": "クレジットが不足しています。チャージしてください。",
+    "generationFailed": "生成に失敗しました。もう一度お試しください。",
+    "contentFlagged": "この物語は書けません。別の内容を試してください。"
+  }
+}
