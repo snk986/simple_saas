@@ -213,6 +213,43 @@
       }
     }
   },
+  "email": {
+    "recall": {
+      "fallbackSongTitle": "tu canción",
+      "draft_no_audio": {
+        "subject": "Tu letra está lista para convertirse en música",
+        "preheader": "Convierte {songTitle} en audio cuando quieras.",
+        "title": "Dale sonido a {songTitle}",
+        "body": "Tu borrador de letra sigue esperando en Hit-Song. Vuelve para generar el audio y escuchar hacia dónde puede ir la historia.",
+        "cta": "Generar audio",
+        "footer": "Recibes este correo porque empezaste una canción en Hit-Song. Puedes ignorarlo si ya la terminaste."
+      },
+      "ready_no_report": {
+        "subject": "Tu canción está lista para su informe de productor",
+        "preheader": "Descubre fortalezas y próximos pasos para {songTitle}.",
+        "title": "Mira qué funciona en {songTitle}",
+        "body": "El audio ya está listo. Genera el informe estilo productor para revisar puntuaciones, notas del gancho y texto listo para compartir.",
+        "cta": "Ver informe",
+        "footer": "Recibes este correo porque creaste una canción en Hit-Song."
+      },
+      "report_no_share": {
+        "subject": "El informe de tu canción está listo para compartir",
+        "preheader": "Devuelve {songTitle} al centro de atención.",
+        "title": "Comparte {songTitle} con alguien",
+        "body": "Tu informe está listo, pero la canción aún no se compartió. Abre la página pública y deja que alguien escuche la pista.",
+        "cta": "Abrir canción",
+        "footer": "Recibes este correo porque creaste una canción en Hit-Song."
+      },
+      "inactive_creator": {
+        "subject": "¿Tienes otra historia para convertir en canción?",
+        "preheader": "Empieza un nuevo Hit-Song desde un recuerdo o estado de ánimo.",
+        "title": "Tu próxima canción puede empezar con un detalle",
+        "body": "Ha pasado un tiempo desde tu última canción terminada. Vuelve con una emoción, recuerdo o mensaje nuevo y conviértelo en algo que se pueda escuchar.",
+        "cta": "Crear una canción",
+        "footer": "Recibes este correo porque has creado música en Hit-Song."
+      }
+    }
+  },
   "errors": {
     "insufficientCredits": "No tienes creditos suficientes. Recarga tu saldo.",
     "generationFailed": "La generacion fallo. Intentalo de nuevo.",

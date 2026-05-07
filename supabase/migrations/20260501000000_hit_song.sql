@@ -46,7 +46,10 @@ create table public.achievements (
 create table public.email_log (
   id         uuid primary key default gen_random_uuid(),
   user_id    uuid references auth.users(id) on delete cascade not null,
+  song_id    uuid references public.songs(id) on delete set null,
   email_type text not null,
+  status     text not null default 'sent',
+  metadata   jsonb not null default '{}',
   sent_at    timestamptz default now()
 );
 
@@ -58,6 +61,7 @@ create index songs_created_at_idx on public.songs(created_at desc);
 create index achievements_user_id_idx on public.achievements(user_id);
 create index email_log_user_id_idx on public.email_log(user_id);
 create index email_log_sent_at_idx on public.email_log(sent_at);
+create index email_log_user_type_sent_at_idx on public.email_log(user_id, email_type, sent_at desc);
 
 -- Increment song counter RPC
 create or replace function public.increment_song_counter(

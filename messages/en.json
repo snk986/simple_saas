@@ -213,6 +213,43 @@
       }
     }
   },
+  "email": {
+    "recall": {
+      "fallbackSongTitle": "your song",
+      "draft_no_audio": {
+        "subject": "Your lyrics are ready for music",
+        "preheader": "Turn {songTitle} into audio when you are ready.",
+        "title": "Give {songTitle} its sound",
+        "body": "Your lyric draft is waiting in Hit-Song. Come back to generate audio and hear where the story can go next.",
+        "cta": "Generate audio",
+        "footer": "You are receiving this because you started a song on Hit-Song. You can ignore this email if you already finished it."
+      },
+      "ready_no_report": {
+        "subject": "Your song is ready for its producer report",
+        "preheader": "Unlock the strengths and next steps for {songTitle}.",
+        "title": "See what works in {songTitle}",
+        "body": "The audio is ready. Generate the producer-style report to review score dimensions, hook notes, and share-ready summary copy.",
+        "cta": "View report",
+        "footer": "You are receiving this because you created a song on Hit-Song."
+      },
+      "report_no_share": {
+        "subject": "Your song report is ready to share",
+        "preheader": "Bring {songTitle} back into the spotlight.",
+        "title": "Share {songTitle} with someone",
+        "body": "Your report is ready, but the song has not been shared yet. Open the public page and let someone hear the track.",
+        "cta": "Open song page",
+        "footer": "You are receiving this because you created a song on Hit-Song."
+      },
+      "inactive_creator": {
+        "subject": "Have another story to turn into a song?",
+        "preheader": "Start a new Hit-Song from a fresh memory or mood.",
+        "title": "Your next song can start with one detail",
+        "body": "It has been a little while since your last finished song. Come back with a new feeling, memory, or message and shape it into something playable.",
+        "cta": "Create a new song",
+        "footer": "You are receiving this because you have created music on Hit-Song."
+      }
+    }
+  },
   "errors": {
     "insufficientCredits": "Not enough credits. Please top up.",
     "generationFailed": "Generation failed. Please try again.",

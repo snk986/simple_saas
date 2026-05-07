@@ -213,6 +213,43 @@
       }
     }
   },
+  "email": {
+    "recall": {
+      "fallbackSongTitle": "sua música",
+      "draft_no_audio": {
+        "subject": "Sua letra está pronta para virar música",
+        "preheader": "Transforme {songTitle} em áudio quando quiser.",
+        "title": "Dê som a {songTitle}",
+        "body": "Seu rascunho de letra está esperando no Hit-Song. Volte para gerar o áudio e ouvir para onde a história pode ir.",
+        "cta": "Gerar áudio",
+        "footer": "Você recebeu este email porque começou uma música no Hit-Song. Ignore se já terminou."
+      },
+      "ready_no_report": {
+        "subject": "Sua música está pronta para o relatório de produtor",
+        "preheader": "Veja pontos fortes e próximos passos para {songTitle}.",
+        "title": "Veja o que funciona em {songTitle}",
+        "body": "O áudio está pronto. Gere o relatório estilo produtor para revisar pontuações, notas de gancho e texto pronto para compartilhar.",
+        "cta": "Ver relatório",
+        "footer": "Você recebeu este email porque criou uma música no Hit-Song."
+      },
+      "report_no_share": {
+        "subject": "O relatório da sua música está pronto para compartilhar",
+        "preheader": "Coloque {songTitle} em destaque de novo.",
+        "title": "Compartilhe {songTitle} com alguém",
+        "body": "Seu relatório está pronto, mas a música ainda não foi compartilhada. Abra a página pública e deixe alguém ouvir a faixa.",
+        "cta": "Abrir página da música",
+        "footer": "Você recebeu este email porque criou uma música no Hit-Song."
+      },
+      "inactive_creator": {
+        "subject": "Tem outra história para virar música?",
+        "preheader": "Comece um novo Hit-Song a partir de uma memória ou clima.",
+        "title": "Sua próxima música pode começar com um detalhe",
+        "body": "Faz algum tempo desde sua última música finalizada. Volte com um sentimento, memória ou mensagem nova e transforme isso em algo para ouvir.",
+        "cta": "Criar nova música",
+        "footer": "Você recebeu este email porque criou música no Hit-Song."
+      }
+    }
+  },
   "errors": {
     "insufficientCredits": "Creditos insuficientes. Recarregue seu saldo.",
     "generationFailed": "A geracao falhou. Tente novamente.",
