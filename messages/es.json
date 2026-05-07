@@ -82,6 +82,8 @@
     "regenerateLimit": "Llegaste al maximo de 3 regeneraciones",
     "inputTooShort": "Cuenta un poco mas de la historia primero.",
     "emptyState": "Tu letra aparecera aqui despues del primer borrador.",
+    "paymentSuccessTitle": "Pago confirmado",
+    "paymentSuccessDescription": "Tus creditos o plan se estan sincronizando. Si el saldo aun no se actualizo, refresca en un momento.",
     "recall": {
       "draftNoAudio": "Cargamos tu letra guardada. Revisala y genera el audio cuando quieras.",
       "inactiveCreator": "Bienvenido de nuevo. Empieza con un detalle nuevo y convierte la siguiente historia en cancion."

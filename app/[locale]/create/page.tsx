@@ -1,6 +1,7 @@
 import { StoryInput } from "@/components/create/story-input";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { createClient } from "@/utils/supabase/server";
+import { getTranslations } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
 
 interface CreatePageProps {
@@ -9,6 +10,7 @@ interface CreatePageProps {
     id?: string;
     ref?: string;
     utm_campaign?: string;
+    upgraded?: string;
   }>;
 }
 
@@ -35,6 +37,7 @@ function buildRedirectPath(
 export default async function CreatePage({ params, searchParams }: CreatePageProps) {
   const { locale } = await params;
   const query = await searchParams;
+  const t = await getTranslations("create");
 
   if (!locales.includes(locale)) {
     notFound();
@@ -83,6 +86,12 @@ export default async function CreatePage({ params, searchParams }: CreatePagePro
 
   return (
     <div className="container px-4 py-8 md:px-6 md:py-12">
+      {query.upgraded === "true" && (
+        <div className="mx-auto mb-6 max-w-3xl rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+          <p className="font-medium">{t("paymentSuccessTitle")}</p>
+          <p className="mt-1 text-emerald-800">{t("paymentSuccessDescription")}</p>
+        </div>
+      )}
       <StoryInput
         initialDraft={initialDraft}
         recallCampaign={query.utm_campaign ?? null}

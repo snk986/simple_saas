@@ -82,6 +82,8 @@
     "regenerateLimit": "최대 3회 다시 생성할 수 있습니다",
     "inputTooShort": "먼저 이야기를 조금 더 들려주세요.",
     "emptyState": "첫 초안이 생성되면 여기에 가사가 표시됩니다.",
+    "paymentSuccessTitle": "결제가 확인되었습니다",
+    "paymentSuccessDescription": "크레딧 또는 플랜을 동기화하고 있습니다. 잔액이 아직 업데이트되지 않았다면 잠시 후 새로고침하세요.",
     "recall": {
       "draftNoAudio": "저장된 가사를 불러왔습니다. 검토한 뒤 준비되면 오디오를 생성하세요.",
       "inactiveCreator": "다시 오신 것을 환영합니다. 새로운 디테일로 다음 이야기를 노래로 만들어보세요."

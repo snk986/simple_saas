@@ -82,6 +82,8 @@
     "regenerateLimit": "再生成は最大3回までです",
     "inputTooShort": "まずはもう少し物語を聞かせてください。",
     "emptyState": "最初のドラフト生成後、ここに歌詞が表示されます。",
+    "paymentSuccessTitle": "支払いを確認しました",
+    "paymentSuccessDescription": "クレジットまたはプランを同期しています。残高がまだ更新されない場合は、少し待ってから更新してください。",
     "recall": {
       "draftNoAudio": "保存済みの歌詞を読み込みました。確認して、準備ができたら音源を生成しましょう。",
       "inactiveCreator": "おかえりなさい。新しいディテールから、次の物語を曲にしましょう。"

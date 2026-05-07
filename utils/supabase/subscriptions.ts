@@ -1,13 +1,17 @@
 import { createServiceRoleClient } from "./service-role";
 import { CreemCustomer, CreemSubscription } from "@/types/creem";
+import { getTierById, SUBSCRIPTION_TIERS } from "@/config/subscriptions";
+import type { PlanTier, ProductTier } from "@/types/subscriptions";
 
 export async function createOrUpdateCustomer(
-  creemCustomer: CreemCustomer,
+  creemCustomer: CreemCustomer | string,
   userId?: string
 ) {
   const supabase = createServiceRoleClient();
 
   let existingCustomer = null;
+  const creemCustomerId =
+    typeof creemCustomer === "string" ? creemCustomer : creemCustomer.id;
 
   // 1. Try finding by user_id if provided
   // This handles the transition from 'auto_' ID to 'cust_' ID
@@ -31,7 +35,7 @@ export async function createOrUpdateCustomer(
     const { data, error } = await supabase
       .from("customers")
       .select()
-      .eq("creem_customer_id", creemCustomer.id)
+      .eq("creem_customer_id", creemCustomerId)
       .single();
 
     if (!error) {
@@ -42,7 +46,10 @@ export async function createOrUpdateCustomer(
   }
 
   if (existingCustomer) {
-    // If found, update the record
+    if (typeof creemCustomer === "string") {
+      return existingCustomer.id;
+    }
+
     const { error } = await supabase
       .from("customers")
       .update({
@@ -63,7 +70,10 @@ export async function createOrUpdateCustomer(
     throw new Error("Cannot create customer: user_id is missing from webhook metadata");
   }
 
-  // Insert new customer
+  if (typeof creemCustomer === "string") {
+    throw new Error("Cannot create customer: Creem customer payload is incomplete");
+  }
+
   const { data: newCustomer, error } = await supabase
     .from("customers")
     .insert({
@@ -104,10 +114,16 @@ export async function createOrUpdateSubscription(
         ? creemSubscription?.product
         : creemSubscription?.product?.id,
     status: creemSubscription?.status,
-    current_period_start: creemSubscription?.current_period_start_date,
-    current_period_end: creemSubscription?.current_period_end_date,
+    current_period_start:
+      creemSubscription?.current_period_start_date ??
+      creemSubscription?.created_at ??
+      new Date().toISOString(),
+    current_period_end:
+      creemSubscription?.current_period_end_date ??
+      creemSubscription?.created_at ??
+      new Date().toISOString(),
     canceled_at: creemSubscription?.canceled_at,
-    metadata: creemSubscription?.metadata,
+    metadata: creemSubscription?.metadata ?? {},
     updated_at: new Date().toISOString(),
   };
 
@@ -118,6 +134,7 @@ export async function createOrUpdateSubscription(
       .eq("id", existingSubscription.id);
 
     if (error) throw error;
+    await syncCustomerPlanFromSubscription(customerId, creemSubscription);
     return existingSubscription.id;
   }
 
@@ -131,7 +148,69 @@ export async function createOrUpdateSubscription(
     .single();
 
   if (error) throw error;
+  await syncCustomerPlanFromSubscription(customerId, creemSubscription);
   return newSubscription.id;
+}
+
+export function getTierFromMetadata(metadata?: Record<string, any> | null) {
+  const tierId = typeof metadata?.tier_id === "string" ? metadata.tier_id : "";
+  return getTierById(tierId);
+}
+
+export function getTierFromProductId(productId?: string | null) {
+  if (!productId) return undefined;
+  return SUBSCRIPTION_TIERS.find((tier) => tier.productId === productId);
+}
+
+export function subscriptionCreditGrantKey(subscription: CreemSubscription) {
+  return [
+    "subscription",
+    subscription.id,
+    subscription.current_period_start_date ?? "unknown-start",
+    subscription.current_period_end_date ?? "unknown-end",
+  ].join(":");
+}
+
+export function checkoutCreditGrantKey(checkoutId: string, orderId?: string) {
+  return orderId || `checkout:${checkoutId}`;
+}
+
+export function getTierCreditAmount(tier: ProductTier | undefined, fallback?: unknown) {
+  if (tier?.creditAmount) {
+    return tier.creditAmount;
+  }
+
+  const parsed = Number(fallback);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+async function syncCustomerPlanFromSubscription(
+  customerId: string,
+  subscription: CreemSubscription
+) {
+  const supabase = createServiceRoleClient();
+  const productId =
+    typeof subscription.product === "string"
+      ? subscription.product
+      : subscription.product?.id;
+  const tier = getTierFromMetadata(subscription.metadata) ?? getTierFromProductId(productId);
+  const periodEnd = subscription.current_period_end_date
+    ? new Date(subscription.current_period_end_date)
+    : null;
+  const retainsCurrentPeriod =
+    subscription.status === "canceled" && periodEnd && periodEnd.getTime() > Date.now();
+  const activeLike =
+    subscription.status === "active" ||
+    subscription.status === "trialing" ||
+    retainsCurrentPeriod;
+  const plan: PlanTier = activeLike ? tier?.plan ?? "free" : "free";
+
+  const { error } = await supabase
+    .from("customers")
+    .update({ plan, updated_at: new Date().toISOString() })
+    .eq("id", customerId);
+
+  if (error) throw error;
 }
 
 export async function getUserSubscription(userId: string) {
@@ -160,42 +239,25 @@ export async function addCreditsToCustomer(
   customerId: string,
   credits_balance: number,
   creemOrderId?: string,
-  description?: string
+  description?: string,
+  metadata?: Record<string, unknown>
 ) {
   const supabase = createServiceRoleClient();
-  // Start a transaction
-  const { data: client } = await supabase
-    .from("customers")
-    .select("credits_balance")
-    .eq("id", customerId)
-    .single();
-  if (!client) throw new Error("Customer not found");
-  console.log("🚀 ~ 1client:", client);
-  console.log("🚀 ~ 1credits:", credits_balance);
-  const newCredits = (client.credits_balance || 0) + credits_balance;
+  if (!creemOrderId) {
+    throw new Error("creemOrderId is required for idempotent credit grants");
+  }
 
-  // Update customer credits_balance
-  const { error: updateError } = await supabase
-    .from("customers")
-    .update({ credits_balance: newCredits, updated_at: new Date().toISOString() })
-    .eq("id", customerId);
+  const { data, error } = await supabase.rpc("grant_credits_once", {
+    p_customer_id: customerId,
+    p_amount: credits_balance,
+    p_creem_order_id: creemOrderId,
+    p_description: description || "Credits purchase",
+    p_metadata: metadata ?? {},
+  });
 
-  if (updateError) throw updateError;
+  if (error) throw error;
 
-  // Record the transaction in credits_history
-  const { error: historyError } = await supabase
-    .from("credits_history")
-    .insert({
-      customer_id: customerId,
-      amount: credits_balance,
-      type: "add",
-      description: description || "Credits purchase",
-      creem_order_id: creemOrderId,
-    });
-
-  if (historyError) throw historyError;
-
-  return newCredits;
+  return Number((data as { balance?: number } | null)?.balance ?? 0);
 }
 
 export async function useCredits(

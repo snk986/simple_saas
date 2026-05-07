@@ -2,7 +2,23 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { creem } from '@/lib/creem';
 import { getTierById } from '@/config/subscriptions';
-import { isLocale } from '@/i18n/routing';
+import { defaultLocale, isLocale, type Locale } from '@/i18n/routing';
+import crypto from "crypto";
+
+function inferLocaleFromRequest(request: Request): Locale {
+  const referer = request.headers.get("referer");
+
+  if (!referer) {
+    return defaultLocale;
+  }
+
+  try {
+    const [, maybeLocale] = new URL(referer).pathname.split("/");
+    return maybeLocale && isLocale(maybeLocale) ? maybeLocale : defaultLocale;
+  } catch {
+    return defaultLocale;
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -14,9 +30,18 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json().catch(() => ({}));
+    const allowedKeys = ["tierId"];
+
+    if (
+      !body ||
+      typeof body !== "object" ||
+      Object.keys(body).some((key) => !allowedKeys.includes(key))
+    ) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
     const tierId = typeof body?.tierId === "string" ? body.tierId : "";
-    const locale =
-      typeof body?.locale === "string" && isLocale(body.locale) ? body.locale : "en";
+    const locale = inferLocaleFromRequest(request);
     const tier = getTierById(tierId);
 
     if (!tier) {
@@ -49,6 +74,7 @@ export async function POST(request: Request) {
         credit_amount: tier.creditAmount,
         product_type: tier.billingPeriod === "one_time" ? "credits" : "subscription",
         locale,
+        idempotency_key: crypto.randomUUID(),
       }
     });
 

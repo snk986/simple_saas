@@ -40,7 +40,7 @@ export function PricingBuyButton({
         : await fetch("/api/creem/create-checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tierId, locale }),
+            body: JSON.stringify({ tierId }),
           });
 
       if (!response.ok) {

@@ -82,6 +82,8 @@
     "regenerateLimit": "Limite maximo de 3 regeneracoes atingido",
     "inputTooShort": "Conte um pouco mais da historia primeiro.",
     "emptyState": "Sua letra aparecera aqui depois do primeiro rascunho.",
+    "paymentSuccessTitle": "Pagamento confirmado",
+    "paymentSuccessDescription": "Seus creditos ou plano estao sendo sincronizados. Se o saldo ainda nao atualizou, atualize em instantes.",
     "recall": {
       "draftNoAudio": "Carregamos sua letra salva. Revise e gere o audio quando quiser.",
       "inactiveCreator": "Bem-vindo de volta. Comece com um novo detalhe e transforme a proxima historia em musica."

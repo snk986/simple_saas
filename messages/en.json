@@ -82,6 +82,8 @@
     "regenerateLimit": "Max 3 regenerations reached",
     "inputTooShort": "Tell a little more of the story first.",
     "emptyState": "Your lyrics will appear here after the first draft.",
+    "paymentSuccessTitle": "Payment confirmed",
+    "paymentSuccessDescription": "Your credits or plan are being synced. If the balance has not updated yet, refresh in a moment.",
     "recall": {
       "draftNoAudio": "Your saved lyrics are loaded. Review them, then generate the audio when you are ready.",
       "inactiveCreator": "Welcome back. Start with a fresh detail and turn the next story into a song."

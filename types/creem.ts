@@ -48,7 +48,15 @@ export interface CreemSubscription {
   product: string | CreemProduct;
   customer: string | CreemCustomer;
   collection_method: "charge_automatically";
-  status: "active" | "canceled" | "expired";
+  status:
+    | "incomplete"
+    | "expired"
+    | "active"
+    | "past_due"
+    | "canceled"
+    | "unpaid"
+    | "paused"
+    | "trialing";
   canceled_at: string | null;
   current_period_start_date?: string;
   current_period_end_date?: string;
@@ -73,6 +81,12 @@ export interface CreemOrder {
     user_id: string; // User ID of the customer
     product_type: "subscription" | "credits"; // Type of the product
     credits?: number; // Number of credits this order provides
+    credit_amount?: number;
+    tier_id?: string;
+    plan?: string;
+    billing_period?: string;
+    locale?: string;
+    idempotency_key?: string;
   };
 }
 
