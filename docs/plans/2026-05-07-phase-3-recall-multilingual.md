@@ -358,3 +358,12 @@ pnpm build
 预期：构建成功完成。
 
 当前任务构建通过，并且上面列出的手动检查通过后，再进入下一个任务。
+ 
+---
+
+## Task 13 执行记录
+
+- 日期：2026-05-07
+- 发布门禁清单：`docs/checklists/phase-3-release.md`
+- 自动化结果：`pnpm build` 通过。
+- 剩余项：浏览器登录态检查、真实 Supabase 召回 dry-run、Resend 投递验证需要环境数据和凭证。
