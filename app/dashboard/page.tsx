@@ -2,7 +2,12 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubscriptionStatusCard } from "@/components/dashboard/subscription-status-card";
 import { CreditsBalanceCard } from "@/components/dashboard/credits-balance-card";
+import {
+  Achievements,
+  type UserAchievement,
+} from "@/components/dashboard/achievements";
 import { SongList, type DashboardSong } from "@/components/dashboard/song-list";
+import { achievements } from "@/config/achievements";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -49,6 +54,11 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(20);
+  const { data: achievementsData } = await supabase
+    .from("achievements")
+    .select("achievement,unlocked_at")
+    .eq("user_id", user.id)
+    .order("unlocked_at", { ascending: false });
 
   const songs: DashboardSong[] = (songsData ?? []).map((song) => ({
     id: song.id,
@@ -64,6 +74,7 @@ export default async function DashboardPage() {
     reportHref: `/report/${song.id}`,
     createdAt: song.created_at,
   }));
+  const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
 
   return (
     <div className="flex-1 w-full flex flex-col gap-6 sm:gap-8 px-4 sm:px-8 container">
@@ -91,6 +102,10 @@ export default async function DashboardPage() {
       </div>
 
       <SongList songs={songs} />
+      <Achievements
+        definitions={achievements}
+        unlocked={unlockedAchievements}
+      />
     </div>
   );
 }

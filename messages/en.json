@@ -31,6 +31,10 @@
     "title": "My Songs",
     "noSongs": "No songs yet. Create your first hit!"
   },
+  "achievements": {
+    "title": "Achievements",
+    "progress": "{unlocked} of {total} unlocked"
+  },
   "report": {
     "badge": "Creator Report",
     "subtitleReady": "Generated on {date}. Use this report to understand the song's strongest emotional and production opportunities.",

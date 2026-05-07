@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { generateJudgeReport } from "@/lib/ai/claude";
 import { createClient } from "@/utils/supabase/server";
 import type { JudgeReport } from "@/types/judge";
@@ -137,6 +138,10 @@ export async function POST(request: NextRequest) {
     }
 
     charged = false;
+
+    await checkAchievements(user.id).catch((achievementError) => {
+      console.error("Achievement check error:", achievementError);
+    });
 
     return NextResponse.json({
       songId: updatedSong.id,

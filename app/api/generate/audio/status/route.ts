@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { audioProvider } from "@/lib/audio";
-import { uploadPollinationsCover, uploadRemoteMedia } from "@/lib/audio/storage";
+import {
+  uploadPollinationsCover,
+  uploadRemoteMedia,
+} from "@/lib/audio/storage";
+import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { createClient } from "@/utils/supabase/server";
 
 const AUDIO_CREDIT_COST = 100;
@@ -147,6 +151,10 @@ export async function GET(request: NextRequest) {
     if (updateError) {
       throw updateError;
     }
+
+    await checkAchievements(user.id).catch((achievementError) => {
+      console.error("Achievement check error:", achievementError);
+    });
 
     return NextResponse.json({
       status: "completed",

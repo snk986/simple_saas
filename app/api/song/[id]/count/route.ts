@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 const requestSchema = z.object({
@@ -28,7 +29,7 @@ export async function POST(
     const supabase = createServiceRoleClient();
     const { data: song, error: fetchError } = await supabase
       .from("songs")
-      .select("id")
+      .select("id,user_id")
       .eq("id", id)
       .eq("is_public", true)
       .eq("status", "ready")
@@ -46,6 +47,10 @@ export async function POST(
     if (error) {
       throw error;
     }
+
+    await checkAchievements(song.user_id).catch((achievementError) => {
+      console.error("Achievement check error:", achievementError);
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {
