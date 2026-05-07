@@ -16,6 +16,7 @@ export interface DashboardSong {
   shareCount: number;
   ctaClickCount: number;
   publicHref: string;
+  reportHref: string;
   createdAt: string;
 }
 
@@ -74,9 +75,12 @@ export function SongList({ songs }: SongListProps) {
                     </Badge>
                     <Badge variant="outline">{song.status}</Badge>
                   </div>
-                  <h3 className="truncate text-base font-semibold">{song.title}</h3>
+                  <h3 className="truncate text-base font-semibold">
+                    {song.title}
+                  </h3>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Created {new Intl.DateTimeFormat("en", {
+                    Created{" "}
+                    {new Intl.DateTimeFormat("en", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
@@ -94,8 +98,12 @@ export function SongList({ songs }: SongListProps) {
                     ["CTA", song.ctaClickCount],
                   ].map(([label, value]) => (
                     <div key={label} className="rounded-lg bg-muted/40 p-2">
-                      <p className="text-sm font-semibold">{Number(value).toLocaleString()}</p>
-                      <p className="text-[11px] text-muted-foreground">{label}</p>
+                      <p className="text-sm font-semibold">
+                        {Number(value).toLocaleString()}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground">
+                        {label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -107,7 +115,10 @@ export function SongList({ songs }: SongListProps) {
                     className="gap-2"
                     disabled={!song.isPublic || song.status !== "ready"}
                     onClick={() => {
-                      const url = new URL(song.publicHref, window.location.origin);
+                      const url = new URL(
+                        song.publicHref,
+                        window.location.origin,
+                      );
                       void navigator.clipboard?.writeText(url.toString());
                     }}
                   >
@@ -115,18 +126,34 @@ export function SongList({ songs }: SongListProps) {
                     Copy link
                   </Button>
                   {song.isPublic && song.status === "ready" ? (
-                    <Button asChild size="sm" variant="outline" className="gap-2">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                    >
                       <Link href={song.publicHref}>
                         Preview
                         <ExternalLink className="h-4 w-4" />
                       </Link>
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" className="gap-2" disabled>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                      disabled
+                    >
                       Preview
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   )}
+                  <Button asChild size="sm" variant="outline" className="gap-2">
+                    <Link href={song.reportHref}>
+                      Report
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </article>

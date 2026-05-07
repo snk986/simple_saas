@@ -31,6 +31,45 @@
     "title": "My Songs",
     "noSongs": "No songs yet. Create your first hit!"
   },
+  "report": {
+    "badge": "Creator Report",
+    "subtitleReady": "Generated on {date}. Use this report to understand the song's strongest emotional and production opportunities.",
+    "subtitleMissing": "Generate a producer-style report after your song is ready. The report costs 100 credits unless credit checks are skipped in this environment.",
+    "coverAlt": "{title} cover art",
+    "noCover": "No cover yet",
+    "emptyTitle": "No report yet",
+    "emptyBody": "Generate the report to unlock score dimensions, producer notes, emotional value, hook analysis, and share-ready summary copy.",
+    "totalScore": "Total Score",
+    "shareSummary": "Share Summary",
+    "dimensions": {
+      "melody_potential": "Melody Potential",
+      "lyric_quality": "Lyric Quality",
+      "emotional_resonance": "Emotional Resonance",
+      "commercial_appeal": "Commercial Appeal",
+      "originality": "Originality"
+    },
+    "producer": {
+      "title": "Producer Comment",
+      "strengths": "Strengths",
+      "improvements": "Improvements",
+      "nextSteps": "Next Steps"
+    },
+    "sections": {
+      "emotionalValue": "Emotional Value",
+      "hookAnalysis": "Hook Analysis",
+      "marketPositioning": "Market Positioning"
+    },
+    "actions": {
+      "generate": "Generate Report",
+      "generating": "Generating Report",
+      "generated": "Report generated",
+      "generateFailed": "Report generation failed",
+      "publicPage": "Public Page",
+      "copyPublicLink": "Copy Public Link",
+      "copied": "Public link copied",
+      "shareCardSoon": "Share Card in Task 7"
+    }
+  },
   "pricing": {
     "title": "Simple Pricing",
     "getStarted": "Get Started"

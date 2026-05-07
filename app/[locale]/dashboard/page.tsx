@@ -9,6 +9,10 @@ function localizedSongHref(locale: Locale, id: string) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/song/${id}`;
 }
 
+function localizedReportHref(locale: Locale, id: string) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/report/${id}`;
+}
+
 export default async function DashboardPage({
   params,
 }: {
@@ -43,7 +47,7 @@ export default async function DashboardPage({
         type,
         created_at
       )
-    `
+    `,
     )
     .eq("user_id", user.id)
     .single();
@@ -71,6 +75,7 @@ export default async function DashboardPage({
     shareCount: song.share_count ?? 0,
     ctaClickCount: song.cta_click_count ?? 0,
     publicHref: localizedSongHref(locale, song.id),
+    reportHref: localizedReportHref(locale, song.id),
     createdAt: song.created_at,
   }));
 
@@ -82,18 +87,21 @@ export default async function DashboardPage({
           Welcome back, {customerData?.name || user.email?.split("@")[0]}
         </h1>
         <p className="text-muted-foreground">
-          Manage your subscription, check your credits_balance, and access your dashboard features.
+          Manage your subscription, check your credits_balance, and access your
+          dashboard features.
         </p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Credits Card */}
-        <CreditsBalanceCard credits={credits_balance} recentHistory={recentCreditsHistory} />
-        
+        <CreditsBalanceCard
+          credits={credits_balance}
+          recentHistory={recentCreditsHistory}
+        />
+
         {/* Subscription Status */}
         <SubscriptionStatusCard subscription={subscription} />
-
       </div>
 
       <SongList songs={songs} />
