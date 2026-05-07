@@ -9,18 +9,38 @@ import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import { redirect } from "next/navigation";
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
+type SignInSearchParams = Message & {
+  redirectTo?: string;
+};
+
+function safeRedirectPath(path?: string) {
+  if (!path || !path.startsWith("/") || path.startsWith("//")) {
+    return null;
+  }
+
+  return path;
+}
+
+export default async function Login(props: { searchParams: Promise<SignInSearchParams> }) {
   const searchParams = await props.searchParams;
+  const redirectTo = safeRedirectPath(searchParams.redirectTo);
+  const signUpHref = redirectTo
+    ? `/sign-up?redirectTo=${encodeURIComponent(redirectTo)}`
+    : "/sign-up";
 
   const signInWithGoogle = async () => {
     "use server";
     const supabase = await createClient();
     const origin = process.env.BASE_URL;
+    const redirectToParam = safeRedirectPath(searchParams.redirectTo);
+    const callbackUrl = redirectToParam
+      ? `${origin}/auth/callback?redirect_to=${encodeURIComponent(redirectToParam)}`
+      : `${origin}/auth/callback`;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: callbackUrl,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -47,6 +67,9 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
+          {redirectTo ? (
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+          ) : null}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -128,7 +151,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
         <div className="text-sm text-muted-foreground text-center">
           Don't have an account?{" "}
           <Link
-            href="/sign-up"
+            href={signUpHref}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
             Sign up

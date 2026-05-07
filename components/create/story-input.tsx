@@ -29,12 +29,40 @@ interface AudioResult {
   cover_url?: string | null;
 }
 
-export function StoryInput() {
+interface InitialDraft {
+  songId: string;
+  title: string;
+  lyrics: string;
+  userInput: string;
+  style_key: string;
+  style_params: StyleParams;
+  style_tags: string[];
+  lyrics_regen_count: number;
+}
+
+interface StoryInputProps {
+  initialDraft?: InitialDraft | null;
+  recallCampaign?: string | null;
+}
+
+export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
   const t = useTranslations();
   const params = useParams<{ locale?: string }>();
-  const [story, setStory] = useState("");
-  const [result, setResult] = useState<LyricsResult | null>(null);
-  const [editableLyrics, setEditableLyrics] = useState("");
+  const [story, setStory] = useState(initialDraft?.userInput ?? "");
+  const [result, setResult] = useState<LyricsResult | null>(
+    initialDraft
+      ? {
+          songId: initialDraft.songId,
+          title: initialDraft.title,
+          lyrics: initialDraft.lyrics,
+          style_key: initialDraft.style_key,
+          style_params: initialDraft.style_params,
+          style_tags: initialDraft.style_tags,
+          lyrics_regen_count: initialDraft.lyrics_regen_count,
+        }
+      : null,
+  );
+  const [editableLyrics, setEditableLyrics] = useState(initialDraft?.lyrics ?? "");
   const [error, setError] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
@@ -214,6 +242,18 @@ export function StoryInput() {
             {t("create.subtitle")}
           </p>
         </div>
+
+        {recallCampaign === "inactive_creator" ? (
+          <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+            {t("create.recall.inactiveCreator")}
+          </div>
+        ) : null}
+
+        {initialDraft ? (
+          <div className="mb-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-950">
+            {t("create.recall.draftNoAudio")}
+          </div>
+        ) : null}
 
         <Textarea
           value={story}

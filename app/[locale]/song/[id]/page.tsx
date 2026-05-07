@@ -16,6 +16,12 @@ interface SongPageProps {
     locale: Locale;
     id: string;
   }>;
+  searchParams?: Promise<{
+    utm_campaign?: string;
+    utm_medium?: string;
+    utm_source?: string;
+    song_id?: string;
+  }>;
 }
 
 function localePrefix(locale: string) {
@@ -121,8 +127,9 @@ export async function generateMetadata({ params }: SongPageProps): Promise<Metad
   };
 }
 
-export default async function SongPage({ params }: SongPageProps) {
+export default async function SongPage({ params, searchParams }: SongPageProps) {
   const { locale, id } = await params;
+  const query = searchParams ? await searchParams : {};
   const t = await getTranslations("songPublic");
 
   if (!locales.includes(locale)) {
@@ -211,6 +218,12 @@ export default async function SongPage({ params }: SongPageProps) {
 
       <div className="container px-4 py-6 md:px-6 md:py-10">
         <div className="mx-auto max-w-6xl space-y-6">
+          {query.utm_campaign === "report_no_share" ? (
+            <section className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+              {t("recall.reportNoShare")}
+            </section>
+          ) : null}
+
           <SongHero
             songId={song.id}
             title={song.title}

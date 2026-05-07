@@ -52,7 +52,10 @@ export const updateSession = async (
     const signInPath = getDashboardRedirectPath(request.nextUrl.pathname);
     if (signInPath && user.error) {
       const redirectUrl = new URL(signInPath, request.url);
-      redirectUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+      redirectUrl.searchParams.set(
+        "redirectTo",
+        `${request.nextUrl.pathname}${request.nextUrl.search}`,
+      );
 
       const redirectResponse = NextResponse.redirect(redirectUrl);
       response.headers.getSetCookie().forEach((cookie) => {

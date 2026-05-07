@@ -57,6 +57,12 @@ export function ReportActions({
   async function copyPublicLink() {
     const url = new URL(publicHref, window.location.origin);
     await navigator.clipboard?.writeText(url.toString());
+    await fetch(`/api/song/${songId}/count`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: "share" }),
+      keepalive: true,
+    }).catch(() => undefined);
     toast({ title: t("copied") });
   }
 

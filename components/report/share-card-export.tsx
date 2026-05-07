@@ -32,6 +32,13 @@ export function ShareCardExport({
       await navigator.clipboard?.writeText(url);
       toast({ title: t("copied") });
     }
+
+    await fetch(`/api/song/${songId}/count`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: "share" }),
+      keepalive: true,
+    }).catch(() => undefined);
   }
 
   return (

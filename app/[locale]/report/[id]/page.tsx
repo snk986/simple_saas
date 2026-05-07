@@ -17,6 +17,12 @@ interface ReportPageProps {
     locale: Locale;
     id: string;
   }>;
+  searchParams: Promise<{
+    utm_campaign?: string;
+    utm_medium?: string;
+    utm_source?: string;
+    song_id?: string;
+  }>;
 }
 
 export const metadata: Metadata = {
@@ -33,6 +39,19 @@ function localePrefix(locale: Locale) {
 
 function publicSongHref(locale: Locale, id: string) {
   return `${localePrefix(locale)}/song/${id}`;
+}
+
+function reportPath(locale: Locale, id: string, query: Awaited<ReportPageProps["searchParams"]>) {
+  const params = new URLSearchParams();
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (value) {
+      params.set(key, value);
+    }
+  });
+
+  const search = params.toString();
+  return `${localePrefix(locale)}/report/${id}${search ? `?${search}` : ""}`;
 }
 
 function isJudgeReport(value: unknown): value is JudgeReport {
@@ -52,8 +71,9 @@ function formatDate(value: string, locale: Locale) {
   }).format(new Date(value));
 }
 
-export default async function ReportPage({ params }: ReportPageProps) {
+export default async function ReportPage({ params, searchParams }: ReportPageProps) {
   const { locale, id } = await params;
+  const query = await searchParams;
 
   if (!locales.includes(locale)) {
     notFound();
@@ -66,7 +86,11 @@ export default async function ReportPage({ params }: ReportPageProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(`${localePrefix(locale)}/sign-in`);
+    redirect(
+      `${localePrefix(locale)}/sign-in?redirectTo=${encodeURIComponent(
+        reportPath(locale, id, query),
+      )}`,
+    );
   }
 
   const { data: song, error } = await supabase
@@ -143,6 +167,11 @@ export default async function ReportPage({ params }: ReportPageProps) {
             </div>
 
             <div className="mt-6">
+              {query.utm_campaign === "ready_no_report" && !report ? (
+                <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                  {t("recall.readyNoReport")}
+                </div>
+              ) : null}
               <ReportActions
                 songId={song.id}
                 publicHref={publicSongHref(locale, song.id)}

@@ -81,7 +81,11 @@
     "regenerate": "Regenerate",
     "regenerateLimit": "Max 3 regenerations reached",
     "inputTooShort": "Tell a little more of the story first.",
-    "emptyState": "Your lyrics will appear here after the first draft."
+    "emptyState": "Your lyrics will appear here after the first draft.",
+    "recall": {
+      "draftNoAudio": "Your saved lyrics are loaded. Review them, then generate the audio when you are ready.",
+      "inactiveCreator": "Welcome back. Start with a fresh detail and turn the next story into a song."
+    }
   },
   "song": {
     "play": "Play",
@@ -120,6 +124,9 @@
       "description": "Start with a memory, mood, or message. Hit-Song turns it into lyrics, audio, and a public page built for sharing.",
       "create": "Create your own song",
       "copy": "Copy link"
+    },
+    "recall": {
+      "reportNoShare": "Your song is ready to share. Use the copy button or your browser share tools to send it out."
     }
   },
   "dashboard": {
@@ -168,6 +175,9 @@
       "copied": "Public link copied",
       "downloadShareCard": "Download Share Card",
       "shareSong": "Share Song"
+    },
+    "recall": {
+      "readyNoReport": "You came back from your reminder. Generate the report to unlock the producer notes for this song."
     }
   },
   "pricing": {

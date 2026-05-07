@@ -81,7 +81,11 @@
     "regenerate": "다시 생성",
     "regenerateLimit": "최대 3회 다시 생성할 수 있습니다",
     "inputTooShort": "먼저 이야기를 조금 더 들려주세요.",
-    "emptyState": "첫 초안이 생성되면 여기에 가사가 표시됩니다."
+    "emptyState": "첫 초안이 생성되면 여기에 가사가 표시됩니다.",
+    "recall": {
+      "draftNoAudio": "저장된 가사를 불러왔습니다. 검토한 뒤 준비되면 오디오를 생성하세요.",
+      "inactiveCreator": "다시 오신 것을 환영합니다. 새로운 디테일로 다음 이야기를 노래로 만들어보세요."
+    }
   },
   "song": {
     "play": "재생",
@@ -120,6 +124,9 @@
       "description": "기억, 분위기, 메시지에서 시작하세요. Hit-Song이 가사, 오디오, 공유용 공개 페이지로 바꿉니다.",
       "create": "나만의 노래 만들기",
       "copy": "링크 복사"
+    },
+    "recall": {
+      "reportNoShare": "노래를 공유할 준비가 되었습니다. 복사 버튼이나 브라우저 공유 도구로 보내보세요."
     }
   },
   "dashboard": {
@@ -168,6 +175,9 @@
       "copied": "공개 링크가 복사되었습니다",
       "downloadShareCard": "공유 카드 다운로드",
       "shareSong": "노래 공유"
+    },
+    "recall": {
+      "readyNoReport": "리마인더를 통해 돌아오셨습니다. 이 노래의 프로듀서 노트를 보려면 리포트를 생성하세요."
     }
   },
   "pricing": {

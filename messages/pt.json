@@ -81,7 +81,11 @@
     "regenerate": "Regenerar",
     "regenerateLimit": "Limite maximo de 3 regeneracoes atingido",
     "inputTooShort": "Conte um pouco mais da historia primeiro.",
-    "emptyState": "Sua letra aparecera aqui depois do primeiro rascunho."
+    "emptyState": "Sua letra aparecera aqui depois do primeiro rascunho.",
+    "recall": {
+      "draftNoAudio": "Carregamos sua letra salva. Revise e gere o audio quando quiser.",
+      "inactiveCreator": "Bem-vindo de volta. Comece com um novo detalhe e transforme a proxima historia em musica."
+    }
   },
   "song": {
     "play": "Tocar",
@@ -120,6 +124,9 @@
       "description": "Comece com uma memoria, clima ou mensagem. Hit-Song transforma isso em letras, audio e uma pagina publica pronta para compartilhar.",
       "create": "Criar minha propria musica",
       "copy": "Copiar link"
+    },
+    "recall": {
+      "reportNoShare": "Sua musica esta pronta para compartilhar. Use o botao de copiar ou as ferramentas de compartilhamento do navegador."
     }
   },
   "dashboard": {
@@ -168,6 +175,9 @@
       "copied": "Link publico copiado",
       "downloadShareCard": "Baixar cartao",
       "shareSong": "Compartilhar musica"
+    },
+    "recall": {
+      "readyNoReport": "Voce voltou pelo lembrete. Gere o relatorio para desbloquear as notas de produtor desta musica."
     }
   },
   "pricing": {

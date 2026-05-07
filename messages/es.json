@@ -81,7 +81,11 @@
     "regenerate": "Regenerar",
     "regenerateLimit": "Llegaste al maximo de 3 regeneraciones",
     "inputTooShort": "Cuenta un poco mas de la historia primero.",
-    "emptyState": "Tu letra aparecera aqui despues del primer borrador."
+    "emptyState": "Tu letra aparecera aqui despues del primer borrador.",
+    "recall": {
+      "draftNoAudio": "Cargamos tu letra guardada. Revisala y genera el audio cuando quieras.",
+      "inactiveCreator": "Bienvenido de nuevo. Empieza con un detalle nuevo y convierte la siguiente historia en cancion."
+    }
   },
   "song": {
     "play": "Reproducir",
@@ -120,6 +124,9 @@
       "description": "Empieza con un recuerdo, animo o mensaje. Hit-Song lo convierte en letras, audio y una pagina publica lista para compartir.",
       "create": "Crear mi propia cancion",
       "copy": "Copiar enlace"
+    },
+    "recall": {
+      "reportNoShare": "Tu cancion esta lista para compartir. Usa el boton de copiar o las herramientas de compartir del navegador."
     }
   },
   "dashboard": {
@@ -168,6 +175,9 @@
       "copied": "Enlace publico copiado",
       "downloadShareCard": "Descargar tarjeta",
       "shareSong": "Compartir cancion"
+    },
+    "recall": {
+      "readyNoReport": "Volviste desde tu recordatorio. Genera el informe para desbloquear las notas de productor de esta cancion."
     }
   },
   "pricing": {

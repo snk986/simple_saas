@@ -5,6 +5,16 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+function safeRedirectPath(value: FormDataEntryValue | null) {
+  const path = value?.toString();
+
+  if (!path || !path.startsWith("/") || path.startsWith("//")) {
+    return null;
+  }
+
+  return path;
+}
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -38,7 +48,9 @@ export const signUpAction = async (formData: FormData) => {
 export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const redirectTo = safeRedirectPath(formData.get("redirectTo"));
   const supabase = await createClient();
+  const signInPath = redirectTo ? `/sign-in?redirectTo=${encodeURIComponent(redirectTo)}` : "/sign-in";
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -46,10 +58,10 @@ export const signInAction = async (formData: FormData) => {
   });
 
   if (error) {
-    return encodedRedirect("error", "/sign-in", error.message);
+    return encodedRedirect("error", signInPath, error.message);
   }
 
-  return redirect("/dashboard");
+  return redirect(redirectTo ?? "/dashboard");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
