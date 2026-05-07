@@ -6,11 +6,13 @@ import { CreditTransaction } from "@/types/creem";
 type CreditsBalanceCardProps = {
   credits: number;
   recentHistory: CreditTransaction[];
+  songRetentionDays: number | null;
 };
 
 export function CreditsBalanceCard({
   credits,
   recentHistory,
+  songRetentionDays,
 }: CreditsBalanceCardProps) {
   return (
     <div className="rounded-xl border bg-card p-6">
@@ -23,6 +25,11 @@ export function CreditsBalanceCard({
           <h3 className="text-2xl font-bold mt-1">{credits}</h3>
         </div>
       </div>
+      <p className="mt-4 text-sm text-muted-foreground">
+        {songRetentionDays === null
+          ? "Songs created while subscribed are kept permanently."
+          : `Free songs are kept for ${songRetentionDays} days.`}
+      </p>
       <div className="mt-4 space-y-2">
         <p className="text-sm text-muted-foreground">Recent Activity</p>
         <div className="space-y-1">

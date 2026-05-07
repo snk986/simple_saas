@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { generateJudgeReport } from "@/lib/ai/claude";
+import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 import type { JudgeReport } from "@/types/judge";
 
@@ -21,6 +22,8 @@ async function freezeCreditIfNeeded(supabase: SupabaseClient, userId: string) {
   const { data, error } = await supabase.rpc("freeze_credit", {
     p_user_id: userId,
     p_amount: REPORT_CREDIT_COST,
+    p_description: "judge_report",
+    p_metadata: { operation: "judge_report" },
   });
 
   if (error) {
@@ -44,6 +47,8 @@ async function refundCreditIfNeeded(
   await supabase.rpc("unfreeze_credit", {
     p_user_id: userId,
     p_amount: REPORT_CREDIT_COST,
+    p_description: "judge_report_refund",
+    p_metadata: { operation: "judge_report" },
   });
 }
 
@@ -77,6 +82,7 @@ export async function POST(request: NextRequest) {
     }
 
     userId = user.id;
+    await getUserEntitlements(user.id);
 
     const { data: song, error: songError } = await supabase
       .from("songs")

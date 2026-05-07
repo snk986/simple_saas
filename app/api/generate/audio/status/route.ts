@@ -6,6 +6,7 @@ import {
   uploadRemoteMedia,
 } from "@/lib/audio/storage";
 import { checkAchievements } from "@/lib/achievements/check-achievements";
+import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 
 const AUDIO_CREDIT_COST = 100;
@@ -26,6 +27,8 @@ async function refundCreditIfNeeded(
   await supabase.rpc("unfreeze_credit", {
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
+    p_description: "audio_generation_refund",
+    p_metadata: { operation: "audio_generation" },
   });
 }
 
@@ -81,6 +84,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ status: "failed", songId: song.id });
     }
 
+    const entitlements = await getUserEntitlements(user.id);
     const result = await audioProvider.getTaskStatus(song.kie_task_id);
 
     if (result.status === "processing") {
@@ -135,16 +139,22 @@ export async function GET(request: NextRequest) {
           styleTags: song.style_tags ?? [],
         });
 
+    const readyUpdate: Record<string, unknown> = {
+      audio_url: audioUrl,
+      audio_url_alt: audioUrlAlt,
+      cover_url: coverUrl,
+      status: "ready",
+      selected_audio: "primary",
+      updated_at: new Date().toISOString(),
+    };
+
+    if (entitlements.canKeepSongsForever) {
+      readyUpdate.expires_at = null;
+    }
+
     const { error: updateError } = await supabase
       .from("songs")
-      .update({
-        audio_url: audioUrl,
-        audio_url_alt: audioUrlAlt,
-        cover_url: coverUrl,
-        status: "ready",
-        selected_audio: "primary",
-        updated_at: new Date().toISOString(),
-      })
+      .update(readyUpdate)
       .eq("id", song.id)
       .eq("user_id", user.id);
 

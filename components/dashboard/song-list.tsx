@@ -18,6 +18,7 @@ export interface DashboardSong {
   publicHref: string;
   reportHref: string;
   createdAt: string;
+  expiresAt: string | null;
 }
 
 interface SongListProps {
@@ -86,6 +87,16 @@ export function SongList({ songs }: SongListProps) {
                       year: "numeric",
                     }).format(new Date(song.createdAt))}
                   </p>
+                  {song.expiresAt && song.status !== "expired" ? (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Expires{" "}
+                      {new Intl.DateTimeFormat("en", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      }).format(new Date(song.expiresAt))}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 

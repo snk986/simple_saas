@@ -8,9 +8,10 @@ import {
   Ban,
   PauseCircle,
   LucideIcon,
+  Zap,
 } from "lucide-react";
 import { SubscriptionPortalDialog } from "./subscription-portal-dialog";
-import { SubscriptionState } from "@/types/subscriptions";
+import { PlanTier, SubscriptionState } from "@/types/subscriptions";
 
 type StatusConfig = {
   color: string;
@@ -105,11 +106,25 @@ type SubscriptionStatusCardProps = {
     status: string;
     current_period_end: string;
   } | null;
+  entitlements: {
+    plan: PlanTier;
+    priorityGeneration: boolean;
+    canKeepSongsForever: boolean;
+    subscriptionEndsAt: string | null;
+  };
+  upgradeHref?: string;
 };
 
 export function SubscriptionStatusCard({
   subscription,
+  entitlements,
+  upgradeHref,
 }: SubscriptionStatusCardProps) {
+  const planLabel =
+    entitlements.plan === "free"
+      ? "Free"
+      : entitlements.plan.charAt(0).toUpperCase() + entitlements.plan.slice(1);
+
   return (
     <div className="rounded-xl border bg-card p-6">
       <div className="flex items-center gap-4">
@@ -117,7 +132,7 @@ export function SubscriptionStatusCard({
           <CreditCard className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <p className="text-sm text-muted-foreground">Subscription Status</p>
+          <p className="text-sm text-muted-foreground">Current Plan</p>
           {subscription && (
             <h3
               className={`text-2xl font-bold capitalize mt-1 ${
@@ -132,9 +147,27 @@ export function SubscriptionStatusCard({
           )}
           {!subscription && (
             <h3 className="text-2xl font-bold mt-1 text-muted-foreground">
-              No Active Plan
+              {planLabel}
             </h3>
           )}
+        </div>
+      </div>
+      <div className="mt-4 grid gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Package2 className="h-4 w-4 text-primary" />
+          <span>
+            {entitlements.canKeepSongsForever
+              ? "Permanent storage for subscriber songs"
+              : "30-day storage for free songs"}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Zap className="h-4 w-4 text-primary" />
+          <span>
+            {entitlements.priorityGeneration
+              ? "Priority generation enabled"
+              : "Standard generation queue"}
+          </span>
         </div>
       </div>
       {subscription && (
@@ -155,7 +188,7 @@ export function SubscriptionStatusCard({
         </div>
       )}
       <div className="mt-4">
-        <SubscriptionPortalDialog />
+        <SubscriptionPortalDialog upgradeHref={upgradeHref} />
       </div>
     </div>
   );

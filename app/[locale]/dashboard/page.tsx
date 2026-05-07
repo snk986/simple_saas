@@ -9,6 +9,7 @@ import {
 import { SongList, type DashboardSong } from "@/components/dashboard/song-list";
 import { achievements } from "@/config/achievements";
 import { defaultLocale, type Locale } from "@/config/i18n";
+import { getUserEntitlements } from "@/lib/subscription/entitlements";
 
 function localizedSongHref(locale: Locale, id: string) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/song/${id}`;
@@ -16,6 +17,10 @@ function localizedSongHref(locale: Locale, id: string) {
 
 function localizedReportHref(locale: Locale, id: string) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/report/${id}`;
+}
+
+function localizedPricingHref(locale: Locale) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/pricing`;
 }
 
 export default async function DashboardPage({
@@ -35,8 +40,7 @@ export default async function DashboardPage({
     return redirect("/sign-in");
   }
 
-  // 2. Fetch Customer Data (Credits, Subscription)
-  // We use a single query to get the customer profile + related subscription & credits_balance history
+  const entitlements = await getUserEntitlements(user.id);
   const { data: customerData } = await supabase
     .from("customers")
     .select(
@@ -58,12 +62,11 @@ export default async function DashboardPage({
     .single();
 
   const subscription = customerData?.subscriptions?.[0];
-  const credits_balance = customerData?.credits_balance || 0;
   const recentCreditsHistory = customerData?.credits_history?.slice(0, 2) || [];
   const { data: songsData } = await supabase
     .from("songs")
     .select(
-      "id,title,status,is_public,cover_url,play_count,complete_count,share_count,cta_click_count,created_at",
+      "id,title,status,is_public,cover_url,play_count,complete_count,share_count,cta_click_count,created_at,expires_at",
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
@@ -87,6 +90,7 @@ export default async function DashboardPage({
     publicHref: localizedSongHref(locale, song.id),
     reportHref: localizedReportHref(locale, song.id),
     createdAt: song.created_at,
+    expiresAt: song.expires_at,
   }));
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
 
@@ -98,8 +102,7 @@ export default async function DashboardPage({
           Welcome back, {customerData?.name || user.email?.split("@")[0]}
         </h1>
         <p className="text-muted-foreground">
-          Manage your subscription, check your credits_balance, and access your
-          dashboard features.
+          Manage your plan, track credits, and keep an eye on song storage.
         </p>
       </div>
 
@@ -107,12 +110,17 @@ export default async function DashboardPage({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Credits Card */}
         <CreditsBalanceCard
-          credits={credits_balance}
+          credits={entitlements.creditsBalance}
           recentHistory={recentCreditsHistory}
+          songRetentionDays={entitlements.songRetentionDays}
         />
 
         {/* Subscription Status */}
-        <SubscriptionStatusCard subscription={subscription} />
+        <SubscriptionStatusCard
+          subscription={subscription}
+          entitlements={entitlements}
+          upgradeHref={localizedPricingHref(locale)}
+        />
       </div>
 
       <SongList songs={songs} />

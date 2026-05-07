@@ -1,4 +1,4 @@
-export type SongStatus = "draft" | "generating" | "ready" | "failed";
+export type SongStatus = "draft" | "generating" | "ready" | "failed" | "expired";
 export type SelectedAudio = "primary" | "alt";
 
 export interface Song {

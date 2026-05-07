@@ -4,6 +4,10 @@ import { analyzeInput, generateLyrics } from "@/lib/ai/claude";
 import { getSongStyle, matchSongStyle } from "@/config/styles";
 import { locales, defaultLocale } from "@/config/i18n";
 import { createClient } from "@/utils/supabase/server";
+import {
+  getSongExpiryForEntitlements,
+  getUserEntitlements,
+} from "@/lib/subscription/entitlements";
 
 const requestSchema = z.object({
   userInput: z.string().trim().min(10).max(2000).optional(),
@@ -35,6 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     const locale = normalizeLocale(body.data.locale);
+    const entitlements = await getUserEntitlements(user.id);
 
     if (body.data.songId) {
       const { data: existingSong, error: fetchError } = await supabase
@@ -153,6 +158,7 @@ export async function POST(request: NextRequest) {
         locale,
         status: "draft",
         is_public: true,
+        expires_at: getSongExpiryForEntitlements(entitlements),
       })
       .select("id,title,lyrics,style_key,style_params,style_tags")
       .single();

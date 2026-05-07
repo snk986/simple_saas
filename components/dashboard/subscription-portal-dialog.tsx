@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,11 @@ import { ArrowRight, CreditCard, Receipt, Settings } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect } from "react";
 
-export function SubscriptionPortalDialog() {
+export function SubscriptionPortalDialog({
+  upgradeHref = "/pricing",
+}: {
+  upgradeHref?: string;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasCustomer, setHasCustomer] = useState(false);
@@ -67,7 +72,14 @@ export function SubscriptionPortalDialog() {
   };
 
   if (!hasCustomer) {
-    return null;
+    return (
+      <Button asChild variant="outline" className="w-full">
+        <Link href={upgradeHref}>
+          View plans
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Link>
+      </Button>
+    );
   }
 
   return (

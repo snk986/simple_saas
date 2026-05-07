@@ -267,38 +267,27 @@ export async function useCredits(
 ) {
   const supabase = createServiceRoleClient();
 
-  // Start a transaction
   const { data: client } = await supabase
     .from("customers")
-    .select("credits_balance")
+    .select("user_id")
     .eq("id", customerId)
     .single();
+
   if (!client) throw new Error("Customer not found");
-  if ((client.credits_balance || 0) < credits_balance) throw new Error("Insufficient credits_balance");
 
-  const newCredits = client.credits_balance - credits_balance;
+  const { data, error } = await supabase.rpc("freeze_credit", {
+    p_user_id: client.user_id,
+    p_amount: credits_balance,
+    p_description: description,
+    p_metadata: { source: "utils.supabase.subscriptions.useCredits" },
+  });
 
-  // Update customer credits_balance
-  const { error: updateError } = await supabase
-    .from("customers")
-    .update({ credits_balance: newCredits, updated_at: new Date().toISOString() })
-    .eq("id", customerId);
+  if (error) throw error;
+  if (!Boolean((data as { enough?: boolean } | null)?.enough)) {
+    throw new Error("Insufficient credits_balance");
+  }
 
-  if (updateError) throw updateError;
-
-  // Record the transaction in credits_history
-  const { error: historyError } = await supabase
-    .from("credits_history")
-    .insert({
-      customer_id: customerId,
-      amount: credits_balance,
-      type: "subtract",
-      description,
-    });
-
-  if (historyError) throw historyError;
-
-  return newCredits;
+  return Number((data as { balance?: number } | null)?.balance ?? 0);
 }
 
 export async function getCustomerCredits(customerId: string) {
