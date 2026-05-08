@@ -105,6 +105,7 @@ type SubscriptionStatusCardProps = {
   subscription?: {
     status: string;
     current_period_end: string;
+    creem_product_id?: string | null;
   } | null;
   entitlements: {
     plan: PlanTier;
@@ -188,7 +189,10 @@ export function SubscriptionStatusCard({
         </div>
       )}
       <div className="mt-4">
-        <SubscriptionPortalDialog upgradeHref={upgradeHref} />
+        <SubscriptionPortalDialog
+          upgradeHref={upgradeHref}
+          hasPortalCustomer={Boolean(subscription)}
+        />
       </div>
     </div>
   );

@@ -12,44 +12,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ArrowRight, CreditCard, Receipt, Settings } from "lucide-react";
-import { createClient } from "@/utils/supabase/client";
-import { useEffect } from "react";
 
 export function SubscriptionPortalDialog({
   upgradeHref = "/pricing",
+  hasPortalCustomer = false,
 }: {
   upgradeHref?: string;
+  hasPortalCustomer?: boolean;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasCustomer, setHasCustomer] = useState(false);
-  const supabase = createClient();
-
-  useEffect(() => {
-    const checkCustomer = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) return;
-
-        const { data: customer } = await supabase
-          .from("customers")
-          .select("creem_customer_id")
-          .eq("user_id", user.id)
-          .single();
-
-        // Only show portal if they have a real Creem ID (starts with cust_)
-        // Users with 'auto_' IDs are free users who haven't purchased yet
-        setHasCustomer(!!customer?.creem_customer_id?.startsWith('cust_'));
-      } catch (err) {
-        console.error("Error checking customer:", err);
-        setHasCustomer(false);
-      }
-    };
-
-    checkCustomer();
-  }, []);
 
   const handleManageSubscription = async () => {
     try {
@@ -71,7 +43,7 @@ export function SubscriptionPortalDialog({
     }
   };
 
-  if (!hasCustomer) {
+  if (!hasPortalCustomer) {
     return (
       <Button asChild variant="outline" className="w-full">
         <Link href={upgradeHref}>
