@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeInput, generateLyrics } from "@/lib/ai/claude";
+import { analyzeInput, generateLyrics } from "@/lib/ai/provider";
 import { getSongStyle, matchSongStyle } from "@/config/styles";
 import { locales, defaultLocale } from "@/config/i18n";
 import { createClient } from "@/utils/supabase/server";

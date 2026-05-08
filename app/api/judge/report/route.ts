@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { checkAchievements } from "@/lib/achievements/check-achievements";
-import { generateJudgeReport } from "@/lib/ai/claude";
+import { generateJudgeReport } from "@/lib/ai/provider";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 import type { JudgeReport } from "@/types/judge";
