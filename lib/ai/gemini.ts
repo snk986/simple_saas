@@ -22,6 +22,14 @@ interface GeminiGenerateContentResponse {
   }>;
 }
 
+interface GeminiErrorResponse {
+  error?: {
+    code?: number;
+    message?: string;
+    status?: string;
+  };
+}
+
 function getGeminiModels() {
   const configuredModels = [
     process.env.GEMINI_MODEL,
@@ -35,6 +43,15 @@ function getGeminiModels() {
 
 function shouldFallback(status: number) {
   return status === 429 || status >= 500;
+}
+
+async function readGeminiError(response: Response) {
+  try {
+    const data = (await response.json()) as GeminiErrorResponse;
+    return data.error?.message || data.error?.status || response.statusText;
+  } catch {
+    return response.statusText;
+  }
 }
 
 async function requestGemini(
@@ -76,6 +93,8 @@ async function requestGemini(
   );
 
   if (!response.ok) {
+    const errorMessage = await readGeminiError(response);
+
     if (attempt === 0 && response.status >= 500) {
       return requestGemini(prompt, options, modelIndex, attempt + 1);
     }
@@ -85,7 +104,7 @@ async function requestGemini(
     }
 
     throw new AiProviderError(
-      `Gemini request failed with ${response.status} using ${model}`,
+      `Gemini request failed with ${response.status} using ${model}: ${errorMessage}`,
     );
   }
 
