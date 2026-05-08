@@ -1,13 +1,18 @@
 import { claudeProvider } from "./claude";
 import { geminiProvider } from "./gemini";
+import { openRouterProvider } from "./openrouter";
 import type { AiProvider } from "./types";
 
-type AiProviderName = "claude" | "gemini";
+type AiProviderName = "claude" | "gemini" | "openrouter";
 
 function getProviderName(): AiProviderName {
   const provider = (process.env.AI_PROVIDER ?? "claude").toLowerCase();
 
-  if (provider === "gemini" || provider === "claude") {
+  if (
+    provider === "gemini" ||
+    provider === "claude" ||
+    provider === "openrouter"
+  ) {
     return provider;
   }
 
@@ -16,6 +21,10 @@ function getProviderName(): AiProviderName {
 
 export function getAiProvider(): AiProvider {
   const provider = getProviderName();
+
+  if (provider === "openrouter") {
+    return openRouterProvider;
+  }
 
   return provider === "gemini" ? geminiProvider : claudeProvider;
 }
