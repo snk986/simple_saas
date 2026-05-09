@@ -9,7 +9,11 @@ import { LyricsDisplay } from "@/components/song/lyrics-display";
 import { SongSeoSummary } from "@/components/song/song-seo-summary";
 import { RelatedSongs } from "@/components/song/related-songs";
 import { SongCta } from "@/components/song/song-cta";
-import { absoluteLocaleUrl, baseUrl, localizedAlternates } from "@/lib/i18n/urls";
+import {
+  absoluteLocaleUrl,
+  baseUrl,
+  localizedAlternates,
+} from "@/lib/i18n/urls";
 
 interface SongPageProps {
   params: Promise<{
@@ -44,7 +48,9 @@ function getTimestamps(reportData: Record<string, unknown> | null) {
     return null;
   }
 
-  const timestamps = value.filter((item): item is number => typeof item === "number");
+  const timestamps = value.filter(
+    (item): item is number => typeof item === "number",
+  );
   return timestamps.length > 0 ? timestamps : null;
 }
 
@@ -136,7 +142,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function SongPage({ params, searchParams }: SongPageProps) {
+export default async function SongPage({
+  params,
+  searchParams,
+}: SongPageProps) {
   const { locale, id } = await params;
   const query = searchParams ? await searchParams : {};
   const t = await getTranslations("songPublic");

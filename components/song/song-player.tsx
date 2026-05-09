@@ -136,7 +136,8 @@ export function SongPlayer({
               {title}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
-              Listen to this AI-generated {styleLabel.toLowerCase()} song, shaped with a {mood} feel and ready to inspire your own track.
+              Listen to this AI-generated {styleLabel.toLowerCase()} song,
+              shaped with a {mood} feel and ready to inspire your own track.
             </p>
           </div>
 
@@ -156,10 +157,15 @@ export function SongPlayer({
                   aria-label={isPlaying ? "Pause song" : "Play song"}
                   className={cn(
                     "h-12 w-12 rounded-full bg-slate-950 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200",
-                    isPlaying && "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-400",
+                    isPlaying &&
+                      "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-400",
                   )}
                 >
-                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="ml-0.5 h-5 w-5" />}
+                  {isPlaying ? (
+                    <Pause className="h-5 w-5" />
+                  ) : (
+                    <Play className="ml-0.5 h-5 w-5" />
+                  )}
                 </Button>
                 <div>
                   <p className="text-sm font-medium text-slate-950 dark:text-white">

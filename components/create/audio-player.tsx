@@ -1,21 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { Check, ExternalLink, Music, Radio } from "lucide-react";
+import { ExternalLink, Music, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import type { SelectedAudio } from "@/types/song";
 
 interface AudioPlayerProps {
   songId: string;
   title: string;
   coverUrl?: string | null;
   audioUrl?: string | null;
-  audioUrlAlt?: string | null;
-  selectedAudio: SelectedAudio;
-  isSelecting: boolean;
-  onSelect: (selectedAudio: SelectedAudio) => void;
+  altSongId?: string | null;
+  altAudioUrl?: string | null;
+  altCoverUrl?: string | null;
 }
 
 export function AudioPlayer({
@@ -23,14 +20,25 @@ export function AudioPlayer({
   title,
   coverUrl,
   audioUrl,
-  audioUrlAlt,
-  selectedAudio,
-  isSelecting,
-  onSelect,
+  altSongId,
+  altAudioUrl,
+  altCoverUrl,
 }: AudioPlayerProps) {
   const tracks = [
-    { key: "primary" as const, label: "Version A", url: audioUrl },
-    { key: "alt" as const, label: "Version B", url: audioUrlAlt },
+    {
+      key: "primary",
+      label: "Version A",
+      url: audioUrl,
+      coverUrl,
+      publicHref: `/song/${songId}`,
+    },
+    {
+      key: "alt",
+      label: "Version B",
+      url: altAudioUrl,
+      coverUrl: altCoverUrl ?? coverUrl,
+      publicHref: altSongId ? `/song/${altSongId}` : null,
+    },
   ].filter((track) => track.url);
 
   return (
@@ -59,49 +67,37 @@ export function AudioPlayer({
           </div>
           <h2 className="break-words text-2xl font-semibold">{title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            The selected version will be used for sharing, previews, and the
-            public song page.
+            Each version is saved as its own song with an independent public
+            page and listening metrics.
           </p>
 
           <div className="mt-5 grid gap-3">
-            {tracks.map((track) => {
-              const isSelected = selectedAudio === track.key;
-
-              return (
-                <article
-                  key={track.key}
-                  className={cn(
-                    "rounded-lg border p-4 transition-colors",
-                    isSelected
-                      ? "border-primary/40 bg-primary/5"
-                      : "bg-muted/20",
-                  )}
-                >
-                  <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <h3 className="text-base font-medium">{track.label}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {isSelected ? "Selected for sharing" : "Available take"}
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant={isSelected ? "default" : "outline"}
-                      disabled={isSelecting || isSelected}
-                      onClick={() => onSelect(track.key)}
-                      className="gap-2"
-                    >
-                      {isSelected ? <Check className="h-4 w-4" /> : null}
-                      {isSelected ? "Selected" : "Use this"}
-                    </Button>
+            {tracks.map((track) => (
+              <article
+                key={track.key}
+                className="rounded-lg border bg-muted/20 p-4 transition-colors"
+              >
+                <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h3 className="text-base font-medium">{track.label}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      Saved as a separate song
+                    </p>
                   </div>
-                  <audio controls preload="metadata" className="w-full">
-                    <source src={track.url!} />
-                  </audio>
-                </article>
-              );
-            })}
+                  {track.publicHref ? (
+                    <Button asChild type="button" size="sm" variant="outline">
+                      <Link href={track.publicHref}>
+                        Open page
+                        <ExternalLink className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  ) : null}
+                </div>
+                <audio controls preload="metadata" className="w-full">
+                  <source src={track.url!} />
+                </audio>
+              </article>
+            ))}
           </div>
 
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">

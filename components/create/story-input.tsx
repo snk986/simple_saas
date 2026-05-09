@@ -6,11 +6,19 @@ import { Wand2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { AudioPlayer } from "./audio-player";
 import { GenerationStatus } from "./generation-status";
 import { LyricsEditor } from "./lyrics-editor";
-import type { SelectedAudio, StyleParams } from "@/types/song";
+import type { StyleParams } from "@/types/song";
 
 interface LyricsResult {
   songId: string;
@@ -26,8 +34,10 @@ interface AudioResult {
   taskId?: string;
   songId: string;
   audio_url?: string | null;
-  audio_url_alt?: string | null;
   cover_url?: string | null;
+  altSongId?: string | null;
+  alt_audio_url?: string | null;
+  alt_cover_url?: string | null;
 }
 
 interface InitialDraft {
@@ -63,7 +73,9 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
         }
       : null,
   );
-  const [editableLyrics, setEditableLyrics] = useState(initialDraft?.lyrics ?? "");
+  const [editableLyrics, setEditableLyrics] = useState(
+    initialDraft?.lyrics ?? "",
+  );
   const [error, setError] = useState("");
   const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
     null,
@@ -74,8 +86,6 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     "idle" | "processing" | "completed" | "failed" | "timeout"
   >("idle");
   const [audioResult, setAudioResult] = useState<AudioResult | null>(null);
-  const [selectedAudio, setSelectedAudio] = useState<SelectedAudio>("primary");
-  const [isSelectingAudio, setIsSelectingAudio] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
@@ -119,6 +129,12 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          setError(t("errors.authRequired"));
+          setErrorAction("sign-in");
+          return;
+        }
+
         throw new Error(data.error ?? t("errors.generationFailed"));
       }
 
@@ -205,10 +221,11 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
           songId,
           taskId,
           audio_url: data.audio_url,
-          audio_url_alt: data.audio_url_alt,
           cover_url: data.cover_url,
+          altSongId: data.altSongId,
+          alt_audio_url: data.alt_audio_url,
+          alt_cover_url: data.alt_cover_url,
         });
-        setSelectedAudio("primary");
         setAudioStatus("completed");
         return;
       }
@@ -224,146 +241,137 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     setAudioStatus("timeout");
   }
 
-  async function selectAudio(nextSelectedAudio: SelectedAudio) {
-    if (!audioResult) {
-      return;
-    }
-
-    setIsSelectingAudio(true);
-    setError("");
-
-    try {
-      const response = await fetch(`/api/song/${audioResult.songId}/select`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ selectedAudio: nextSelectedAudio }),
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error ?? "Failed to select audio");
-      }
-
-      setSelectedAudio(nextSelectedAudio);
-    } catch (caught) {
-      const message =
-        caught instanceof Error ? caught.message : "Failed to select audio";
-      setError(message);
-    } finally {
-      setIsSelectingAudio(false);
-    }
-  }
-
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(280px,420px)_1fr]">
-      <section className="rounded-lg border bg-background p-5 shadow-sm lg:sticky lg:top-24 lg:self-start">
-        <div className="mb-4">
-          <h1 className="text-3xl font-semibold tracking-normal">
-            {t("create.title")}
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t("create.subtitle")}
-          </p>
-        </div>
-
-        {recallCampaign === "inactive_creator" ? (
-          <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-            {t("create.recall.inactiveCreator")}
-          </div>
-        ) : null}
-
-        {initialDraft ? (
-          <div className="mb-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-950">
-            {t("create.recall.draftNoAudio")}
-          </div>
-        ) : null}
-
-        <Textarea
-          value={story}
-          maxLength={2000}
-          onChange={(event) => setStory(event.target.value)}
-          placeholder={t("create.inputPlaceholder")}
-          className="min-h-[260px] resize-y text-base leading-7"
-        />
-        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-          <span>{t("create.inputHint")}</span>
-          <span>{story.length}/2000</span>
-        </div>
-
-        {error ? (
-          <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            <p>{error}</p>
-            {errorAction ? (
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="mt-3 border-destructive/40 bg-background text-foreground hover:bg-background/90"
+    <>
+      <Dialog
+        open={Boolean(errorAction)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setErrorAction(null);
+            setError("");
+          }
+        }}
+      >
+        <DialogContent className="max-w-md rounded-lg p-6">
+          <DialogHeader>
+            <DialogTitle>{t("errors.actionNeeded")}</DialogTitle>
+            <DialogDescription>
+              {errorAction === "sign-in"
+                ? t("errors.authRequiredDescription")
+                : t("errors.insufficientCreditsDescription")}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button asChild className="w-full sm:w-auto">
+              <Link
+                href={
+                  errorAction === "sign-in"
+                    ? `${localePrefix}/sign-in`
+                    : `${localePrefix}/pricing`
+                }
               >
-                <Link
-                  href={
-                    errorAction === "sign-in"
-                      ? `${localePrefix}/sign-in`
-                      : `${localePrefix}/pricing`
-                  }
-                >
-                  {errorAction === "sign-in"
-                    ? t("errors.signInToCreate")
-                    : t("errors.topUpCredits")}
-                </Link>
-              </Button>
+                {errorAction === "sign-in"
+                  ? t("errors.signInToCreate")
+                  : t("errors.topUpCredits")}
+              </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(280px,420px)_1fr]">
+        <section className="rounded-lg border bg-background p-5 shadow-sm lg:sticky lg:top-24 lg:self-start">
+          <div className="mb-4">
+            <h1 className="text-3xl font-semibold tracking-normal">
+              {t("create.title")}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t("create.subtitle")}
+            </p>
+          </div>
+
+          {recallCampaign === "inactive_creator" ? (
+            <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+              {t("create.recall.inactiveCreator")}
+            </div>
+          ) : null}
+
+          {initialDraft ? (
+            <div className="mb-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-950">
+              {t("create.recall.draftNoAudio")}
+            </div>
+          ) : null}
+
+          <Textarea
+            value={story}
+            maxLength={2000}
+            onChange={(event) => setStory(event.target.value)}
+            placeholder={t("create.inputPlaceholder")}
+            className="min-h-[260px] resize-y text-base leading-7"
+          />
+          <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+            <span>{t("create.inputHint")}</span>
+            <span>{story.length}/2000</span>
+          </div>
+
+          {error && !errorAction ? (
+            <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              <p>{error}</p>
+            </div>
+          ) : null}
+
+          <Button
+            type="button"
+            size="lg"
+            disabled={
+              isGenerating || isRegenerating || audioStatus === "processing"
+            }
+            onClick={() => submitLyrics()}
+            className="mt-5 w-full gap-2"
+          >
+            <Wand2
+              className={isGenerating ? "h-4 w-4 animate-pulse" : "h-4 w-4"}
+            />
+            {isGenerating ? t("create.generating") : t("create.generateLyrics")}
+          </Button>
+        </section>
+
+        {result ? (
+          <div className="grid gap-6">
+            <LyricsEditor
+              title={result.title}
+              lyrics={editableLyrics}
+              styleTags={result.style_tags}
+              styleParams={result.style_params}
+              regenCount={result.lyrics_regen_count}
+              isRegenerating={isRegenerating}
+              isGeneratingMusic={audioStatus === "processing"}
+              onLyricsChange={setEditableLyrics}
+              onRegenerate={() => submitLyrics({ regenerate: true })}
+              onGenerateMusic={generateMusic}
+            />
+            <GenerationStatus
+              status={audioStatus}
+              elapsedSeconds={elapsedSeconds}
+            />
+            {audioResult?.audio_url && audioStatus === "completed" ? (
+              <AudioPlayer
+                songId={audioResult.songId}
+                title={result.title}
+                coverUrl={audioResult.cover_url}
+                audioUrl={audioResult.audio_url}
+                altSongId={audioResult.altSongId}
+                altAudioUrl={audioResult.alt_audio_url}
+                altCoverUrl={audioResult.alt_cover_url}
+              />
             ) : null}
           </div>
-        ) : null}
-
-        <Button
-          type="button"
-          size="lg"
-          disabled={isGenerating || isRegenerating || audioStatus === "processing"}
-          onClick={() => submitLyrics()}
-          className="mt-5 w-full gap-2"
-        >
-          <Wand2 className={isGenerating ? "h-4 w-4 animate-pulse" : "h-4 w-4"} />
-          {isGenerating ? t("create.generating") : t("create.generateLyrics")}
-        </Button>
-      </section>
-
-      {result ? (
-        <div className="grid gap-6">
-          <LyricsEditor
-            title={result.title}
-            lyrics={editableLyrics}
-            styleTags={result.style_tags}
-            styleParams={result.style_params}
-            regenCount={result.lyrics_regen_count}
-            isRegenerating={isRegenerating}
-            isGeneratingMusic={audioStatus === "processing"}
-            onLyricsChange={setEditableLyrics}
-            onRegenerate={() => submitLyrics({ regenerate: true })}
-            onGenerateMusic={generateMusic}
-          />
-          <GenerationStatus
-            status={audioStatus}
-            elapsedSeconds={elapsedSeconds}
-          />
-          {audioResult?.audio_url && audioStatus === "completed" ? (
-            <AudioPlayer
-              songId={audioResult.songId}
-              title={result.title}
-              coverUrl={audioResult.cover_url}
-              audioUrl={audioResult.audio_url}
-              audioUrlAlt={audioResult.audio_url_alt}
-              selectedAudio={selectedAudio}
-              isSelecting={isSelectingAudio}
-              onSelect={selectAudio}
-            />
-          ) : null}
-        </div>
-      ) : (
-        <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed bg-muted/30 p-8 text-center text-sm text-muted-foreground">
-          {t("create.emptyState")}
-        </section>
-      )}
-    </div>
+        ) : (
+          <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed bg-muted/30 p-8 text-center text-sm text-muted-foreground">
+            {t("create.emptyState")}
+          </section>
+        )}
+      </div>
+    </>
   );
 }

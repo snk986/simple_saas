@@ -312,7 +312,10 @@
     }
   },
   "errors": {
+    "actionNeeded": "Accion necesaria",
     "authRequired": "Inicia sesion antes de generar musica.",
+    "authRequiredDescription": "Inicia sesion para conservar tu letra, generar audio y guardar la cancion final.",
+    "insufficientCreditsDescription": "Tu saldo es demasiado bajo para esta generacion. Agrega creditos para continuar.",
     "signInToCreate": "Iniciar sesion",
     "topUpCredits": "Recargar creditos",
     "insufficientCredits": "No tienes creditos suficientes. Recarga tu saldo.",

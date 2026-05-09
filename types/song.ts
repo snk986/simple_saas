@@ -1,4 +1,9 @@
-export type SongStatus = "draft" | "generating" | "ready" | "failed" | "expired";
+export type SongStatus =
+  | "draft"
+  | "generating"
+  | "ready"
+  | "failed"
+  | "expired";
 export type SelectedAudio = "primary" | "alt";
 
 export interface Song {
@@ -63,6 +68,8 @@ export interface AudioStatusResponse {
   status: "processing" | "completed" | "failed";
   songId?: string;
   audio_url?: string;
-  audio_url_alt?: string;
   cover_url?: string;
+  altSongId?: string;
+  alt_audio_url?: string;
+  alt_cover_url?: string;
 }

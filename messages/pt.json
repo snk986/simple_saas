@@ -312,7 +312,10 @@
     }
   },
   "errors": {
+    "actionNeeded": "Acao necessaria",
     "authRequired": "Entre antes de gerar musica.",
+    "authRequiredDescription": "Entre para manter sua letra, gerar audio e salvar a musica final.",
+    "insufficientCreditsDescription": "Seu saldo esta baixo para esta geracao. Adicione creditos para continuar.",
     "signInToCreate": "Entrar",
     "topUpCredits": "Comprar creditos",
     "insufficientCredits": "Creditos insuficientes. Recarregue seu saldo.",

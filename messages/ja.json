@@ -312,7 +312,10 @@
     }
   },
   "errors": {
+    "actionNeeded": "操作が必要です",
     "authRequired": "音楽を生成する前にサインインしてください。",
+    "authRequiredDescription": "サインインすると、歌詞を保持し、音楽を生成し、完成した曲を保存できます。",
+    "insufficientCreditsDescription": "この生成にはクレジットが不足しています。続行するにはクレジットを追加してください。",
     "signInToCreate": "サインイン",
     "topUpCredits": "クレジットを追加",
     "insufficientCredits": "クレジットが不足しています。チャージしてください。",

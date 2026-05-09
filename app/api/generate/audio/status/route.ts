@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     let songQuery = supabase
       .from("songs")
       .select(
-        "id,title,status,kie_task_id,audio_url,audio_url_alt,cover_url,style_tags,user_id",
+        "id,title,lyrics,user_input,status,kie_task_id,audio_url,audio_url_alt,cover_url,lyrics_regen_count,style_key,style_params,style_tags,locale,user_id,is_public,expires_at,created_at",
       )
       .eq("user_id", user.id);
 
@@ -75,7 +75,6 @@ export async function GET(request: NextRequest) {
         status: "completed",
         songId: song.id,
         audio_url: song.audio_url,
-        audio_url_alt: song.audio_url_alt,
         cover_url: song.cover_url,
       });
     }
@@ -109,22 +108,12 @@ export async function GET(request: NextRequest) {
     const primary = result.songs[0];
     const alt = result.songs[1];
     const pathPrefix = `songs/${song.id}/audio`;
-    const [audioUrl, audioUrlAlt] = await Promise.all([
-      uploadRemoteMedia({
-        url: primary.audio_url,
-        pathPrefix,
-        fileName: "primary",
-        fallbackExtension: "mp3",
-      }),
-      alt
-        ? uploadRemoteMedia({
-            url: alt.audio_url,
-            pathPrefix,
-            fileName: "alt",
-            fallbackExtension: "mp3",
-          })
-        : Promise.resolve(null),
-    ]);
+    const audioUrl = await uploadRemoteMedia({
+      url: primary.audio_url,
+      pathPrefix,
+      fileName: "primary",
+      fallbackExtension: "mp3",
+    });
 
     const coverUrl = primary.image_url
       ? await uploadRemoteMedia({
@@ -141,7 +130,7 @@ export async function GET(request: NextRequest) {
 
     const readyUpdate: Record<string, unknown> = {
       audio_url: audioUrl,
-      audio_url_alt: audioUrlAlt,
+      audio_url_alt: null,
       cover_url: coverUrl,
       status: "ready",
       selected_audio: "primary",
@@ -162,6 +151,73 @@ export async function GET(request: NextRequest) {
       throw updateError;
     }
 
+    let altSong: {
+      id: string;
+      audio_url: string | null;
+      cover_url: string | null;
+    } | null = null;
+
+    if (alt) {
+      const altTitle = alt.title?.trim() || `${song.title} (Version B)`;
+      const { data: insertedAltSong, error: insertAltError } = await supabase
+        .from("songs")
+        .insert({
+          user_id: user.id,
+          title:
+            altTitle === song.title ? `${song.title} (Version B)` : altTitle,
+          lyrics: song.lyrics,
+          user_input: song.user_input,
+          style_key: song.style_key,
+          style_params: song.style_params,
+          style_tags: song.style_tags,
+          locale: song.locale,
+          status: "generating",
+          is_public: song.is_public,
+          expires_at: entitlements.canKeepSongsForever ? null : song.expires_at,
+        })
+        .select("id")
+        .single();
+
+      if (insertAltError || !insertedAltSong) {
+        throw insertAltError ?? new Error("Failed to create alternate song");
+      }
+
+      const altAudioUrl = await uploadRemoteMedia({
+        url: alt.audio_url,
+        pathPrefix: `songs/${insertedAltSong.id}/audio`,
+        fileName: "primary",
+        fallbackExtension: "mp3",
+      });
+      const altCoverUrl = alt.image_url
+        ? await uploadRemoteMedia({
+            url: alt.image_url,
+            pathPrefix: `songs/${insertedAltSong.id}/cover`,
+            fileName: "cover",
+            fallbackExtension: "jpg",
+          })
+        : coverUrl;
+
+      const { data: readyAltSong, error: updateAltError } = await supabase
+        .from("songs")
+        .update({
+          audio_url: altAudioUrl,
+          cover_url: altCoverUrl,
+          status: "ready",
+          selected_audio: "primary",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", insertedAltSong.id)
+        .eq("user_id", user.id)
+        .select("id,audio_url,cover_url")
+        .single();
+
+      if (updateAltError || !readyAltSong) {
+        throw updateAltError ?? new Error("Failed to store alternate song");
+      }
+
+      altSong = readyAltSong;
+    }
+
     await checkAchievements(user.id).catch((achievementError) => {
       console.error("Achievement check error:", achievementError);
     });
@@ -170,8 +226,10 @@ export async function GET(request: NextRequest) {
       status: "completed",
       songId: song.id,
       audio_url: audioUrl,
-      audio_url_alt: audioUrlAlt,
       cover_url: coverUrl,
+      altSongId: altSong?.id,
+      alt_audio_url: altSong?.audio_url,
+      alt_cover_url: altSong?.cover_url,
     });
   } catch (error) {
     console.error("Audio status error:", error);

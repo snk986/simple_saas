@@ -110,7 +110,10 @@ function makeLyricsPreview(lyrics: string) {
     .join("\n\n");
 }
 
-function mapPublicSong(song: RawSong, take?: PublicSongTake): PublicSong | null {
+function mapPublicSong(
+  song: RawSong,
+  take?: PublicSongTake,
+): PublicSong | null {
   const audioUrl =
     take === "alt"
       ? song.audio_url_alt
@@ -140,7 +143,8 @@ function mapPublicSong(song: RawSong, take?: PublicSongTake): PublicSong | null 
     styleTags: song.style_tags ?? style.tags,
     genre: styleParams.genre ?? style.params.genre,
     mood: styleParams.mood ?? style.params.mood,
-    bpm: typeof styleParams.bpm === "number" ? styleParams.bpm : style.params.bpm,
+    bpm:
+      typeof styleParams.bpm === "number" ? styleParams.bpm : style.params.bpm,
     locale: song.locale,
     totalScore: song.total_score,
     reportData: song.report_data,
@@ -154,23 +158,25 @@ function mapPublicSong(song: RawSong, take?: PublicSongTake): PublicSong | null 
   };
 }
 
-export const getPublicSong = cache(async (id: string, take?: PublicSongTake) => {
-  const supabase = createServiceRoleClient();
-  const { data, error } = await supabase
-    .from("songs")
-    .select(publicProjection)
-    .eq("id", id)
-    .eq("is_public", true)
-    .eq("status", "ready")
-    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-    .single();
+export const getPublicSong = cache(
+  async (id: string, take?: PublicSongTake) => {
+    const supabase = createServiceRoleClient();
+    const { data, error } = await supabase
+      .from("songs")
+      .select(publicProjection)
+      .eq("id", id)
+      .eq("is_public", true)
+      .eq("status", "ready")
+      .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+      .single();
 
-  if (error || !data) {
-    return null;
-  }
+    if (error || !data) {
+      return null;
+    }
 
-  return mapPublicSong(data as RawSong, take);
-});
+    return mapPublicSong(data as RawSong, take);
+  },
+);
 
 export async function getRelatedPublicSongs(song: PublicSong, limit = 3) {
   const supabase = createServiceRoleClient();

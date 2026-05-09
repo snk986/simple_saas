@@ -312,7 +312,10 @@
     }
   },
   "errors": {
+    "actionNeeded": "Action needed",
     "authRequired": "Please sign in before generating music.",
+    "authRequiredDescription": "Sign in to keep your lyrics, generate audio, and save the finished song.",
+    "insufficientCreditsDescription": "Your balance is too low for this generation. Add credits to continue.",
     "signInToCreate": "Sign in",
     "topUpCredits": "Top up credits",
     "insufficientCredits": "Not enough credits. Please top up.",
