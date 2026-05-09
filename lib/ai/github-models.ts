@@ -96,7 +96,6 @@ async function requestGitHubModels(
         model,
         messages: [{ role: "user", content: prompt }],
         max_tokens: options.maxTokens ?? 1800,
-        response_format: { type: "json_object" },
         stream: false,
         temperature: options.temperature ?? 0.8,
       }),

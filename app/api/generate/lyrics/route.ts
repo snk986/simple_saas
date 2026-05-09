@@ -20,6 +20,18 @@ function normalizeLocale(locale?: string) {
   return locales.includes(locale as any) ? locale! : defaultLocale;
 }
 
+function isPreviewRuntime() {
+  return process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production";
+}
+
+function errorDetail(error: unknown) {
+  if (!isPreviewRuntime()) {
+    return undefined;
+  }
+
+  return error instanceof Error ? error.message : String(error);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = requestSchema.safeParse(await request.json());
@@ -42,6 +54,12 @@ export async function POST(request: NextRequest) {
     const entitlements = await getUserEntitlements(user.id);
 
     if (body.data.songId) {
+      console.info("[lyrics] regenerating lyrics", {
+        provider: process.env.AI_PROVIDER ?? "github",
+        locale,
+        songId: body.data.songId,
+      });
+
       const { data: existingSong, error: fetchError } = await supabase
         .from("songs")
         .select(
@@ -101,6 +119,7 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (updateError || !updatedSong) {
+        console.error("[lyrics] failed to update song", updateError);
         return NextResponse.json(
           { error: "Failed to update song" },
           { status: 500 },
@@ -121,6 +140,11 @@ export async function POST(request: NextRequest) {
     if (!body.data.userInput) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
+
+    console.info("[lyrics] generating lyrics", {
+      provider: process.env.AI_PROVIDER ?? "github",
+      locale,
+    });
 
     const analysis = await analyzeInput(body.data.userInput, locale);
 
@@ -145,6 +169,12 @@ export async function POST(request: NextRequest) {
       style,
     });
 
+    console.info("[lyrics] generated draft", {
+      provider: process.env.AI_PROVIDER ?? "github",
+      locale,
+      style: style.key,
+    });
+
     const { data: song, error: insertError } = await supabase
       .from("songs")
       .insert({
@@ -164,6 +194,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError || !song) {
+      console.error("[lyrics] failed to create song", insertError);
       return NextResponse.json(
         { error: "Failed to create song" },
         { status: 500 },
@@ -182,7 +213,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Lyrics generation error:", error);
     return NextResponse.json(
-      { error: "Generation failed" },
+      {
+        error: "Generation failed",
+        detail: errorDetail(error),
+      },
       { status: 500 },
     );
   }
