@@ -17,6 +17,7 @@ interface SongPageProps {
     id: string;
   }>;
   searchParams?: Promise<{
+    take?: string;
     utm_campaign?: string;
     utm_medium?: string;
     utm_source?: string;
@@ -47,6 +48,10 @@ function getTimestamps(reportData: Record<string, unknown> | null) {
   return timestamps.length > 0 ? timestamps : null;
 }
 
+function normalizeTake(take?: string) {
+  return take === "alt" ? "alt" : take === "primary" ? "primary" : undefined;
+}
+
 function buildDescription(
   song: Awaited<ReturnType<typeof getPublicSong>>,
   template: (values: Record<string, string>) => string,
@@ -63,10 +68,14 @@ function buildDescription(
   });
 }
 
-export async function generateMetadata({ params }: SongPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: SongPageProps): Promise<Metadata> {
   const { locale, id } = await params;
+  const query = searchParams ? await searchParams : {};
   const t = await getTranslations({ locale, namespace: "songPublic.seo" });
-  const song = await getPublicSong(id);
+  const song = await getPublicSong(id, normalizeTake(query.take));
 
   if (!song || !locales.includes(locale)) {
     return {
@@ -136,7 +145,7 @@ export default async function SongPage({ params, searchParams }: SongPageProps) 
     notFound();
   }
 
-  const song = await getPublicSong(id);
+  const song = await getPublicSong(id, normalizeTake(query.take));
 
   if (!song) {
     notFound();

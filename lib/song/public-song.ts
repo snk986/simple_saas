@@ -2,6 +2,8 @@ import { cache } from "react";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 import { getSongStyle } from "@/config/styles";
 
+export type PublicSongTake = "primary" | "alt";
+
 export interface PublicSong {
   id: string;
   title: string;
@@ -108,9 +110,9 @@ function makeLyricsPreview(lyrics: string) {
     .join("\n\n");
 }
 
-function mapPublicSong(song: RawSong): PublicSong | null {
+function mapPublicSong(song: RawSong, take?: PublicSongTake): PublicSong | null {
   const audioUrl =
-    song.selected_audio === "alt" && song.audio_url_alt
+    (take ?? song.selected_audio) === "alt" && song.audio_url_alt
       ? song.audio_url_alt
       : song.audio_url;
 
@@ -148,7 +150,7 @@ function mapPublicSong(song: RawSong): PublicSong | null {
   };
 }
 
-export const getPublicSong = cache(async (id: string) => {
+export const getPublicSong = cache(async (id: string, take?: PublicSongTake) => {
   const supabase = createServiceRoleClient();
   const { data, error } = await supabase
     .from("songs")
@@ -163,7 +165,7 @@ export const getPublicSong = cache(async (id: string) => {
     return null;
   }
 
-  return mapPublicSong(data as RawSong);
+  return mapPublicSong(data as RawSong, take);
 });
 
 export async function getRelatedPublicSongs(song: PublicSong, limit = 3) {

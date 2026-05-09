@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export interface DashboardSong {
-  id: string;
+  listId: string;
   title: string;
+  versionLabel?: string;
   status: string;
   isPublic: boolean;
   coverUrl: string | null;
@@ -52,7 +53,7 @@ export function SongList({ songs }: SongListProps) {
         <div className="divide-y">
           {songs.map((song) => (
             <article
-              key={song.id}
+              key={song.listId}
               className="grid gap-4 py-4 first:pt-0 last:pb-0 lg:grid-cols-[minmax(0,1fr)_360px]"
             >
               <div className="flex min-w-0 gap-4">
@@ -79,6 +80,11 @@ export function SongList({ songs }: SongListProps) {
                   <h3 className="truncate text-base font-semibold">
                     {song.title}
                   </h3>
+                  {song.versionLabel ? (
+                    <p className="mt-1 text-xs font-medium text-primary">
+                      {song.versionLabel}
+                    </p>
+                  ) : null}
                   <p className="mt-1 text-xs text-muted-foreground">
                     Created{" "}
                     {new Intl.DateTimeFormat("en", {
