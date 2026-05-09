@@ -312,6 +312,9 @@
     }
   },
   "errors": {
+    "authRequired": "Please sign in before generating music.",
+    "signInToCreate": "Sign in",
+    "topUpCredits": "Top up credits",
     "insufficientCredits": "Not enough credits. Please top up.",
     "generationFailed": "Generation failed. Please try again.",
     "contentFlagged": "This story can't be written. Try a different one?"

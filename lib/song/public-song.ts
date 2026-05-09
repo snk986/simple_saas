@@ -112,9 +112,13 @@ function makeLyricsPreview(lyrics: string) {
 
 function mapPublicSong(song: RawSong, take?: PublicSongTake): PublicSong | null {
   const audioUrl =
-    (take ?? song.selected_audio) === "alt" && song.audio_url_alt
+    take === "alt"
       ? song.audio_url_alt
-      : song.audio_url;
+      : take === "primary"
+        ? song.audio_url
+        : song.selected_audio === "alt" && song.audio_url_alt
+          ? song.audio_url_alt
+          : song.audio_url;
 
   if (!audioUrl) {
     return null;

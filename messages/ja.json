@@ -312,6 +312,9 @@
     }
   },
   "errors": {
+    "authRequired": "音楽を生成する前にサインインしてください。",
+    "signInToCreate": "サインイン",
+    "topUpCredits": "クレジットを追加",
     "insufficientCredits": "クレジットが不足しています。チャージしてください。",
     "generationFailed": "生成に失敗しました。もう一度お試しください。",
     "contentFlagged": "この物語は書けません。別の内容を試してください。"

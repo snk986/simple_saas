@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Wand2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -64,6 +65,9 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
   );
   const [editableLyrics, setEditableLyrics] = useState(initialDraft?.lyrics ?? "");
   const [error, setError] = useState("");
+  const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
+    null,
+  );
   const [isGenerating, setIsGenerating] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [audioStatus, setAudioStatus] = useState<
@@ -73,6 +77,8 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
   const [selectedAudio, setSelectedAudio] = useState<SelectedAudio>("primary");
   const [isSelectingAudio, setIsSelectingAudio] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const localePrefix =
+    params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
   useEffect(() => {
     if (audioStatus !== "processing") {
@@ -96,6 +102,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     }
 
     setError("");
+    setErrorAction(null);
     regenerate ? setIsRegenerating(true) : setIsGenerating(true);
 
     try {
@@ -137,6 +144,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     }
 
     setError("");
+    setErrorAction(null);
     setElapsedSeconds(0);
     setAudioStatus("processing");
     setAudioResult(null);
@@ -153,6 +161,20 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          setError(t("errors.authRequired"));
+          setErrorAction("sign-in");
+          setAudioStatus("idle");
+          return;
+        }
+
+        if (response.status === 402) {
+          setError(t("errors.insufficientCredits"));
+          setErrorAction("pricing");
+          setAudioStatus("idle");
+          return;
+        }
+
         throw new Error(data.error ?? "Audio generation failed");
       }
 
@@ -162,6 +184,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
       const message =
         caught instanceof Error ? caught.message : "Audio generation failed";
       setError(message);
+      setErrorAction(null);
       setAudioStatus("failed");
     }
   }
@@ -269,7 +292,27 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
 
         {error ? (
           <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            {error}
+            <p>{error}</p>
+            {errorAction ? (
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="mt-3 border-destructive/40 bg-background text-foreground hover:bg-background/90"
+              >
+                <Link
+                  href={
+                    errorAction === "sign-in"
+                      ? `${localePrefix}/sign-in`
+                      : `${localePrefix}/pricing`
+                  }
+                >
+                  {errorAction === "sign-in"
+                    ? t("errors.signInToCreate")
+                    : t("errors.topUpCredits")}
+                </Link>
+              </Button>
+            ) : null}
           </div>
         ) : null}
 

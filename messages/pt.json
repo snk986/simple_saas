@@ -312,6 +312,9 @@
     }
   },
   "errors": {
+    "authRequired": "Entre antes de gerar musica.",
+    "signInToCreate": "Entrar",
+    "topUpCredits": "Comprar creditos",
     "insufficientCredits": "Creditos insuficientes. Recarregue seu saldo.",
     "generationFailed": "A geracao falhou. Tente novamente.",
     "contentFlagged": "Esta historia nao pode ser escrita. Tente outra."

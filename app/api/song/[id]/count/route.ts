@@ -20,7 +20,15 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-    const body = requestSchema.safeParse(await request.json());
+    let payload: unknown;
+
+    try {
+      payload = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
+    const body = requestSchema.safeParse(payload);
 
     if (!body.success) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
