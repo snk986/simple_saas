@@ -23,6 +23,9 @@ function getKieConfig() {
       /\/$/,
       "",
     ),
+    callBackUrl:
+      process.env.KIE_CALLBACK_URL ??
+      `${(process.env.BASE_URL ?? "").replace(/\/$/, "")}/api/webhooks/kie`,
     model: process.env.KIE_MODEL ?? DEFAULT_MODEL,
   };
 }
@@ -70,8 +73,12 @@ function normalizeStatus(status?: string): TaskResult["status"] {
 
 export const kieProvider: AudioProvider = {
   async generateSong(params: GenerateParams) {
-    const { apiKey, baseUrl, model } = getKieConfig();
+    const { apiKey, baseUrl, callBackUrl, model } = getKieConfig();
     const style = params.prompt.slice(0, model.startsWith("V3") ? 200 : 1000);
+
+    if (!callBackUrl.startsWith("https://")) {
+      throw new KieError("KIE callback URL must be an HTTPS URL");
+    }
 
     const json = await requestWithRetry<{
       data?: { taskId?: string };
@@ -85,6 +92,7 @@ export const kieProvider: AudioProvider = {
         prompt: params.lyrics,
         style,
         title: params.title.slice(0, 80),
+        callBackUrl,
         customMode: true,
         instrumental: params.make_instrumental,
         model,
