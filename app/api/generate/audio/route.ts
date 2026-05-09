@@ -8,7 +8,7 @@ import {
   getUserEntitlements,
 } from "@/lib/subscription/entitlements";
 
-const AUDIO_CREDIT_COST = 100;
+const AUDIO_CREDIT_COST = 200;
 
 const requestSchema = z.object({
   songId: z.string().uuid(),

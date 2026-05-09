@@ -9,7 +9,7 @@ import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 
-const AUDIO_CREDIT_COST = 100;
+const AUDIO_CREDIT_COST = 200;
 
 const querySchema = z.object({
   taskId: z.string().min(1).optional(),
