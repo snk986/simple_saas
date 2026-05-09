@@ -1,18 +1,13 @@
 import { claudeProvider } from "./claude";
-import { geminiProvider } from "./gemini";
-import { openRouterProvider } from "./openrouter";
+import { githubModelsProvider } from "./github-models";
 import type { AiProvider } from "./types";
 
-type AiProviderName = "claude" | "gemini" | "openrouter";
+type AiProviderName = "claude" | "github";
 
 function getProviderName(): AiProviderName {
-  const provider = (process.env.AI_PROVIDER ?? "claude").toLowerCase();
+  const provider = (process.env.AI_PROVIDER ?? "github").toLowerCase();
 
-  if (
-    provider === "gemini" ||
-    provider === "claude" ||
-    provider === "openrouter"
-  ) {
+  if (provider === "github" || provider === "claude") {
     return provider;
   }
 
@@ -22,11 +17,11 @@ function getProviderName(): AiProviderName {
 export function getAiProvider(): AiProvider {
   const provider = getProviderName();
 
-  if (provider === "openrouter") {
-    return openRouterProvider;
+  if (provider === "github") {
+    return githubModelsProvider;
   }
 
-  return provider === "gemini" ? geminiProvider : claudeProvider;
+  return claudeProvider;
 }
 
 export const analyzeInput: AiProvider["analyzeInput"] = (...args) =>
