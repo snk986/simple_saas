@@ -80,6 +80,11 @@ export const kieProvider: AudioProvider = {
       throw new KieError("KIE callback URL must be an HTTPS URL");
     }
 
+    console.info("[audio] generating song with KIE", {
+      model,
+      baseUrl,
+    });
+
     const json = await requestWithRetry<{
       data?: { taskId?: string };
     }>(`${baseUrl}/api/v1/generate`, {
