@@ -290,8 +290,8 @@ export default async function SongPage({
           ) : null}
 
           <section className="bg-[var(--mood-color)] px-5 py-6 sm:px-8 sm:py-8">
-            <div className="grid items-end gap-5 sm:grid-cols-[184px_minmax(0,1fr)] sm:gap-6">
-              <div className="aspect-square w-36 overflow-hidden rounded-md bg-zinc-800 shadow-[0_22px_60px_rgba(0,0,0,0.38)] sm:w-[184px]">
+            <div className="grid items-end gap-5 sm:grid-cols-[minmax(160px,232px)_minmax(0,1fr)] sm:gap-6">
+              <div className="aspect-square w-36 overflow-hidden rounded-md bg-zinc-800 shadow-[0_22px_60px_rgba(0,0,0,0.38)] sm:w-[clamp(160px,22vw,232px)]">
                 {song.coverUrl ? (
                   <img
                     src={song.coverUrl}
