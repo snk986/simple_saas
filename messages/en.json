@@ -122,7 +122,9 @@
       "create": "Create song"
     },
     "lyrics": {
-      "title": "Lyrics"
+      "title": "Lyrics",
+      "showMore": "Show more",
+      "showLess": "Show less"
     },
     "breadcrumbCreate": "Create",
     "creatorReport": "Creator report",

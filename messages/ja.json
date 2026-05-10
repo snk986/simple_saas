@@ -122,7 +122,9 @@
       "create": "Create song"
     },
     "lyrics": {
-      "title": "Lyrics"
+      "title": "歌詞",
+      "showMore": "もっと見る",
+      "showLess": "閉じる"
     },
     "breadcrumbCreate": "作成",
     "creatorReport": "クリエイターレポート",

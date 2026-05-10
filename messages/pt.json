@@ -122,7 +122,9 @@
       "create": "Criar cancao"
     },
     "lyrics": {
-      "title": "Letra"
+      "title": "Letra",
+      "showMore": "Ver mais",
+      "showLess": "Ver menos"
     },
     "breadcrumbCreate": "Criar",
     "creatorReport": "Relatorio do criador",

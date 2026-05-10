@@ -316,7 +316,7 @@ export default async function SongPage({
                   {headerStats.map((item) => (
                     <span
                       key={item}
-                      className="before:mr-2 before:content-['•']"
+                      className="inline-flex items-center gap-2 before:block before:h-1 before:w-1 before:rounded-full before:bg-white/70 before:content-['']"
                     >
                       {item}
                     </span>
@@ -351,6 +351,8 @@ export default async function SongPage({
               lyrics={song.lyrics}
               timestamps={timestamps}
               title={t("lyrics.title")}
+              showMoreLabel={t("lyrics.showMore")}
+              showLessLabel={t("lyrics.showLess")}
             />
             <SongSeoSummary
               storySummary={song.storySummary}

@@ -122,7 +122,9 @@
       "create": "Create song"
     },
     "lyrics": {
-      "title": "Lyrics"
+      "title": "가사",
+      "showMore": "더 보기",
+      "showLess": "접기"
     },
     "breadcrumbCreate": "만들기",
     "creatorReport": "크리에이터 리포트",
