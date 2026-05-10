@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface LyricsDisplayProps {
@@ -31,11 +31,29 @@ export function LyricsDisplay({
   showLessLabel = "Show less",
 }: LyricsDisplayProps) {
   const cleanedLyrics = useMemo(() => cleanLyrics(lyrics), [lyrics]);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const hasLongLyrics = cleanedLyrics.split(/\r?\n/).length > 20;
 
+  function handleToggleLyrics() {
+    setIsExpanded((current) => {
+      const next = !current;
+
+      if (!next) {
+        window.requestAnimationFrame(() => {
+          sectionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        });
+      }
+
+      return next;
+    });
+  }
+
   return (
-    <section className="max-w-[540px]">
+    <section ref={sectionRef} className="max-w-[540px]">
       <div className="mb-4">
         <h2 className="text-[25px] font-extrabold leading-tight tracking-normal text-white">
           {title}
@@ -59,8 +77,9 @@ export function LyricsDisplay({
       {hasLongLyrics ? (
         <button
           type="button"
+          aria-expanded={isExpanded}
           className="mt-1 text-[16px] font-extrabold leading-none text-white hover:underline"
-          onClick={() => setIsExpanded((current) => !current)}
+          onClick={handleToggleLyrics}
         >
           ...{isExpanded ? showLessLabel : showMoreLabel}
         </button>
