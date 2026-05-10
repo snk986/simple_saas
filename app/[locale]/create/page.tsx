@@ -34,7 +34,10 @@ function buildRedirectPath(
   return `${localePrefix(locale)}/create${query ? `?${query}` : ""}`;
 }
 
-export default async function CreatePage({ params, searchParams }: CreatePageProps) {
+export default async function CreatePage({
+  params,
+  searchParams,
+}: CreatePageProps) {
   const { locale } = await params;
   const query = await searchParams;
   const t = await getTranslations("create");
@@ -87,9 +90,11 @@ export default async function CreatePage({ params, searchParams }: CreatePagePro
   return (
     <div className="container px-4 py-8 md:px-6 md:py-12">
       {query.upgraded === "true" && (
-        <div className="mx-auto mb-6 max-w-3xl rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div className="mx-auto mb-6 max-w-3xl rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-foreground">
           <p className="font-medium">{t("paymentSuccessTitle")}</p>
-          <p className="mt-1 text-emerald-800">{t("paymentSuccessDescription")}</p>
+          <p className="mt-1 text-muted-foreground">
+            {t("paymentSuccessDescription")}
+          </p>
         </div>
       )}
       <StoryInput

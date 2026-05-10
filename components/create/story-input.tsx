@@ -252,7 +252,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
           }
         }}
       >
-        <DialogContent className="max-w-md rounded-lg p-6">
+        <DialogContent className="max-w-md rounded-lg border-border bg-card p-6">
           <DialogHeader>
             <DialogTitle>{t("errors.actionNeeded")}</DialogTitle>
             <DialogDescription>
@@ -280,7 +280,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
       </Dialog>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(280px,420px)_1fr]">
-        <section className="rounded-lg border bg-background p-5 shadow-sm lg:sticky lg:top-24 lg:self-start">
+        <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-4">
             <h1 className="text-3xl font-semibold tracking-normal">
               {t("create.title")}
@@ -291,13 +291,13 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
           </div>
 
           {recallCampaign === "inactive_creator" ? (
-            <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+            <div className="mb-4 rounded-md border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-foreground">
               {t("create.recall.inactiveCreator")}
             </div>
           ) : null}
 
           {initialDraft ? (
-            <div className="mb-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-950">
+            <div className="mb-4 rounded-md border border-sky-500/30 bg-sky-500/10 px-3 py-2 text-sm text-sky-100">
               {t("create.recall.draftNoAudio")}
             </div>
           ) : null}
@@ -367,7 +367,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
             ) : null}
           </div>
         ) : (
-          <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed bg-muted/30 p-8 text-center text-sm text-muted-foreground">
+          <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
             {t("create.emptyState")}
           </section>
         )}

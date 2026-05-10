@@ -34,7 +34,7 @@ export function LyricsEditor({
   const remaining = Math.max(3 - regenCount, 0);
 
   return (
-    <section className="rounded-lg border bg-background p-5 shadow-sm">
+    <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="mb-2 flex items-center gap-2 text-sm font-medium text-primary">

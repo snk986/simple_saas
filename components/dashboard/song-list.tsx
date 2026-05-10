@@ -28,7 +28,7 @@ interface SongListProps {
 
 export function SongList({ songs }: SongListProps) {
   return (
-    <section className="rounded-lg border bg-background p-5 shadow-sm sm:p-6">
+    <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 sm:p-6">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold">Your songs</h2>
@@ -42,7 +42,7 @@ export function SongList({ songs }: SongListProps) {
       </div>
 
       {songs.length === 0 ? (
-        <div className="rounded-lg border border-dashed bg-muted/20 p-8 text-center">
+        <div className="rounded-lg border border-dashed border-border bg-muted/20 p-8 text-center">
           <Music2 className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
           <p className="font-medium">No songs yet</p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -50,14 +50,14 @@ export function SongList({ songs }: SongListProps) {
           </p>
         </div>
       ) : (
-        <div className="divide-y">
+        <div className="divide-y divide-border">
           {songs.map((song) => (
             <article
               key={song.listId}
               className="grid gap-4 py-4 first:pt-0 last:pb-0 lg:grid-cols-[minmax(0,1fr)_360px]"
             >
               <div className="flex min-w-0 gap-4">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border bg-muted">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
                   {song.coverUrl ? (
                     <img
                       src={song.coverUrl}

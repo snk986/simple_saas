@@ -25,7 +25,7 @@ export function Achievements({ definitions, unlocked }: AchievementsProps) {
   const unlockedCount = unlockedMap.size;
 
   return (
-    <section className="rounded-lg border bg-background p-5 shadow-sm sm:p-6">
+    <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 sm:p-6">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
@@ -49,8 +49,8 @@ export function Achievements({ definitions, unlocked }: AchievementsProps) {
               className={cn(
                 "rounded-lg border p-4 transition-colors",
                 isUnlocked
-                  ? "border-emerald-200 bg-emerald-50/70 dark:border-emerald-900 dark:bg-emerald-950/30"
-                  : "border-slate-200 bg-muted/20 opacity-75 dark:border-slate-800",
+                  ? "border-primary/30 bg-primary/10"
+                  : "border-border bg-muted/20 opacity-75",
               )}
             >
               <div className="mb-3 flex items-center justify-between gap-3">
@@ -58,8 +58,8 @@ export function Achievements({ definitions, unlocked }: AchievementsProps) {
                   className={cn(
                     "flex h-9 w-9 items-center justify-center rounded-md",
                     isUnlocked
-                      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200"
-                      : "bg-slate-100 text-slate-500 dark:bg-slate-900",
+                      ? "bg-primary/15 text-primary"
+                      : "bg-muted text-muted-foreground",
                   )}
                 >
                   {isUnlocked ? (

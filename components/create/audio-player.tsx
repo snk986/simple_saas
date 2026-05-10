@@ -42,7 +42,7 @@ export function AudioPlayer({
   ].filter((track) => track.url);
 
   return (
-    <section className="rounded-lg border bg-background p-5 shadow-sm">
+    <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20">
       <div className="grid gap-5 md:grid-cols-[180px_1fr]">
         <div className="relative aspect-square overflow-hidden rounded-lg border bg-muted">
           {coverUrl ? (
@@ -75,7 +75,7 @@ export function AudioPlayer({
             {tracks.map((track) => (
               <article
                 key={track.key}
-                className="rounded-lg border bg-muted/20 p-4 transition-colors"
+                className="rounded-lg border border-border bg-muted/30 p-4 transition-colors"
               >
                 <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>

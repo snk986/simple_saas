@@ -15,7 +15,7 @@ export function CreditsBalanceCard({
   songRetentionDays,
 }: CreditsBalanceCardProps) {
   return (
-    <div className="rounded-xl border bg-card p-6">
+    <div className="rounded-lg border border-border bg-card p-6 shadow-sm shadow-black/20">
       <div className="flex items-center gap-4">
         <div className="p-2 bg-primary/10 rounded-lg">
           <Coins className="h-6 w-6 text-primary" />

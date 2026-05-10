@@ -34,7 +34,7 @@ function isFutureDate(date: string) {
 
 function getStatusConfig(
   status: string,
-  current_period_end: string
+  current_period_end: string,
 ): StatusConfig {
   const inGracePeriod = isFutureDate(current_period_end);
 
@@ -127,7 +127,7 @@ export function SubscriptionStatusCard({
       : entitlements.plan.charAt(0).toUpperCase() + entitlements.plan.slice(1);
 
   return (
-    <div className="rounded-xl border bg-card p-6">
+    <div className="rounded-lg border border-border bg-card p-6 shadow-sm shadow-black/20">
       <div className="flex items-center gap-4">
         <div className="p-2 bg-primary/10 rounded-lg">
           <CreditCard className="h-6 w-6 text-primary" />
@@ -139,7 +139,7 @@ export function SubscriptionStatusCard({
               className={`text-2xl font-bold capitalize mt-1 ${
                 getStatusConfig(
                   subscription.status,
-                  subscription.current_period_end
+                  subscription.current_period_end,
                 ).color
               }`}
             >
@@ -176,7 +176,7 @@ export function SubscriptionStatusCard({
           {(() => {
             const config = getStatusConfig(
               subscription.status,
-              subscription.current_period_end
+              subscription.current_period_end,
             );
             const Icon = config.icon;
             return (

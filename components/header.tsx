@@ -4,7 +4,6 @@ import { signOutAction } from "@/app/actions";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Button } from "./ui/button";
-import { ThemeSwitcher } from "./theme-switcher";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 import { locales, type Locale } from "@/i18n/routing";
@@ -35,12 +34,12 @@ export default function Header({ user }: HeaderProps) {
   const navItems = isDashboard ? dashboardItems : mainNavItems;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <Logo />
         </div>
-        
+
         {/* Centered Navigation */}
         <nav className="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
           {navItems.map((item) => (
@@ -71,7 +70,6 @@ export default function Header({ user }: HeaderProps) {
               </option>
             ))}
           </select>
-          <ThemeSwitcher />
           {user ? (
             <div className="hidden md:flex items-center gap-2">
               {isDashboard && (

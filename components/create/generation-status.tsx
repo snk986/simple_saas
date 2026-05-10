@@ -53,7 +53,7 @@ export function GenerationStatus({
   return (
     <section
       aria-live="polite"
-      className="rounded-lg border bg-background p-5 shadow-sm"
+      className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -111,7 +111,7 @@ export function GenerationStatus({
             className={cn(
               "flex items-center gap-2 rounded-md border px-3 py-2 text-sm",
               step.active || step.done
-                ? "border-primary/30 bg-primary/5 text-foreground"
+                ? "border-primary/30 bg-primary/10 text-foreground"
                 : "bg-muted/30 text-muted-foreground",
             )}
           >

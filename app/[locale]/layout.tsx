@@ -4,9 +4,7 @@ import { notFound } from "next/navigation";
 import { locales } from "@/i18n/routing";
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
-import { ThemeProvider } from "next-themes";
 import { createClient } from "@/utils/supabase/server";
-import { Toaster } from "@/components/ui/toaster";
 
 export default async function LocaleLayout({
   children,

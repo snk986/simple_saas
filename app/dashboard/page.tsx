@@ -97,9 +97,9 @@ export default async function DashboardPage() {
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-6 sm:gap-8 px-4 sm:px-8 container">
+    <div className="container flex w-full flex-1 flex-col gap-6 px-4 sm:gap-8 sm:px-8">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border rounded-lg p-6 sm:p-8 mt-6 sm:mt-8">
+      <div className="mt-6 rounded-lg border border-border bg-card p-6 shadow-sm shadow-black/20 sm:mt-8 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold mb-2 break-words">
           Welcome back, {customerData?.name || user.email?.split("@")[0]}
         </h1>

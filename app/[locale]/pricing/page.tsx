@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { CheckCircle2, Shield, Clock, CreditCard, RefreshCcw } from "lucide-react";
+import {
+  CheckCircle2,
+  Shield,
+  Clock,
+  CreditCard,
+  RefreshCcw,
+} from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { locales, type Locale } from "@/i18n/routing";
@@ -57,10 +63,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
 
   const creditPackKeys = ["mini", "standard", "pro_pack"] as const;
   const subscriptionMonthly = SUBSCRIPTION_TIERS.filter(
-    (tier) => tier.billingPeriod === "monthly"
+    (tier) => tier.billingPeriod === "monthly",
   );
   const subscriptionYearly = SUBSCRIPTION_TIERS.filter(
-    (tier) => tier.billingPeriod === "yearly"
+    (tier) => tier.billingPeriod === "yearly",
   );
   let accountSummary: {
     credits: number;
@@ -81,25 +87,27 @@ export default async function PricingPage({ params }: PricingPageProps) {
           current_period_end,
           metadata
         )
-      `
+      `,
       )
       .eq("user_id", user.id)
       .maybeSingle();
 
     const activeSubscription = customer?.subscriptions?.find((subscription) =>
-      ["active", "trialing"].includes(subscription.status)
+      ["active", "trialing"].includes(subscription.status),
     );
     const metadataPlan =
       typeof activeSubscription?.metadata?.plan === "string"
         ? activeSubscription.metadata.plan
         : undefined;
     const matchedTier = SUBSCRIPTION_TIERS.find(
-      (tier) => tier.productId && tier.productId === activeSubscription?.creem_product_id
+      (tier) =>
+        tier.productId &&
+        tier.productId === activeSubscription?.creem_product_id,
     );
     const plan =
       metadataPlan === "basic" || metadataPlan === "pro"
         ? metadataPlan
-        : matchedTier?.plan ?? "free";
+        : (matchedTier?.plan ?? "free");
 
     accountSummary = {
       credits: customer?.credits_balance ?? customer?.credits ?? 0,
@@ -153,7 +161,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
       />
 
       {/* Hero */}
-      <section className="border-b py-16 md:py-20">
+      <section className="border-b border-border py-16 md:py-20">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-normal text-primary">
@@ -167,7 +175,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
             </p>
           </div>
           {accountSummary && (
-            <div className="mx-auto mt-8 grid max-w-2xl gap-3 rounded-lg border bg-card p-4 text-left shadow-sm sm:grid-cols-2">
+            <div className="mx-auto mt-8 grid max-w-2xl gap-3 rounded-lg border border-border bg-card p-4 text-left shadow-sm shadow-black/20 sm:grid-cols-2">
               <div>
                 <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
                   {tp("currentPlan")}
@@ -219,7 +227,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
               return (
                 <article
                   key={pack.id}
-                  className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm ${
+                  className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm shadow-black/20 ${
                     pack.featured ? "border-primary ring-1 ring-primary" : ""
                   }`}
                 >
@@ -250,10 +258,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
                           key={fk}
                           className="flex gap-2 text-sm text-muted-foreground"
                         >
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           {t(`creditPacks.${key}.${fk}`)}
                         </li>
-                      )
+                      ),
                     )}
                   </ul>
                   <div className="mt-6">
@@ -270,7 +278,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
         </div>
       </section>
       {/* Subscriptions */}
-      <section className="border-t py-16">
+      <section className="border-t border-border py-16">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold">{t("subscriptionsTitle")}</h2>
@@ -288,10 +296,8 @@ export default async function PricingPage({ params }: PricingPageProps) {
                 return (
                   <article
                     key={tier.id}
-                    className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm ${
-                      tier.featured
-                        ? "border-primary ring-1 ring-primary"
-                        : ""
+                    className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm shadow-black/20 ${
+                      tier.featured ? "border-primary ring-1 ring-primary" : ""
                     }`}
                   >
                     {tier.featured && (
@@ -312,7 +318,8 @@ export default async function PricingPage({ params }: PricingPageProps) {
                       </span>
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      {tier.creditAmount} {tp("credits")}{tp("perMonth")}
+                      {tier.creditAmount} {tp("credits")}
+                      {tp("perMonth")}
                     </p>
                     <ul className="mt-5 flex-1 space-y-2.5">
                       {(["feature1", "feature2", "feature3"] as const).map(
@@ -321,10 +328,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
                             key={fk}
                             className="flex gap-2 text-sm text-muted-foreground"
                           >
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                             {t(`subscriptions.${planKey}.${fk}`)}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                     <div className="mt-6">
@@ -353,10 +360,8 @@ export default async function PricingPage({ params }: PricingPageProps) {
                 return (
                   <article
                     key={tier.id}
-                    className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm ${
-                      tier.featured
-                        ? "border-primary ring-1 ring-primary"
-                        : ""
+                    className={`relative flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm shadow-black/20 ${
+                      tier.featured ? "border-primary ring-1 ring-primary" : ""
                     }`}
                   >
                     {tier.featured && (
@@ -377,7 +382,8 @@ export default async function PricingPage({ params }: PricingPageProps) {
                       </span>
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      {tier.creditAmount} {tp("credits")}{tp("perYear")}
+                      {tier.creditAmount} {tp("credits")}
+                      {tp("perYear")}
                     </p>
                     <ul className="mt-5 flex-1 space-y-2.5">
                       {(["feature1", "feature2", "feature3"] as const).map(
@@ -386,10 +392,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
                             key={fk}
                             className="flex gap-2 text-sm text-muted-foreground"
                           >
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                             {t(`subscriptions.${planKey}.${fk}`)}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                     <div className="mt-6">
@@ -412,7 +418,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
       </section>
 
       {/* FAQ */}
-      <section className="border-t py-16">
+      <section className="border-t border-border py-16">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold text-center">{t("faq.title")}</h2>
