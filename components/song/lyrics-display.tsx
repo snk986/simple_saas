@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Music2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LyricsDisplayProps {
   songId: string;
   lyrics: string;
   timestamps?: number[] | null;
+  title?: string;
 }
 
 function splitLyrics(lyrics: string) {
@@ -17,14 +17,21 @@ function splitLyrics(lyrics: string) {
     .filter(Boolean);
 }
 
-export function LyricsDisplay({ songId, lyrics, timestamps }: LyricsDisplayProps) {
+export function LyricsDisplay({
+  songId,
+  lyrics,
+  timestamps,
+  title = "Lyrics",
+}: LyricsDisplayProps) {
   const sections = useMemo(() => splitLyrics(lyrics), [lyrics]);
   const sectionRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
     const handleTimeUpdate = (event: Event) => {
-      const detail = (event as CustomEvent<{ currentTime: number; duration: number }>).detail;
+      const detail = (
+        event as CustomEvent<{ currentTime: number; duration: number }>
+      ).detail;
 
       if (!detail || sections.length === 0) {
         return;
@@ -58,26 +65,22 @@ export function LyricsDisplay({ songId, lyrics, timestamps }: LyricsDisplayProps
     };
 
     window.addEventListener(`hit-song:timeupdate:${songId}`, handleTimeUpdate);
-    return () => window.removeEventListener(`hit-song:timeupdate:${songId}`, handleTimeUpdate);
+    return () =>
+      window.removeEventListener(
+        `hit-song:timeupdate:${songId}`,
+        handleTimeUpdate,
+      );
   }, [sections.length, songId, timestamps]);
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950 sm:p-7">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-normal text-emerald-600 dark:text-emerald-400">
-            Lyrics
-          </p>
-          <h2 className="mt-1 text-2xl font-semibold text-slate-950 dark:text-white">
-            Singable story
-          </h2>
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-300">
-          <Music2 className="h-5 w-5" />
-        </div>
+    <section className="max-w-3xl">
+      <div className="mb-5">
+        <h2 className="text-2xl font-semibold tracking-normal text-white">
+          {title}
+        </h2>
       </div>
 
-      <div className="max-h-[560px] space-y-4 overflow-y-auto pr-1">
+      <div className="space-y-4">
         {sections.map((section, index) => (
           <div
             key={`${index}-${section.slice(0, 18)}`}
@@ -85,13 +88,15 @@ export function LyricsDisplay({ songId, lyrics, timestamps }: LyricsDisplayProps
               sectionRefs.current[index] = node;
             }}
             className={cn(
-              "rounded-lg border p-4 transition-all duration-300",
+              "border-l-2 py-1 pl-4 transition-all duration-300",
               activeSection === index
-                ? "border-emerald-300 bg-emerald-50 text-slate-950 shadow-sm dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-white"
-                : "border-transparent bg-slate-50 text-slate-600 dark:bg-slate-900/70 dark:text-slate-300",
+                ? "border-[#1ed760] text-white"
+                : "border-transparent text-zinc-400",
             )}
           >
-            <p className="whitespace-pre-line text-base leading-8">{section}</p>
+            <p className="whitespace-pre-line text-[17px] font-semibold leading-8">
+              {section}
+            </p>
           </div>
         ))}
       </div>

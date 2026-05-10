@@ -22,6 +22,7 @@ export interface PublicSong {
   totalScore: number | null;
   reportData: Record<string, unknown> | null;
   playCount: number;
+  likeCount: number;
   completeCount: number;
   shareCount: number;
   ctaClickCount: number;
@@ -60,6 +61,7 @@ type RawSong = {
   total_score: number | null;
   report_data: Record<string, unknown> | null;
   play_count: number | null;
+  like_count: number | null;
   complete_count: number | null;
   share_count: number | null;
   cta_click_count?: number | null;
@@ -84,6 +86,7 @@ const publicProjection = `
   total_score,
   report_data,
   play_count,
+  like_count,
   complete_count,
   share_count,
   cta_click_count,
@@ -149,6 +152,7 @@ function mapPublicSong(
     totalScore: song.total_score,
     reportData: song.report_data,
     playCount: song.play_count ?? 0,
+    likeCount: song.like_count ?? 0,
     completeCount: song.complete_count ?? 0,
     shareCount: song.share_count ?? 0,
     ctaClickCount: song.cta_click_count ?? 0,

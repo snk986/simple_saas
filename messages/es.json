@@ -103,6 +103,27 @@
       "ogImageAlt": "Imagen para compartir de {title}"
     },
     "previewLyrics": "Vista previa de la letra",
+    "header": {
+      "type": "Cancion",
+      "coverAlt": "Portada de {title}",
+      "plays": "{count} reproducciones",
+      "likes": "{count} me gusta"
+    },
+    "actions": {
+      "play": "Reproducir cancion",
+      "pause": "Pausar cancion",
+      "like": "Me gusta",
+      "liked": "Te gusta",
+      "copy": "Copiar enlace",
+      "copied": "Enlace copiado",
+      "copyFailed": "No se pudo copiar. Selecciona la barra de direccion.",
+      "more": "Mas acciones",
+      "share": "Compartir",
+      "create": "Crear cancion"
+    },
+    "lyrics": {
+      "title": "Letra"
+    },
     "breadcrumbCreate": "Crear",
     "creatorReport": "Informe del creador",
     "summary": {

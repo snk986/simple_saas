@@ -4,7 +4,7 @@ import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 const requestSchema = z.object({
-  event: z.enum(["play_start", "play_complete", "share", "cta_click"]),
+  event: z.enum(["play_start", "play_complete", "share", "cta_click", "like"]),
 });
 
 const counterByEvent = {
@@ -12,6 +12,7 @@ const counterByEvent = {
   play_complete: "complete_count",
   share: "share_count",
   cta_click: "cta_click_count",
+  like: "like_count",
 } as const;
 
 export async function POST(

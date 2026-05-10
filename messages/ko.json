@@ -103,6 +103,27 @@
       "ogImageAlt": "{title} 공유 이미지"
     },
     "previewLyrics": "가사 미리보기",
+    "header": {
+      "type": "Song",
+      "coverAlt": "{title} cover art",
+      "plays": "{count} plays",
+      "likes": "{count} likes"
+    },
+    "actions": {
+      "play": "Play song",
+      "pause": "Pause song",
+      "like": "Like",
+      "liked": "Liked",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "copyFailed": "Copy failed. Select the address bar instead.",
+      "more": "More actions",
+      "share": "Share",
+      "create": "Create song"
+    },
+    "lyrics": {
+      "title": "Lyrics"
+    },
     "breadcrumbCreate": "만들기",
     "creatorReport": "크리에이터 리포트",
     "summary": {

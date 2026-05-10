@@ -103,6 +103,27 @@
       "ogImageAlt": "{title} share image"
     },
     "previewLyrics": "Preview lyrics",
+    "header": {
+      "type": "Song",
+      "coverAlt": "{title} cover art",
+      "plays": "{count} plays",
+      "likes": "{count} likes"
+    },
+    "actions": {
+      "play": "Play song",
+      "pause": "Pause song",
+      "like": "Like",
+      "liked": "Liked",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "copyFailed": "Copy failed. Select the address bar instead.",
+      "more": "More actions",
+      "share": "Share",
+      "create": "Create song"
+    },
+    "lyrics": {
+      "title": "Lyrics"
+    },
     "breadcrumbCreate": "Create",
     "creatorReport": "Creator report",
     "summary": {

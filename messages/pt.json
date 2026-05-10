@@ -103,6 +103,27 @@
       "ogImageAlt": "Imagem de compartilhamento de {title}"
     },
     "previewLyrics": "Previa da letra",
+    "header": {
+      "type": "Cancao",
+      "coverAlt": "Capa de {title}",
+      "plays": "{count} reproducoes",
+      "likes": "{count} curtidas"
+    },
+    "actions": {
+      "play": "Tocar cancao",
+      "pause": "Pausar cancao",
+      "like": "Curtir",
+      "liked": "Curtida",
+      "copy": "Copiar link",
+      "copied": "Link copiado",
+      "copyFailed": "Nao foi possivel copiar. Selecione a barra de endereco.",
+      "more": "Mais acoes",
+      "share": "Compartilhar",
+      "create": "Criar cancao"
+    },
+    "lyrics": {
+      "title": "Letra"
+    },
     "breadcrumbCreate": "Criar",
     "creatorReport": "Relatorio do criador",
     "summary": {

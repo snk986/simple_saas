@@ -22,10 +22,10 @@ export function RelatedSongs({ songs, labels }: RelatedSongsProps) {
     <section>
       <div className="mb-4 flex items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium uppercase tracking-normal text-emerald-600 dark:text-emerald-400">
+          <p className="text-sm font-medium uppercase tracking-normal text-[#1ed760]">
             {labels.sectionLabel}
           </p>
-          <h2 className="mt-1 text-2xl font-semibold text-slate-950 dark:text-white">
+          <h2 className="mt-1 text-2xl font-semibold text-white">
             {labels.title}
           </h2>
         </div>
@@ -35,9 +35,9 @@ export function RelatedSongs({ songs, labels }: RelatedSongsProps) {
           <Link
             key={song.id}
             href={`/song/${song.id}`}
-            className="group overflow-hidden rounded-lg border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-950"
+            className="group overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] transition-all hover:-translate-y-0.5 hover:bg-white/[0.07]"
           >
-            <div className="relative aspect-[4/3] bg-slate-100 dark:bg-slate-900">
+            <div className="relative aspect-[4/3] bg-zinc-900">
               {song.coverUrl ? (
                 <img
                   src={song.coverUrl}
@@ -46,18 +46,18 @@ export function RelatedSongs({ songs, labels }: RelatedSongsProps) {
                 />
               ) : (
                 <div className="flex h-full items-center justify-center">
-                  <Music className="h-8 w-8 text-slate-400" />
+                  <Music className="h-8 w-8 text-zinc-500" />
                 </div>
               )}
             </div>
             <div className="p-4">
-              <p className="line-clamp-1 text-base font-semibold text-slate-950 dark:text-white">
+              <p className="line-clamp-1 text-base font-semibold text-white">
                 {song.title}
               </p>
-              <p className="mt-2 line-clamp-1 text-sm text-slate-500 dark:text-slate-400">
+              <p className="mt-2 line-clamp-1 text-sm text-zinc-400">
                 {song.styleLabel} {labels.styleMoodSeparator} {song.mood}
               </p>
-              <p className="mt-3 text-xs text-slate-400">
+              <p className="mt-3 text-xs text-zinc-500">
                 {song.playCount.toLocaleString()} {labels.playCount}
               </p>
             </div>
