@@ -107,6 +107,7 @@
       "type": "Cancao",
       "coverAlt": "Capa de {title}",
       "plays": "{count} reproducoes",
+      "shares": "{count} compartilhamentos",
       "likes": "{count} curtidas"
     },
     "actions": {
@@ -127,7 +128,21 @@
       "showLess": "Ver menos"
     },
     "breadcrumbCreate": "Criar",
-    "creatorReport": "Relatorio do criador",
+    "creatorReport": {
+      "title": "Relatorio do criador",
+      "score": "Pontuacao IA",
+      "summary": "Resumo",
+      "producerComment": "Comentario do produtor",
+      "emotionalValue": "Valor emocional",
+      "hookAnalysis": "Analise do hook",
+      "marketPositioning": "Posicionamento de mercado",
+      "songDetails": "Detalhes da cancao",
+      "genre": "Genero",
+      "mood": "Clima",
+      "bpm": "BPM",
+      "tags": "Tags",
+      "fallbackIntro": "{title} e uma cancao gerada por IA criada a partir desta historia: {story}. A pagina inclui letra completa, reproducao de audio, detalhes de estilo e sinais publicos para buscadores e ouvintes."
+    },
     "summary": {
       "sectionLabel": "Historia da musica",
       "title": "Criada a partir de um prompt real",

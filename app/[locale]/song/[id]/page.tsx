@@ -3,11 +3,10 @@ import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getPublicSong, getRelatedPublicSongs } from "@/lib/song/public-song";
-import { createClient } from "@/utils/supabase/server";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { LyricsDisplay } from "@/components/song/lyrics-display";
 import { SongActionBand } from "@/components/song/song-action-band";
-import { SongSeoSummary } from "@/components/song/song-seo-summary";
+import { SongCreatorReport } from "@/components/song/song-creator-report";
 import { RelatedSongs } from "@/components/song/related-songs";
 import {
   absoluteLocaleUrl,
@@ -70,19 +69,6 @@ function moodColor(mood: string) {
   }
 
   return "#8b9ab0";
-}
-
-function getTimestamps(reportData: Record<string, unknown> | null) {
-  const value = reportData?.timestamps;
-
-  if (!Array.isArray(value)) {
-    return null;
-  }
-
-  const timestamps = value.filter(
-    (item): item is number => typeof item === "number",
-  );
-  return timestamps.length > 0 ? timestamps : null;
 }
 
 function normalizeTake(take?: string) {
@@ -191,15 +177,9 @@ export default async function SongPage({
     notFound();
   }
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const isOwner = user?.id === song.userId;
   const relatedSongs = await getRelatedPublicSongs(song);
   const url = songUrl(locale, song.id);
   const prefix = localePrefix(locale);
-  const timestamps = getTimestamps(song.reportData);
   const artistName = "Hit-Song AI";
   const publishedYear = new Intl.DateTimeFormat(locale, {
     year: "numeric",
@@ -208,6 +188,9 @@ export default async function SongPage({
     publishedYear,
     song.playCount > 0
       ? t("header.plays", { count: song.playCount.toLocaleString(locale) })
+      : null,
+    song.shareCount > 0
+      ? t("header.shares", { count: song.shareCount.toLocaleString(locale) })
       : null,
     song.likeCount > 0
       ? t("header.likes", { count: song.likeCount.toLocaleString(locale) })
@@ -349,44 +332,35 @@ export default async function SongPage({
             <LyricsDisplay
               songId={song.id}
               lyrics={song.lyrics}
-              timestamps={timestamps}
               title={t("lyrics.title")}
               showMoreLabel={t("lyrics.showMore")}
               showLessLabel={t("lyrics.showLess")}
             />
-            <SongSeoSummary
+
+            <SongCreatorReport
+              title={song.title}
               storySummary={song.storySummary}
               genre={song.genre}
               mood={song.mood}
               bpm={song.bpm}
               styleTags={song.styleTags}
               totalScore={song.totalScore}
-              playCount={song.playCount}
-              completeCount={song.completeCount}
-              shareCount={song.shareCount}
-              createdAt={song.createdAt}
-              locale={locale}
+              reportData={song.reportData}
               labels={{
-                sectionLabel: t("summary.sectionLabel"),
-                title: t("summary.title"),
-                plays: t("summary.plays"),
-                complete: t("summary.complete"),
-                shares: t("summary.shares"),
-                published: t("summary.published"),
-                aiScore: t("summary.aiScore"),
+                title: t("creatorReport.title"),
+                score: t("creatorReport.score"),
+                producerComment: t("creatorReport.producerComment"),
+                emotionalValue: t("creatorReport.emotionalValue"),
+                hookAnalysis: t("creatorReport.hookAnalysis"),
+                marketPositioning: t("creatorReport.marketPositioning"),
+                songDetails: t("creatorReport.songDetails"),
+                genre: t("creatorReport.genre"),
+                mood: t("creatorReport.mood"),
+                bpm: t("creatorReport.bpm"),
+                tags: t("creatorReport.tags"),
+                fallbackIntro: t("creatorReport.fallbackIntro"),
               }}
             />
-
-            {isOwner && song.reportData ? (
-              <section className="mt-12 rounded-lg border border-white/10 bg-white/[0.04] p-5 sm:p-7">
-                <p className="text-sm font-medium uppercase tracking-normal text-[#1ed760]">
-                  {t("creatorReport")}
-                </p>
-                <pre className="mt-4 max-h-80 overflow-auto rounded-lg bg-black/30 p-4 text-xs leading-6 text-zinc-300">
-                  {JSON.stringify(song.reportData, null, 2)}
-                </pre>
-              </section>
-            ) : null}
 
             <div className="mt-12">
               <RelatedSongs

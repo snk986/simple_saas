@@ -107,6 +107,7 @@
       "type": "Song",
       "coverAlt": "{title} cover art",
       "plays": "{count} plays",
+      "shares": "{count} Shares",
       "likes": "{count} likes"
     },
     "actions": {
@@ -127,7 +128,21 @@
       "showLess": "Show less"
     },
     "breadcrumbCreate": "Create",
-    "creatorReport": "Creator report",
+    "creatorReport": {
+      "title": "Creator report",
+      "score": "AI score",
+      "summary": "Summary",
+      "producerComment": "Producer comment",
+      "emotionalValue": "Emotional value",
+      "hookAnalysis": "Hook analysis",
+      "marketPositioning": "Market positioning",
+      "songDetails": "Song details",
+      "genre": "Genre",
+      "mood": "Mood",
+      "bpm": "BPM",
+      "tags": "Tags",
+      "fallbackIntro": "{title} is an AI-generated song created from this story: {story}. The page includes the full lyrics, audio playback, style details, and public listening signals for search engines and listeners."
+    },
     "summary": {
       "sectionLabel": "Song story",
       "title": "Built from a real prompt",

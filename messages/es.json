@@ -107,6 +107,7 @@
       "type": "Cancion",
       "coverAlt": "Portada de {title}",
       "plays": "{count} reproducciones",
+      "shares": "{count} compartidos",
       "likes": "{count} me gusta"
     },
     "actions": {
@@ -127,7 +128,21 @@
       "showLess": "Ver menos"
     },
     "breadcrumbCreate": "Crear",
-    "creatorReport": "Informe del creador",
+    "creatorReport": {
+      "title": "Informe del creador",
+      "score": "Puntuacion IA",
+      "summary": "Resumen",
+      "producerComment": "Comentario del productor",
+      "emotionalValue": "Valor emocional",
+      "hookAnalysis": "Analisis del hook",
+      "marketPositioning": "Posicionamiento de mercado",
+      "songDetails": "Detalles de la cancion",
+      "genre": "Genero",
+      "mood": "Animo",
+      "bpm": "BPM",
+      "tags": "Etiquetas",
+      "fallbackIntro": "{title} es una cancion generada con IA creada desde esta historia: {story}. La pagina incluye letra completa, reproduccion de audio, detalles de estilo y senales publicas para buscadores y oyentes."
+    },
     "summary": {
       "sectionLabel": "Historia de la cancion",
       "title": "Creada desde un prompt real",
