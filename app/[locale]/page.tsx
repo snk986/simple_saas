@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Music, Mic, Star, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  FileText,
+  HelpCircle,
+  Mic,
+  Music,
+  Star,
+} from "lucide-react";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { locales, type Locale } from "@/i18n/routing";
 
@@ -79,12 +87,50 @@ export default async function Home({ params }: HomePageProps) {
       priceCurrency: "USD",
     },
   };
+  const faqItems = [
+    {
+      question: "What is an AI song generator?",
+      answer:
+        "An AI song generator turns a written idea, story, or prompt into music assets such as lyrics, style direction, and audio. Hit-Song focuses on a complete workflow from story to lyrics, generated audio, producer-style report, and public song page.",
+    },
+    {
+      question: "Can I create a song from my own story?",
+      answer:
+        "Yes. Hit-Song is designed around personal stories, emotions, memories, and messages. The more specific the prompt, the more personal the lyric draft and song direction can feel.",
+    },
+    {
+      question: "Does Hit-Song create lyrics and audio?",
+      answer:
+        "Yes. The platform first creates structured lyrics, then generates audio for the song. Finished songs can include lyrics, playback, style details, and sharing links.",
+    },
+    {
+      question: "Are public song pages indexable?",
+      answer:
+        "Public song pages are server-rendered with song metadata, lyrics, audio details, and structured data so listeners and search engines can understand the page.",
+    },
+  ];
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <section className="relative overflow-hidden border-b border-border py-16 md:py-24">
@@ -161,7 +207,9 @@ export default async function Home({ params }: HomePageProps) {
       >
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">{t("howItWorks.title")}</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              AI song generator workflow
+            </h2>
             <p className="text-muted-foreground text-lg">
               {t("howItWorks.subtitle")}
             </p>
@@ -182,6 +230,89 @@ export default async function Home({ params }: HomePageProps) {
                 <p className="text-muted-foreground">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border py-16">
+        <div className="container px-4 md:px-6">
+          <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-normal text-primary">
+                Explore Hit-Song
+              </p>
+              <h2 className="mt-3 text-3xl font-bold tracking-normal">
+                Create, price, and publish AI songs from one workflow
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                Start with the song maker, compare credit options, or learn how
+                Hit-Song turns a story into a shareable music page.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                {
+                  title: "AI song maker",
+                  description: "Turn a prompt into lyrics and audio.",
+                  href: "/create",
+                  icon: Music,
+                },
+                {
+                  title: "Pricing",
+                  description: "Compare credits and subscriptions.",
+                  href: "/pricing",
+                  icon: CheckCircle2,
+                },
+                {
+                  title: "About",
+                  description: "See how the platform is built.",
+                  href: "/about",
+                  icon: FileText,
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-lg border border-border bg-card p-5 transition-colors hover:bg-accent"
+                  >
+                    <Icon className="mb-4 h-5 w-5 text-primary" />
+                    <h3 className="font-semibold">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border py-16">
+        <div className="container px-4 md:px-6">
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-8 flex items-center gap-2">
+              <HelpCircle className="h-5 w-5 text-primary" />
+              <h2 className="text-3xl font-bold tracking-normal">
+                AI song generator FAQ
+              </h2>
+            </div>
+            <dl className="space-y-6">
+              {faqItems.map((item) => (
+                <div
+                  key={item.question}
+                  className="rounded-lg border border-border bg-card p-5"
+                >
+                  <dt className="font-semibold">{item.question}</dt>
+                  <dd className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {item.answer}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>

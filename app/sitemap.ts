@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...localizedEntries("/", 1),
+    ...localizedEntries("/about", 0.75),
     ...localizedEntries("/create", 0.9),
     ...localizedEntries("/pricing", 0.85),
     ...songs.flatMap((song) =>
