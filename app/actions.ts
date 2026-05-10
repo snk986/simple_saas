@@ -4,6 +4,20 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
+
+function localePrefix(locale: Locale) {
+  return locale === defaultLocale ? "" : `/${locale}`;
+}
+
+function getLocale(formData: FormData) {
+  const locale = formData.get("locale")?.toString();
+  return locale && isLocale(locale) ? locale : defaultLocale;
+}
+
+function localizedPath(locale: Locale, path: string) {
+  return `${localePrefix(locale)}${path}`;
+}
 
 function safeRedirectPath(value: FormDataEntryValue | null) {
   const path = value?.toString();
@@ -18,14 +32,20 @@ function safeRedirectPath(value: FormDataEntryValue | null) {
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
+  const locale = getLocale(formData);
   const supabase = await createClient();
-  const origin = (await headers()).get("origin");
+  const origin =
+    (await headers()).get("origin") ??
+    process.env.BASE_URL ??
+    "http://localhost:3000";
+  const signUpPath = localizedPath(locale, "/sign-up");
+  const dashboardPath = localizedPath(locale, "/dashboard");
 
   if (!email || !password) {
     return encodedRedirect(
       "error",
-      "/sign-up",
-      "Email and password are required"
+      signUpPath,
+      "Email and password are required",
     );
   }
 
@@ -33,15 +53,15 @@ export const signUpAction = async (formData: FormData) => {
     email,
     password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`,
     },
   });
 
   if (error) {
     console.error(error.code + " " + error.message);
-    return encodedRedirect("error", "/sign-up", error.message);
+    return encodedRedirect("error", signUpPath, error.message);
   } else {
-    return encodedRedirect("success", "/dashboard", "Thanks for signing up!");
+    return encodedRedirect("success", dashboardPath, "Thanks for signing up!");
   }
 };
 
@@ -49,8 +69,11 @@ export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const redirectTo = safeRedirectPath(formData.get("redirectTo"));
+  const locale = getLocale(formData);
   const supabase = await createClient();
-  const signInPath = redirectTo ? `/sign-in?redirectTo=${encodeURIComponent(redirectTo)}` : "/sign-in";
+  const signInPath = redirectTo
+    ? `${localizedPath(locale, "/sign-in")}?redirectTo=${encodeURIComponent(redirectTo)}`
+    : localizedPath(locale, "/sign-in");
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -61,29 +84,35 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", signInPath, error.message);
   }
 
-  return redirect(redirectTo ?? "/dashboard");
+  return redirect(redirectTo ?? localizedPath(locale, "/dashboard"));
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
+  const locale = getLocale(formData);
   const supabase = await createClient();
-  const origin = (await headers()).get("origin");
+  const origin =
+    (await headers()).get("origin") ??
+    process.env.BASE_URL ??
+    "http://localhost:3000";
   const callbackUrl = formData.get("callbackUrl")?.toString();
+  const forgotPasswordPath = localizedPath(locale, "/forgot-password");
+  const resetPasswordPath = localizedPath(locale, "/dashboard/reset-password");
 
   if (!email) {
-    return encodedRedirect("error", "/forgot-password", "Email is required");
+    return encodedRedirect("error", forgotPasswordPath, "Email is required");
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/auth/callback?redirect_to=/dashboard/reset-password`,
+    redirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(resetPasswordPath)}`,
   });
 
   if (error) {
     console.error(error.message);
     return encodedRedirect(
       "error",
-      "/forgot-password",
-      "Could not reset password"
+      forgotPasswordPath,
+      "Could not reset password",
     );
   }
 
@@ -93,13 +122,15 @@ export const forgotPasswordAction = async (formData: FormData) => {
 
   return encodedRedirect(
     "success",
-    "/forgot-password",
-    "Check your email for a link to reset your password."
+    forgotPasswordPath,
+    "Check your email for a link to reset your password.",
   );
 };
 
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
+  const locale = getLocale(formData);
+  const resetPasswordPath = localizedPath(locale, "/dashboard/reset-password");
 
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
@@ -107,17 +138,13 @@ export const resetPasswordAction = async (formData: FormData) => {
   if (!password || !confirmPassword) {
     encodedRedirect(
       "error",
-      "/dashboard/reset-password",
-      "Password and confirm password are required"
+      resetPasswordPath,
+      "Password and confirm password are required",
     );
   }
 
   if (password !== confirmPassword) {
-    encodedRedirect(
-      "error",
-      "/dashboard/reset-password",
-      "Passwords do not match"
-    );
+    encodedRedirect("error", resetPasswordPath, "Passwords do not match");
   }
 
   const { error } = await supabase.auth.updateUser({
@@ -125,19 +152,15 @@ export const resetPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    encodedRedirect(
-      "error",
-      "/dashboard/reset-password",
-      "Password update failed"
-    );
+    encodedRedirect("error", resetPasswordPath, "Password update failed");
   }
 
-  encodedRedirect("success", "/dashboard/reset-password", "Password updated");
+  encodedRedirect("success", resetPasswordPath, "Password updated");
 };
 
-export const signOutAction = async () => {
+export const signOutAction = async (formData?: FormData) => {
+  const locale = formData ? getLocale(formData) : defaultLocale;
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return redirect("/sign-in");
+  return redirect(localizedPath(locale, "/sign-in"));
 };
-

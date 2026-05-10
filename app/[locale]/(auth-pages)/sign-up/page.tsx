@@ -1,28 +1,50 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { signUpAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
-import { redirect } from "next/navigation";
+import Link from "next/link";
+
+function localePrefix(locale: Locale) {
+  return locale === defaultLocale ? "" : `/${locale}`;
+}
+
+function localizedPath(locale: Locale, path: string) {
+  return `${localePrefix(locale)}${path}`;
+}
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export default async function SignUp(props: {
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<Message>;
 }) {
+  const { locale } = await props.params;
   const searchParams = await props.searchParams;
+  const signUpPath = localizedPath(locale, "/sign-up");
+  const signInPath = localizedPath(locale, "/sign-in");
+  const dashboardPath = localizedPath(locale, "/dashboard");
 
   const signUpWithGoogle = async () => {
     "use server";
     const supabase = await createClient();
-    const origin = process.env.BASE_URL;
+    const origin =
+      (await headers()).get("origin") ??
+      process.env.BASE_URL ??
+      "http://localhost:3000";
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -31,7 +53,7 @@ export default async function SignUp(props: {
     });
 
     if (error) {
-      return encodedRedirect("error", "/sign-up", error.message);
+      return encodedRedirect("error", signUpPath, error.message);
     }
 
     if (data.url) {
@@ -42,13 +64,16 @@ export default async function SignUp(props: {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Create your account
+        </h1>
         <p className="text-sm text-muted-foreground">
-          Sign up to access global authentication and payment solutions
+          Sign up to save songs, generate audio, and manage credits
         </p>
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
+          <input type="hidden" name="locale" value={locale} />
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -68,7 +93,7 @@ export default async function SignUp(props: {
               id="password"
               name="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="Password"
               autoComplete="current-password"
               required
             />
@@ -96,7 +121,7 @@ export default async function SignUp(props: {
           <Button
             type="submit"
             variant="outline"
-            className="w-full flex items-center justify-center gap-2"
+            className="flex w-full items-center justify-center gap-2"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5">
               <path
@@ -119,10 +144,10 @@ export default async function SignUp(props: {
             Sign up with Google
           </Button>
         </form>
-        <div className="text-sm text-muted-foreground text-center">
+        <div className="text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
-            href="/sign-in"
+            href={signInPath}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
             Sign in

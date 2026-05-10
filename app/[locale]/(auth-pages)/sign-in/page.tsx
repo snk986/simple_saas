@@ -1,13 +1,15 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 type SignInSearchParams = Message & {
   redirectTo?: string;
@@ -21,21 +23,43 @@ function safeRedirectPath(path?: string) {
   return path;
 }
 
-export default async function Login(props: { searchParams: Promise<SignInSearchParams> }) {
+function localePrefix(locale: Locale) {
+  return locale === defaultLocale ? "" : `/${locale}`;
+}
+
+function localizedPath(locale: Locale, path: string) {
+  return `${localePrefix(locale)}${path}`;
+}
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export default async function Login(props: {
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<SignInSearchParams>;
+}) {
+  const { locale } = await props.params;
   const searchParams = await props.searchParams;
   const redirectTo = safeRedirectPath(searchParams.redirectTo);
+  const signInPath = localizedPath(locale, "/sign-in");
+  const forgotPasswordPath = localizedPath(locale, "/forgot-password");
+  const dashboardPath = localizedPath(locale, "/dashboard");
   const signUpHref = redirectTo
-    ? `/sign-up?redirectTo=${encodeURIComponent(redirectTo)}`
-    : "/sign-up";
+    ? `${localizedPath(locale, "/sign-up")}?redirectTo=${encodeURIComponent(redirectTo)}`
+    : localizedPath(locale, "/sign-up");
 
   const signInWithGoogle = async () => {
     "use server";
     const supabase = await createClient();
-    const origin = process.env.BASE_URL;
+    const origin =
+      (await headers()).get("origin") ??
+      process.env.BASE_URL ??
+      "http://localhost:3000";
     const redirectToParam = safeRedirectPath(searchParams.redirectTo);
     const callbackUrl = redirectToParam
       ? `${origin}/auth/callback?redirect_to=${encodeURIComponent(redirectToParam)}`
-      : `${origin}/auth/callback`;
+      : `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -49,7 +73,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
     });
 
     if (error) {
-      return encodedRedirect("error", "/sign-in", error.message);
+      return encodedRedirect("error", signInPath, error.message);
     }
 
     if (data.url) {
@@ -67,6 +91,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
+          <input type="hidden" name="locale" value={locale} />
           {redirectTo ? (
             <input type="hidden" name="redirectTo" value={redirectTo} />
           ) : null}
@@ -87,7 +112,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
               <Link
-                href="/forgot-password"
+                href={forgotPasswordPath}
                 className="text-sm font-medium text-primary hover:underline"
               >
                 Forgot password?
@@ -97,7 +122,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
               id="password"
               name="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="Password"
               autoComplete="current-password"
               required
             />
@@ -125,7 +150,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
           <Button
             type="submit"
             variant="outline"
-            className="w-full flex items-center justify-center gap-2"
+            className="flex w-full items-center justify-center gap-2"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5">
               <path
@@ -148,7 +173,7 @@ export default async function Login(props: { searchParams: Promise<SignInSearchP
             Sign in with Google
           </Button>
         </form>
-        <div className="text-sm text-muted-foreground text-center">
+        <div className="text-center text-sm text-muted-foreground">
           Don't have an account?{" "}
           <Link
             href={signUpHref}

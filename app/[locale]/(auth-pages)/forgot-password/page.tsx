@@ -3,12 +3,25 @@ import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import Link from "next/link";
 
+function localePrefix(locale: Locale) {
+  return locale === defaultLocale ? "" : `/${locale}`;
+}
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export default async function ForgotPassword(props: {
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<Message>;
 }) {
+  const { locale } = await props.params;
   const searchParams = await props.searchParams;
+  const signInPath = `${localePrefix(locale)}/sign-in`;
+
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
@@ -22,6 +35,7 @@ export default async function ForgotPassword(props: {
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
+          <input type="hidden" name="locale" value={locale} />
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -44,10 +58,10 @@ export default async function ForgotPassword(props: {
           </SubmitButton>
           <FormMessage message={searchParams} />
         </form>
-        <div className="text-sm text-muted-foreground text-center">
+        <div className="text-center text-sm text-muted-foreground">
           Remember your password?{" "}
           <Link
-            href="/sign-in"
+            href={signInPath}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
             Sign in

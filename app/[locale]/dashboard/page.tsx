@@ -23,6 +23,10 @@ function localizedPricingHref(locale: Locale) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/pricing`;
 }
 
+function localizedSignInHref(locale: Locale) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/sign-in`;
+}
+
 export default async function DashboardPage({
   params,
 }: {
@@ -37,7 +41,7 @@ export default async function DashboardPage({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return redirect("/sign-in");
+    return redirect(localizedSignInHref(locale));
   }
 
   const entitlements = await getUserEntitlements(user.id);

@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import { Logo } from "@/components/logo";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
+
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="container grid lg:max-w-none lg:grid-cols-1 lg:px-0">
       <div className="lg:p-8">

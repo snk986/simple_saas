@@ -83,6 +83,7 @@ export default function Header({ user }: HeaderProps) {
                 </Button>
               )}
               <form action={signOutAction}>
+                <input type="hidden" name="locale" value={locale} />
                 <Button type="submit" variant="outline" size="sm">
                   {t("signOut")}
                 </Button>

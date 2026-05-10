@@ -11,6 +11,7 @@ import {
 import { Menu } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { signOutAction } from "@/app/actions";
+import { useLocale } from "next-intl";
 
 interface MobileNavProps {
   items: { label: string; href: string }[];
@@ -26,7 +27,14 @@ interface MobileNavProps {
   };
 }
 
-export function MobileNav({ items, user, isDashboard, labels }: MobileNavProps) {
+export function MobileNav({
+  items,
+  user,
+  isDashboard,
+  labels,
+}: MobileNavProps) {
+  const locale = useLocale();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -62,6 +70,7 @@ export function MobileNav({ items, user, isDashboard, labels }: MobileNavProps) 
                 </Button>
               )}
               <form action={signOutAction} className="w-full">
+                <input type="hidden" name="locale" value={locale} />
                 <Button type="submit" variant="outline" className="w-full">
                   {labels.signOut}
                 </Button>
