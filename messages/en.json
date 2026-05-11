@@ -250,6 +250,8 @@
     "creditPacksSubtitle": "One-time purchase. Credits never expire.",
     "subscriptionsTitle": "Subscriptions",
     "subscriptionsSubtitle": "Monthly credits, permanent song storage, and priority features.",
+    "subscriptionsHighlight": "Most Popular Choice",
+    "subscriptionsUrgency": "Subscribe now for better value and priority creation every month.",
     "monthly": "Monthly",
     "yearly": "Yearly",
     "planCta": "Get Started",
@@ -304,12 +306,6 @@
       "a4": "Yes. We offer a 7-day refund policy for unused credits. Contact support within 7 days of purchase.",
       "q5": "What payment methods are accepted?",
       "a5": "We accept all major credit cards. Prices are in USD."
-    },
-    "trust": {
-      "refund": "7-day refund policy",
-      "noExpiry": "Credits never expire",
-      "cancel": "Cancel anytime",
-      "currency": "Prices in USD"
     }
   },
   "email": {

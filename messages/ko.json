@@ -250,6 +250,8 @@
     "creditPacksSubtitle": "일회성 구매. 크레딧은 만료되지 않습니다.",
     "subscriptionsTitle": "구독",
     "subscriptionsSubtitle": "매월 크레딧, 영구 저장, 우선 기능.",
+    "subscriptionsHighlight": "Most Popular Choice",
+    "subscriptionsUrgency": "Subscribe now for better value and priority creation every month.",
     "monthly": "월간",
     "yearly": "연간",
     "planCta": "시작하기",
@@ -304,12 +306,6 @@
       "a4": "네. 미사용 크레딧에 대해 7일 환불 정책을 제공합니다. 구매 후 7일 이내에 지원팀에 연락하세요.",
       "q5": "어떤 결제 수단을 사용할 수 있나요?",
       "a5": "주요 신용카드를 지원합니다. 가격은 USD로 표시됩니다."
-    },
-    "trust": {
-      "refund": "7일 환불 보장",
-      "noExpiry": "크레딧 무기한",
-      "cancel": "언제든 해지 가능",
-      "currency": "USD 표시"
     }
   },
   "email": {

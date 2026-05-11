@@ -250,6 +250,8 @@
     "creditPacksSubtitle": "一回払い。クレジットは無期限です。",
     "subscriptionsTitle": "サブスクリプション",
     "subscriptionsSubtitle": "毎月クレジット付与、永久保存、優先機能。",
+    "subscriptionsHighlight": "Most Popular Choice",
+    "subscriptionsUrgency": "Subscribe now for better value and priority creation every month.",
     "monthly": "月額",
     "yearly": "年額",
     "planCta": "はじめる",
@@ -304,12 +306,6 @@
       "a4": "はい。未使用クレジットについて7日間の返金ポリシーがあります。購入後7日以内にサポートへご連絡ください。",
       "q5": "どの支払い方法が使えますか？",
       "a5": "主要なクレジットカードに対応しています。価格はUSD表示です。"
-    },
-    "trust": {
-      "refund": "7日間返金保証",
-      "noExpiry": "クレジット無期限",
-      "cancel": "いつでも解約可能",
-      "currency": "USD表示"
     }
   },
   "email": {

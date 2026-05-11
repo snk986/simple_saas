@@ -250,6 +250,8 @@
     "creditPacksSubtitle": "Compra unica. Los creditos nunca expiran.",
     "subscriptionsTitle": "Suscripciones",
     "subscriptionsSubtitle": "Creditos mensuales, almacenamiento permanente y funciones prioritarias.",
+    "subscriptionsHighlight": "La opcion mas elegida",
+    "subscriptionsUrgency": "Suscribete ahora para obtener mejor valor y prioridad de generacion cada mes.",
     "monthly": "Mensual",
     "yearly": "Anual",
     "planCta": "Empezar",
@@ -304,12 +306,6 @@
       "a4": "Si. Ofrecemos una politica de reembolso de 7 dias para creditos no utilizados. Contacta soporte dentro de los 7 dias posteriores a la compra.",
       "q5": "Que metodos de pago se aceptan?",
       "a5": "Aceptamos todas las tarjetas de credito principales. Los precios estan en USD."
-    },
-    "trust": {
-      "refund": "Reembolso en 7 dias",
-      "noExpiry": "Los creditos nunca expiran",
-      "cancel": "Cancela cuando quieras",
-      "currency": "Precios en USD"
     }
   },
   "email": {
