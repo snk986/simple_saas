@@ -6,6 +6,7 @@ import { getPublicSong, getRelatedPublicSongs } from "@/lib/song/public-song";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { LyricsDisplay } from "@/components/song/lyrics-display";
 import { SongActionBand } from "@/components/song/song-action-band";
+import { SongHeaderStats } from "@/components/song/song-header-stats";
 import { SongCreatorReport } from "@/components/song/song-creator-report";
 import { RelatedSongs } from "@/components/song/related-songs";
 import {
@@ -180,22 +181,9 @@ export default async function SongPage({
   const relatedSongs = await getRelatedPublicSongs(song);
   const url = songUrl(locale, song.id);
   const prefix = localePrefix(locale);
-  const artistName = "Hit-Song AI";
   const publishedYear = new Intl.DateTimeFormat(locale, {
     year: "numeric",
   }).format(new Date(song.createdAt));
-  const headerStats = [
-    publishedYear,
-    song.playCount > 0
-      ? t("header.plays", { count: song.playCount.toLocaleString(locale) })
-      : null,
-    song.shareCount > 0
-      ? t("header.shares", { count: song.shareCount.toLocaleString(locale) })
-      : null,
-    song.likeCount > 0
-      ? t("header.likes", { count: song.likeCount.toLocaleString(locale) })
-      : null,
-  ].filter(Boolean);
   const description = buildDescription(song, (values) =>
     t("seo.description", values),
   );
@@ -291,20 +279,21 @@ export default async function SongPage({
                 <p className="mb-2 text-sm font-extrabold text-white sm:mb-3">
                   {t("header.type")}
                 </p>
-                <h1 className="max-w-4xl text-5xl font-black leading-[0.96] tracking-normal text-white sm:text-7xl lg:text-8xl">
+                <h1 className="max-w-4xl text-4xl font-black leading-[0.96] tracking-normal text-white sm:text-7xl lg:text-8xl">
                   {song.title}
                 </h1>
-                <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-bold text-white/80">
-                  <strong className="text-white">{artistName}</strong>
-                  {headerStats.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center gap-2 before:block before:h-1 before:w-1 before:rounded-full before:bg-white/70 before:content-['']"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </p>
+                <SongHeaderStats
+                  locale={locale}
+                  year={publishedYear}
+                  initialPlayCount={song.playCount}
+                  initialShareCount={song.shareCount}
+                  initialLikeCount={song.likeCount}
+                  labels={{
+                    plays: t("summary.plays"),
+                    shares: t("summary.shares"),
+                    likes: t("actions.like"),
+                  }}
+                />
               </div>
             </div>
           </section>

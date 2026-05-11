@@ -81,7 +81,7 @@ export function LyricsDisplay({
           className="mt-1 text-[16px] font-extrabold leading-none text-white hover:underline"
           onClick={handleToggleLyrics}
         >
-          ...{isExpanded ? showLessLabel : showMoreLabel}
+          {isExpanded ? showLessLabel : showMoreLabel}
         </button>
       ) : null}
     </section>

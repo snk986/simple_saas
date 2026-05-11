@@ -141,7 +141,7 @@
       "mood": "Mood",
       "bpm": "BPM",
       "tags": "Tags",
-      "fallbackIntro": "{title} is an AI-generated song created from this story: {story}. The page includes the full lyrics, audio playback, style details, and public listening signals for search engines and listeners."
+      "fallbackIntro": "{title} はこのストーリーから生まれた AI 生成楽曲です: {story}。このページでは歌詞全文、音源再生、スタイル情報、公開リスニング指標を確認できます。"
     },
     "summary": {
       "sectionLabel": "曲の物語",
@@ -307,7 +307,7 @@
       "a5": "主要なクレジットカードに対応しています。価格はUSD表示です。"
     },
     "save69": "Save 69%",
-    "subscribeNowCancelAnytime": "Subscribe now ? cancel anytime.",
+    "subscribeNowCancelAnytime": "Subscribe now - cancel anytime.",
     "songsUnit": "songs",
     "popularPack": "Popular"
   },

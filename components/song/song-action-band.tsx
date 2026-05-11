@@ -43,6 +43,13 @@ async function countSongEvent(songId: string, event: string) {
   }).catch(() => undefined);
 }
 
+function emitMetric(type: "play" | "share" | "like") {
+  if (typeof window === "undefined") {
+    return;
+  }
+  window.dispatchEvent(new CustomEvent("hit-song:metric", { detail: { type } }));
+}
+
 export function SongActionBand({
   songId,
   title,
@@ -85,6 +92,7 @@ export function SongActionBand({
       await navigator.clipboard.writeText(window.location.href);
       toast({ title: labels.copied });
       void countSongEvent(songId, "share");
+      emitMetric("share");
     } catch {
       toast({ title: labels.copyFailed });
     }
@@ -96,6 +104,7 @@ export function SongActionBand({
         .share({ title, url: window.location.href })
         .catch(() => undefined);
       void countSongEvent(songId, "share");
+      emitMetric("share");
       return;
     }
 
@@ -108,6 +117,7 @@ export function SongActionBand({
     if (!countedLikeRef.current) {
       countedLikeRef.current = true;
       void countSongEvent(songId, "like");
+      emitMetric("like");
     }
   };
 
@@ -117,6 +127,7 @@ export function SongActionBand({
     if (!countedPlayRef.current) {
       countedPlayRef.current = true;
       void countSongEvent(songId, "play_start");
+      emitMetric("play");
     }
   };
 
