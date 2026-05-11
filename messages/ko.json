@@ -255,6 +255,14 @@
     "monthly": "월간",
     "yearly": "연간",
     "planCta": "시작하기",
+    "freeCard": {
+      "description": "For new creators getting started with one song idea.",
+      "priceLabel": "Free",
+      "creditHint": "No subscription required",
+      "feature1": "Create with pay-as-you-go credit packs",
+      "feature2": "Lyrics + audio generation",
+      "feature3": "Upgrade anytime"
+    },
     "creditPacks": {
       "mini": {
         "name": "Mini",
