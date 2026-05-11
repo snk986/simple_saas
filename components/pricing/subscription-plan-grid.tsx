@@ -21,8 +21,32 @@ interface SubscriptionPlanGridProps {
   basicYearly: PlanData;
   proMonthly: PlanData;
   proYearly: PlanData;
-  t: (key: string) => string;
-  tp: (key: string) => string;
+  labels: {
+    monthly: string;
+    yearly: string;
+    save69: string;
+    subscribeNowCancelAnytime: string;
+    songsUnit: string;
+    perMonth: string;
+    perYear: string;
+    getStarted: string;
+    freePlan: string;
+    basic: {
+      name: string;
+      description: string;
+      features: string[];
+    };
+    pro: {
+      name: string;
+      description: string;
+      features: string[];
+    };
+    free: {
+      description: string;
+      creditHint: string;
+      features: string[];
+    };
+  };
 }
 
 export function SubscriptionPlanGrid({
@@ -34,8 +58,7 @@ export function SubscriptionPlanGrid({
   basicYearly,
   proMonthly,
   proYearly,
-  t,
-  tp,
+  labels,
 }: SubscriptionPlanGridProps) {
   const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
 
@@ -59,7 +82,7 @@ export function SubscriptionPlanGrid({
               billing === "monthly" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
           >
-            {t("monthly")}
+            {labels.monthly}
           </button>
           <button
             type="button"
@@ -68,84 +91,84 @@ export function SubscriptionPlanGrid({
               billing === "yearly" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
           >
-            {t("yearly")}
+            {labels.yearly}
           </button>
           <span className="ml-1 inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
-            {t("save69")}
+            {labels.save69}
           </span>
         </div>
       </div>
-      <p className="mb-4 text-center text-sm text-foreground">{t("subscribeNowCancelAnytime")}</p>
+      <p className="mb-4 text-center text-sm text-foreground">{labels.subscribeNowCancelAnytime}</p>
 
       <div className="grid gap-3 lg:grid-cols-3">
         <article className="flex h-full flex-col rounded-xl border bg-background p-4">
-          <h4 className="text-lg font-semibold">{t("subscriptions.basic.name")}</h4>
-          <p className="mt-1 text-xs text-muted-foreground">{t("subscriptions.basic.description")}</p>
+          <h4 className="text-lg font-semibold">{labels.basic.name}</h4>
+          <p className="mt-1 text-xs text-muted-foreground">{labels.basic.description}</p>
           <p className="mt-3 text-3xl font-bold">
             ${basic.priceValue}
             <span className="ml-1 text-base font-normal text-muted-foreground">
-              {billing === "monthly" ? tp("perMonth") : tp("perYear")}
+              {billing === "monthly" ? labels.perMonth : labels.perYear}
             </span>
           </p>
           <p className="mt-1 text-xs font-medium text-muted-foreground">
-            {basic.songs} {t("songsUnit")}
-            {billing === "monthly" ? tp("perMonth") : tp("perYear")}
+            {basic.songs} {labels.songsUnit}
+            {billing === "monthly" ? labels.perMonth : labels.perYear}
           </p>
           <div className="mt-3">
             <PricingBuyButton tierId={basic.tierId} locale={locale} managePlan={manageBasic} />
           </div>
           <ul className="mt-3 flex-1 space-y-2">
-            {(["feature1", "feature2", "feature3"] as const).map((fk) => (
-              <li key={fk} className="flex gap-2 text-xs text-muted-foreground">
+            {labels.basic.features.map((feature) => (
+              <li key={feature} className="flex gap-2 text-xs text-muted-foreground">
                 <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                {t(`subscriptions.basic.${fk}`)}
+                {feature}
               </li>
             ))}
           </ul>
         </article>
 
         <article className="flex h-full flex-col rounded-xl border-2 border-primary bg-background p-4 shadow-sm shadow-primary/20">
-          <h4 className="text-lg font-semibold">{t("subscriptions.pro.name")}</h4>
-          <p className="mt-1 text-xs text-muted-foreground">{t("subscriptions.pro.description")}</p>
+          <h4 className="text-lg font-semibold">{labels.pro.name}</h4>
+          <p className="mt-1 text-xs text-muted-foreground">{labels.pro.description}</p>
           <p className="mt-3 text-3xl font-bold">
             ${pro.priceValue}
             <span className="ml-1 text-base font-normal text-muted-foreground">
-              {billing === "monthly" ? tp("perMonth") : tp("perYear")}
+              {billing === "monthly" ? labels.perMonth : labels.perYear}
             </span>
           </p>
           <p className="mt-1 text-xs font-medium text-muted-foreground">
-            {pro.songs} {t("songsUnit")}
-            {billing === "monthly" ? tp("perMonth") : tp("perYear")}
+            {pro.songs} {labels.songsUnit}
+            {billing === "monthly" ? labels.perMonth : labels.perYear}
           </p>
           <div className="mt-3">
             <PricingBuyButton tierId={pro.tierId} locale={locale} featured managePlan={managePro} />
           </div>
           <ul className="mt-3 flex-1 space-y-2">
-            {(["feature1", "feature2", "feature3"] as const).map((fk) => (
-              <li key={fk} className="flex gap-2 text-xs text-muted-foreground">
+            {labels.pro.features.map((feature) => (
+              <li key={feature} className="flex gap-2 text-xs text-muted-foreground">
                 <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                {t(`subscriptions.pro.${fk}`)}
+                {feature}
               </li>
             ))}
           </ul>
         </article>
 
         <article className="flex h-full flex-col rounded-xl border bg-background p-4">
-          <h4 className="text-lg font-semibold">{tp("freePlan")}</h4>
-          <p className="mt-1 text-xs text-muted-foreground">{t("freeCard.description")}</p>
+          <h4 className="text-lg font-semibold">{labels.freePlan}</h4>
+          <p className="mt-1 text-xs text-muted-foreground">{labels.free.description}</p>
           <p className="mt-3 text-3xl font-bold">$0</p>
-          <p className="mt-1 text-xs font-medium text-muted-foreground">{t("freeCard.creditHint")}</p>
+          <p className="mt-1 text-xs font-medium text-muted-foreground">{labels.free.creditHint}</p>
           <Link
             href={createHref}
             className="mt-3 inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium hover:bg-accent"
           >
-            {tp("getStarted")}
+            {labels.getStarted}
           </Link>
           <ul className="mt-3 flex-1 space-y-2">
-            {(["feature1", "feature2", "feature3"] as const).map((fk) => (
-              <li key={fk} className="flex gap-2 text-xs text-muted-foreground">
+            {labels.free.features.map((feature) => (
+              <li key={feature} className="flex gap-2 text-xs text-muted-foreground">
                 <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                {t(`freeCard.${fk}`)}
+                {feature}
               </li>
             ))}
           </ul>
@@ -154,4 +177,3 @@ export function SubscriptionPlanGrid({
     </div>
   );
 }
-

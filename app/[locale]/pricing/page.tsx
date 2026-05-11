@@ -218,8 +218,44 @@ export default async function PricingPage({ params }: PricingPageProps) {
                 priceValue: proYearly.priceValue,
                 songs: Math.floor(proYearly.creditAmount / 100),
               }}
-              t={(key) => t(key)}
-              tp={(key) => tp(key)}
+              labels={{
+                monthly: t("monthly"),
+                yearly: t("yearly"),
+                save69: t("save69"),
+                subscribeNowCancelAnytime: t("subscribeNowCancelAnytime"),
+                songsUnit: t("songsUnit"),
+                perMonth: tp("perMonth"),
+                perYear: tp("perYear"),
+                getStarted: tp("getStarted"),
+                freePlan: tp("freePlan"),
+                basic: {
+                  name: t("subscriptions.basic.name"),
+                  description: t("subscriptions.basic.description"),
+                  features: [
+                    t("subscriptions.basic.feature1"),
+                    t("subscriptions.basic.feature2"),
+                    t("subscriptions.basic.feature3"),
+                  ],
+                },
+                pro: {
+                  name: t("subscriptions.pro.name"),
+                  description: t("subscriptions.pro.description"),
+                  features: [
+                    t("subscriptions.pro.feature1"),
+                    t("subscriptions.pro.feature2"),
+                    t("subscriptions.pro.feature3"),
+                  ],
+                },
+                free: {
+                  description: t("freeCard.description"),
+                  creditHint: t("freeCard.creditHint"),
+                  features: [
+                    t("freeCard.feature1"),
+                    t("freeCard.feature2"),
+                    t("freeCard.feature3"),
+                  ],
+                },
+              }}
             />
           )}
         </div>
