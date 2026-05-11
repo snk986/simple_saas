@@ -244,14 +244,12 @@
       "description": "Choose a Hit-Song plan for creating AI lyrics, audio, producer reports, and shareable public song pages. Credits never expire."
     },
     "eyebrow": "Pricing",
-    "title": "Turn your stories into songs",
-    "subtitle": "Each credit creates one complete song: lyrics, audio, and a shareable public page. Buy credits once or subscribe for ongoing creation.",
+    "title": "Unlock Your Full Creative Potential",
+    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "Credit Packs",
-    "creditPacksSubtitle": "One-time purchase. Credits never expire.",
+    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
     "subscriptionsTitle": "Subscriptions",
-    "subscriptionsSubtitle": "Monthly credits, permanent song storage, and priority features.",
-    "subscriptionsHighlight": "Most Popular Choice",
-    "subscriptionsUrgency": "Subscribe now for better value and priority creation every month.",
+    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
     "monthly": "Monthly",
     "yearly": "Yearly",
     "planCta": "Get Started",
@@ -264,24 +262,17 @@
       "feature3": "Upgrade anytime"
     },
     "creditPacks": {
-      "mini": {
-        "name": "Mini",
-        "description": "Try a single song creation.",
-        "feature1": "1 credit for one complete song",
-        "feature2": "Lyrics + audio generation",
-        "feature3": "Public shareable page"
-      },
       "standard": {
-        "name": "Standard",
-        "description": "Create multiple songs at a better rate.",
-        "feature1": "3 credits for complete songs",
+        "name": "Starter Pack",
+        "description": "Best for quick creation bursts.",
+        "feature1": "1600 credits for complete songs",
         "feature2": "Lyrics + audio generation",
         "feature3": "Public shareable pages"
       },
       "pro_pack": {
         "name": "Pro Pack",
-        "description": "Best value for serious creators.",
-        "feature1": "7 credits for complete songs",
+        "description": "High-volume pack for frequent creation.",
+        "feature1": "5000 credits for complete songs",
         "feature2": "Producer reports included",
         "feature3": "Public shareable pages"
       }
@@ -290,14 +281,14 @@
       "basic": {
         "name": "Basic",
         "description": "For regular creators who want songs that last.",
-        "feature1": "3 credits per month",
+        "feature1": "3000 credits per month",
         "feature2": "Songs stored permanently",
         "feature3": "Producer reports included"
       },
       "pro": {
         "name": "Pro",
         "description": "Priority generation and maximum creative output.",
-        "feature1": "8 credits per month",
+        "feature1": "10000 credits per month",
         "feature2": "Songs stored permanently",
         "feature3": "Priority audio generation"
       }
@@ -314,7 +305,11 @@
       "a4": "Yes. We offer a 7-day refund policy for unused credits. Contact support within 7 days of purchase.",
       "q5": "What payment methods are accepted?",
       "a5": "We accept all major credit cards. Prices are in USD."
-    }
+    },
+    "save69": "Save 69%",
+    "subscribeNowCancelAnytime": "Subscribe now ? cancel anytime.",
+    "songsUnit": "songs",
+    "popularPack": "Popular"
   },
   "email": {
     "recall": {

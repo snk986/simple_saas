@@ -6,6 +6,7 @@ import { locales, type Locale } from "@/i18n/routing";
 import { defaultLocale } from "@/config/i18n";
 import { CREDIT_PACKS, SUBSCRIPTION_TIERS } from "@/config/subscriptions";
 import { PricingBuyButton } from "@/components/pricing/pricing-buy-button";
+import { SubscriptionPlanGrid } from "@/components/pricing/subscription-plan-grid";
 import { createClient } from "@/utils/supabase/server";
 import type { PlanTier } from "@/types/subscriptions";
 
@@ -60,7 +61,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const creditPackKeys = ["mini", "standard", "pro_pack"] as const;
+  const creditPackKeys = ["standard", "pro_pack"] as const;
   const subscriptionMonthly = SUBSCRIPTION_TIERS.filter(
     (tier) => tier.billingPeriod === "monthly",
   );
@@ -71,6 +72,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const basicYearly = subscriptionYearly.find((tier) => tier.plan === "basic");
   const proMonthly = subscriptionMonthly.find((tier) => tier.plan === "pro");
   const proYearly = subscriptionYearly.find((tier) => tier.plan === "pro");
+  const createHref = localizedCreateHref(locale);
 
   let accountSummary: {
     plan: PlanTier;
@@ -163,13 +165,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
       <section className="py-14 md:py-16">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-              {t("eyebrow")}
-            </p>
             <h1 className="mt-3 text-4xl font-bold tracking-normal md:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
               {t("subtitle")}
             </p>
           </div>
@@ -179,136 +178,50 @@ export default async function PricingPage({ params }: PricingPageProps) {
       <section className="bg-muted/30 py-12">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-              {t("subscriptionsHighlight")}
-            </p>
-            <h2 className="mt-2 text-4xl font-bold tracking-normal md:text-5xl">
+            <h2 className="text-3xl font-bold tracking-normal md:text-4xl">
               {t("subscriptionsTitle")}
             </h2>
-            <p className="mt-3 text-base text-muted-foreground md:text-lg">
+            <p className="mt-2 text-sm text-muted-foreground md:text-base">
               {t("subscriptionsSubtitle")}
             </p>
-            <p className="mt-3 text-sm font-medium text-foreground">
-              {t("subscriptionsUrgency")}
-            </p>
           </div>
 
-          <div className="mx-auto mt-8 max-w-6xl rounded-2xl border bg-card p-4 shadow-sm shadow-black/15 md:p-5">
-            <div className="grid gap-3 lg:grid-cols-3">
-              {basicMonthly && basicYearly && (
-                <article className="flex h-full flex-col rounded-xl border bg-background p-4">
-                  <h4 className="text-lg font-semibold">{t("subscriptions.basic.name")}</h4>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {t("subscriptions.basic.description")}
-                  </p>
-                  <div className="mt-3 space-y-2">
-                    <div className="rounded-lg border bg-card p-3">
-                      <p className="text-xs font-medium text-muted-foreground">{t("monthly")}</p>
-                      <p className="mt-1 text-2xl font-bold">
-                        ${basicMonthly.priceValue}
-                        <span className="ml-1 text-sm font-normal text-muted-foreground">{tp("perMonth")}</span>
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">{basicMonthly.creditAmount} {tp("credits")}{tp("perMonth")}</p>
-                      <div className="mt-2">
-                        <PricingBuyButton
-                          tierId={basicMonthly.id}
-                          locale={locale}
-                          managePlan={accountSummary?.hasActiveSubscription && accountSummary.plan === "basic"}
-                        />
-                      </div>
-                    </div>
-                    <div className="rounded-lg border bg-card p-3">
-                      <p className="text-xs font-medium text-muted-foreground">{t("yearly")}</p>
-                      <p className="mt-1 text-2xl font-bold">
-                        ${basicYearly.priceValue}
-                        <span className="ml-1 text-sm font-normal text-muted-foreground">{tp("perYear")}</span>
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">{basicYearly.creditAmount} {tp("credits")}{tp("perYear")}</p>
-                      <div className="mt-2">
-                        <PricingBuyButton
-                          tierId={basicYearly.id}
-                          locale={locale}
-                          managePlan={accountSummary?.hasActiveSubscription && accountSummary.plan === "basic"}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              )}
-
-              {proMonthly && proYearly && (
-                <article className="relative flex h-full flex-col rounded-xl border-2 border-primary bg-background p-4 shadow-sm shadow-primary/20">
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground">
-                    {tp("mostPopular")}
-                  </span>
-                  <h4 className="text-lg font-semibold">{t("subscriptions.pro.name")}</h4>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {t("subscriptions.pro.description")}
-                  </p>
-                  <div className="mt-3 space-y-2">
-                    <div className="rounded-lg border bg-card p-3">
-                      <p className="text-xs font-medium text-muted-foreground">{t("monthly")}</p>
-                      <p className="mt-1 text-2xl font-bold">
-                        ${proMonthly.priceValue}
-                        <span className="ml-1 text-sm font-normal text-muted-foreground">{tp("perMonth")}</span>
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">{proMonthly.creditAmount} {tp("credits")}{tp("perMonth")}</p>
-                      <div className="mt-2">
-                        <PricingBuyButton
-                          tierId={proMonthly.id}
-                          locale={locale}
-                          featured
-                          managePlan={accountSummary?.hasActiveSubscription && accountSummary.plan === "pro"}
-                        />
-                      </div>
-                    </div>
-                    <div className="rounded-lg border bg-card p-3">
-                      <p className="text-xs font-medium text-muted-foreground">{t("yearly")}</p>
-                      <p className="mt-1 text-2xl font-bold">
-                        ${proYearly.priceValue}
-                        <span className="ml-1 text-sm font-normal text-muted-foreground">{tp("perYear")}</span>
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">{proYearly.creditAmount} {tp("credits")}{tp("perYear")}</p>
-                      <div className="mt-2">
-                        <PricingBuyButton
-                          tierId={proYearly.id}
-                          locale={locale}
-                          featured
-                          managePlan={accountSummary?.hasActiveSubscription && accountSummary.plan === "pro"}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              )}
-
-              <article className="flex h-full flex-col rounded-xl border bg-background p-4">
-                <h4 className="text-lg font-semibold">{tp("freePlan")}</h4>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {t("freeCard.description")}
-                </p>
-                <div className="mt-3 rounded-lg border bg-card p-3">
-                  <p className="text-xs font-medium text-muted-foreground">{t("freeCard.priceLabel")}</p>
-                  <p className="mt-1 text-2xl font-bold">$0</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{t("freeCard.creditHint")}</p>
-                </div>
-                <ul className="mt-3 flex-1 space-y-2">
-                  {(["feature1", "feature2", "feature3"] as const).map((fk) => (
-                    <li key={fk} className="flex gap-2 text-xs text-muted-foreground">
-                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                      {t(`freeCard.${fk}`)}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={localizedCreateHref(locale)}
-                  className="mt-3 inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium hover:bg-accent"
-                >
-                  {tp("getStarted")}
-                </a>
-              </article>
-            </div>
-          </div>
+          {basicMonthly && basicYearly && proMonthly && proYearly && (
+            <SubscriptionPlanGrid
+              locale={locale}
+              createHref={createHref}
+              manageBasic={
+                Boolean(accountSummary?.hasActiveSubscription) &&
+                accountSummary?.plan === "basic"
+              }
+              managePro={
+                Boolean(accountSummary?.hasActiveSubscription) &&
+                accountSummary?.plan === "pro"
+              }
+              basicMonthly={{
+                tierId: basicMonthly.id,
+                priceValue: basicMonthly.priceValue,
+                songs: Math.floor(basicMonthly.creditAmount / 100),
+              }}
+              basicYearly={{
+                tierId: basicYearly.id,
+                priceValue: basicYearly.priceValue,
+                songs: Math.floor(basicYearly.creditAmount / 100),
+              }}
+              proMonthly={{
+                tierId: proMonthly.id,
+                priceValue: proMonthly.priceValue,
+                songs: Math.floor(proMonthly.creditAmount / 100),
+              }}
+              proYearly={{
+                tierId: proYearly.id,
+                priceValue: proYearly.priceValue,
+                songs: Math.floor(proYearly.creditAmount / 100),
+              }}
+              t={(key) => t(key)}
+              tp={(key) => tp(key)}
+            />
+          )}
         </div>
       </section>
 
@@ -332,7 +245,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                 >
                   {pack.featured && (
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground">
-                      {tp("mostPopular")}
+                      {t("popularPack")}
                     </span>
                   )}
                   <h3 className="text-xl font-semibold">
@@ -348,7 +261,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     </span>
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {pack.creditAmount} {tp("credits")}
+                    {Math.floor(pack.creditAmount / 100)} {t("songsUnit")}
                   </p>
                   <ul className="mt-5 flex-1 space-y-2.5">
                     {(["feature1", "feature2", "feature3"] as const).map(

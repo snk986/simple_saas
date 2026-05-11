@@ -244,14 +244,12 @@
       "description": "AI 가사, 오디오, 프로듀서 리포트, 공개 페이지를 만들 수 있는 Hit-Song 플랜을 선택하세요. 크레딧은 만료되지 않습니다."
     },
     "eyebrow": "요금",
-    "title": "당신의 이야기를 노래로 만드세요",
-    "subtitle": "1크레딧으로 1곡 완성: 가사, 오디오, 공유 가능한 공개 페이지. 크레딧을 구매하거나 구독으로 지속적으로 제작하세요.",
+    "title": "Unlock Your Full Creative Potential",
+    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "크레딧 팩",
-    "creditPacksSubtitle": "일회성 구매. 크레딧은 만료되지 않습니다.",
+    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
     "subscriptionsTitle": "구독",
-    "subscriptionsSubtitle": "매월 크레딧, 영구 저장, 우선 기능.",
-    "subscriptionsHighlight": "Most Popular Choice",
-    "subscriptionsUrgency": "Subscribe now for better value and priority creation every month.",
+    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
     "monthly": "월간",
     "yearly": "연간",
     "planCta": "시작하기",
@@ -264,40 +262,33 @@
       "feature3": "Upgrade anytime"
     },
     "creditPacks": {
-      "mini": {
-        "name": "Mini",
-        "description": "1곡만 시험해 보세요.",
-        "feature1": "1크레딧으로 1곡 완성",
-        "feature2": "가사 + 오디오 생성",
-        "feature3": "공유 가능한 공개 페이지"
-      },
       "standard": {
-        "name": "Standard",
-        "description": "더 좋은 가격으로 여러 곡 제작.",
-        "feature1": "3크레딧으로 곡 제작",
-        "feature2": "가사 + 오디오 생성",
-        "feature3": "공유 가능한 공개 페이지"
+        "name": "Starter Pack",
+        "description": "Best for quick creation bursts.",
+        "feature1": "1600 credits for complete songs",
+        "feature2": "Lyrics + audio generation",
+        "feature3": "Public shareable pages"
       },
       "pro_pack": {
         "name": "Pro Pack",
-        "description": "진지한 크리에이터를 위한 최고 가성비.",
-        "feature1": "7크레딧으로 곡 제작",
-        "feature2": "프로듀서 리포트 포함",
-        "feature3": "공유 가능한 공개 페이지"
+        "description": "High-volume pack for frequent creation.",
+        "feature1": "5000 credits for complete songs",
+        "feature2": "Producer reports included",
+        "feature3": "Public shareable pages"
       }
     },
     "subscriptions": {
       "basic": {
         "name": "Basic",
         "description": "노래를 영구 보관하고 싶은 정기 크리에이터용.",
-        "feature1": "매월 3크레딧",
+        "feature1": "3000 credits per month",
         "feature2": "노래 영구 저장",
         "feature3": "프로듀서 리포트 포함"
       },
       "pro": {
         "name": "Pro",
         "description": "우선 생성과 최대 창작 출력.",
-        "feature1": "매월 8크레딧",
+        "feature1": "10000 credits per month",
         "feature2": "노래 영구 저장",
         "feature3": "오디오 우선 생성"
       }
@@ -314,7 +305,11 @@
       "a4": "네. 미사용 크레딧에 대해 7일 환불 정책을 제공합니다. 구매 후 7일 이내에 지원팀에 연락하세요.",
       "q5": "어떤 결제 수단을 사용할 수 있나요?",
       "a5": "주요 신용카드를 지원합니다. 가격은 USD로 표시됩니다."
-    }
+    },
+    "save69": "Save 69%",
+    "subscribeNowCancelAnytime": "Subscribe now ? cancel anytime.",
+    "songsUnit": "songs",
+    "popularPack": "Popular"
   },
   "email": {
     "recall": {

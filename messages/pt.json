@@ -244,14 +244,12 @@
       "description": "Escolha um plano do Hit-Song para criar letras, audio, relatorios de produtor e paginas publicas. Creditos nunca expiram."
     },
     "eyebrow": "Precos",
-    "title": "Transforme suas historias em musicas",
-    "subtitle": "Cada credito cria uma musica completa: letra, audio e uma pagina publica para compartilhar. Compre creditos ou assine para criar continuamente.",
+    "title": "Unlock Your Full Creative Potential",
+    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "Pacotes de creditos",
-    "creditPacksSubtitle": "Compra unica. Creditos nunca expiram.",
+    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
     "subscriptionsTitle": "Assinaturas",
-    "subscriptionsSubtitle": "Creditos mensais, armazenamento permanente e recursos prioritarios.",
-    "subscriptionsHighlight": "Escolha mais popular",
-    "subscriptionsUrgency": "Assine agora para ter melhor custo-beneficio e prioridade de geracao todo mes.",
+    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
     "monthly": "Mensal",
     "yearly": "Anual",
     "planCta": "Comecar",
@@ -264,40 +262,33 @@
       "feature3": "Upgrade anytime"
     },
     "creditPacks": {
-      "mini": {
-        "name": "Mini",
-        "description": "Experimente com uma unica musica.",
-        "feature1": "1 credito para uma musica completa",
-        "feature2": "Geracao de letra + audio",
-        "feature3": "Pagina publica para compartilhar"
-      },
       "standard": {
-        "name": "Standard",
-        "description": "Crie varias musicas com melhor preco.",
-        "feature1": "3 creditos para musicas completas",
-        "feature2": "Geracao de letra + audio",
-        "feature3": "Paginas publicas para compartilhar"
+        "name": "Starter Pack",
+        "description": "Best for quick creation bursts.",
+        "feature1": "1600 credits for complete songs",
+        "feature2": "Lyrics + audio generation",
+        "feature3": "Public shareable pages"
       },
       "pro_pack": {
         "name": "Pro Pack",
-        "description": "Melhor valor para criadores dedicados.",
-        "feature1": "7 creditos para musicas completas",
-        "feature2": "Relatorios de produtor incluidos",
-        "feature3": "Paginas publicas para compartilhar"
+        "description": "High-volume pack for frequent creation.",
+        "feature1": "5000 credits for complete songs",
+        "feature2": "Producer reports included",
+        "feature3": "Public shareable pages"
       }
     },
     "subscriptions": {
       "basic": {
         "name": "Basic",
         "description": "Para criadores regulares que querem musicas permanentes.",
-        "feature1": "3 creditos por mes",
+        "feature1": "3000 credits per month",
         "feature2": "Musicas armazenadas permanentemente",
         "feature3": "Relatorios de produtor incluidos"
       },
       "pro": {
         "name": "Pro",
         "description": "Geracao prioritaria e maxima producao criativa.",
-        "feature1": "8 creditos por mes",
+        "feature1": "10000 credits per month",
         "feature2": "Musicas armazenadas permanentemente",
         "feature3": "Geracao de audio prioritaria"
       }
@@ -314,7 +305,11 @@
       "a4": "Sim. Oferecemos politica de reembolso de 7 dias para creditos nao utilizados. Contate o suporte dentro de 7 dias apos a compra.",
       "q5": "Quais metodos de pagamento sao aceitos?",
       "a5": "Aceitamos todos os principais cartoes de credito. Precos em USD."
-    }
+    },
+    "save69": "Save 69%",
+    "subscribeNowCancelAnytime": "Subscribe now ? cancel anytime.",
+    "songsUnit": "songs",
+    "popularPack": "Popular"
   },
   "email": {
     "recall": {
