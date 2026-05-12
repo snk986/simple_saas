@@ -72,11 +72,6 @@ export default function Header({ user }: HeaderProps) {
           </select>
           {user ? (
             <div className="hidden md:flex items-center gap-2">
-              {isDashboard && (
-                <span className="hidden sm:inline text-sm text-muted-foreground">
-                  {user.email}
-                </span>
-              )}
               {!isDashboard && (
                 <Button asChild size="sm" variant="outline">
                   <Link href="/dashboard">{t("dashboard")}</Link>

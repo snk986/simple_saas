@@ -48,7 +48,7 @@ export default async function DashboardPage() {
   const { data: songsData } = await supabase
     .from("songs")
     .select(
-      "id,title,status,is_public,cover_url,audio_url,audio_url_alt,play_count,complete_count,share_count,cta_click_count,created_at,expires_at",
+      "id,title,status,is_public,cover_url,play_count,complete_count,share_count,cta_click_count,created_at,expires_at",
     )
     .eq("user_id", user.id)
     .eq("status", "ready")
@@ -60,9 +60,15 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .order("unlocked_at", { ascending: false });
 
-  const songs: DashboardSong[] = (songsData ?? []).flatMap((song) => {
-    const base = {
+  const songs: DashboardSong[] = (songsData ?? []).map((song) => {
+    const versionLabel = song.title.endsWith("(Version B)")
+      ? "Version B"
+      : undefined;
+
+    return {
+      listId: song.id,
       title: song.title,
+      versionLabel,
       status: song.status,
       isPublic: Boolean(song.is_public),
       coverUrl: song.cover_url,
@@ -70,29 +76,11 @@ export default async function DashboardPage() {
       completeCount: song.complete_count ?? 0,
       shareCount: song.share_count ?? 0,
       ctaClickCount: song.cta_click_count ?? 0,
+      publicHref: `/song/${song.id}`,
       reportHref: `/report/${song.id}`,
       createdAt: song.created_at,
       expiresAt: song.expires_at,
     };
-
-    return [
-      {
-        ...base,
-        listId: song.id,
-        versionLabel: song.audio_url_alt ? "Version A" : undefined,
-        publicHref: `/song/${song.id}`,
-      },
-      ...(song.audio_url_alt
-        ? [
-            {
-              ...base,
-              listId: `${song.id}:legacy-alt`,
-              versionLabel: "Version B",
-              publicHref: `/song/${song.id}?take=alt`,
-            },
-          ]
-        : []),
-    ];
   });
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
 

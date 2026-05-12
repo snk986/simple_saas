@@ -61,9 +61,6 @@ export function MobileNav({
         <div className="mt-auto pt-4 border-t">
           {user ? (
             <div className="flex flex-col gap-2">
-              {user.email && (
-                <p className="text-sm text-muted-foreground">{user.email}</p>
-              )}
               {!isDashboard && (
                 <Button asChild variant="outline" className="w-full">
                   <Link href="/dashboard">{labels.dashboard}</Link>
