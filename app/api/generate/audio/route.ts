@@ -7,6 +7,14 @@ import {
   getSongExpiryForEntitlements,
   getUserEntitlements,
 } from "@/lib/subscription/entitlements";
+import { ERROR_CODES } from "@/lib/observability/error-codes";
+import {
+  classifyProviderError,
+  elapsedMs,
+  getRequestId,
+  logError,
+  logInfo,
+} from "@/lib/observability/log";
 
 const AUDIO_CREDIT_COST = 200;
 
@@ -17,23 +25,65 @@ const requestSchema = z.object({
 
 type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
 
-async function freezeCreditIfNeeded(supabase: SupabaseClient, userId: string) {
+async function getCreditBalance(supabase: SupabaseClient, userId: string) {
+  const { data } = await supabase
+    .from("customers")
+    .select("credits_balance")
+    .eq("user_id", userId)
+    .maybeSingle();
+  return data?.credits_balance ?? null;
+}
+
+async function freezeCreditIfNeeded(
+  supabase: SupabaseClient,
+  userId: string,
+  requestId: string,
+  songId: string,
+) {
   if (process.env.SKIP_CREDIT_CHECK === "true") {
     return { enough: true, charged: false };
   }
 
+  const before = await getCreditBalance(supabase, userId);
   const { data, error } = await supabase.rpc("freeze_credit", {
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation",
-    p_metadata: { operation: "audio_generation" },
+    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
   });
 
   if (error) {
+    logError("credit_freeze", {
+      request_id: requestId,
+      user_id: userId,
+      song_id: songId,
+      op: "freeze",
+      stage: "credit_finalize",
+      status: "failed",
+      error_code: ERROR_CODES.CREDIT_OP_FAILED,
+      failure_reason: error.message,
+      balance_before: before,
+      amount: AUDIO_CREDIT_COST,
+      balance_after: null,
+      success: false,
+    });
     throw error;
   }
 
   const enough = Boolean((data as { enough?: boolean } | null)?.enough);
+  const after = await getCreditBalance(supabase, userId);
+  logInfo("credit_freeze", {
+    request_id: requestId,
+    user_id: userId,
+    song_id: songId,
+    op: "freeze",
+    stage: "credit_finalize",
+    status: enough ? "succeeded" : "insufficient",
+    balance_before: before,
+    amount: AUDIO_CREDIT_COST,
+    balance_after: after,
+    success: enough,
+  });
   return { enough, charged: enough };
 }
 
@@ -41,23 +91,61 @@ async function refundCreditIfNeeded(
   supabase: SupabaseClient,
   userId: string,
   charged: boolean,
+  requestId: string,
+  songId: string | null,
 ) {
   if (!charged || process.env.SKIP_CREDIT_CHECK === "true") {
     return;
   }
 
-  await supabase.rpc("unfreeze_credit", {
+  const before = await getCreditBalance(supabase, userId);
+  const { error } = await supabase.rpc("unfreeze_credit", {
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation_refund",
-    p_metadata: { operation: "audio_generation" },
+    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
+  });
+
+  if (error) {
+    logError("credit_refund", {
+      request_id: requestId,
+      user_id: userId,
+      song_id: songId,
+      op: "refund",
+      stage: "credit_finalize",
+      status: "failed",
+      error_code: ERROR_CODES.CREDIT_OP_FAILED,
+      failure_reason: error.message,
+      balance_before: before,
+      amount: AUDIO_CREDIT_COST,
+      balance_after: null,
+      success: false,
+    });
+    return;
+  }
+
+  const after = await getCreditBalance(supabase, userId);
+  logInfo("credit_refund", {
+    request_id: requestId,
+    user_id: userId,
+    song_id: songId,
+    op: "refund",
+    stage: "credit_finalize",
+    status: "succeeded",
+    balance_before: before,
+    amount: AUDIO_CREDIT_COST,
+    balance_after: after,
+    success: true,
   });
 }
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
+  const requestId = getRequestId(request.headers.get("x-request-id"));
+  const startMs = Date.now();
   let charged = false;
   let userId: string | null = null;
+  let songId: string | null = null;
 
   try {
     const body = requestSchema.safeParse(await request.json());
@@ -76,6 +164,7 @@ export async function POST(request: NextRequest) {
     }
 
     userId = user.id;
+    songId = body.data.songId;
     const entitlements = await getUserEntitlements(user.id);
     const { data: song, error: songError } = await supabase
       .from("songs")
@@ -95,7 +184,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const credit = await freezeCreditIfNeeded(supabase, user.id);
+    logInfo("audio_submit_start", {
+      request_id: requestId,
+      user_id: user.id,
+      song_id: song.id,
+      stage: "audio_submit",
+      status: "started",
+    });
+
+    const credit = await freezeCreditIfNeeded(supabase, user.id, requestId, song.id);
     charged = credit.charged;
 
     if (!credit.enough) {
@@ -130,15 +227,35 @@ export async function POST(request: NextRequest) {
     }
 
     charged = false;
-    return NextResponse.json({ taskId, songId: song.id });
+    logInfo("audio_submit_end", {
+      request_id: requestId,
+      user_id: user.id,
+      song_id: song.id,
+      stage: "audio_submit",
+      status: "succeeded",
+      duration_ms: elapsedMs(startMs),
+      provider_task_id: taskId,
+    });
+    return NextResponse.json({ request_id: requestId, taskId, songId: song.id });
   } catch (error) {
     if (userId) {
-      await refundCreditIfNeeded(supabase, userId, charged);
+      await refundCreditIfNeeded(supabase, userId, charged, requestId, songId);
     }
 
-    console.error("Audio generation error:", error);
+    const providerError = classifyProviderError(error);
+    logError("audio_submit_failed", {
+      request_id: requestId,
+      user_id: userId,
+      song_id: songId,
+      stage: "audio_submit",
+      status: "failed",
+      duration_ms: elapsedMs(startMs),
+      error_code: providerError.error_code,
+      provider_error_code: providerError.provider_error_code,
+      provider_message: providerError.provider_message,
+    });
     return NextResponse.json(
-      { error: "Audio generation failed" },
+      { error: "Audio generation failed", request_id: requestId },
       { status: 500 },
     );
   }

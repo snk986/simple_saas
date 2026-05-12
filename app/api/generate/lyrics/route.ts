@@ -8,6 +8,13 @@ import {
   getSongExpiryForEntitlements,
   getUserEntitlements,
 } from "@/lib/subscription/entitlements";
+import {
+  classifyProviderError,
+  elapsedMs,
+  getRequestId,
+  logError,
+  logInfo,
+} from "@/lib/observability/log";
 
 const requestSchema = z.object({
   userInput: z.string().trim().min(10).max(2000).optional(),
@@ -33,6 +40,9 @@ function errorDetail(error: unknown) {
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request.headers.get("x-request-id"));
+  const requestStart = Date.now();
+
   try {
     const body = requestSchema.safeParse(await request.json());
 
@@ -49,6 +59,13 @@ export async function POST(request: NextRequest) {
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    logInfo("lyrics_start", {
+      request_id: requestId,
+      user_id: user.id,
+      stage: "lyrics_start",
+      status: "started",
+    });
 
     const locale = normalizeLocale(body.data.locale);
     const entitlements = await getUserEntitlements(user.id);
@@ -119,14 +136,33 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (updateError || !updatedSong) {
-        console.error("[lyrics] failed to update song", updateError);
+        logError("lyrics_failed", {
+          request_id: requestId,
+          user_id: user.id,
+          song_id: existingSong.id,
+          stage: "lyrics_end",
+          status: "failed",
+          duration_ms: elapsedMs(requestStart),
+          error_code: "BAD_RESPONSE",
+          failure_reason: "failed_to_update_song",
+        });
         return NextResponse.json(
           { error: "Failed to update song" },
           { status: 500 },
         );
       }
 
+      logInfo("lyrics_end", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: updatedSong.id,
+        stage: "lyrics_end",
+        status: "succeeded",
+        duration_ms: elapsedMs(requestStart),
+      });
+
       return NextResponse.json({
+        request_id: requestId,
         songId: updatedSong.id,
         title: updatedSong.title,
         lyrics: updatedSong.lyrics,
@@ -194,14 +230,32 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError || !song) {
-      console.error("[lyrics] failed to create song", insertError);
+      logError("lyrics_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        stage: "lyrics_end",
+        status: "failed",
+        duration_ms: elapsedMs(requestStart),
+        error_code: "BAD_RESPONSE",
+        failure_reason: "failed_to_create_song",
+      });
       return NextResponse.json(
         { error: "Failed to create song" },
         { status: 500 },
       );
     }
 
+    logInfo("lyrics_end", {
+      request_id: requestId,
+      user_id: user.id,
+      song_id: song.id,
+      stage: "lyrics_end",
+      status: "succeeded",
+      duration_ms: elapsedMs(requestStart),
+    });
+
     return NextResponse.json({
+      request_id: requestId,
       songId: song.id,
       title: song.title,
       lyrics: song.lyrics,
@@ -211,7 +265,16 @@ export async function POST(request: NextRequest) {
       lyrics_regen_count: 1,
     });
   } catch (error) {
-    console.error("Lyrics generation error:", error);
+    const providerError = classifyProviderError(error);
+    logError("lyrics_failed", {
+      request_id: requestId,
+      stage: "lyrics_end",
+      status: "failed",
+      duration_ms: elapsedMs(requestStart),
+      error_code: providerError.error_code,
+      provider_error_code: providerError.provider_error_code,
+      provider_message: providerError.provider_message,
+    });
     return NextResponse.json(
       {
         error: "Generation failed",

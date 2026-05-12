@@ -8,6 +8,14 @@ import {
 import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
+import { ERROR_CODES } from "@/lib/observability/error-codes";
+import {
+  classifyProviderError,
+  elapsedMs,
+  getRequestId,
+  logError,
+  logInfo,
+} from "@/lib/observability/log";
 
 const AUDIO_CREDIT_COST = 200;
 
@@ -19,20 +27,70 @@ const querySchema = z.object({
 async function refundCreditIfNeeded(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
+  requestId: string,
+  songId: string,
 ) {
   if (process.env.SKIP_CREDIT_CHECK === "true") {
     return;
   }
 
-  await supabase.rpc("unfreeze_credit", {
+  const { data: beforeData } = await supabase
+    .from("customers")
+    .select("credits_balance")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  const { error } = await supabase.rpc("unfreeze_credit", {
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation_refund",
-    p_metadata: { operation: "audio_generation" },
+    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
+  });
+
+  if (error) {
+    logError("credit_refund", {
+      request_id: requestId,
+      user_id: userId,
+      song_id: songId,
+      op: "refund",
+      stage: "credit_finalize",
+      status: "failed",
+      error_code: ERROR_CODES.CREDIT_OP_FAILED,
+      failure_reason: error.message,
+      balance_before: beforeData?.credits_balance ?? null,
+      amount: AUDIO_CREDIT_COST,
+      balance_after: null,
+      success: false,
+    });
+    return;
+  }
+
+  const { data: afterData } = await supabase
+    .from("customers")
+    .select("credits_balance")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  logInfo("credit_refund", {
+    request_id: requestId,
+    user_id: userId,
+    song_id: songId,
+    op: "refund",
+    stage: "credit_finalize",
+    status: "succeeded",
+    balance_before: beforeData?.credits_balance ?? null,
+    amount: AUDIO_CREDIT_COST,
+    balance_after: afterData?.credits_balance ?? null,
+    success: true,
   });
 }
 
 export async function GET(request: NextRequest) {
+  const requestId = getRequestId(
+    request.headers.get("x-request-id") ??
+      request.nextUrl.searchParams.get("request_id"),
+  );
+  const startMs = Date.now();
   try {
     const query = querySchema.safeParse({
       taskId: request.nextUrl.searchParams.get("taskId") ?? undefined,
@@ -53,6 +111,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    logInfo("audio_poll_start", {
+      request_id: requestId,
+      user_id: user.id,
+      song_id: query.data.songId ?? null,
+      stage: "audio_poll",
+      status: "started",
+    });
+
     let songQuery = supabase
       .from("songs")
       .select(
@@ -71,7 +137,16 @@ export async function GET(request: NextRequest) {
     }
 
     if (song.status === "ready") {
+      logInfo("audio_poll_end", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "succeeded",
+        duration_ms: elapsedMs(startMs),
+      });
       return NextResponse.json({
+        request_id: requestId,
         status: "completed",
         songId: song.id,
         audio_url: song.audio_url,
@@ -80,6 +155,16 @@ export async function GET(request: NextRequest) {
     }
 
     if (song.status === "failed") {
+      logError("audio_poll_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "failed",
+        duration_ms: elapsedMs(startMs),
+        error_code: ERROR_CODES.BAD_RESPONSE,
+        failure_reason: "song_already_failed",
+      });
       return NextResponse.json({ status: "failed", songId: song.id });
     }
 
@@ -96,9 +181,22 @@ export async function GET(request: NextRequest) {
         .update({ status: "failed", updated_at: new Date().toISOString() })
         .eq("id", song.id)
         .eq("user_id", user.id);
-      await refundCreditIfNeeded(supabase, user.id);
+      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
+
+      logError("audio_poll_timeout", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "failed",
+        duration_ms: elapsedMs(startMs),
+        error_code: ERROR_CODES.TIMEOUT,
+        provider_task_id: song.kie_task_id,
+        provider_message: result.error ?? "provider returned failed",
+      });
 
       return NextResponse.json({
+        request_id: requestId,
         status: "failed",
         songId: song.id,
         error: result.error,
@@ -219,10 +317,32 @@ export async function GET(request: NextRequest) {
     }
 
     await checkAchievements(user.id).catch((achievementError) => {
-      console.error("Achievement check error:", achievementError);
+      logError("achievement_check_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "failed",
+        error_code: ERROR_CODES.BAD_RESPONSE,
+        failure_reason:
+          achievementError instanceof Error
+            ? achievementError.message
+            : String(achievementError),
+      });
+    });
+
+    logInfo("audio_poll_end", {
+      request_id: requestId,
+      user_id: user.id,
+      song_id: song.id,
+      stage: "audio_poll",
+      status: "succeeded",
+      duration_ms: elapsedMs(startMs),
+      provider_task_id: song.kie_task_id,
     });
 
     return NextResponse.json({
+      request_id: requestId,
       status: "completed",
       songId: song.id,
       audio_url: audioUrl,
@@ -232,9 +352,18 @@ export async function GET(request: NextRequest) {
       alt_cover_url: altSong?.cover_url,
     });
   } catch (error) {
-    console.error("Audio status error:", error);
+    const providerError = classifyProviderError(error);
+    logError("audio_poll_failed", {
+      request_id: requestId,
+      stage: "audio_poll",
+      status: "failed",
+      duration_ms: elapsedMs(startMs),
+      error_code: providerError.error_code,
+      provider_error_code: providerError.provider_error_code,
+      provider_message: providerError.provider_message,
+    });
     return NextResponse.json(
-      { error: "Failed to check audio status" },
+      { error: "Failed to check audio status", request_id: requestId },
       { status: 500 },
     );
   }
