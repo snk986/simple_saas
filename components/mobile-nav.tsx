@@ -12,6 +12,7 @@ import { Menu } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { signOutAction } from "@/app/actions";
 import { useLocale } from "next-intl";
+import { useState } from "react";
 
 interface MobileNavProps {
   items: { label: string; href: string }[];
@@ -34,9 +35,10 @@ export function MobileNav({
   labels,
 }: MobileNavProps) {
   const locale = useLocale();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
           <Menu className="h-5 w-5" />
@@ -52,6 +54,7 @@ export function MobileNav({
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setOpen(false)}
               className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
@@ -63,12 +66,19 @@ export function MobileNav({
             <div className="flex flex-col gap-2">
               {!isDashboard && (
                 <Button asChild variant="outline" className="w-full">
-                  <Link href="/dashboard">{labels.dashboard}</Link>
+                  <Link href="/dashboard" onClick={() => setOpen(false)}>
+                    {labels.dashboard}
+                  </Link>
                 </Button>
               )}
               <form action={signOutAction} className="w-full">
                 <input type="hidden" name="locale" value={locale} />
-                <Button type="submit" variant="outline" className="w-full">
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setOpen(false)}
+                >
                   {labels.signOut}
                 </Button>
               </form>
@@ -76,10 +86,14 @@ export function MobileNav({
           ) : (
             <div className="flex flex-col gap-2">
               <Button asChild variant="outline" className="w-full">
-                <Link href="/sign-in">{labels.signIn}</Link>
+                <Link href="/sign-in" onClick={() => setOpen(false)}>
+                  {labels.signIn}
+                </Link>
               </Button>
               <Button asChild variant="default" className="w-full">
-                <Link href="/sign-up">{labels.signUp}</Link>
+                <Link href="/sign-up" onClick={() => setOpen(false)}>
+                  {labels.signUp}
+                </Link>
               </Button>
             </div>
           )}
