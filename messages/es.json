@@ -18,7 +18,7 @@
     "pricing": "Precios",
     "company": "Empresa",
     "about": "Acerca de",
-    "legal": "Legal",
+    "legal": "Jurídico",
     "privacy": "Privacidad",
     "terms": "Terminos"
   },
@@ -187,7 +187,7 @@
       "title": "Sigue escuchando",
       "playCount": "reproducciones",
       "coverAlt": "Portada de {title}",
-      "styleMoodSeparator": "-"
+      "styleMoodSeparator": " • "
     },
     "cta": {
       "title": "Convierte tu historia en una cancion",
@@ -219,12 +219,12 @@
         "plays": "Reprod.",
         "full": "Completa",
         "shares": "Compart.",
-        "cta": "CTA"
+        "cta": "Acción"
       },
       "copyLink": "Copiar enlace",
       "preview": "Vista previa",
       "report": "Informe",
-      "versionB": "Version B"
+      "versionB": "Versión B"
     },
     "creditsCard": {
       "availableCredits": "Creditos disponibles",
@@ -237,7 +237,7 @@
       "currentPlan": "Plan actual",
       "freePlan": "Gratis",
       "basicPlan": "Basico",
-      "proPlan": "Pro",
+      "proPlan": "Profesional",
       "storagePermanent": "Almacenamiento permanente para canciones de suscriptores",
       "storageFree": "Almacenamiento de {days} dias para canciones gratis",
       "priorityEnabled": "Generacion prioritaria activada",
@@ -277,36 +277,36 @@
     "progress": "{unlocked} de {total} desbloqueados",
     "items": {
       "first_song": {
-        "title": "First Draft",
-        "description": "Create your first song idea."
+        "title": "Primer borrador",
+        "description": "Crea tu primera idea de canción."
       },
       "first_ready_song": {
-        "title": "First Release",
-        "description": "Generate audio for your first ready song."
+        "title": "Primer lanzamiento",
+        "description": "Genera audio para tu primera canción terminada."
       },
       "first_report": {
-        "title": "Producer Notes",
-        "description": "Generate your first judge report."
+        "title": "Notas del productor",
+        "description": "Genera tu primer informe de evaluación."
       },
       "score_80": {
-        "title": "Strong Signal",
-        "description": "Earn a report score of 80 or higher."
+        "title": "Señal fuerte",
+        "description": "Consigue una puntuación de 80 o más en el informe."
       },
       "score_90": {
-        "title": "Hit Potential",
-        "description": "Earn a report score of 90 or higher."
+        "title": "Potencial de hit",
+        "description": "Consigue una puntuación de 90 o más en el informe."
       },
       "songs_3": {
-        "title": "Three-Song Run",
-        "description": "Create at least three songs."
+        "title": "Racha de 3 canciones",
+        "description": "Crea al menos tres canciones."
       },
       "plays_50": {
-        "title": "First Audience",
-        "description": "Reach 50 total plays across your songs."
+        "title": "Primera audiencia",
+        "description": "Alcanza 50 reproducciones totales en tus canciones."
       },
       "shares_10": {
-        "title": "Worth Sharing",
-        "description": "Reach 10 total shares across your songs."
+        "title": "Vale la pena compartir",
+        "description": "Alcanza 10 compartidos totales en tus canciones."
       }
     }
   },
@@ -367,10 +367,10 @@
     "mostPopular": "Mas popular",
     "signInToBuy": "Inicia sesion para comprar",
     "freePlan": "Gratis",
-    "basicPlan": "Basic",
-    "proPlan": "Pro",
-    "enterprisePlan": "Enterprise",
-    "errorTitle": "Error",
+    "basicPlan": "Básico",
+    "proPlan": "Profesional",
+    "enterprisePlan": "Empresarial",
+    "errorTitle": "Error de pago",
     "checkoutFailed": "No se pudo crear el checkout",
     "paymentFailed": "Pago fallido"
   },
@@ -381,7 +381,7 @@
     },
     "eyebrow": "Precios",
     "title": "Desbloquea todo tu potencial creativo",
-    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
+    "subtitle": "Despídete de los límites de crédito y las largas esperas. Únete ahora y convierte cada chispa de inspiración en una obra maestra.",
     "creditPacksTitle": "Paquetes de creditos",
     "creditPacksSubtitle": "Compra unica para creadores que necesitan canciones extra ahora.",
     "subscriptionsTitle": "Suscripciones",
@@ -391,38 +391,38 @@
     "planCta": "Empezar",
     "freeCard": {
       "description": "Para nuevos creadores que empiezan con una idea de cancion.",
-      "priceLabel": "Free",
-      "creditHint": "No subscription required",
-      "feature1": "Create with pay-as-you-go credit packs",
-      "feature2": "Lyrics + audio generation",
-      "feature3": "Upgrade anytime"
+      "priceLabel": "Gratis",
+      "creditHint": "No requiere suscripción",
+      "feature1": "Crea con paquetes de créditos por uso",
+      "feature2": "Generación de letra + audio",
+      "feature3": "Mejora en cualquier momento"
     },
     "creditPacks": {
       "standard": {
         "name": "Paquete inicial",
-        "description": "Best for quick creation bursts.",
-        "feature1": "1600 credits for complete songs",
-        "feature2": "Lyrics + audio generation",
-        "feature3": "Public shareable pages"
+        "description": "Ideal para ráfagas rápidas de creación.",
+        "feature1": "1600 créditos para canciones completas",
+        "feature2": "Generación de letra + audio",
+        "feature3": "Páginas públicas para compartir"
       },
       "pro_pack": {
         "name": "Paquete Pro",
-        "description": "High-volume pack for frequent creation.",
-        "feature1": "5000 credits for complete songs",
-        "feature2": "Producer reports included",
-        "feature3": "Public shareable pages"
+        "description": "Paquete de alto volumen para crear con frecuencia.",
+        "feature1": "5000 créditos para canciones completas",
+        "feature2": "Incluye informes de productor",
+        "feature3": "Páginas públicas para compartir"
       }
     },
     "subscriptions": {
       "basic": {
-        "name": "Basic",
+        "name": "Básico",
         "description": "Para creadores regulares que quieren canciones permanentes.",
         "feature1": "3000 creditos por mes",
         "feature2": "Canciones almacenadas permanentemente",
         "feature3": "Informes de productor incluidos"
       },
       "pro": {
-        "name": "Pro",
+        "name": "Profesional",
         "description": "Generacion prioritaria y maxima produccion creativa.",
         "feature1": "10000 creditos por mes",
         "feature2": "Canciones almacenadas permanentemente",
@@ -442,10 +442,10 @@
       "q5": "Que metodos de pago se aceptan?",
       "a5": "Aceptamos todas las tarjetas de credito principales. Los precios estan en USD."
     },
-    "save69": "Save 69%",
+    "save69": "Ahorra 69%",
     "subscribeNowCancelAnytime": "Suscribete ahora - cancela en cualquier momento.",
     "songsUnit": "canciones",
-    "popularPack": "Popular"
+    "popularPack": "Más popular"
   },
   "email": {
     "recall": {

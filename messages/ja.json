@@ -134,23 +134,23 @@
     },
     "previewLyrics": "歌詞プレビュー",
     "header": {
-      "type": "Song",
-      "coverAlt": "{title} cover art",
-      "plays": "{count} plays",
-      "shares": "{count} Shares",
-      "likes": "{count} likes"
+      "type": "曲",
+      "coverAlt": "{title} のカバーアート",
+      "plays": "{count} 再生",
+      "shares": "{count} シェア",
+      "likes": "{count} いいね"
     },
     "actions": {
-      "play": "Play song",
-      "pause": "Pause song",
-      "like": "Like",
-      "liked": "Liked",
-      "copy": "Copy link",
-      "copied": "Link copied",
-      "copyFailed": "Copy failed. Select the address bar instead.",
-      "more": "More actions",
-      "share": "Share",
-      "create": "Create song"
+      "play": "再生",
+      "pause": "一時停止",
+      "like": "いいね",
+      "liked": "いいね済み",
+      "copy": "リンクをコピー",
+      "copied": "リンクをコピーしました",
+      "copyFailed": "コピーに失敗しました。アドレスバーからコピーしてください。",
+      "more": "その他の操作",
+      "share": "シェア",
+      "create": "曲を作成"
     },
     "lyrics": {
       "title": "歌詞",
@@ -160,17 +160,17 @@
     "breadcrumbCreate": "作成",
     "creatorReport": {
       "title": "クリエイターレポート",
-      "score": "AI score",
-      "summary": "Summary",
-      "producerComment": "Producer comment",
-      "emotionalValue": "Emotional value",
-      "hookAnalysis": "Hook analysis",
-      "marketPositioning": "Market positioning",
-      "songDetails": "Song details",
-      "genre": "Genre",
-      "mood": "Mood",
+      "score": "AIスコア",
+      "summary": "要約",
+      "producerComment": "プロデューサーコメント",
+      "emotionalValue": "感情価値",
+      "hookAnalysis": "フック分析",
+      "marketPositioning": "市場ポジショニング",
+      "songDetails": "楽曲詳細",
+      "genre": "ジャンル",
+      "mood": "ムード",
       "bpm": "BPM",
-      "tags": "Tags",
+      "tags": "タグ",
       "fallbackIntro": "{title} はこのストーリーから生まれた AI 生成楽曲です: {story}。このページでは歌詞全文、音源再生、スタイル情報、公開リスニング指標を確認できます。"
     },
     "summary": {
@@ -187,7 +187,7 @@
       "title": "続けて聴く",
       "playCount": "再生",
       "coverAlt": "{title} のカバーアート",
-      "styleMoodSeparator": "-"
+      "styleMoodSeparator": "・"
     },
     "cta": {
       "title": "あなたの物語を曲に",
@@ -219,12 +219,12 @@
         "plays": "再生",
         "full": "完聴",
         "shares": "共有",
-        "cta": "CTA"
+        "cta": "アクション"
       },
       "copyLink": "リンクをコピー",
       "preview": "プレビュー",
       "report": "レポート",
-      "versionB": "Version B"
+      "versionB": "バージョンB"
     },
     "creditsCard": {
       "availableCredits": "利用可能クレジット",
@@ -236,8 +236,8 @@
     "subscriptionCard": {
       "currentPlan": "現在のプラン",
       "freePlan": "無料",
-      "basicPlan": "?????",
-      "proPlan": "??",
+      "basicPlan": "ベーシック",
+      "proPlan": "プロ",
       "storagePermanent": "サブスク楽曲は永久保存",
       "storageFree": "無料楽曲は {days} 日保存",
       "priorityEnabled": "優先生成が有効",
@@ -277,36 +277,36 @@
     "progress": "{total}個中{unlocked}個を解除",
     "items": {
       "first_song": {
-        "title": "First Draft",
-        "description": "Create your first song idea."
+        "title": "初回ドラフト",
+        "description": "最初の曲アイデアを作成する。"
       },
       "first_ready_song": {
-        "title": "First Release",
-        "description": "Generate audio for your first ready song."
+        "title": "初回リリース",
+        "description": "最初の完成曲の音声を生成する。"
       },
       "first_report": {
-        "title": "Producer Notes",
-        "description": "Generate your first judge report."
+        "title": "プロデューサーノート",
+        "description": "最初の審査レポートを生成する。"
       },
       "score_80": {
-        "title": "Strong Signal",
-        "description": "Earn a report score of 80 or higher."
+        "title": "高評価シグナル",
+        "description": "レポートスコア80以上を達成する。"
       },
       "score_90": {
-        "title": "Hit Potential",
-        "description": "Earn a report score of 90 or higher."
+        "title": "ヒットの可能性",
+        "description": "レポートスコア90以上を達成する。"
       },
       "songs_3": {
-        "title": "Three-Song Run",
-        "description": "Create at least three songs."
+        "title": "3曲達成",
+        "description": "少なくとも3曲を作成する。"
       },
       "plays_50": {
-        "title": "First Audience",
-        "description": "Reach 50 total plays across your songs."
+        "title": "最初のリスナー層",
+        "description": "全楽曲の合計再生数50回を達成する。"
       },
       "shares_10": {
-        "title": "Worth Sharing",
-        "description": "Reach 10 total shares across your songs."
+        "title": "シェアされる価値",
+        "description": "全楽曲の合計シェア数10回を達成する。"
       }
     }
   },
@@ -367,9 +367,9 @@
     "mostPopular": "人気No.1",
     "signInToBuy": "購入するにはログイン",
     "freePlan": "無料",
-    "basicPlan": "Basic",
-    "proPlan": "Pro",
-    "enterprisePlan": "Enterprise",
+    "basicPlan": "ベーシック",
+    "proPlan": "プロ",
+    "enterprisePlan": "エンタープライズ",
     "errorTitle": "エラー",
     "checkoutFailed": "チェックアウトの作成に失敗しました",
     "paymentFailed": "決済に失敗しました"
@@ -381,7 +381,7 @@
     },
     "eyebrow": "料金",
     "title": "創作ポテンシャルを最大化しよう",
-    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
+    "subtitle": "クレジット制限や長い待ち時間とはお別れ。今すぐ始めて、ひらめきを作品に変えましょう。",
     "creditPacksTitle": "クレジットパック",
     "creditPacksSubtitle": "今すぐ追加曲が必要なクリエイター向けの買い切りプランです。",
     "subscriptionsTitle": "サブスクリプション",
@@ -391,38 +391,38 @@
     "planCta": "はじめる",
     "freeCard": {
       "description": "1曲目のアイデアから始める新規クリエイター向け。",
-      "priceLabel": "Free",
-      "creditHint": "No subscription required",
-      "feature1": "Create with pay-as-you-go credit packs",
-      "feature2": "Lyrics + audio generation",
-      "feature3": "Upgrade anytime"
+      "priceLabel": "無料",
+      "creditHint": "サブスク不要",
+      "feature1": "必要な分だけクレジット購入",
+      "feature2": "歌詞 + 音声生成",
+      "feature3": "いつでもアップグレード可能"
     },
     "creditPacks": {
       "standard": {
         "name": "スターターパック",
-        "description": "Best for quick creation bursts.",
-        "feature1": "1600 credits for complete songs",
-        "feature2": "Lyrics + audio generation",
-        "feature3": "Public shareable pages"
+        "description": "短時間での制作に最適。",
+        "feature1": "1600クレジットで楽曲を生成",
+        "feature2": "歌詞 + 音声生成",
+        "feature3": "公開ページでシェア可能"
       },
       "pro_pack": {
         "name": "プロパック",
-        "description": "High-volume pack for frequent creation.",
-        "feature1": "5000 credits for complete songs",
-        "feature2": "Producer reports included",
-        "feature3": "Public shareable pages"
+        "description": "高頻度で制作する方向けの大容量パック。",
+        "feature1": "5000クレジットで楽曲を生成",
+        "feature2": "プロデューサーレポート付き",
+        "feature3": "公開ページでシェア可能"
       }
     },
     "subscriptions": {
       "basic": {
-        "name": "Basic",
+        "name": "ベーシック",
         "description": "曲を永久保存したい定期クリエイター向け。",
         "feature1": "毎月3000クレジット",
         "feature2": "曲を永久保存",
         "feature3": "プロデューサーレポート付き"
       },
       "pro": {
-        "name": "Pro",
+        "name": "プロ",
         "description": "優先生成と最大限のクリエイティブ出力。",
         "feature1": "毎月10000クレジット",
         "feature2": "曲を永久保存",
@@ -442,10 +442,10 @@
       "q5": "どの支払い方法が使えますか？",
       "a5": "主要なクレジットカードに対応しています。価格はUSD表示です。"
     },
-    "save69": "Save 69%",
+    "save69": "69%お得",
     "subscribeNowCancelAnytime": "今すぐ登録 - いつでも解約可能。",
     "songsUnit": "曲",
-    "popularPack": "Popular"
+    "popularPack": "人気"
   },
   "email": {
     "recall": {

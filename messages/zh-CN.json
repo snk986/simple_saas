@@ -7,20 +7,20 @@
     "signIn": "登录",
     "signUp": "注册",
     "signOut": "退出登录",
-    "language": "Language",
+    "language": "语言",
     "navigation": "导航",
     "toggleMenu": "切换菜单"
   },
   "footer": {
-    "tagline": "Turn personal stories into lyrics, audio, and producer-style reports.",
-    "product": "Product",
-    "features": "How it works",
-    "pricing": "Pricing",
-    "company": "Company",
-    "about": "About",
-    "legal": "Legal",
-    "privacy": "Privacy",
-    "terms": "Terms"
+    "tagline": "将个人故事转化为歌词、音频和制作人风格报告。",
+    "product": "产品",
+    "features": "工作流程",
+    "pricing": "定价",
+    "company": "公司",
+    "about": "关于",
+    "legal": "法律",
+    "privacy": "隐私",
+    "terms": "条款"
   },
   "home": {
     "seo": {
@@ -101,102 +101,102 @@
     }
   },
   "create": {
-    "title": "Turn Your Story Into a Hit Song",
-    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into a structured lyric draft.",
-    "inputPlaceholder": "Tell your story...",
-    "inputHint": "A few vivid details help the song feel personal.",
-    "generateLyrics": "Generate Lyrics",
-    "generating": "Writing lyrics...",
-    "generateMusic": "Generate Music",
-    "regenerate": "Regenerate",
-    "regenerateLimit": "Max 3 regenerations reached",
-    "inputTooShort": "Tell a little more of the story first.",
-    "emptyState": "Your lyrics will appear here after the first draft.",
-    "paymentSuccessTitle": "Payment confirmed",
-    "paymentSuccessDescription": "Your credits or plan are being synced. If the balance has not updated yet, refresh in a moment.",
+    "title": "把你的故事变成一首爆款歌曲",
+    "subtitle": "从一个瞬间、心事、记忆或情绪开始。我们会将它打磨成结构化歌词草稿。",
+    "inputPlaceholder": "讲讲你的故事...",
+    "inputHint": "多一些具体细节，歌曲会更有个人风格。",
+    "generateLyrics": "生成歌词",
+    "generating": "正在写歌词...",
+    "generateMusic": "生成音乐",
+    "regenerate": "重新生成",
+    "regenerateLimit": "最多可重新生成 3 次",
+    "inputTooShort": "先再多讲一点故事吧。",
+    "emptyState": "首次草稿完成后，这里会显示你的歌词。",
+    "paymentSuccessTitle": "支付已确认",
+    "paymentSuccessDescription": "你的积分或订阅正在同步中。如果余额暂未更新，请稍后刷新。",
     "recall": {
-      "draftNoAudio": "Your saved lyrics are loaded. Review them, then generate the audio when you are ready.",
-      "inactiveCreator": "Welcome back. Start with a fresh detail and turn the next story into a song."
+      "draftNoAudio": "你的歌词草稿已恢复，确认后即可继续生成音频。",
+      "inactiveCreator": "欢迎回来。用一个新细节开始你的下一首歌吧。"
     }
   },
   "song": {
-    "play": "Play",
-    "pause": "Pause",
-    "share": "Share",
-    "viewReport": "View Report"
+    "play": "播放",
+    "pause": "暂停",
+    "share": "分享",
+    "viewReport": "查看报告"
   },
   "songPublic": {
     "seo": {
-      "title": "{title} - AI Generated {style} Song | Hit-Song",
-      "description": "Listen to \"{title}\", an AI-generated {style} song with a {mood} mood. {story} Create your own song with Hit-Song.",
-      "notFoundTitle": "Song not found | Hit-Song",
-      "ogImageAlt": "{title} share image"
+      "title": "{title} - AI 生成的 {style} 歌曲 | Hit-Song",
+      "description": "收听《{title}》，这是一首 AI 生成的 {style} 风格歌曲，情绪为 {mood}。{story} 你也可以用 Hit-Song 创作自己的歌曲。",
+      "notFoundTitle": "歌曲未找到 | Hit-Song",
+      "ogImageAlt": "{title} 分享图"
     },
-    "previewLyrics": "Preview lyrics",
+    "previewLyrics": "预览歌词",
     "header": {
-      "type": "Song",
-      "coverAlt": "{title} cover art",
-      "plays": "{count} plays",
-      "shares": "{count} Shares",
-      "likes": "{count} likes"
+      "type": "歌曲",
+      "coverAlt": "{title} 封面图",
+      "plays": "{count} 次播放",
+      "shares": "{count} 次分享",
+      "likes": "{count} 次喜欢"
     },
     "actions": {
-      "play": "Play song",
-      "pause": "Pause song",
-      "like": "Like",
-      "liked": "Liked",
-      "copy": "Copy link",
-      "copied": "Link copied",
-      "copyFailed": "Copy failed. Select the address bar instead.",
-      "more": "More actions",
-      "share": "Share",
-      "create": "Create song"
+      "play": "播放歌曲",
+      "pause": "暂停歌曲",
+      "like": "点赞",
+      "liked": "已点赞",
+      "copy": "复制链接",
+      "copied": "链接已复制",
+      "copyFailed": "复制失败，请从地址栏手动复制。",
+      "more": "更多操作",
+      "share": "分享",
+      "create": "创作歌曲"
     },
     "lyrics": {
-      "title": "Lyrics",
-      "showMore": "Show more",
-      "showLess": "Show less"
+      "title": "歌词",
+      "showMore": "展开更多",
+      "showLess": "收起"
     },
-    "breadcrumbCreate": "Create",
+    "breadcrumbCreate": "创作",
     "creatorReport": {
-      "title": "Creator report",
-      "score": "AI score",
-      "summary": "Summary",
-      "producerComment": "Producer comment",
-      "emotionalValue": "Emotional value",
-      "hookAnalysis": "Hook analysis",
-      "marketPositioning": "Market positioning",
-      "songDetails": "Song details",
-      "genre": "Genre",
-      "mood": "Mood",
+      "title": "创作者报告",
+      "score": "AI 评分",
+      "summary": "总结",
+      "producerComment": "制作人点评",
+      "emotionalValue": "情感价值",
+      "hookAnalysis": "Hook 分析",
+      "marketPositioning": "市场定位",
+      "songDetails": "歌曲信息",
+      "genre": "风格",
+      "mood": "情绪",
       "bpm": "BPM",
-      "tags": "Tags",
-      "fallbackIntro": "{title} is an AI-generated song created from this story: {story}. The page includes the full lyrics, audio playback, style details, and public listening signals for search engines and listeners."
+      "tags": "标签",
+      "fallbackIntro": "{title} 是一首基于此故事生成的 AI 歌曲：{story}。页面包含完整歌词、音频播放、风格信息以及可供搜索引擎与听众理解的公开数据。"
     },
     "summary": {
-      "sectionLabel": "Song story",
-      "title": "Built from a real prompt",
-      "plays": "Plays",
-      "complete": "Full listens",
-      "shares": "Shares",
-      "published": "Published",
-      "aiScore": "AI score"
+      "sectionLabel": "歌曲故事",
+      "title": "来自真实输入的创作",
+      "plays": "播放",
+      "complete": "完整播放",
+      "shares": "分享",
+      "published": "发布于",
+      "aiScore": "AI 评分"
     },
     "related": {
-      "sectionLabel": "Related songs",
-      "title": "Keep listening",
-      "playCount": "plays",
-      "coverAlt": "{title} cover art",
-      "styleMoodSeparator": "-"
+      "sectionLabel": "相关歌曲",
+      "title": "继续探索其他 AI 歌曲",
+      "playCount": "{count} 次播放",
+      "coverAlt": "{title} 封面",
+      "styleMoodSeparator": " · "
     },
     "cta": {
-      "title": "Turn your story into a song",
-      "description": "Start with a memory, mood, or message. Hit-Song turns it into lyrics, audio, and a public page built for sharing.",
-      "create": "Create your own song",
-      "copy": "Copy link"
+      "title": "把你的故事变成下一首歌",
+      "description": "从一个瞬间开始，Hit-Song 会帮你完成歌词、音频与可分享页面。",
+      "create": "开始创作",
+      "copy": "复制本页链接"
     },
     "recall": {
-      "reportNoShare": "Your song is ready to share. Use the copy button or your browser share tools to send it out."
+      "reportNoShare": "你回来了，这首歌已经准备好，去公开页面分享给更多人吧。"
     }
   },
   "dashboard": {
@@ -219,7 +219,7 @@
         "plays": "播放",
         "full": "完整播放",
         "shares": "分享",
-        "cta": "CTA"
+        "cta": "转化"
       },
       "copyLink": "复制链接",
       "preview": "预览",
@@ -236,8 +236,8 @@
     "subscriptionCard": {
       "currentPlan": "当前方案",
       "freePlan": "免费",
-      "basicPlan": "???",
-      "proPlan": "???",
+      "basicPlan": "基础版",
+      "proPlan": "专业版",
       "storagePermanent": "订阅用户歌曲永久保存",
       "storageFree": "免费歌曲保留 {days} 天",
       "priorityEnabled": "已开启优先生成",
@@ -311,46 +311,46 @@
     }
   },
   "report": {
-    "badge": "Creator Report",
-    "subtitleReady": "Generated on {date}. Use this report to understand the song's strongest emotional and production opportunities.",
-    "subtitleMissing": "Generate a producer-style report after your song is ready. The report costs 100 credits unless credit checks are skipped in this environment.",
-    "coverAlt": "{title} cover art",
-    "noCover": "No cover yet",
-    "emptyTitle": "No report yet",
-    "emptyBody": "Generate the report to unlock score dimensions, producer notes, emotional value, hook analysis, and share-ready summary copy.",
-    "totalScore": "Total Score",
-    "shareSummary": "Share Summary",
+    "badge": "创作者报告",
+    "subtitleReady": "生成于 {date}。通过这份报告了解这首歌在情绪表达和制作层面的优势机会。",
+    "subtitleMissing": "歌曲准备好后可生成制作人风格报告。除非当前环境跳过积分检查，否则该报告消耗 100 积分。",
+    "coverAlt": "{title} 封面图",
+    "noCover": "暂无封面",
+    "emptyTitle": "暂无报告",
+    "emptyBody": "生成报告后可解锁评分维度、制作人建议、情感价值、Hook 分析与分享文案。",
+    "totalScore": "总分",
+    "shareSummary": "分享摘要",
     "dimensions": {
-      "melody_potential": "Melody Potential",
-      "lyric_quality": "Lyric Quality",
-      "emotional_resonance": "Emotional Resonance",
-      "commercial_appeal": "Commercial Appeal",
-      "originality": "Originality"
+      "melody_potential": "旋律潜力",
+      "lyric_quality": "歌词质量",
+      "emotional_resonance": "情绪共鸣",
+      "commercial_appeal": "商业吸引力",
+      "originality": "原创性"
     },
     "producer": {
-      "title": "Producer Comment",
-      "strengths": "Strengths",
-      "improvements": "Improvements",
-      "nextSteps": "Next Steps"
+      "title": "制作人点评",
+      "strengths": "优势",
+      "improvements": "可改进点",
+      "nextSteps": "下一步建议"
     },
     "sections": {
-      "emotionalValue": "Emotional Value",
-      "hookAnalysis": "Hook Analysis",
-      "marketPositioning": "Market Positioning"
+      "emotionalValue": "情感价值",
+      "hookAnalysis": "Hook 分析",
+      "marketPositioning": "市场定位"
     },
     "actions": {
-      "generate": "Generate Report",
-      "generating": "Generating Report",
-      "generated": "Report generated",
-      "generateFailed": "Report generation failed",
-      "publicPage": "Public Page",
-      "copyPublicLink": "Copy Public Link",
-      "copied": "Public link copied",
-      "downloadShareCard": "Download Share Card",
-      "shareSong": "Share Song"
+      "generate": "生成报告",
+      "generating": "报告生成中",
+      "generated": "报告已生成",
+      "generateFailed": "报告生成失败",
+      "publicPage": "公开页面",
+      "copyPublicLink": "复制公开链接",
+      "copied": "公开链接已复制",
+      "downloadShareCard": "下载分享卡片",
+      "shareSong": "分享歌曲"
     },
     "recall": {
-      "readyNoReport": "You came back from your reminder. Generate the report to unlock the producer notes for this song."
+      "readyNoReport": "你是从提醒中回来的。生成报告即可解锁这首歌的制作人建议。"
     }
   },
   "pricing": {
@@ -449,51 +449,51 @@
   },
   "email": {
     "recall": {
-      "fallbackSongTitle": "your song",
+      "fallbackSongTitle": "你的歌曲",
       "draft_no_audio": {
-        "subject": "Your lyrics are ready for music",
-        "preheader": "Turn {songTitle} into audio when you are ready.",
-        "title": "Give {songTitle} its sound",
-        "body": "Your lyric draft is waiting in Hit-Song. Come back to generate audio and hear where the story can go next.",
-        "cta": "Generate audio",
-        "footer": "You are receiving this because you started a song on Hit-Song. You can ignore this email if you already finished it."
+        "subject": "你的歌词已准备好，来生成音乐吧",
+        "preheader": "随时把 {songTitle} 变成可播放音频。",
+        "title": "给 {songTitle} 加上声音",
+        "body": "你的歌词草稿正在 Hit-Song 等你。回来生成音频，听听这段故事还能走向哪里。",
+        "cta": "生成音频",
+        "footer": "你之所以收到这封邮件，是因为你在 Hit-Song 开始了歌曲创作。如果你已完成，可忽略本邮件。"
       },
       "ready_no_report": {
-        "subject": "Your song is ready for its producer report",
-        "preheader": "Unlock the strengths and next steps for {songTitle}.",
-        "title": "See what works in {songTitle}",
-        "body": "The audio is ready. Generate the producer-style report to review score dimensions, hook notes, and share-ready summary copy.",
-        "cta": "View report",
-        "footer": "You are receiving this because you created a song on Hit-Song."
+        "subject": "你的歌曲已准备好，来生成制作人报告",
+        "preheader": "解锁 {songTitle} 的亮点与下一步建议。",
+        "title": "看看 {songTitle} 的优势在哪里",
+        "body": "音频已准备完成。生成制作人风格报告，查看评分维度、Hook 建议与可分享摘要。",
+        "cta": "查看报告",
+        "footer": "你之所以收到这封邮件，是因为你在 Hit-Song 创建过歌曲。"
       },
       "report_no_share": {
-        "subject": "Your song report is ready to share",
-        "preheader": "Bring {songTitle} back into the spotlight.",
-        "title": "Share {songTitle} with someone",
-        "body": "Your report is ready, but the song has not been shared yet. Open the public page and let someone hear the track.",
-        "cta": "Open song page",
-        "footer": "You are receiving this because you created a song on Hit-Song."
+        "subject": "你的歌曲报告已就绪，准备分享吧",
+        "preheader": "让 {songTitle} 重新回到聚光灯下。",
+        "title": "把 {songTitle} 分享给更多人",
+        "body": "报告已经准备好，但这首歌还未被分享。打开公开页面，让更多人听到它。",
+        "cta": "打开歌曲页面",
+        "footer": "你之所以收到这封邮件，是因为你在 Hit-Song 创建过歌曲。"
       },
       "inactive_creator": {
-        "subject": "Have another story to turn into a song?",
-        "preheader": "Start a new Hit-Song from a fresh memory or mood.",
-        "title": "Your next song can start with one detail",
-        "body": "It has been a little while since your last finished song. Come back with a new feeling, memory, or message and shape it into something playable.",
-        "cta": "Create a new song",
-        "footer": "You are receiving this because you have created music on Hit-Song."
+        "subject": "有新的故事想写成歌曲吗？",
+        "preheader": "从新的记忆或情绪开始下一首 Hit-Song。",
+        "title": "你的下一首歌，只差一个细节",
+        "body": "距离你上次完成歌曲已经有一段时间。带着新的情绪、记忆或表达回来，再创作一首可播放的作品吧。",
+        "cta": "创作新歌曲",
+        "footer": "你之所以收到这封邮件，是因为你在 Hit-Song 创作过音乐。"
       }
     }
   },
   "errors": {
-    "actionNeeded": "Action needed",
-    "authRequired": "Please sign in before generating music.",
-    "authRequiredDescription": "Sign in to keep your lyrics, generate audio, and save the finished song.",
-    "insufficientCreditsDescription": "Your balance is too low for this generation. Add credits to continue.",
-    "signInToCreate": "Sign in",
-    "topUpCredits": "Top up credits",
-    "insufficientCredits": "Not enough credits. Please top up.",
-    "generationFailed": "Generation failed. Please try again.",
-    "generationFailedWithRefund": "Generation failed, credits were refunded. Please try again later.",
-    "contentFlagged": "This story can't be written. Try a different one?"
+    "actionNeeded": "需要处理",
+    "authRequired": "请先登录再生成音乐。",
+    "authRequiredDescription": "登录后可保存歌词、生成音频并存档完成的歌曲。",
+    "insufficientCreditsDescription": "当前积分不足，充值后可继续生成。",
+    "signInToCreate": "去登录",
+    "topUpCredits": "充值积分",
+    "insufficientCredits": "积分不足，请先充值。",
+    "generationFailed": "生成失败，请重试。",
+    "generationFailedWithRefund": "生成失败，积分已退回，请稍后再试。",
+    "contentFlagged": "这个故事暂时无法生成，试试换个写法？"
   }
 }
