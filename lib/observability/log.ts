@@ -17,8 +17,10 @@ export type LogPayload = {
 function emit(level: LogLevel, event: string, payload: LogPayload) {
   const line = {
     timestamp: new Date().toISOString(),
+    event_time: new Date().toISOString(),
     level,
     event,
+    event_name: event,
     ...payload,
   };
 
@@ -110,5 +112,40 @@ export function classifyProviderError(error: unknown): {
     error_code: ERROR_CODES.BAD_RESPONSE,
     provider_error_code: providerErrorCode,
     provider_message: providerMessage,
+  };
+}
+
+export function getClientContext(userAgent: string | null) {
+  const ua = (userAgent ?? "").toLowerCase();
+  const deviceType = /mobile|iphone|android/.test(ua)
+    ? "mobile"
+    : /ipad|tablet/.test(ua)
+      ? "tablet"
+      : "desktop";
+  const browser = ua.includes("edg/")
+    ? "edge"
+    : ua.includes("chrome/")
+      ? "chrome"
+      : ua.includes("safari/") && !ua.includes("chrome/")
+        ? "safari"
+        : ua.includes("firefox/")
+          ? "firefox"
+          : "unknown";
+  const os = ua.includes("windows")
+    ? "windows"
+    : ua.includes("mac os")
+      ? "macos"
+      : ua.includes("android")
+        ? "android"
+        : ua.includes("iphone") || ua.includes("ipad") || ua.includes("ios")
+          ? "ios"
+          : ua.includes("linux")
+            ? "linux"
+            : "unknown";
+
+  return {
+    device_type: deviceType,
+    browser,
+    os,
   };
 }

@@ -4,6 +4,12 @@ import { creem } from '@/lib/creem';
 import { getTierById } from '@/config/subscriptions';
 import { defaultLocale, isLocale, type Locale } from '@/i18n/routing';
 import crypto from "crypto";
+import {
+  getClientContext,
+  getRequestId,
+  logError,
+  logInfo,
+} from "@/lib/observability/log";
 
 function inferLocaleFromRequest(request: Request): Locale {
   const referer = request.headers.get("referer");
@@ -21,11 +27,20 @@ function inferLocaleFromRequest(request: Request): Locale {
 }
 
 export async function POST(request: Request) {
+  const requestId = getRequestId(request.headers.get("x-request-id"));
+  const client = getClientContext(request.headers.get("user-agent"));
   try {
     const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
+      logError("checkout_failed", {
+        request_id: requestId,
+        stage: "checkout",
+        status: "failed",
+        failure_reason: "unauthorized",
+        ...client,
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -37,6 +52,14 @@ export async function POST(request: Request) {
       typeof body !== "object" ||
       Object.keys(body).some((key) => !allowedKeys.includes(key))
     ) {
+      logError("checkout_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        stage: "checkout",
+        status: "failed",
+        failure_reason: "invalid_request",
+        ...client,
+      });
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
@@ -45,15 +68,40 @@ export async function POST(request: Request) {
     const tier = getTierById(tierId);
 
     if (!tier) {
+      logError("checkout_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        stage: "checkout",
+        status: "failed",
+        failure_reason: "invalid_plan",
+        ...client,
+      });
       return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
     }
 
     if (!tier.productId) {
+      logError("checkout_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        stage: "checkout",
+        status: "failed",
+        failure_reason: "product_not_configured",
+        ...client,
+      });
       return NextResponse.json(
         { error: "Payment plan is not configured" },
         { status: 500 }
       );
     }
+
+    logInfo("checkout_start", {
+      request_id: requestId,
+      user_id: user.id,
+      stage: "checkout",
+      status: "started",
+      tier_id: tier.id,
+      ...client,
+    });
 
     const origin = request.headers.get("origin") ?? process.env.BASE_URL ?? "";
     const successUrl =
@@ -79,11 +127,18 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({
+      request_id: requestId,
       checkoutUrl: checkout.checkoutUrl ?? (checkout as { checkout_url?: string }).checkout_url,
     });
 
   } catch (error) {
-    console.error('Checkout error:', error);
+    logError("checkout_failed", {
+      request_id: requestId,
+      stage: "checkout",
+      status: "failed",
+      failure_reason: error instanceof Error ? error.message : String(error),
+      ...client,
+    });
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

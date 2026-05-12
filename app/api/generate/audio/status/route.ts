@@ -12,6 +12,7 @@ import { ERROR_CODES } from "@/lib/observability/error-codes";
 import {
   classifyProviderError,
   elapsedMs,
+  getClientContext,
   getRequestId,
   logError,
   logInfo,
@@ -91,6 +92,7 @@ export async function GET(request: NextRequest) {
       request.nextUrl.searchParams.get("request_id"),
   );
   const startMs = Date.now();
+  const client = getClientContext(request.headers.get("user-agent"));
   try {
     const query = querySchema.safeParse({
       taskId: request.nextUrl.searchParams.get("taskId") ?? undefined,
@@ -117,6 +119,7 @@ export async function GET(request: NextRequest) {
       song_id: query.data.songId ?? null,
       stage: "audio_poll",
       status: "started",
+      ...client,
     });
 
     let songQuery = supabase
@@ -137,13 +140,14 @@ export async function GET(request: NextRequest) {
     }
 
     if (song.status === "ready") {
-      logInfo("audio_poll_end", {
+      logInfo("song_generate_success", {
         request_id: requestId,
         user_id: user.id,
         song_id: song.id,
         stage: "audio_poll",
         status: "succeeded",
         duration_ms: elapsedMs(startMs),
+        ...client,
       });
       return NextResponse.json({
         request_id: requestId,
@@ -155,7 +159,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (song.status === "failed") {
-      logError("audio_poll_failed", {
+      logError("song_generate_failed", {
         request_id: requestId,
         user_id: user.id,
         song_id: song.id,
@@ -164,6 +168,7 @@ export async function GET(request: NextRequest) {
         duration_ms: elapsedMs(startMs),
         error_code: ERROR_CODES.BAD_RESPONSE,
         failure_reason: "song_already_failed",
+        ...client,
       });
       return NextResponse.json({ status: "failed", songId: song.id });
     }
@@ -183,7 +188,7 @@ export async function GET(request: NextRequest) {
         .eq("user_id", user.id);
       await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
 
-      logError("audio_poll_timeout", {
+      logError("song_generate_timeout", {
         request_id: requestId,
         user_id: user.id,
         song_id: song.id,
@@ -193,6 +198,7 @@ export async function GET(request: NextRequest) {
         error_code: ERROR_CODES.TIMEOUT,
         provider_task_id: song.kie_task_id,
         provider_message: result.error ?? "provider returned failed",
+        ...client,
       });
 
       return NextResponse.json({
@@ -328,10 +334,11 @@ export async function GET(request: NextRequest) {
           achievementError instanceof Error
             ? achievementError.message
             : String(achievementError),
+        ...client,
       });
     });
 
-    logInfo("audio_poll_end", {
+    logInfo("song_generate_success", {
       request_id: requestId,
       user_id: user.id,
       song_id: song.id,
@@ -339,6 +346,7 @@ export async function GET(request: NextRequest) {
       status: "succeeded",
       duration_ms: elapsedMs(startMs),
       provider_task_id: song.kie_task_id,
+      ...client,
     });
 
     return NextResponse.json({
@@ -353,7 +361,11 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     const providerError = classifyProviderError(error);
-    logError("audio_poll_failed", {
+    const eventName =
+      providerError.error_code === "TIMEOUT"
+        ? "song_generate_timeout"
+        : "song_generate_failed";
+    logError(eventName, {
       request_id: requestId,
       stage: "audio_poll",
       status: "failed",
@@ -361,6 +373,7 @@ export async function GET(request: NextRequest) {
       error_code: providerError.error_code,
       provider_error_code: providerError.provider_error_code,
       provider_message: providerError.provider_message,
+      ...client,
     });
     return NextResponse.json(
       { error: "Failed to check audio status", request_id: requestId },

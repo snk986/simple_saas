@@ -11,6 +11,7 @@ import {
 import {
   classifyProviderError,
   elapsedMs,
+  getClientContext,
   getRequestId,
   logError,
   logInfo,
@@ -42,6 +43,7 @@ function errorDetail(error: unknown) {
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request.headers.get("x-request-id"));
   const requestStart = Date.now();
+  const client = getClientContext(request.headers.get("user-agent"));
 
   try {
     const body = requestSchema.safeParse(await request.json());
@@ -60,11 +62,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    logInfo("lyrics_start", {
+    logInfo("song_generate_start", {
       request_id: requestId,
       user_id: user.id,
-      stage: "lyrics_start",
+      stage: "lyrics",
       status: "started",
+      ...client,
     });
 
     const locale = normalizeLocale(body.data.locale);
@@ -136,15 +139,16 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (updateError || !updatedSong) {
-        logError("lyrics_failed", {
+        logError("song_generate_failed", {
           request_id: requestId,
           user_id: user.id,
           song_id: existingSong.id,
-          stage: "lyrics_end",
+          stage: "lyrics",
           status: "failed",
           duration_ms: elapsedMs(requestStart),
           error_code: "BAD_RESPONSE",
           failure_reason: "failed_to_update_song",
+          ...client,
         });
         return NextResponse.json(
           { error: "Failed to update song" },
@@ -152,13 +156,14 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      logInfo("lyrics_end", {
+      logInfo("song_generate_success", {
         request_id: requestId,
         user_id: user.id,
         song_id: updatedSong.id,
-        stage: "lyrics_end",
+        stage: "lyrics",
         status: "succeeded",
         duration_ms: elapsedMs(requestStart),
+        ...client,
       });
 
       return NextResponse.json({
@@ -230,14 +235,15 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError || !song) {
-      logError("lyrics_failed", {
+      logError("song_generate_failed", {
         request_id: requestId,
         user_id: user.id,
-        stage: "lyrics_end",
+        stage: "lyrics",
         status: "failed",
         duration_ms: elapsedMs(requestStart),
         error_code: "BAD_RESPONSE",
         failure_reason: "failed_to_create_song",
+        ...client,
       });
       return NextResponse.json(
         { error: "Failed to create song" },
@@ -245,13 +251,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    logInfo("lyrics_end", {
+    logInfo("song_generate_success", {
       request_id: requestId,
       user_id: user.id,
       song_id: song.id,
-      stage: "lyrics_end",
+      stage: "lyrics",
       status: "succeeded",
       duration_ms: elapsedMs(requestStart),
+      ...client,
     });
 
     return NextResponse.json({
@@ -266,14 +273,19 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     const providerError = classifyProviderError(error);
-    logError("lyrics_failed", {
+    const eventName =
+      providerError.error_code === "TIMEOUT"
+        ? "song_generate_timeout"
+        : "song_generate_failed";
+    logError(eventName, {
       request_id: requestId,
-      stage: "lyrics_end",
+      stage: "lyrics",
       status: "failed",
       duration_ms: elapsedMs(requestStart),
       error_code: providerError.error_code,
       provider_error_code: providerError.provider_error_code,
       provider_message: providerError.provider_message,
+      ...client,
     });
     return NextResponse.json(
       {

@@ -11,6 +11,7 @@ import { ERROR_CODES } from "@/lib/observability/error-codes";
 import {
   classifyProviderError,
   elapsedMs,
+  getClientContext,
   getRequestId,
   logError,
   logInfo,
@@ -143,6 +144,7 @@ export async function POST(request: NextRequest) {
   const supabase = await createClient();
   const requestId = getRequestId(request.headers.get("x-request-id"));
   const startMs = Date.now();
+  const client = getClientContext(request.headers.get("user-agent"));
   let charged = false;
   let userId: string | null = null;
   let songId: string | null = null;
@@ -184,12 +186,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    logInfo("audio_submit_start", {
+    logInfo("song_generate_start", {
       request_id: requestId,
       user_id: user.id,
       song_id: song.id,
       stage: "audio_submit",
       status: "started",
+      ...client,
     });
 
     const credit = await freezeCreditIfNeeded(supabase, user.id, requestId, song.id);
@@ -235,6 +238,7 @@ export async function POST(request: NextRequest) {
       status: "succeeded",
       duration_ms: elapsedMs(startMs),
       provider_task_id: taskId,
+      ...client,
     });
     return NextResponse.json({ request_id: requestId, taskId, songId: song.id });
   } catch (error) {
@@ -243,7 +247,11 @@ export async function POST(request: NextRequest) {
     }
 
     const providerError = classifyProviderError(error);
-    logError("audio_submit_failed", {
+    const eventName =
+      providerError.error_code === "TIMEOUT"
+        ? "song_generate_timeout"
+        : "song_generate_failed";
+    logError(eventName, {
       request_id: requestId,
       user_id: userId,
       song_id: songId,
@@ -253,6 +261,7 @@ export async function POST(request: NextRequest) {
       error_code: providerError.error_code,
       provider_error_code: providerError.provider_error_code,
       provider_message: providerError.provider_message,
+      ...client,
     });
     return NextResponse.json(
       { error: "Audio generation failed", request_id: requestId },

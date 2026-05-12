@@ -12,6 +12,12 @@ import {
   getTierFromProductId,
   subscriptionCreditGrantKey,
 } from "@/utils/supabase/subscriptions";
+import {
+  getClientContext,
+  getRequestId,
+  logError,
+  logInfo,
+} from "@/lib/observability/log";
 
 const CREEM_WEBHOOK_SECRET = process.env.CREEM_WEBHOOK_SECRET;
 
@@ -156,21 +162,47 @@ async function handleSubscriptionUpdate(event: CreemWebhookEvent, grantCredits: 
 }
 
 export async function POST(request: Request) {
+  const requestId = getRequestId(request.headers.get("x-request-id"));
+  const client = getClientContext(request.headers.get("user-agent"));
   try {
     const body = await request.text();
     const signature = (await headers()).get("creem-signature") || "";
 
     if (!isValidSignature(body, signature)) {
-      console.error("Invalid Creem webhook signature");
+      logError("payment_webhook_failed", {
+        request_id: requestId,
+        stage: "payment_webhook",
+        status: "failed",
+        failure_reason: "invalid_signature",
+        ...client,
+      });
       return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
     }
 
     const event = JSON.parse(body) as CreemWebhookEvent;
-    console.log("Received Creem webhook event:", event.eventType, event.object?.id);
+    const eventRequestId = event.id || requestId;
+    logInfo("payment_webhook_received", {
+      request_id: eventRequestId,
+      stage: "payment_webhook",
+      status: "received",
+      event_type: event.eventType,
+      event_id: event.id,
+      object_id: event.object?.id,
+      ...client,
+    });
 
     switch (event.eventType) {
       case "checkout.completed":
         await handleCheckoutCompleted(event);
+        logInfo("payment_success", {
+          request_id: eventRequestId,
+          stage: "payment_webhook",
+          status: "succeeded",
+          event_type: event.eventType,
+          event_id: event.id,
+          payment_order_id: (event.object as CreemCheckout)?.order?.id ?? null,
+          ...client,
+        });
         break;
       case "subscription.active":
         await handleSubscriptionUpdate(event, false);
@@ -191,10 +223,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error(
-      "Error processing Creem webhook:",
-      error instanceof Error ? error.message : "Unknown error"
-    );
+    logError("payment_webhook_failed", {
+      request_id: requestId,
+      stage: "payment_webhook",
+      status: "failed",
+      failure_reason: error instanceof Error ? error.message : "Unknown error",
+      ...client,
+    });
     return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
   }
 }
