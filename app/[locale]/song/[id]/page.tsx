@@ -3,11 +3,13 @@ import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getPublicSong } from "@/lib/song/public-song";
+import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { LyricsDisplay } from "@/components/song/lyrics-display";
 import { SongActionBand } from "@/components/song/song-action-band";
 import { SongHeaderStats } from "@/components/song/song-header-stats";
 import { SongCreatorReport } from "@/components/song/song-creator-report";
+import { createClient } from "@/utils/supabase/server";
 import {
   absoluteLocaleUrl,
   baseUrl,
@@ -177,6 +179,15 @@ export default async function SongPage({
   if (!song) {
     notFound();
   }
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  let canDownload = false;
+  if (user?.id === song.userId) {
+    const entitlements = await getUserEntitlements(user.id);
+    canDownload = entitlements.plan !== "free";
+  }
 
   const url = songUrl(locale, song.id);
   const prefix = localePrefix(locale);
@@ -310,7 +321,9 @@ export default async function SongPage({
               more: t("actions.more"),
               share: t("actions.share"),
               create: t("actions.create"),
+              download: t("actions.download"),
             }}
+            canDownload={canDownload}
           />
 
           <section className="bg-[#111] px-5 pb-16 pt-2 sm:px-8 sm:pb-20">

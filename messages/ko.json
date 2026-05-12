@@ -117,6 +117,16 @@
     "recall": {
       "draftNoAudio": "저장된 가사를 불러왔습니다. 검토한 뒤 준비되면 오디오를 생성하세요.",
       "inactiveCreator": "다시 오신 것을 환영합니다. 새로운 디테일로 다음 이야기를 노래로 만들어보세요."
+    },
+    "audioPlayer": {
+      "readyForPreview": "Ready for preview",
+      "savedAsSeparate": "Each version is saved as its own song with an independent public page and listening metrics.",
+      "openPage": "Open page",
+      "download": "Download",
+      "upgradeToDownload": "Upgrade to download",
+      "openPublicPage": "Open public page",
+      "viewDashboard": "View dashboard",
+      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
     }
   },
   "song": {
@@ -150,7 +160,8 @@
       "copyFailed": "복사에 실패했습니다. 주소창에서 직접 복사해주세요.",
       "more": "더보기",
       "share": "공유",
-      "create": "노래 만들기"
+      "create": "노래 만들기",
+      "download": "Download"
     },
     "lyrics": {
       "title": "가사",
@@ -224,7 +235,9 @@
       "copyLink": "링크 복사",
       "preview": "미리보기",
       "report": "리포트",
-      "versionB": "버전 B"
+      "versionB": "버전 B",
+      "download": "Download",
+      "upgradeToDownload": "Upgrade to download"
     },
     "creditsCard": {
       "availableCredits": "사용 가능한 크레딧",

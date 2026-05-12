@@ -54,9 +54,14 @@ interface InitialDraft {
 interface StoryInputProps {
   initialDraft?: InitialDraft | null;
   recallCampaign?: string | null;
+  canDownload: boolean;
 }
 
-export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
+export function StoryInput({
+  initialDraft,
+  recallCampaign,
+  canDownload,
+}: StoryInputProps) {
   const t = useTranslations();
   const params = useParams<{ locale?: string }>();
   const [story, setStory] = useState(initialDraft?.userInput ?? "");
@@ -431,6 +436,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
                 altSongId={audioResult.altSongId}
                 altAudioUrl={audioResult.alt_audio_url}
                 altCoverUrl={audioResult.alt_cover_url}
+                canDownload={canDownload}
               />
             ) : null}
           </div>

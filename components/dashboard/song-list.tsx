@@ -20,12 +20,14 @@ export interface DashboardSong {
   reportHref: string;
   createdAt: string;
   expiresAt: string | null;
+  audioUrl: string | null;
 }
 
 interface SongListProps {
   songs: DashboardSong[];
   locale: string;
   createHref: string;
+  canDownload: boolean;
   labels: {
     title: string;
     subtitle: string;
@@ -44,6 +46,8 @@ interface SongListProps {
       cta: string;
     };
     copyLink: string;
+    download: string;
+    upgradeToDownload: string;
     preview: string;
     report: string;
     versionB: string;
@@ -54,7 +58,13 @@ function formatLabel(template: string, value: string) {
   return template.replace("{date}", value);
 }
 
-export function SongList({ songs, locale, createHref, labels }: SongListProps) {
+export function SongList({
+  songs,
+  locale,
+  createHref,
+  canDownload,
+  labels,
+}: SongListProps) {
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     month: "short",
     day: "numeric",
@@ -155,6 +165,17 @@ export function SongList({ songs, locale, createHref, labels }: SongListProps) {
                   ))}
                 </div>
                 <div className="flex flex-col gap-2 sm:flex-row">
+                  {song.audioUrl && canDownload ? (
+                    <Button asChild size="sm" variant="outline" className="gap-2">
+                      <a href={song.audioUrl} download>
+                        {labels.download}
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button size="sm" variant="outline" className="gap-2" disabled>
+                      {labels.upgradeToDownload}
+                    </Button>
+                  )}
                   <Button
                     type="button"
                     size="sm"

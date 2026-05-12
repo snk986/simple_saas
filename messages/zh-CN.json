@@ -117,6 +117,16 @@
     "recall": {
       "draftNoAudio": "你的歌词草稿已恢复，确认后即可继续生成音频。",
       "inactiveCreator": "欢迎回来。用一个新细节开始你的下一首歌吧。"
+    },
+    "audioPlayer": {
+      "readyForPreview": "???",
+      "savedAsSeparate": "????????????????????????????",
+      "openPage": "????",
+      "download": "??",
+      "upgradeToDownload": "??????",
+      "openPublicPage": "?????",
+      "viewDashboard": "?????",
+      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
     }
   },
   "song": {
@@ -150,7 +160,8 @@
       "copyFailed": "复制失败，请从地址栏手动复制。",
       "more": "更多操作",
       "share": "分享",
-      "create": "创作歌曲"
+      "create": "创作歌曲",
+      "download": "??"
     },
     "lyrics": {
       "title": "歌词",
@@ -224,7 +235,9 @@
       "copyLink": "复制链接",
       "preview": "预览",
       "report": "报告",
-      "versionB": "版本 B"
+      "versionB": "版本 B",
+      "download": "??",
+      "upgradeToDownload": "??????"
     },
     "creditsCard": {
       "availableCredits": "可用积分",

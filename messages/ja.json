@@ -117,6 +117,16 @@
     "recall": {
       "draftNoAudio": "保存済みの歌詞を読み込みました。確認して、準備ができたら音源を生成しましょう。",
       "inactiveCreator": "おかえりなさい。新しいディテールから、次の物語を曲にしましょう。"
+    },
+    "audioPlayer": {
+      "readyForPreview": "Ready for preview",
+      "savedAsSeparate": "Each version is saved as its own song with an independent public page and listening metrics.",
+      "openPage": "Open page",
+      "download": "Download",
+      "upgradeToDownload": "Upgrade to download",
+      "openPublicPage": "Open public page",
+      "viewDashboard": "View dashboard",
+      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
     }
   },
   "song": {
@@ -150,7 +160,8 @@
       "copyFailed": "コピーに失敗しました。アドレスバーからコピーしてください。",
       "more": "その他の操作",
       "share": "シェア",
-      "create": "曲を作成"
+      "create": "曲を作成",
+      "download": "Download"
     },
     "lyrics": {
       "title": "歌詞",
@@ -224,7 +235,9 @@
       "copyLink": "リンクをコピー",
       "preview": "プレビュー",
       "report": "レポート",
-      "versionB": "バージョンB"
+      "versionB": "バージョンB",
+      "download": "Download",
+      "upgradeToDownload": "Upgrade to download"
     },
     "creditsCard": {
       "availableCredits": "利用可能クレジット",

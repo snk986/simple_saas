@@ -1,5 +1,6 @@
 import { StoryInput } from "@/components/create/story-input";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 import { getTranslations } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
@@ -41,6 +42,12 @@ export default async function CreatePage({
   const { locale } = await params;
   const query = await searchParams;
   const t = await getTranslations("create");
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const entitlements = user ? await getUserEntitlements(user.id) : null;
+  const canDownload = entitlements ? entitlements.plan !== "free" : false;
 
   if (!locales.includes(locale)) {
     notFound();
@@ -50,11 +57,6 @@ export default async function CreatePage({
   let initialDraft = null;
 
   if (shouldResumeDraft) {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
     if (!user) {
       const redirectTo = buildRedirectPath(locale, query);
       redirect(
@@ -100,6 +102,7 @@ export default async function CreatePage({
       <StoryInput
         initialDraft={initialDraft}
         recallCampaign={query.utm_campaign ?? null}
+        canDownload={canDownload}
       />
     </div>
   );

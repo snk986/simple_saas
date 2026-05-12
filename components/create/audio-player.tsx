@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ExternalLink, Music, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 interface AudioPlayerProps {
   songId: string;
@@ -13,6 +14,7 @@ interface AudioPlayerProps {
   altSongId?: string | null;
   altAudioUrl?: string | null;
   altCoverUrl?: string | null;
+  canDownload: boolean;
 }
 
 export function AudioPlayer({
@@ -23,7 +25,9 @@ export function AudioPlayer({
   altSongId,
   altAudioUrl,
   altCoverUrl,
+  canDownload,
 }: AudioPlayerProps) {
+  const t = useTranslations("create.audioPlayer");
   const tracks = [
     {
       key: "primary",
@@ -62,13 +66,12 @@ export function AudioPlayer({
           <div className="mb-2 flex items-center gap-2">
             <Badge variant="secondary" className="gap-1">
               <Radio className="h-3 w-3" />
-              Ready for preview
+              {t("readyForPreview")}
             </Badge>
           </div>
           <h2 className="break-words text-2xl font-semibold">{title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Each version is saved as its own song with an independent public
-            page and listening metrics.
+            {t("savedAsSeparate")}
           </p>
 
           <div className="mt-5 grid gap-3">
@@ -87,7 +90,7 @@ export function AudioPlayer({
                   {track.publicHref ? (
                     <Button asChild type="button" size="sm" variant="outline">
                       <Link href={track.publicHref}>
-                        Open page
+                        {t("openPage")}
                         <ExternalLink className="h-4 w-4" />
                       </Link>
                     </Button>
@@ -96,6 +99,19 @@ export function AudioPlayer({
                 <audio controls preload="metadata" className="w-full">
                   <source src={track.url!} />
                 </audio>
+                <div className="mt-3">
+                  {canDownload ? (
+                    <Button asChild type="button" size="sm" variant="outline">
+                      <a href={track.url!} download>
+                        {t("download")}
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button type="button" size="sm" variant="outline" disabled>
+                      {t("upgradeToDownload")}
+                    </Button>
+                  )}
+                </div>
               </article>
             ))}
           </div>
@@ -103,14 +119,15 @@ export function AudioPlayer({
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">
             <Button asChild className="gap-2">
               <Link href={`/song/${songId}`}>
-                Open public page
+                {t("openPublicPage")}
                 <ExternalLink className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/dashboard">View dashboard</Link>
+              <Link href="/dashboard">{t("viewDashboard")}</Link>
             </Button>
           </div>
+          <p className="mt-3 text-sm text-muted-foreground">{t("rightsNotice")}</p>
         </div>
       </div>
     </section>

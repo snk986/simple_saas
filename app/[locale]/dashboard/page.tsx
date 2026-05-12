@@ -77,7 +77,7 @@ export default async function DashboardPage({
   const { data: songsData } = await supabase
     .from("songs")
     .select(
-      "id,title,status,is_public,cover_url,play_count,complete_count,share_count,cta_click_count,created_at,expires_at",
+      "id,title,status,is_public,cover_url,audio_url,play_count,complete_count,share_count,cta_click_count,created_at,expires_at",
     )
     .eq("user_id", user.id)
     .eq("status", "ready")
@@ -109,6 +109,7 @@ export default async function DashboardPage({
       reportHref: localizedReportHref(locale, song.id),
       createdAt: song.created_at,
       expiresAt: song.expires_at,
+      audioUrl: song.audio_url,
     };
   });
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
@@ -198,6 +199,7 @@ export default async function DashboardPage({
         songs={songs}
         locale={locale}
         createHref={localizedCreateHref(locale)}
+        canDownload={entitlements.plan !== "free"}
         labels={{
           title: t("songList.title"),
           subtitle: t("songList.subtitle"),
@@ -216,6 +218,8 @@ export default async function DashboardPage({
             cta: t("songList.metrics.cta"),
           },
           copyLink: t("songList.copyLink"),
+          download: t("songList.download"),
+          upgradeToDownload: t("songList.upgradeToDownload"),
           preview: t("songList.preview"),
           report: t("songList.report"),
           versionB: t("songList.versionB"),

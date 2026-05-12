@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Copy,
+  Download,
   Heart,
   MoreHorizontal,
   Pause,
@@ -31,7 +32,9 @@ interface SongActionBandProps {
     more: string;
     share: string;
     create: string;
+    download: string;
   };
+  canDownload?: boolean;
 }
 
 async function countSongEvent(songId: string, event: string) {
@@ -56,6 +59,7 @@ export function SongActionBand({
   audioUrl,
   createHref,
   labels,
+  canDownload = false,
 }: SongActionBandProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const countedPlayRef = useRef(false);
@@ -234,6 +238,19 @@ export function SongActionBand({
             {labels.create}
           </Link>
         </Button>
+        {canDownload ? (
+          <Button
+            asChild
+            type="button"
+            variant="ghost"
+            className="h-10 rounded-full border border-white/20 px-4 text-zinc-100 hover:bg-white/10 hover:text-white"
+          >
+            <a href={audioUrl} download>
+              <Download className="mr-2 h-4 w-4" />
+              {labels.download}
+            </a>
+          </Button>
+        ) : null}
       </div>
       <div
         className="mt-5 h-1 overflow-hidden rounded-full bg-white/10"

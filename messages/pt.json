@@ -117,6 +117,16 @@
     "recall": {
       "draftNoAudio": "Carregamos sua letra salva. Revise e gere o audio quando quiser.",
       "inactiveCreator": "Bem-vindo de volta. Comece com um novo detalhe e transforme a proxima historia em musica."
+    },
+    "audioPlayer": {
+      "readyForPreview": "Pronto para ouvir",
+      "savedAsSeparate": "Cada versao e salva como uma musica separada, com pagina publica e metricas proprias.",
+      "openPage": "Abrir pagina",
+      "download": "Baixar",
+      "upgradeToDownload": "Faca upgrade para baixar",
+      "openPublicPage": "Abrir pagina publica",
+      "viewDashboard": "Ver painel",
+      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
     }
   },
   "song": {
@@ -150,7 +160,8 @@
       "copyFailed": "Nao foi possivel copiar. Selecione a barra de endereco.",
       "more": "Mais acoes",
       "share": "Compartilhar",
-      "create": "Criar cancao"
+      "create": "Criar cancao",
+      "download": "Baixar"
     },
     "lyrics": {
       "title": "Letra",
@@ -222,6 +233,8 @@
         "cta": "CTA"
       },
       "copyLink": "Copiar link",
+      "download": "Baixar",
+      "upgradeToDownload": "Faca upgrade para baixar",
       "preview": "Visualizar",
       "report": "Relatorio",
       "versionB": "Version B"
