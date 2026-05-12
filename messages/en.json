@@ -20,7 +20,8 @@
     "about": "About",
     "legal": "Legal",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "refund": "Refund"
   },
   "home": {
     "seo": {
@@ -459,6 +460,185 @@
     "subscribeNowCancelAnytime": "Subscribe now - cancel anytime.",
     "songsUnit": "songs",
     "popularPack": "Popular"
+  },
+  "legal": {
+    "common": {
+      "backToHome": "Back to home",
+      "lastUpdatedLabel": "Last updated",
+      "lastUpdated": "May 13, 2026",
+      "relatedTitle": "Related legal pages",
+      "contactTitle": "Need help?",
+      "contactBody": "For questions about these policies or your account, contact support from your dashboard or reach out through our support channel.",
+      "contactCta": "Go to pricing",
+      "links": {
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "refund": "Refund Policy"
+      }
+    },
+    "privacy": {
+      "seo": {
+        "title": "Privacy Policy | Hit-Song",
+        "description": "How Hit-Song collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+      },
+      "badge": "Privacy",
+      "title": "Privacy Policy",
+      "subtitle": "This policy explains what data Hit-Song handles, why we handle it, and the choices you have.",
+      "sections": [
+        {
+          "title": "Data we collect",
+          "body": [
+            "We collect account identifiers such as email and authentication data, song creation inputs such as stories and prompts, generation outputs such as lyrics and audio metadata, and billing records needed to process purchases."
+          ],
+          "bullets": [
+            "Account data: email, auth provider identifiers, profile basics",
+            "Creation data: story text, style selections, generated lyrics/audio references",
+            "Usage data: logs, device/browser metadata, anti-abuse signals",
+            "Billing data: transaction references from payment processors"
+          ]
+        },
+        {
+          "title": "How we use data",
+          "body": [
+            "We use data to operate core product flows, deliver purchased services, prevent abuse, improve reliability, and communicate important account or policy updates."
+          ],
+          "bullets": [
+            "Run lyric, audio, and report generation workflows",
+            "Store and serve your songs and public share pages",
+            "Process credits, subscriptions, and refunds",
+            "Investigate incidents and maintain security"
+          ]
+        },
+        {
+          "title": "Third-party services",
+          "body": [
+            "Hit-Song relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+          ],
+          "bullets": [
+            "Hosting and database services",
+            "Payment processing services",
+            "Email and notification services",
+            "AI generation providers for lyrics, audio, and analysis"
+          ]
+        },
+        {
+          "title": "Retention and your choices",
+          "body": [
+            "We retain data for as long as needed to provide the service, meet legal obligations, and resolve disputes. You can request deletion of your account data subject to operational and legal constraints."
+          ],
+          "bullets": [
+            "You may delete songs and account data from product surfaces where available",
+            "Backups and legal records may persist for limited periods",
+            "Public song pages remain public until you change visibility or remove them"
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "seo": {
+        "title": "Terms of Service | Hit-Song",
+        "description": "Terms governing use of Hit-Song, including account responsibilities, generated content, credits, subscriptions, and limitations."
+      },
+      "badge": "Terms",
+      "title": "Terms of Service",
+      "subtitle": "By using Hit-Song, you agree to these terms for account access, AI generation, and paid features.",
+      "sections": [
+        {
+          "title": "Service scope",
+          "body": [
+            "Hit-Song provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+          ]
+        },
+        {
+          "title": "Accounts and acceptable use",
+          "body": [
+            "You are responsible for activity under your account and for complying with law and platform policies."
+          ],
+          "bullets": [
+            "Do not misuse the service, attempt unauthorized access, or automate abuse",
+            "Do not upload unlawful, infringing, or harmful content",
+            "Keep account credentials secure and accurate"
+          ]
+        },
+        {
+          "title": "Content and intellectual property",
+          "body": [
+            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Hit-Song and its licensors retain rights in the platform, models, and infrastructure."
+          ]
+        },
+        {
+          "title": "Payments, credits, and refunds",
+          "body": [
+            "Paid features include credit packs and subscriptions. Charges are processed by our payment providers. Refund eligibility is governed by our Refund Policy."
+          ],
+          "bullets": [
+            "Credits are consumed by eligible generation actions",
+            "Subscription access and benefits follow the active billing period",
+            "Refund requests are reviewed under stated policy conditions"
+          ]
+        },
+        {
+          "title": "Disclaimers and limitation",
+          "body": [
+            "The service is provided on an as-available basis. We do not guarantee uninterrupted operation or specific creative outcomes. To the maximum extent permitted by law, liability is limited to amounts paid for the relevant service period."
+          ]
+        }
+      ]
+    },
+    "refund": {
+      "seo": {
+        "title": "Refund Policy | Hit-Song",
+        "description": "Refund eligibility, timelines, and process for Hit-Song credit purchases and subscriptions."
+      },
+      "badge": "Refund",
+      "title": "Refund Policy",
+      "subtitle": "This policy explains when refunds are available and how to request one.",
+      "sections": [
+        {
+          "title": "Eligibility",
+          "body": [
+            "Refunds are available for unused credits requested within 7 days of purchase."
+          ],
+          "bullets": [
+            "Request must be submitted within 7 calendar days",
+            "Credits tied to the request must be unused",
+            "The purchase must be made through an official Hit-Song checkout flow"
+          ]
+        },
+        {
+          "title": "Non-refundable cases",
+          "body": [
+            "Refunds are generally not available for credits that have been used, expired windows, or abuse-related account restrictions."
+          ],
+          "bullets": [
+            "Partially or fully consumed credits",
+            "Requests beyond the 7-day window",
+            "Fraud, chargeback abuse, or policy violations"
+          ]
+        },
+        {
+          "title": "How to request a refund",
+          "body": [
+            "Contact support with your account email, order identifier, and reason for the request. We may ask for additional verification to protect account security."
+          ],
+          "bullets": [
+            "Include order ID and purchase date",
+            "Use the same account email used for purchase",
+            "Allow support time to verify credit usage status"
+          ]
+        },
+        {
+          "title": "Processing timeline",
+          "body": [
+            "Approved refunds are issued to the original payment method. Processing time depends on your payment provider and card network."
+          ],
+          "bullets": [
+            "Policy review: typically within 3 business days",
+            "Payment reversal: usually 5-10 business days after approval"
+          ]
+        }
+      ]
+    }
   },
   "email": {
     "recall": {

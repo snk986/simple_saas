@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LegalDocument } from "@/components/legal/legal-document";
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { defaultLocale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
-
-interface TermsPageProps {
-  params: Promise<{ locale: Locale }>;
-}
 
 type LegalSection = {
   title: string;
@@ -15,37 +11,29 @@ type LegalSection = {
   bullets?: string[];
 };
 
-export async function generateMetadata({
-  params,
-}: TermsPageProps): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations({
     locale: defaultLocale,
-    namespace: "legal.terms",
+    namespace: "legal.refund",
   });
-  const url = absoluteLocaleUrl(locale, "/terms");
+  const url = absoluteLocaleUrl(defaultLocale, "/refund");
 
   return buildMarketingMetadata({
     title: t("seo.title"),
     description: t("seo.description"),
     url,
-    locale,
+    locale: defaultLocale,
     alternates: {
       canonical: url,
-      languages: localizedAlternates("/terms"),
+      languages: localizedAlternates("/refund"),
     },
   });
 }
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
-
-export default async function TermsPage({ params }: TermsPageProps) {
-  await params;
+export default async function RefundPage() {
   const t = await getTranslations({
     locale: defaultLocale,
-    namespace: "legal.terms",
+    namespace: "legal.refund",
   });
   const common = await getTranslations({
     locale: defaultLocale,
@@ -65,7 +53,7 @@ export default async function TermsPage({ params }: TermsPageProps) {
       relatedTitle={common("relatedTitle")}
       relatedLinks={[
         { label: common("links.privacy"), href: "/privacy" },
-        { label: common("links.refund"), href: "/refund" },
+        { label: common("links.terms"), href: "/terms" },
       ]}
       contactTitle={common("contactTitle")}
       contactBody={common("contactBody")}

@@ -5,7 +5,7 @@ import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
-interface TermsPageProps {
+interface RefundPageProps {
   params: Promise<{ locale: Locale }>;
 }
 
@@ -17,13 +17,13 @@ type LegalSection = {
 
 export async function generateMetadata({
   params,
-}: TermsPageProps): Promise<Metadata> {
+}: RefundPageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({
     locale: defaultLocale,
-    namespace: "legal.terms",
+    namespace: "legal.refund",
   });
-  const url = absoluteLocaleUrl(locale, "/terms");
+  const url = absoluteLocaleUrl(locale, "/refund");
 
   return buildMarketingMetadata({
     title: t("seo.title"),
@@ -32,7 +32,7 @@ export async function generateMetadata({
     locale,
     alternates: {
       canonical: url,
-      languages: localizedAlternates("/terms"),
+      languages: localizedAlternates("/refund"),
     },
   });
 }
@@ -41,11 +41,11 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function TermsPage({ params }: TermsPageProps) {
+export default async function RefundPage({ params }: RefundPageProps) {
   await params;
   const t = await getTranslations({
     locale: defaultLocale,
-    namespace: "legal.terms",
+    namespace: "legal.refund",
   });
   const common = await getTranslations({
     locale: defaultLocale,
@@ -65,7 +65,7 @@ export default async function TermsPage({ params }: TermsPageProps) {
       relatedTitle={common("relatedTitle")}
       relatedLinks={[
         { label: common("links.privacy"), href: "/privacy" },
-        { label: common("links.refund"), href: "/refund" },
+        { label: common("links.terms"), href: "/terms" },
       ]}
       contactTitle={common("contactTitle")}
       contactBody={common("contactBody")}

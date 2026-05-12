@@ -23,6 +23,7 @@ export function Footer() {
       links: [
         { label: t("privacy"), href: "/privacy" },
         { label: t("terms"), href: "/terms" },
+        { label: t("refund"), href: "/refund" },
       ],
     },
   ];
