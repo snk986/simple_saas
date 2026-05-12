@@ -73,7 +73,7 @@
   "create": {
     "title": "Transforme sua historia em um hit",
     "subtitle": "Comece com um momento, uma confissao, uma memoria ou um sentimento. Vamos moldar isso em um rascunho de letra estruturado.",
-    "inputPlaceholder": "Conte sua historia... (ate 200 palavras)",
+    "inputPlaceholder": "Conte sua historia...",
     "inputHint": "Alguns detalhes vivos ajudam a musica a parecer pessoal.",
     "generateLyrics": "Gerar letra",
     "generating": "Escrevendo a letra...",
@@ -98,7 +98,7 @@
   "songPublic": {
     "seo": {
       "title": "{title} - Musica {style} gerada com IA | Hit-Song",
-      "description": "Ouça \"{title}\", uma musica {style} gerada com IA e clima {mood}. {story} Crie sua propria musica com Hit-Song.",
+      "description": "Ou莽a \"{title}\", uma musica {style} gerada com IA e clima {mood}. {story} Crie sua propria musica com Hit-Song.",
       "notFoundTitle": "Musica nao encontrada | Hit-Song",
       "ogImageAlt": "Imagem de compartilhamento de {title}"
     },
@@ -313,38 +313,38 @@
   },
   "email": {
     "recall": {
-      "fallbackSongTitle": "sua música",
+      "fallbackSongTitle": "sua m煤sica",
       "draft_no_audio": {
-        "subject": "Sua letra está pronta para virar música",
-        "preheader": "Transforme {songTitle} em áudio quando quiser.",
-        "title": "Dê som a {songTitle}",
-        "body": "Seu rascunho de letra está esperando no Hit-Song. Volte para gerar o áudio e ouvir para onde a história pode ir.",
-        "cta": "Gerar áudio",
-        "footer": "Você recebeu este email porque começou uma música no Hit-Song. Ignore se já terminou."
+        "subject": "Sua letra est谩 pronta para virar m煤sica",
+        "preheader": "Transforme {songTitle} em 谩udio quando quiser.",
+        "title": "D锚 som a {songTitle}",
+        "body": "Seu rascunho de letra est谩 esperando no Hit-Song. Volte para gerar o 谩udio e ouvir para onde a hist贸ria pode ir.",
+        "cta": "Gerar 谩udio",
+        "footer": "Voc锚 recebeu este email porque come莽ou uma m煤sica no Hit-Song. Ignore se j谩 terminou."
       },
       "ready_no_report": {
-        "subject": "Sua música está pronta para o relatório de produtor",
-        "preheader": "Veja pontos fortes e próximos passos para {songTitle}.",
+        "subject": "Sua m煤sica est谩 pronta para o relat贸rio de produtor",
+        "preheader": "Veja pontos fortes e pr贸ximos passos para {songTitle}.",
         "title": "Veja o que funciona em {songTitle}",
-        "body": "O áudio está pronto. Gere o relatório estilo produtor para revisar pontuações, notas de gancho e texto pronto para compartilhar.",
-        "cta": "Ver relatório",
-        "footer": "Você recebeu este email porque criou uma música no Hit-Song."
+        "body": "O 谩udio est谩 pronto. Gere o relat贸rio estilo produtor para revisar pontua莽玫es, notas de gancho e texto pronto para compartilhar.",
+        "cta": "Ver relat贸rio",
+        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Hit-Song."
       },
       "report_no_share": {
-        "subject": "O relatório da sua música está pronto para compartilhar",
+        "subject": "O relat贸rio da sua m煤sica est谩 pronto para compartilhar",
         "preheader": "Coloque {songTitle} em destaque de novo.",
-        "title": "Compartilhe {songTitle} com alguém",
-        "body": "Seu relatório está pronto, mas a música ainda não foi compartilhada. Abra a página pública e deixe alguém ouvir a faixa.",
-        "cta": "Abrir página da música",
-        "footer": "Você recebeu este email porque criou uma música no Hit-Song."
+        "title": "Compartilhe {songTitle} com algu茅m",
+        "body": "Seu relat贸rio est谩 pronto, mas a m煤sica ainda n茫o foi compartilhada. Abra a p谩gina p煤blica e deixe algu茅m ouvir a faixa.",
+        "cta": "Abrir p谩gina da m煤sica",
+        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Hit-Song."
       },
       "inactive_creator": {
-        "subject": "Tem outra história para virar música?",
-        "preheader": "Comece um novo Hit-Song a partir de uma memória ou clima.",
-        "title": "Sua próxima música pode começar com um detalhe",
-        "body": "Faz algum tempo desde sua última música finalizada. Volte com um sentimento, memória ou mensagem nova e transforme isso em algo para ouvir.",
-        "cta": "Criar nova música",
-        "footer": "Você recebeu este email porque criou música no Hit-Song."
+        "subject": "Tem outra hist贸ria para virar m煤sica?",
+        "preheader": "Comece um novo Hit-Song a partir de uma mem贸ria ou clima.",
+        "title": "Sua pr贸xima m煤sica pode come莽ar com um detalhe",
+        "body": "Faz algum tempo desde sua 煤ltima m煤sica finalizada. Volte com um sentimento, mem贸ria ou mensagem nova e transforme isso em algo para ouvir.",
+        "cta": "Criar nova m煤sica",
+        "footer": "Voc锚 recebeu este email porque criou m煤sica no Hit-Song."
       }
     }
   },
@@ -360,3 +360,5 @@
     "contentFlagged": "Esta historia nao pode ser escrita. Tente outra."
   }
 }
+
+

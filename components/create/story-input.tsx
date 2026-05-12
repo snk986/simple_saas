@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Wand2 } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -81,12 +81,12 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     null,
   );
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isRegenerating, setIsRegenerating] = useState(false);
   const [audioStatus, setAudioStatus] = useState<
     "idle" | "processing" | "completed" | "failed" | "timeout"
   >("idle");
   const [audioResult, setAudioResult] = useState<AudioResult | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const lastLyricsSubmitAtRef = useRef(0);
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
@@ -102,8 +102,13 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
     return () => window.clearInterval(timer);
   }, [audioStatus]);
 
-  async function submitLyrics(options?: { regenerate?: boolean }) {
-    const regenerate = options?.regenerate ?? false;
+  async function submitLyrics() {
+    const now = Date.now();
+    if (now - lastLyricsSubmitAtRef.current < 1200) {
+      return;
+    }
+    lastLyricsSubmitAtRef.current = now;
+
     const trimmedStory = story.trim();
 
     if (!trimmedStory || trimmedStory.length < 10) {
@@ -113,17 +118,18 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
 
     setError("");
     setErrorAction(null);
-    regenerate ? setIsRegenerating(true) : setIsGenerating(true);
+    setIsGenerating(true);
 
     try {
+      const songId = result?.songId;
       const response = await fetch("/api/generate/lyrics", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           userInput: trimmedStory,
           locale: params.locale ?? "en",
-          songId: regenerate ? result?.songId : undefined,
-          currentLyrics: regenerate ? editableLyrics : undefined,
+          songId,
+          currentLyrics: songId ? editableLyrics : undefined,
         }),
       });
       const data = await response.json();
@@ -150,7 +156,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
         message === "Content flagged" ? t("errors.contentFlagged") : message,
       );
     } finally {
-      regenerate ? setIsRegenerating(false) : setIsGenerating(false);
+      setIsGenerating(false);
     }
   }
 
@@ -323,9 +329,7 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
           <Button
             type="button"
             size="lg"
-            disabled={
-              isGenerating || isRegenerating || audioStatus === "processing"
-            }
+            disabled={isGenerating || audioStatus === "processing"}
             onClick={() => submitLyrics()}
             className="mt-5 w-full gap-2"
           >
@@ -343,11 +347,8 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
               lyrics={editableLyrics}
               styleTags={result.style_tags}
               styleParams={result.style_params}
-              regenCount={result.lyrics_regen_count}
-              isRegenerating={isRegenerating}
               isGeneratingMusic={audioStatus === "processing"}
               onLyricsChange={setEditableLyrics}
-              onRegenerate={() => submitLyrics({ regenerate: true })}
               onGenerateMusic={generateMusic}
             />
             <GenerationStatus

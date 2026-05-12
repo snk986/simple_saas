@@ -1,6 +1,6 @@
 "use client";
 
-import { Disc3, Music2, RefreshCw } from "lucide-react";
+import { Disc3, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,11 +11,8 @@ interface LyricsEditorProps {
   lyrics: string;
   styleTags: string[];
   styleParams: StyleParams | null;
-  regenCount: number;
-  isRegenerating: boolean;
   isGeneratingMusic: boolean;
   onLyricsChange: (lyrics: string) => void;
-  onRegenerate: () => void;
   onGenerateMusic: () => void;
 }
 
@@ -24,15 +21,10 @@ export function LyricsEditor({
   lyrics,
   styleTags,
   styleParams,
-  regenCount,
-  isRegenerating,
   isGeneratingMusic,
   onLyricsChange,
-  onRegenerate,
   onGenerateMusic,
 }: LyricsEditorProps) {
-  const remaining = Math.max(3 - regenCount, 0);
-
   return (
     <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -51,20 +43,8 @@ export function LyricsEditor({
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           <Button
             type="button"
-            variant="outline"
-            onClick={onRegenerate}
-            disabled={isRegenerating || isGeneratingMusic || remaining === 0}
-            className="gap-2"
-          >
-            <RefreshCw
-              className={isRegenerating ? "h-4 w-4 animate-spin" : "h-4 w-4"}
-            />
-            Regenerate ({remaining})
-          </Button>
-          <Button
-            type="button"
             onClick={onGenerateMusic}
-            disabled={isGeneratingMusic || isRegenerating}
+            disabled={isGeneratingMusic}
             className="gap-2"
           >
             <Disc3

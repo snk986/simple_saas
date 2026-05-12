@@ -73,7 +73,7 @@
   "create": {
     "title": "Convierte tu historia en una cancion exitosa",
     "subtitle": "Empieza con un momento, una confesion, un recuerdo o una emocion. Lo transformaremos en un borrador de letra estructurado.",
-    "inputPlaceholder": "Cuenta tu historia... (hasta 200 palabras)",
+    "inputPlaceholder": "Cuenta tu historia...",
     "inputHint": "Unos detalles vivos ayudan a que la cancion se sienta personal.",
     "generateLyrics": "Generar letra",
     "generating": "Escribiendo la letra...",
@@ -313,38 +313,38 @@
   },
   "email": {
     "recall": {
-      "fallbackSongTitle": "tu canción",
+      "fallbackSongTitle": "tu canci贸n",
       "draft_no_audio": {
-        "subject": "Tu letra está lista para convertirse en música",
+        "subject": "Tu letra est谩 lista para convertirse en m煤sica",
         "preheader": "Convierte {songTitle} en audio cuando quieras.",
         "title": "Dale sonido a {songTitle}",
-        "body": "Tu borrador de letra sigue esperando en Hit-Song. Vuelve para generar el audio y escuchar hacia dónde puede ir la historia.",
+        "body": "Tu borrador de letra sigue esperando en Hit-Song. Vuelve para generar el audio y escuchar hacia d贸nde puede ir la historia.",
         "cta": "Generar audio",
-        "footer": "Recibes este correo porque empezaste una canción en Hit-Song. Puedes ignorarlo si ya la terminaste."
+        "footer": "Recibes este correo porque empezaste una canci贸n en Hit-Song. Puedes ignorarlo si ya la terminaste."
       },
       "ready_no_report": {
-        "subject": "Tu canción está lista para su informe de productor",
-        "preheader": "Descubre fortalezas y próximos pasos para {songTitle}.",
-        "title": "Mira qué funciona en {songTitle}",
-        "body": "El audio ya está listo. Genera el informe estilo productor para revisar puntuaciones, notas del gancho y texto listo para compartir.",
+        "subject": "Tu canci贸n est谩 lista para su informe de productor",
+        "preheader": "Descubre fortalezas y pr贸ximos pasos para {songTitle}.",
+        "title": "Mira qu茅 funciona en {songTitle}",
+        "body": "El audio ya est谩 listo. Genera el informe estilo productor para revisar puntuaciones, notas del gancho y texto listo para compartir.",
         "cta": "Ver informe",
-        "footer": "Recibes este correo porque creaste una canción en Hit-Song."
+        "footer": "Recibes este correo porque creaste una canci贸n en Hit-Song."
       },
       "report_no_share": {
-        "subject": "El informe de tu canción está listo para compartir",
-        "preheader": "Devuelve {songTitle} al centro de atención.",
+        "subject": "El informe de tu canci贸n est谩 listo para compartir",
+        "preheader": "Devuelve {songTitle} al centro de atenci贸n.",
         "title": "Comparte {songTitle} con alguien",
-        "body": "Tu informe está listo, pero la canción aún no se compartió. Abre la página pública y deja que alguien escuche la pista.",
-        "cta": "Abrir canción",
-        "footer": "Recibes este correo porque creaste una canción en Hit-Song."
+        "body": "Tu informe est谩 listo, pero la canci贸n a煤n no se comparti贸. Abre la p谩gina p煤blica y deja que alguien escuche la pista.",
+        "cta": "Abrir canci贸n",
+        "footer": "Recibes este correo porque creaste una canci贸n en Hit-Song."
       },
       "inactive_creator": {
-        "subject": "¿Tienes otra historia para convertir en canción?",
-        "preheader": "Empieza un nuevo Hit-Song desde un recuerdo o estado de ánimo.",
-        "title": "Tu próxima canción puede empezar con un detalle",
-        "body": "Ha pasado un tiempo desde tu última canción terminada. Vuelve con una emoción, recuerdo o mensaje nuevo y conviértelo en algo que se pueda escuchar.",
-        "cta": "Crear una canción",
-        "footer": "Recibes este correo porque has creado música en Hit-Song."
+        "subject": "驴Tienes otra historia para convertir en canci贸n?",
+        "preheader": "Empieza un nuevo Hit-Song desde un recuerdo o estado de 谩nimo.",
+        "title": "Tu pr贸xima canci贸n puede empezar con un detalle",
+        "body": "Ha pasado un tiempo desde tu 煤ltima canci贸n terminada. Vuelve con una emoci贸n, recuerdo o mensaje nuevo y convi茅rtelo en algo que se pueda escuchar.",
+        "cta": "Crear una canci贸n",
+        "footer": "Recibes este correo porque has creado m煤sica en Hit-Song."
       }
     }
   },
@@ -360,3 +360,5 @@
     "contentFlagged": "Esta historia no se puede escribir. Prueba con otra."
   }
 }
+
+

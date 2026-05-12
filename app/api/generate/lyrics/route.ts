@@ -73,9 +73,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Song not found" }, { status: 404 });
       }
 
-      if ((existingSong.lyrics_regen_count ?? 0) >= 3) {
+      if ((existingSong.lyrics_regen_count ?? 0) >= 10) {
         return NextResponse.json(
-          { error: "Regeneration limit reached" },
+          { error: "Lyrics generation limit reached" },
           { status: 400 },
         );
       }
@@ -208,7 +208,7 @@ export async function POST(request: NextRequest) {
       style_key: song.style_key,
       style_params: song.style_params,
       style_tags: song.style_tags,
-      lyrics_regen_count: 0,
+      lyrics_regen_count: 1,
     });
   } catch (error) {
     console.error("Lyrics generation error:", error);

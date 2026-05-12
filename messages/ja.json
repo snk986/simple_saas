@@ -73,7 +73,7 @@
   "create": {
     "title": "あなたの物語をヒット曲へ",
     "subtitle": "出来事、告白、思い出、感情から始めましょう。構成された歌詞ドラフトへ整えます。",
-    "inputPlaceholder": "物語を書いてください... (200語まで)",
+    "inputPlaceholder": "物語を書いてください...",
     "inputHint": "具体的なディテールがあるほど、自分らしい曲になります。",
     "generateLyrics": "歌詞を生成",
     "generating": "歌詞を書いています...",
