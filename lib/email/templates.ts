@@ -5,6 +5,7 @@ import esMessages from "@/messages/es.json";
 import jaMessages from "@/messages/ja.json";
 import koMessages from "@/messages/ko.json";
 import ptMessages from "@/messages/pt.json";
+import zhCNMessages from "@/messages/zh-CN.json";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import type { RecallScenario } from "@/lib/recall/types";
 
@@ -30,6 +31,7 @@ const messagesByLocale = {
   pt: ptMessages,
   ja: jaMessages,
   ko: koMessages,
+  "zh-CN": zhCNMessages,
 } satisfies Record<Locale, typeof enMessages>;
 
 function escapeHtml(value: string) {

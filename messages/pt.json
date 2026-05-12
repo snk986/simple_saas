@@ -46,9 +46,39 @@
       "output": "Verso, refrao e arco emocional prontos para gerar audio."
     },
     "howItWorks": {
-      "title": "Como funciona",
+      "title": "Fluxo do gerador de musicas com IA",
       "subtitle": "Tres passos focados da historia bruta ate uma musica para compartilhar.",
       "step": "Passo {number}"
+    },
+    "explore": {
+      "label": "Explore o Hit-Song",
+      "title": "Crie, precifique e publique musicas com IA em um unico fluxo",
+      "subtitle": "Comece pelo criador de musicas, compare opcoes de creditos ou veja como o Hit-Song transforma uma historia em uma pagina musical compartilhavel.",
+      "cards": {
+        "songMaker": {
+          "title": "Criador de musicas com IA",
+          "description": "Transforme um prompt em letra e audio."
+        },
+        "pricing": {
+          "title": "Precos",
+          "description": "Compare creditos e assinaturas."
+        },
+        "about": {
+          "title": "Sobre",
+          "description": "Veja como a plataforma e construida."
+        }
+      }
+    },
+    "faq": {
+      "title": "FAQ do gerador de musicas com IA",
+      "q1": "O que e um gerador de musicas com IA?",
+      "a1": "Um gerador de musicas com IA transforma uma ideia, historia ou prompt em ativos musicais como letra, direcao de estilo e audio. O Hit-Song oferece um fluxo completo: historia, letra, audio, relatorio de produtor e pagina publica.",
+      "q2": "Posso criar uma musica a partir da minha propria historia?",
+      "a2": "Sim. O Hit-Song foi criado para historias pessoais, emocoes, memorias e mensagens. Quanto mais especifico o prompt, mais pessoal sera o resultado.",
+      "q3": "O Hit-Song cria letra e audio?",
+      "a3": "Sim. A plataforma primeiro cria a letra estruturada e depois gera o audio.",
+      "q4": "Paginas publicas de musica sao indexaveis?",
+      "a4": "Sim. As paginas publicas sao renderizadas no servidor com metadados, letra, detalhes de audio e dados estruturados para ouvintes e buscadores."
     },
     "steps": {
       "story": {
@@ -171,11 +201,114 @@
   },
   "dashboard": {
     "title": "Minhas musicas",
-    "noSongs": "Ainda nao ha musicas. Crie seu primeiro hit."
+    "noSongs": "Ainda nao ha musicas. Crie seu primeiro hit.",
+    "welcomeTitle": "Bem-vindo de volta, {name}",
+    "welcomeSubtitle": "Gerencie seu plano, acompanhe creditos e monitore o armazenamento das musicas.",
+    "songList": {
+      "title": "Suas musicas",
+      "subtitle": "Links publicos, metricas de escuta e desempenho de compartilhamento.",
+      "createSong": "Criar musica",
+      "emptyTitle": "Ainda nao ha musicas",
+      "emptySubtitle": "Crie sua primeira musica para publicar uma pagina indexavel.",
+      "coverAlt": "Capa de {title}",
+      "statusPublic": "Publica",
+      "statusPrivate": "Privada",
+      "createdOn": "Criada em {date}",
+      "expiresOn": "Expira em {date}",
+      "metrics": {
+        "plays": "Tocou",
+        "full": "Completa",
+        "shares": "Compart.",
+        "cta": "CTA"
+      },
+      "copyLink": "Copiar link",
+      "preview": "Visualizar",
+      "report": "Relatorio",
+      "versionB": "Version B"
+    },
+    "creditsCard": {
+      "availableCredits": "Creditos disponiveis",
+      "subscriberStorage": "Musicas criadas durante a assinatura ficam armazenadas permanentemente.",
+      "freeStorage": "Musicas do plano gratuito ficam por {days} dias.",
+      "recentActivity": "Atividade recente",
+      "noRecentActivity": "Sem atividade recente."
+    },
+    "subscriptionCard": {
+      "currentPlan": "Plano atual",
+      "freePlan": "Gratis",
+      "basicPlan": "Basico",
+      "proPlan": "Pro",
+      "storagePermanent": "Armazenamento permanente para musicas de assinantes",
+      "storageFree": "Armazenamento de {days} dias para musicas gratuitas",
+      "priorityEnabled": "Geracao prioritaria ativada",
+      "priorityStandard": "Fila padrao de geracao",
+      "statuses": {
+        "active": "Renova em {date}",
+        "trialing": "Teste termina em {date}",
+        "canceledGrace": "Acesso ate {date}",
+        "canceledEnded": "Encerrado em {date}",
+        "pastDue": "Pagamento pendente - acesso ate {date}",
+        "unpaid": "Pagamento necessario",
+        "paused": "Pausado ate {date}",
+        "incomplete": "Configuracao incompleta",
+        "expired": "Expirado em {date}",
+        "noActivePlan": "Sem plano ativo"
+      }
+    },
+    "portal": {
+      "viewPlans": "Ver planos",
+      "managePlan": "Gerenciar plano",
+      "dialogTitle": "Gerenciamento da assinatura",
+      "dialogDescription": "Acesse as configuracoes da assinatura no portal seguro.",
+      "paymentMethodsTitle": "Metodos de pagamento",
+      "paymentMethodsDescription": "Atualize suas informacoes de cobranca",
+      "billingHistoryTitle": "Historico de cobranca",
+      "billingHistoryDescription": "Veja faturas e pagamentos anteriores",
+      "planSettingsTitle": "Configuracoes do plano",
+      "planSettingsDescription": "Altere ou cancele sua assinatura",
+      "accessFailed": "Falha ao acessar o portal de assinatura.",
+      "accessFailedDescription": "Tente novamente mais tarde.",
+      "redirecting": "Redirecionando...",
+      "continueToPortal": "Continuar para o portal"
+    }
   },
   "achievements": {
     "title": "Conquistas",
-    "progress": "{unlocked} de {total} desbloqueadas"
+    "progress": "{unlocked} de {total} desbloqueadas",
+    "items": {
+      "first_song": {
+        "title": "First Draft",
+        "description": "Create your first song idea."
+      },
+      "first_ready_song": {
+        "title": "First Release",
+        "description": "Generate audio for your first ready song."
+      },
+      "first_report": {
+        "title": "Producer Notes",
+        "description": "Generate your first judge report."
+      },
+      "score_80": {
+        "title": "Strong Signal",
+        "description": "Earn a report score of 80 or higher."
+      },
+      "score_90": {
+        "title": "Hit Potential",
+        "description": "Earn a report score of 90 or higher."
+      },
+      "songs_3": {
+        "title": "Three-Song Run",
+        "description": "Create at least three songs."
+      },
+      "plays_50": {
+        "title": "First Audience",
+        "description": "Reach 50 total plays across your songs."
+      },
+      "shares_10": {
+        "title": "Worth Sharing",
+        "description": "Reach 10 total shares across your songs."
+      }
+    }
   },
   "report": {
     "badge": "Relatorio do criador",
@@ -236,7 +369,10 @@
     "freePlan": "Gratis",
     "basicPlan": "Basic",
     "proPlan": "Pro",
-    "enterprisePlan": "Enterprise"
+    "enterprisePlan": "Enterprise",
+    "errorTitle": "Erro",
+    "checkoutFailed": "Falha ao criar checkout",
+    "paymentFailed": "Falha no pagamento"
   },
   "pricingPage": {
     "seo": {
@@ -244,17 +380,17 @@
       "description": "Escolha um plano do Hit-Song para criar letras, audio, relatorios de produtor e paginas publicas. Creditos nunca expiram."
     },
     "eyebrow": "Precos",
-    "title": "Unlock Your Full Creative Potential",
+    "title": "Desbloqueie todo o seu potencial criativo",
     "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "Pacotes de creditos",
-    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
+    "creditPacksSubtitle": "Compra unica para criadores que precisam de musicas extras agora.",
     "subscriptionsTitle": "Assinaturas",
-    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
+    "subscriptionsSubtitle": "Escolha cobranca mensal ou anual e continue criando sem interrupcoes.",
     "monthly": "Mensal",
     "yearly": "Anual",
     "planCta": "Comecar",
     "freeCard": {
-      "description": "For new creators getting started with one song idea.",
+      "description": "Para novos criadores que estao comecando com uma ideia de musica.",
       "priceLabel": "Free",
       "creditHint": "No subscription required",
       "feature1": "Create with pay-as-you-go credit packs",
@@ -263,14 +399,14 @@
     },
     "creditPacks": {
       "standard": {
-        "name": "Starter Pack",
+        "name": "Pacote inicial",
         "description": "Best for quick creation bursts.",
         "feature1": "1600 credits for complete songs",
         "feature2": "Lyrics + audio generation",
         "feature3": "Public shareable pages"
       },
       "pro_pack": {
-        "name": "Pro Pack",
+        "name": "Pacote Pro",
         "description": "High-volume pack for frequent creation.",
         "feature1": "5000 credits for complete songs",
         "feature2": "Producer reports included",
@@ -281,14 +417,14 @@
       "basic": {
         "name": "Basic",
         "description": "Para criadores regulares que querem musicas permanentes.",
-        "feature1": "3000 credits per month",
+        "feature1": "3000 creditos por mes",
         "feature2": "Musicas armazenadas permanentemente",
         "feature3": "Relatorios de produtor incluidos"
       },
       "pro": {
         "name": "Pro",
         "description": "Geracao prioritaria e maxima producao criativa.",
-        "feature1": "10000 credits per month",
+        "feature1": "10000 creditos por mes",
         "feature2": "Musicas armazenadas permanentemente",
         "feature3": "Geracao de audio prioritaria"
       }
@@ -307,8 +443,8 @@
       "a5": "Aceitamos todos os principais cartoes de credito. Precos em USD."
     },
     "save69": "Save 69%",
-    "subscribeNowCancelAnytime": "Subscribe now - cancel anytime.",
-    "songsUnit": "songs",
+    "subscribeNowCancelAnytime": "Assine agora - cancele a qualquer momento.",
+    "songsUnit": "musicas",
     "popularPack": "Popular"
   },
   "email": {
@@ -361,5 +497,3 @@
     "contentFlagged": "Esta historia nao pode ser escrita. Tente outra."
   }
 }
-
-

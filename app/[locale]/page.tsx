@@ -89,24 +89,20 @@ export default async function Home({ params }: HomePageProps) {
   };
   const faqItems = [
     {
-      question: "What is an AI song generator?",
-      answer:
-        "An AI song generator turns a written idea, story, or prompt into music assets such as lyrics, style direction, and audio. Hit-Song focuses on a complete workflow from story to lyrics, generated audio, producer-style report, and public song page.",
+      question: t("faq.q1"),
+      answer: t("faq.a1"),
     },
     {
-      question: "Can I create a song from my own story?",
-      answer:
-        "Yes. Hit-Song is designed around personal stories, emotions, memories, and messages. The more specific the prompt, the more personal the lyric draft and song direction can feel.",
+      question: t("faq.q2"),
+      answer: t("faq.a2"),
     },
     {
-      question: "Does Hit-Song create lyrics and audio?",
-      answer:
-        "Yes. The platform first creates structured lyrics, then generates audio for the song. Finished songs can include lyrics, playback, style details, and sharing links.",
+      question: t("faq.q3"),
+      answer: t("faq.a3"),
     },
     {
-      question: "Are public song pages indexable?",
-      answer:
-        "Public song pages are server-rendered with song metadata, lyrics, audio details, and structured data so listeners and search engines can understand the page.",
+      question: t("faq.q4"),
+      answer: t("faq.a4"),
     },
   ];
   const faqJsonLd = {
@@ -207,9 +203,7 @@ export default async function Home({ params }: HomePageProps) {
       >
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">
-              AI song generator workflow
-            </h2>
+            <h2 className="text-3xl font-bold mb-4">{t("howItWorks.title")}</h2>
             <p className="text-muted-foreground text-lg">
               {t("howItWorks.subtitle")}
             </p>
@@ -239,33 +233,32 @@ export default async function Home({ params }: HomePageProps) {
           <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
               <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-                Explore Hit-Song
+                {t("explore.label")}
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-normal">
-                Create, price, and publish AI songs from one workflow
+                {t("explore.title")}
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Start with the song maker, compare credit options, or learn how
-                Hit-Song turns a story into a shareable music page.
+                {t("explore.subtitle")}
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-3">
               {[
                 {
-                  title: "AI song maker",
-                  description: "Turn a prompt into lyrics and audio.",
+                  title: t("explore.cards.songMaker.title"),
+                  description: t("explore.cards.songMaker.description"),
                   href: "/create",
                   icon: Music,
                 },
                 {
-                  title: "Pricing",
-                  description: "Compare credits and subscriptions.",
+                  title: t("explore.cards.pricing.title"),
+                  description: t("explore.cards.pricing.description"),
                   href: "/pricing",
                   icon: CheckCircle2,
                 },
                 {
-                  title: "About",
-                  description: "See how the platform is built.",
+                  title: t("explore.cards.about.title"),
+                  description: t("explore.cards.about.description"),
                   href: "/about",
                   icon: FileText,
                 },
@@ -297,7 +290,7 @@ export default async function Home({ params }: HomePageProps) {
             <div className="mb-8 flex items-center gap-2">
               <HelpCircle className="h-5 w-5 text-primary" />
               <h2 className="text-3xl font-bold tracking-normal">
-                AI song generator FAQ
+                {t("faq.title")}
               </h2>
             </div>
             <dl className="space-y-6">

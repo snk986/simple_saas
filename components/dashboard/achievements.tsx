@@ -13,9 +13,24 @@ export interface UserAchievement {
 interface AchievementsProps {
   definitions: AchievementDefinition[];
   unlocked: UserAchievement[];
+  locale: string;
+  title: string;
+  progressTemplate: string;
 }
 
-export function Achievements({ definitions, unlocked }: AchievementsProps) {
+function formatProgress(template: string, unlocked: number, total: number) {
+  return template
+    .replace("{unlocked}", String(unlocked))
+    .replace("{total}", String(total));
+}
+
+export function Achievements({
+  definitions,
+  unlocked,
+  locale,
+  title,
+  progressTemplate,
+}: AchievementsProps) {
   const unlockedMap = new Map(
     unlocked.map((achievement) => [
       achievement.achievement,
@@ -30,10 +45,10 @@ export function Achievements({ definitions, unlocked }: AchievementsProps) {
         <div>
           <div className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-amber-500" />
-            <h2 className="text-xl font-semibold">Achievements</h2>
+            <h2 className="text-xl font-semibold">{title}</h2>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            {unlockedCount} of {definitions.length} unlocked
+            {formatProgress(progressTemplate, unlockedCount, definitions.length)}
           </p>
         </div>
       </div>
@@ -70,7 +85,7 @@ export function Achievements({ definitions, unlocked }: AchievementsProps) {
                 </div>
                 {unlockedAt ? (
                   <span className="text-xs text-muted-foreground">
-                    {new Intl.DateTimeFormat("en", {
+                    {new Intl.DateTimeFormat(locale, {
                       month: "short",
                       day: "numeric",
                     }).format(new Date(unlockedAt))}

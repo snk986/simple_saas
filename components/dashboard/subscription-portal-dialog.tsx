@@ -16,9 +16,26 @@ import { ArrowRight, CreditCard, Receipt, Settings } from "lucide-react";
 export function SubscriptionPortalDialog({
   upgradeHref = "/pricing",
   hasPortalCustomer = false,
+  labels,
 }: {
   upgradeHref?: string;
   hasPortalCustomer?: boolean;
+  labels: {
+    viewPlans: string;
+    managePlan: string;
+    dialogTitle: string;
+    dialogDescription: string;
+    paymentMethodsTitle: string;
+    paymentMethodsDescription: string;
+    billingHistoryTitle: string;
+    billingHistoryDescription: string;
+    planSettingsTitle: string;
+    planSettingsDescription: string;
+    accessFailed: string;
+    accessFailedDescription: string;
+    redirecting: string;
+    continueToPortal: string;
+  };
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +54,7 @@ export function SubscriptionPortalDialog({
       window.open(customer_portal_link, "_blank");
     } catch (err) {
       console.error("Error getting portal link:", err);
-      setError("Failed to access subscription portal. Please try again later.");
+      setError(`${labels.accessFailed} ${labels.accessFailedDescription}`.trim());
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +64,7 @@ export function SubscriptionPortalDialog({
     return (
       <Button asChild variant="outline" className="w-full">
         <Link href={upgradeHref}>
-          View plans
+          {labels.viewPlans}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>
@@ -58,15 +75,15 @@ export function SubscriptionPortalDialog({
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full">
-          Manage Plan
+          {labels.managePlan}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Subscription Management</DialogTitle>
+          <DialogTitle>{labels.dialogTitle}</DialogTitle>
           <DialogDescription>
-            Access your subscription settings in our secure customer portal.
+            {labels.dialogDescription}
           </DialogDescription>
         </DialogHeader>
 
@@ -79,9 +96,9 @@ export function SubscriptionPortalDialog({
                   <CreditCard className="h-5 w-5 text-primary" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Payment Methods</p>
+                  <p className="text-sm font-medium">{labels.paymentMethodsTitle}</p>
                   <p className="text-sm text-muted-foreground">
-                    Update your billing information
+                    {labels.paymentMethodsDescription}
                   </p>
                 </div>
               </div>
@@ -91,9 +108,9 @@ export function SubscriptionPortalDialog({
                   <Receipt className="h-5 w-5 text-primary" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Billing History</p>
+                  <p className="text-sm font-medium">{labels.billingHistoryTitle}</p>
                   <p className="text-sm text-muted-foreground">
-                    View past invoices and payments
+                    {labels.billingHistoryDescription}
                   </p>
                 </div>
               </div>
@@ -103,9 +120,9 @@ export function SubscriptionPortalDialog({
                   <Settings className="h-5 w-5 text-primary" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Plan Settings</p>
+                  <p className="text-sm font-medium">{labels.planSettingsTitle}</p>
                   <p className="text-sm text-muted-foreground">
-                    Change or cancel your subscription
+                    {labels.planSettingsDescription}
                   </p>
                 </div>
               </div>
@@ -121,7 +138,7 @@ export function SubscriptionPortalDialog({
 
         <DialogFooter className="flex space-x-2 sm:space-x-0">
           <Button onClick={handleManageSubscription} disabled={isLoading}>
-            {isLoading ? "Redirecting..." : "Continue to Portal"}
+            {isLoading ? labels.redirecting : labels.continueToPortal}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </DialogFooter>

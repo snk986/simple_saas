@@ -46,9 +46,39 @@
       "output": "Verse, chorus, and emotional arc ready for audio generation."
     },
     "howItWorks": {
-      "title": "How it works",
+      "title": "AI song generator workflow",
       "subtitle": "Three focused steps from raw story to a song you can share.",
       "step": "Step {number}"
+    },
+    "explore": {
+      "label": "Explore Hit-Song",
+      "title": "Create, price, and publish AI songs from one workflow",
+      "subtitle": "Start with the song maker, compare credit options, or learn how Hit-Song turns a story into a shareable music page.",
+      "cards": {
+        "songMaker": {
+          "title": "AI song maker",
+          "description": "Turn a prompt into lyrics and audio."
+        },
+        "pricing": {
+          "title": "Pricing",
+          "description": "Compare credits and subscriptions."
+        },
+        "about": {
+          "title": "About",
+          "description": "See how the platform is built."
+        }
+      }
+    },
+    "faq": {
+      "title": "AI song generator FAQ",
+      "q1": "What is an AI song generator?",
+      "a1": "An AI song generator turns a written idea, story, or prompt into music assets such as lyrics, style direction, and audio. Hit-Song focuses on a complete workflow from story to lyrics, generated audio, producer-style report, and public song page.",
+      "q2": "Can I create a song from my own story?",
+      "a2": "Yes. Hit-Song is designed around personal stories, emotions, memories, and messages. The more specific the prompt, the more personal the lyric draft and song direction can feel.",
+      "q3": "Does Hit-Song create lyrics and audio?",
+      "a3": "Yes. The platform first creates structured lyrics, then generates audio for the song. Finished songs can include lyrics, playback, style details, and sharing links.",
+      "q4": "Are public song pages indexable?",
+      "a4": "Public song pages are server-rendered with song metadata, lyrics, audio details, and structured data so listeners and search engines can understand the page."
     },
     "steps": {
       "story": {
@@ -171,11 +201,114 @@
   },
   "dashboard": {
     "title": "My Songs",
-    "noSongs": "No songs yet. Create your first hit!"
+    "noSongs": "No songs yet. Create your first hit!",
+    "welcomeTitle": "Welcome back, {name}",
+    "welcomeSubtitle": "Manage your plan, track credits, and keep an eye on song storage.",
+    "songList": {
+      "title": "Your songs",
+      "subtitle": "Public links, listening metrics, and share performance.",
+      "createSong": "Create song",
+      "emptyTitle": "No songs yet",
+      "emptySubtitle": "Create your first song to publish a searchable music page.",
+      "coverAlt": "{title} cover art",
+      "statusPublic": "Public",
+      "statusPrivate": "Private",
+      "createdOn": "Created {date}",
+      "expiresOn": "Expires {date}",
+      "metrics": {
+        "plays": "Plays",
+        "full": "Full",
+        "shares": "Shares",
+        "cta": "CTA"
+      },
+      "copyLink": "Copy link",
+      "preview": "Preview",
+      "report": "Report",
+      "versionB": "Version B"
+    },
+    "creditsCard": {
+      "availableCredits": "Available Credits",
+      "subscriberStorage": "Songs created while subscribed are kept permanently.",
+      "freeStorage": "Free songs are kept for {days} days.",
+      "recentActivity": "Recent Activity",
+      "noRecentActivity": "No recent activity yet."
+    },
+    "subscriptionCard": {
+      "currentPlan": "Current Plan",
+      "freePlan": "Free",
+      "basicPlan": "Basic",
+      "proPlan": "Pro",
+      "storagePermanent": "Permanent storage for subscriber songs",
+      "storageFree": "{days}-day storage for free songs",
+      "priorityEnabled": "Priority generation enabled",
+      "priorityStandard": "Standard generation queue",
+      "statuses": {
+        "active": "Renews on {date}",
+        "trialing": "Trial ends on {date}",
+        "canceledGrace": "Access until {date}",
+        "canceledEnded": "Ended on {date}",
+        "pastDue": "Payment due - Access until {date}",
+        "unpaid": "Payment required",
+        "paused": "Paused until {date}",
+        "incomplete": "Setup incomplete",
+        "expired": "Expired on {date}",
+        "noActivePlan": "No active plan"
+      }
+    },
+    "portal": {
+      "viewPlans": "View plans",
+      "managePlan": "Manage Plan",
+      "dialogTitle": "Subscription Management",
+      "dialogDescription": "Access your subscription settings in our secure customer portal.",
+      "paymentMethodsTitle": "Payment Methods",
+      "paymentMethodsDescription": "Update your billing information",
+      "billingHistoryTitle": "Billing History",
+      "billingHistoryDescription": "View past invoices and payments",
+      "planSettingsTitle": "Plan Settings",
+      "planSettingsDescription": "Change or cancel your subscription",
+      "accessFailed": "Failed to access subscription portal.",
+      "accessFailedDescription": "Please try again later.",
+      "redirecting": "Redirecting...",
+      "continueToPortal": "Continue to Portal"
+    }
   },
   "achievements": {
     "title": "Achievements",
-    "progress": "{unlocked} of {total} unlocked"
+    "progress": "{unlocked} of {total} unlocked",
+    "items": {
+      "first_song": {
+        "title": "First Draft",
+        "description": "Create your first song idea."
+      },
+      "first_ready_song": {
+        "title": "First Release",
+        "description": "Generate audio for your first ready song."
+      },
+      "first_report": {
+        "title": "Producer Notes",
+        "description": "Generate your first judge report."
+      },
+      "score_80": {
+        "title": "Strong Signal",
+        "description": "Earn a report score of 80 or higher."
+      },
+      "score_90": {
+        "title": "Hit Potential",
+        "description": "Earn a report score of 90 or higher."
+      },
+      "songs_3": {
+        "title": "Three-Song Run",
+        "description": "Create at least three songs."
+      },
+      "plays_50": {
+        "title": "First Audience",
+        "description": "Reach 50 total plays across your songs."
+      },
+      "shares_10": {
+        "title": "Worth Sharing",
+        "description": "Reach 10 total shares across your songs."
+      }
+    }
   },
   "report": {
     "badge": "Creator Report",
@@ -237,6 +370,10 @@
     "basicPlan": "Basic",
     "proPlan": "Pro",
     "enterprisePlan": "Enterprise"
+    ,
+    "errorTitle": "Error",
+    "checkoutFailed": "Failed to create checkout",
+    "paymentFailed": "Payment failed"
   },
   "pricingPage": {
     "seo": {

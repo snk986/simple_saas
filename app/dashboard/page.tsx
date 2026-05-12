@@ -83,6 +83,8 @@ export default async function DashboardPage() {
     };
   });
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
+  const createHref = "/create";
+  const pricingHref = "/pricing";
 
   return (
     <div className="container flex w-full flex-1 flex-col gap-6 px-4 sm:gap-8 sm:px-8">
@@ -103,20 +105,96 @@ export default async function DashboardPage() {
           credits={entitlements.creditsBalance}
           recentHistory={recentCreditsHistory}
           songRetentionDays={entitlements.songRetentionDays}
+          locale="en"
+          labels={{
+            availableCredits: "Available Credits",
+            subscriberStorage: "Songs created while subscribed are kept permanently.",
+            freeStorage: "Free songs are kept for {days} days.",
+            recentActivity: "Recent Activity",
+            noRecentActivity: "No recent activity yet.",
+          }}
         />
 
         {/* Subscription Status */}
         <SubscriptionStatusCard
           subscription={subscription}
           entitlements={entitlements}
-          upgradeHref="/pricing"
+          locale="en"
+          labels={{
+            currentPlan: "Current Plan",
+            freePlan: "Free",
+            basicPlan: "Basic",
+            proPlan: "Pro",
+            storagePermanent: "Permanent storage for subscriber songs",
+            storageFree: "{days}-day storage for free songs",
+            priorityEnabled: "Priority generation enabled",
+            priorityStandard: "Standard generation queue",
+            statuses: {
+              active: "Renews on {date}",
+              trialing: "Trial ends on {date}",
+              canceledGrace: "Access until {date}",
+              canceledEnded: "Ended on {date}",
+              pastDue: "Payment due - Access until {date}",
+              unpaid: "Payment required",
+              paused: "Paused until {date}",
+              incomplete: "Setup incomplete",
+              expired: "Expired on {date}",
+              noActivePlan: "No active plan",
+            },
+            portal: {
+              viewPlans: "View plans",
+              managePlan: "Manage Plan",
+              dialogTitle: "Subscription Management",
+              dialogDescription: "Access your subscription settings in our secure customer portal.",
+              paymentMethodsTitle: "Payment Methods",
+              paymentMethodsDescription: "Update your billing information",
+              billingHistoryTitle: "Billing History",
+              billingHistoryDescription: "View past invoices and payments",
+              planSettingsTitle: "Plan Settings",
+              planSettingsDescription: "Change or cancel your subscription",
+              accessFailed: "Failed to access subscription portal.",
+              accessFailedDescription: "Please try again later.",
+              redirecting: "Redirecting...",
+              continueToPortal: "Continue to Portal",
+            },
+          }}
+          upgradeHref={pricingHref}
         />
       </div>
 
-      <SongList songs={songs} />
+      <SongList
+        songs={songs}
+        locale="en"
+        createHref={createHref}
+        labels={{
+          title: "Your songs",
+          subtitle: "Public links, listening metrics, and share performance.",
+          createSong: "Create song",
+          emptyTitle: "No songs yet",
+          emptySubtitle: "Create your first song to publish a searchable music page.",
+          coverAlt: "{title} cover art",
+          statusPublic: "Public",
+          statusPrivate: "Private",
+          createdOn: "Created {date}",
+          expiresOn: "Expires {date}",
+          metrics: {
+            plays: "Plays",
+            full: "Full",
+            shares: "Shares",
+            cta: "CTA",
+          },
+          copyLink: "Copy link",
+          preview: "Preview",
+          report: "Report",
+          versionB: "Version B",
+        }}
+      />
       <Achievements
         definitions={achievements}
         unlocked={unlockedAchievements}
+        locale="en"
+        title="Achievements"
+        progressTemplate="{unlocked} of {total} unlocked"
       />
     </div>
   );

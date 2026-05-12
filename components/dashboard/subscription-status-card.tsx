@@ -16,7 +16,7 @@ import { PlanTier, SubscriptionState } from "@/types/subscriptions";
 type StatusConfig = {
   color: string;
   icon: LucideIcon;
-  message: string;
+  messageKey: keyof SubscriptionStatusLabels["statuses"];
   iconColor: string;
 };
 
@@ -24,13 +24,52 @@ type StatusConfigs = {
   [key in SubscriptionState]: StatusConfig;
 };
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString();
+function formatDate(date: string, locale: string) {
+  return new Intl.DateTimeFormat(locale).format(new Date(date));
 }
 
 function isFutureDate(date: string) {
   return new Date(date) > new Date();
 }
+
+type SubscriptionStatusLabels = {
+  currentPlan: string;
+  freePlan: string;
+  basicPlan: string;
+  proPlan: string;
+  storagePermanent: string;
+  storageFree: string;
+  priorityEnabled: string;
+  priorityStandard: string;
+  statuses: {
+    active: string;
+    trialing: string;
+    canceledGrace: string;
+    canceledEnded: string;
+    pastDue: string;
+    unpaid: string;
+    paused: string;
+    incomplete: string;
+    expired: string;
+    noActivePlan: string;
+  };
+  portal: {
+    viewPlans: string;
+    managePlan: string;
+    dialogTitle: string;
+    dialogDescription: string;
+    paymentMethodsTitle: string;
+    paymentMethodsDescription: string;
+    billingHistoryTitle: string;
+    billingHistoryDescription: string;
+    planSettingsTitle: string;
+    planSettingsDescription: string;
+    accessFailed: string;
+    accessFailedDescription: string;
+    redirecting: string;
+    continueToPortal: string;
+  };
+};
 
 function getStatusConfig(
   status: string,
@@ -42,51 +81,49 @@ function getStatusConfig(
     active: {
       color: "text-green-500",
       icon: Package2,
-      message: `Renews on ${formatDate(current_period_end)}`,
+      messageKey: "active",
       iconColor: "text-green-500",
     },
     trialing: {
       color: "text-primary",
       icon: Clock,
-      message: `Trial ends on ${formatDate(current_period_end)}`,
+      messageKey: "trialing",
       iconColor: "text-primary",
     },
     canceled: {
       color: inGracePeriod ? "text-yellow-500" : "text-destructive",
       icon: Ban,
-      message: inGracePeriod
-        ? `Access until ${formatDate(current_period_end)}`
-        : `Ended on ${formatDate(current_period_end)}`,
+      messageKey: inGracePeriod ? "canceledGrace" : "canceledEnded",
       iconColor: inGracePeriod ? "text-yellow-500" : "text-destructive",
     },
     past_due: {
       color: "text-yellow-500",
       icon: AlertCircle,
-      message: `Payment due - Access until ${formatDate(current_period_end)}`,
+      messageKey: "pastDue",
       iconColor: "text-yellow-500",
     },
     unpaid: {
       color: "text-destructive",
       icon: AlertCircle,
-      message: "Payment required",
+      messageKey: "unpaid",
       iconColor: "text-destructive",
     },
     paused: {
       color: "text-yellow-500",
       icon: PauseCircle,
-      message: `Paused until ${formatDate(current_period_end)}`,
+      messageKey: "paused",
       iconColor: "text-yellow-500",
     },
     incomplete: {
       color: "text-yellow-500",
       icon: AlertCircle,
-      message: "Setup incomplete",
+      messageKey: "incomplete",
       iconColor: "text-yellow-500",
     },
     expired: {
       color: "text-destructive",
       icon: Ban,
-      message: `Expired on ${formatDate(current_period_end)}`,
+      messageKey: "expired",
       iconColor: "text-destructive",
     },
   };
@@ -95,7 +132,7 @@ function getStatusConfig(
     configs[status as SubscriptionState] || {
       color: "text-muted-foreground",
       icon: AlertCircle,
-      message: "No active plan",
+      messageKey: "noActivePlan",
       iconColor: "text-muted-foreground",
     }
   );
@@ -113,18 +150,28 @@ type SubscriptionStatusCardProps = {
     canKeepSongsForever: boolean;
     subscriptionEndsAt: string | null;
   };
+  locale: string;
+  labels: SubscriptionStatusLabels;
   upgradeHref?: string;
 };
+
+function formatMessage(template: string, locale: string, date: string) {
+  return template.replace("{date}", formatDate(date, locale));
+}
 
 export function SubscriptionStatusCard({
   subscription,
   entitlements,
+  locale,
+  labels,
   upgradeHref,
 }: SubscriptionStatusCardProps) {
   const planLabel =
     entitlements.plan === "free"
-      ? "Free"
-      : entitlements.plan.charAt(0).toUpperCase() + entitlements.plan.slice(1);
+      ? labels.freePlan
+      : entitlements.plan === "basic"
+        ? labels.basicPlan
+        : labels.proPlan;
 
   return (
     <div className="rounded-lg border border-border bg-card p-6 shadow-sm shadow-black/20">
@@ -133,7 +180,7 @@ export function SubscriptionStatusCard({
           <CreditCard className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <p className="text-sm text-muted-foreground">Current Plan</p>
+          <p className="text-sm text-muted-foreground">{labels.currentPlan}</p>
           {subscription && (
             <h3
               className={`text-2xl font-bold capitalize mt-1 ${
@@ -143,7 +190,7 @@ export function SubscriptionStatusCard({
                 ).color
               }`}
             >
-              {subscription.status}
+              {planLabel}
             </h3>
           )}
           {!subscription && (
@@ -158,16 +205,16 @@ export function SubscriptionStatusCard({
           <Package2 className="h-4 w-4 text-primary" />
           <span>
             {entitlements.canKeepSongsForever
-              ? "Permanent storage for subscriber songs"
-              : "30-day storage for free songs"}
+              ? labels.storagePermanent
+              : labels.storageFree.replace("{days}", "30")}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
           <span>
             {entitlements.priorityGeneration
-              ? "Priority generation enabled"
-              : "Standard generation queue"}
+              ? labels.priorityEnabled
+              : labels.priorityStandard}
           </span>
         </div>
       </div>
@@ -179,10 +226,20 @@ export function SubscriptionStatusCard({
               subscription.current_period_end,
             );
             const Icon = config.icon;
+            const messageTemplate = labels.statuses[config.messageKey];
+            const needsDate = messageTemplate.includes("{date}");
             return (
               <>
                 <Icon className={`h-4 w-4 ${config.iconColor}`} />
-                <span className="text-muted-foreground">{config.message}</span>
+                <span className="text-muted-foreground">
+                  {needsDate
+                    ? formatMessage(
+                        messageTemplate,
+                        locale,
+                        subscription.current_period_end,
+                      )
+                    : messageTemplate}
+                </span>
               </>
             );
           })()}
@@ -192,6 +249,7 @@ export function SubscriptionStatusCard({
         <SubscriptionPortalDialog
           upgradeHref={upgradeHref}
           hasPortalCustomer={Boolean(subscription)}
+          labels={labels.portal}
         />
       </div>
     </div>

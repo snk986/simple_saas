@@ -24,29 +24,63 @@ export interface DashboardSong {
 
 interface SongListProps {
   songs: DashboardSong[];
+  locale: string;
+  createHref: string;
+  labels: {
+    title: string;
+    subtitle: string;
+    createSong: string;
+    emptyTitle: string;
+    emptySubtitle: string;
+    coverAlt: string;
+    statusPublic: string;
+    statusPrivate: string;
+    createdOn: string;
+    expiresOn: string;
+    metrics: {
+      plays: string;
+      full: string;
+      shares: string;
+      cta: string;
+    };
+    copyLink: string;
+    preview: string;
+    report: string;
+    versionB: string;
+  };
 }
 
-export function SongList({ songs }: SongListProps) {
+function formatLabel(template: string, value: string) {
+  return template.replace("{date}", value);
+}
+
+export function SongList({ songs, locale, createHref, labels }: SongListProps) {
+  const dateFormatter = new Intl.DateTimeFormat(locale, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 sm:p-6">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold">Your songs</h2>
+          <h2 className="text-xl font-semibold">{labels.title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Public links, listening metrics, and share performance.
+            {labels.subtitle}
           </p>
         </div>
         <Button asChild>
-          <Link href="/create">Create song</Link>
+          <Link href={createHref}>{labels.createSong}</Link>
         </Button>
       </div>
 
       {songs.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-muted/20 p-8 text-center">
           <Music2 className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
-          <p className="font-medium">No songs yet</p>
+          <p className="font-medium">{labels.emptyTitle}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Create your first song to publish a searchable music page.
+            {labels.emptySubtitle}
           </p>
         </div>
       ) : (
@@ -61,7 +95,7 @@ export function SongList({ songs }: SongListProps) {
                   {song.coverUrl ? (
                     <img
                       src={song.coverUrl}
-                      alt={`${song.title} cover art`}
+                      alt={labels.coverAlt.replace("{title}", song.title)}
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -73,7 +107,7 @@ export function SongList({ songs }: SongListProps) {
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
                     <Badge variant={song.isPublic ? "default" : "secondary"}>
-                      {song.isPublic ? "Public" : "Private"}
+                      {song.isPublic ? labels.statusPublic : labels.statusPrivate}
                     </Badge>
                     <Badge variant="outline">{song.status}</Badge>
                   </div>
@@ -82,25 +116,21 @@ export function SongList({ songs }: SongListProps) {
                   </h3>
                   {song.versionLabel ? (
                     <p className="mt-1 text-xs font-medium text-primary">
-                      {song.versionLabel}
+                      {labels.versionB}
                     </p>
                   ) : null}
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Created{" "}
-                    {new Intl.DateTimeFormat("en", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    }).format(new Date(song.createdAt))}
+                    {formatLabel(
+                      labels.createdOn,
+                      dateFormatter.format(new Date(song.createdAt)),
+                    )}
                   </p>
                   {song.expiresAt && song.status !== "expired" ? (
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Expires{" "}
-                      {new Intl.DateTimeFormat("en", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      }).format(new Date(song.expiresAt))}
+                      {formatLabel(
+                        labels.expiresOn,
+                        dateFormatter.format(new Date(song.expiresAt)),
+                      )}
                     </p>
                   ) : null}
                 </div>
@@ -109,10 +139,10 @@ export function SongList({ songs }: SongListProps) {
               <div className="flex flex-col gap-3">
                 <div className="grid grid-cols-4 gap-2 text-center">
                   {[
-                    ["Plays", song.playCount],
-                    ["Full", song.completeCount],
-                    ["Shares", song.shareCount],
-                    ["CTA", song.ctaClickCount],
+                    [labels.metrics.plays, song.playCount],
+                    [labels.metrics.full, song.completeCount],
+                    [labels.metrics.shares, song.shareCount],
+                    [labels.metrics.cta, song.ctaClickCount],
                   ].map(([label, value]) => (
                     <div key={label} className="rounded-lg bg-muted/40 p-2">
                       <p className="text-sm font-semibold">
@@ -140,7 +170,7 @@ export function SongList({ songs }: SongListProps) {
                     }}
                   >
                     <Copy className="h-4 w-4" />
-                    Copy link
+                    {labels.copyLink}
                   </Button>
                   {song.isPublic && song.status === "ready" ? (
                     <Button
@@ -150,7 +180,7 @@ export function SongList({ songs }: SongListProps) {
                       className="gap-2"
                     >
                       <Link href={song.publicHref}>
-                        Preview
+                        {labels.preview}
                         <ExternalLink className="h-4 w-4" />
                       </Link>
                     </Button>
@@ -161,13 +191,13 @@ export function SongList({ songs }: SongListProps) {
                       className="gap-2"
                       disabled
                     >
-                      Preview
+                      {labels.preview}
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   )}
                   <Button asChild size="sm" variant="outline" className="gap-2">
                     <Link href={song.reportHref}>
-                      Report
+                      {labels.report}
                       <ExternalLink className="h-4 w-4" />
                     </Link>
                   </Button>

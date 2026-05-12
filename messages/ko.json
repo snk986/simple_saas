@@ -46,9 +46,39 @@
       "output": "오디오 생성을 위한 verse, chorus, 감정 흐름."
     },
     "howItWorks": {
-      "title": "작동 방식",
+      "title": "AI 노래 생성 워크플로우",
       "subtitle": "원본 이야기에서 공유 가능한 노래까지 세 단계로 진행됩니다.",
       "step": "단계 {number}"
+    },
+    "explore": {
+      "label": "Hit-Song 살펴보기",
+      "title": "하나의 워크플로우로 AI 노래 생성, 요금 선택, 공개까지",
+      "subtitle": "노래 만들기에서 시작해 크레딧 옵션을 비교하고, Hit-Song이 스토리를 공유 가능한 음악 페이지로 바꾸는 과정을 확인하세요.",
+      "cards": {
+        "songMaker": {
+          "title": "AI 노래 메이커",
+          "description": "프롬프트를 가사와 오디오로 변환합니다."
+        },
+        "pricing": {
+          "title": "요금제",
+          "description": "크레딧과 구독을 비교하세요."
+        },
+        "about": {
+          "title": "소개",
+          "description": "플랫폼이 어떻게 만들어졌는지 확인하세요."
+        }
+      }
+    },
+    "faq": {
+      "title": "AI 노래 생성 FAQ",
+      "q1": "AI 노래 생성기는 무엇인가요?",
+      "a1": "AI 노래 생성기는 아이디어, 스토리, 프롬프트를 가사, 스타일 방향, 오디오 같은 음악 자산으로 바꿉니다. Hit-Song은 스토리부터 가사, 오디오, 프로듀서 리포트, 공개 페이지까지 한 번에 제공합니다.",
+      "q2": "내 이야기로 노래를 만들 수 있나요?",
+      "a2": "네. Hit-Song은 개인적인 이야기, 감정, 기억, 메시지에 맞춰 설계되었습니다. 더 구체적으로 입력할수록 결과가 더 개인화됩니다.",
+      "q3": "Hit-Song은 가사와 오디오를 모두 생성하나요?",
+      "a3": "네. 먼저 구조화된 가사를 만들고, 그 다음 오디오를 생성합니다.",
+      "q4": "공개 노래 페이지는 검색에 노출되나요?",
+      "a4": "네. 공개 페이지는 서버 렌더링으로 메타데이터, 가사, 오디오 정보, 구조화 데이터를 포함합니다."
     },
     "steps": {
       "story": {
@@ -171,11 +201,114 @@
   },
   "dashboard": {
     "title": "내 노래",
-    "noSongs": "아직 노래가 없습니다. 첫 히트곡을 만들어 보세요."
+    "noSongs": "아직 노래가 없습니다. 첫 히트곡을 만들어 보세요.",
+    "welcomeTitle": "다시 오신 것을 환영해요, {name}",
+    "welcomeSubtitle": "플랜 관리, 크레딧 추적, 곡 저장 상태를 한눈에 확인하세요.",
+    "songList": {
+      "title": "내 노래",
+      "subtitle": "공개 링크, 청취 지표, 공유 성과를 확인하세요.",
+      "createSong": "노래 만들기",
+      "emptyTitle": "아직 노래가 없어요",
+      "emptySubtitle": "첫 노래를 만들어 검색 가능한 공개 페이지를 발행하세요.",
+      "coverAlt": "{title} 커버 아트",
+      "statusPublic": "공개",
+      "statusPrivate": "비공개",
+      "createdOn": "생성일 {date}",
+      "expiresOn": "만료일 {date}",
+      "metrics": {
+        "plays": "재생",
+        "full": "완청",
+        "shares": "공유",
+        "cta": "CTA"
+      },
+      "copyLink": "링크 복사",
+      "preview": "미리보기",
+      "report": "리포트",
+      "versionB": "Version B"
+    },
+    "creditsCard": {
+      "availableCredits": "사용 가능한 크레딧",
+      "subscriberStorage": "구독 중 생성한 노래는 영구 보관됩니다.",
+      "freeStorage": "무료 플랜 노래는 {days}일 동안 보관됩니다.",
+      "recentActivity": "최근 활동",
+      "noRecentActivity": "최근 활동이 없습니다."
+    },
+    "subscriptionCard": {
+      "currentPlan": "현재 플랜",
+      "freePlan": "무료",
+      "basicPlan": "???",
+      "proPlan": "??",
+      "storagePermanent": "구독자 노래 영구 보관",
+      "storageFree": "무료 노래 {days}일 보관",
+      "priorityEnabled": "우선 생성 활성화",
+      "priorityStandard": "일반 생성 대기열",
+      "statuses": {
+        "active": "{date}에 갱신",
+        "trialing": "체험 종료일 {date}",
+        "canceledGrace": "{date}까지 이용 가능",
+        "canceledEnded": "{date}에 종료",
+        "pastDue": "결제 필요 - {date}까지 이용 가능",
+        "unpaid": "결제가 필요합니다",
+        "paused": "{date}까지 일시 중지",
+        "incomplete": "설정이 완료되지 않았습니다",
+        "expired": "{date}에 만료",
+        "noActivePlan": "활성 플랜 없음"
+      }
+    },
+    "portal": {
+      "viewPlans": "플랜 보기",
+      "managePlan": "플랜 관리",
+      "dialogTitle": "구독 관리",
+      "dialogDescription": "보안 고객 포털에서 구독 설정을 관리하세요.",
+      "paymentMethodsTitle": "결제 수단",
+      "paymentMethodsDescription": "결제 정보를 업데이트하세요",
+      "billingHistoryTitle": "결제 내역",
+      "billingHistoryDescription": "이전 청구서와 결제를 확인하세요",
+      "planSettingsTitle": "플랜 설정",
+      "planSettingsDescription": "플랜 변경 또는 해지",
+      "accessFailed": "구독 포털에 접근하지 못했습니다.",
+      "accessFailedDescription": "잠시 후 다시 시도해주세요.",
+      "redirecting": "이동 중...",
+      "continueToPortal": "포털로 이동"
+    }
   },
   "achievements": {
     "title": "업적",
-    "progress": "{total}개 중 {unlocked}개 해제"
+    "progress": "{total}개 중 {unlocked}개 해제",
+    "items": {
+      "first_song": {
+        "title": "First Draft",
+        "description": "Create your first song idea."
+      },
+      "first_ready_song": {
+        "title": "First Release",
+        "description": "Generate audio for your first ready song."
+      },
+      "first_report": {
+        "title": "Producer Notes",
+        "description": "Generate your first judge report."
+      },
+      "score_80": {
+        "title": "Strong Signal",
+        "description": "Earn a report score of 80 or higher."
+      },
+      "score_90": {
+        "title": "Hit Potential",
+        "description": "Earn a report score of 90 or higher."
+      },
+      "songs_3": {
+        "title": "Three-Song Run",
+        "description": "Create at least three songs."
+      },
+      "plays_50": {
+        "title": "First Audience",
+        "description": "Reach 50 total plays across your songs."
+      },
+      "shares_10": {
+        "title": "Worth Sharing",
+        "description": "Reach 10 total shares across your songs."
+      }
+    }
   },
   "report": {
     "badge": "크리에이터 리포트",
@@ -236,7 +369,10 @@
     "freePlan": "무료",
     "basicPlan": "Basic",
     "proPlan": "Pro",
-    "enterprisePlan": "Enterprise"
+    "enterprisePlan": "Enterprise",
+    "errorTitle": "오류",
+    "checkoutFailed": "체크아웃 생성에 실패했습니다",
+    "paymentFailed": "결제에 실패했습니다"
   },
   "pricingPage": {
     "seo": {
@@ -244,17 +380,17 @@
       "description": "AI 가사, 오디오, 프로듀서 리포트, 공개 페이지를 만들 수 있는 Hit-Song 플랜을 선택하세요. 크레딧은 만료되지 않습니다."
     },
     "eyebrow": "요금",
-    "title": "Unlock Your Full Creative Potential",
+    "title": "창작 잠재력을 완전히 열어보세요",
     "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "크레딧 팩",
-    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
+    "creditPacksSubtitle": "지금 추가 곡이 필요한 크리에이터를 위한 1회 구매 상품입니다.",
     "subscriptionsTitle": "구독",
-    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
+    "subscriptionsSubtitle": "월간 또는 연간 결제를 선택하고 끊김 없이 계속 창작하세요.",
     "monthly": "월간",
     "yearly": "연간",
     "planCta": "시작하기",
     "freeCard": {
-      "description": "For new creators getting started with one song idea.",
+      "description": "한 곡 아이디어로 시작하는 신규 크리에이터를 위한 플랜입니다.",
       "priceLabel": "Free",
       "creditHint": "No subscription required",
       "feature1": "Create with pay-as-you-go credit packs",
@@ -263,14 +399,14 @@
     },
     "creditPacks": {
       "standard": {
-        "name": "Starter Pack",
+        "name": "스타터 팩",
         "description": "Best for quick creation bursts.",
         "feature1": "1600 credits for complete songs",
         "feature2": "Lyrics + audio generation",
         "feature3": "Public shareable pages"
       },
       "pro_pack": {
-        "name": "Pro Pack",
+        "name": "프로 팩",
         "description": "High-volume pack for frequent creation.",
         "feature1": "5000 credits for complete songs",
         "feature2": "Producer reports included",
@@ -281,14 +417,14 @@
       "basic": {
         "name": "Basic",
         "description": "노래를 영구 보관하고 싶은 정기 크리에이터용.",
-        "feature1": "3000 credits per month",
+        "feature1": "월 3000 크레딧",
         "feature2": "노래 영구 저장",
         "feature3": "프로듀서 리포트 포함"
       },
       "pro": {
         "name": "Pro",
         "description": "우선 생성과 최대 창작 출력.",
-        "feature1": "10000 credits per month",
+        "feature1": "월 10000 크레딧",
         "feature2": "노래 영구 저장",
         "feature3": "오디오 우선 생성"
       }
@@ -307,8 +443,8 @@
       "a5": "주요 신용카드를 지원합니다. 가격은 USD로 표시됩니다."
     },
     "save69": "Save 69%",
-    "subscribeNowCancelAnytime": "Subscribe now - cancel anytime.",
-    "songsUnit": "songs",
+    "subscribeNowCancelAnytime": "지금 구독하고 언제든 해지하세요.",
+    "songsUnit": "곡",
     "popularPack": "Popular"
   },
   "email": {

@@ -10,6 +10,7 @@ import { SongList, type DashboardSong } from "@/components/dashboard/song-list";
 import { achievements } from "@/config/achievements";
 import { defaultLocale, type Locale } from "@/config/i18n";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
+import { getTranslations } from "next-intl/server";
 
 function localizedSongHref(locale: Locale, id: string) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/song/${id}`;
@@ -27,12 +28,18 @@ function localizedSignInHref(locale: Locale) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/sign-in`;
 }
 
+function localizedCreateHref(locale: Locale) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/create`;
+}
+
 export default async function DashboardPage({
   params,
 }: {
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "dashboard" });
+  const ta = await getTranslations({ locale, namespace: "achievements" });
   const supabase = await createClient();
 
   // 1. Check Auth User
@@ -84,7 +91,7 @@ export default async function DashboardPage({
 
   const songs: DashboardSong[] = (songsData ?? []).map((song) => {
     const versionLabel = song.title.endsWith("(Version B)")
-      ? "Version B"
+      ? t("songList.versionB")
       : undefined;
 
     return {
@@ -105,17 +112,22 @@ export default async function DashboardPage({
     };
   });
   const unlockedAchievements = (achievementsData ?? []) as UserAchievement[];
+  const localizedAchievements = achievements.map((achievement) => ({
+    ...achievement,
+    title: ta(`items.${achievement.id}.title`),
+    description: ta(`items.${achievement.id}.description`),
+  }));
 
   return (
     <div className="container flex w-full flex-1 flex-col gap-6 px-4 sm:gap-8 sm:px-8">
       {/* Welcome Banner */}
       <div className="mt-6 rounded-lg border border-border bg-card p-6 shadow-sm shadow-black/20 sm:mt-8 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold mb-2 break-words">
-          Welcome back, {customerData?.name || user.email?.split("@")[0]}
+          {t("welcomeTitle", {
+            name: customerData?.name || user.email?.split("@")[0],
+          })}
         </h1>
-        <p className="text-muted-foreground">
-          Manage your plan, track credits, and keep an eye on song storage.
-        </p>
+        <p className="text-muted-foreground">{t("welcomeSubtitle")}</p>
       </div>
 
       {/* Stats Grid */}
@@ -125,20 +137,96 @@ export default async function DashboardPage({
           credits={entitlements.creditsBalance}
           recentHistory={recentCreditsHistory}
           songRetentionDays={entitlements.songRetentionDays}
+          locale={locale}
+          labels={{
+            availableCredits: t("creditsCard.availableCredits"),
+            subscriberStorage: t("creditsCard.subscriberStorage"),
+            freeStorage: t("creditsCard.freeStorage"),
+            recentActivity: t("creditsCard.recentActivity"),
+            noRecentActivity: t("creditsCard.noRecentActivity"),
+          }}
         />
 
         {/* Subscription Status */}
         <SubscriptionStatusCard
           subscription={subscription}
           entitlements={entitlements}
+          locale={locale}
+          labels={{
+            currentPlan: t("subscriptionCard.currentPlan"),
+            freePlan: t("subscriptionCard.freePlan"),
+            basicPlan: t("subscriptionCard.basicPlan"),
+            proPlan: t("subscriptionCard.proPlan"),
+            storagePermanent: t("subscriptionCard.storagePermanent"),
+            storageFree: t("subscriptionCard.storageFree"),
+            priorityEnabled: t("subscriptionCard.priorityEnabled"),
+            priorityStandard: t("subscriptionCard.priorityStandard"),
+            statuses: {
+              active: t("subscriptionCard.statuses.active"),
+              trialing: t("subscriptionCard.statuses.trialing"),
+              canceledGrace: t("subscriptionCard.statuses.canceledGrace"),
+              canceledEnded: t("subscriptionCard.statuses.canceledEnded"),
+              pastDue: t("subscriptionCard.statuses.pastDue"),
+              unpaid: t("subscriptionCard.statuses.unpaid"),
+              paused: t("subscriptionCard.statuses.paused"),
+              incomplete: t("subscriptionCard.statuses.incomplete"),
+              expired: t("subscriptionCard.statuses.expired"),
+              noActivePlan: t("subscriptionCard.statuses.noActivePlan"),
+            },
+            portal: {
+              viewPlans: t("portal.viewPlans"),
+              managePlan: t("portal.managePlan"),
+              dialogTitle: t("portal.dialogTitle"),
+              dialogDescription: t("portal.dialogDescription"),
+              paymentMethodsTitle: t("portal.paymentMethodsTitle"),
+              paymentMethodsDescription: t("portal.paymentMethodsDescription"),
+              billingHistoryTitle: t("portal.billingHistoryTitle"),
+              billingHistoryDescription: t("portal.billingHistoryDescription"),
+              planSettingsTitle: t("portal.planSettingsTitle"),
+              planSettingsDescription: t("portal.planSettingsDescription"),
+              accessFailed: t("portal.accessFailed"),
+              accessFailedDescription: t("portal.accessFailedDescription"),
+              redirecting: t("portal.redirecting"),
+              continueToPortal: t("portal.continueToPortal"),
+            },
+          }}
           upgradeHref={localizedPricingHref(locale)}
         />
       </div>
 
-      <SongList songs={songs} />
+      <SongList
+        songs={songs}
+        locale={locale}
+        createHref={localizedCreateHref(locale)}
+        labels={{
+          title: t("songList.title"),
+          subtitle: t("songList.subtitle"),
+          createSong: t("songList.createSong"),
+          emptyTitle: t("songList.emptyTitle"),
+          emptySubtitle: t("songList.emptySubtitle"),
+          coverAlt: t("songList.coverAlt"),
+          statusPublic: t("songList.statusPublic"),
+          statusPrivate: t("songList.statusPrivate"),
+          createdOn: t("songList.createdOn"),
+          expiresOn: t("songList.expiresOn"),
+          metrics: {
+            plays: t("songList.metrics.plays"),
+            full: t("songList.metrics.full"),
+            shares: t("songList.metrics.shares"),
+            cta: t("songList.metrics.cta"),
+          },
+          copyLink: t("songList.copyLink"),
+          preview: t("songList.preview"),
+          report: t("songList.report"),
+          versionB: t("songList.versionB"),
+        }}
+      />
       <Achievements
-        definitions={achievements}
+        definitions={localizedAchievements}
         unlocked={unlockedAchievements}
+        locale={locale}
+        title={ta("title")}
+        progressTemplate={ta("progress")}
       />
     </div>
   );

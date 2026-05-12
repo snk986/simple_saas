@@ -45,7 +45,7 @@ export function PricingBuyButton({
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to create checkout");
+        throw new Error(data.error || t("checkoutFailed"));
       }
 
       const data = await response.json();
@@ -55,8 +55,9 @@ export function PricingBuyButton({
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Payment failed",
+        title: t("errorTitle"),
+        description:
+          error instanceof Error ? error.message : t("paymentFailed"),
         variant: "destructive",
       });
     } finally {

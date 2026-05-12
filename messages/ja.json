@@ -46,9 +46,39 @@
       "output": "音声生成に向けた verse、chorus、感情の流れ。"
     },
     "howItWorks": {
-      "title": "使い方",
+      "title": "AI楽曲生成のワークフロー",
       "subtitle": "生の物語から共有できる曲まで、3つのステップで進みます。",
       "step": "ステップ {number}"
+    },
+    "explore": {
+      "label": "Hit-Songを探索",
+      "title": "1つのワークフローでAI楽曲の作成・料金選択・公開まで",
+      "subtitle": "ソングメーカーから始めて、クレジットを比較し、Hit-Songが物語を共有可能な楽曲ページへ変える流れを確認できます。",
+      "cards": {
+        "songMaker": {
+          "title": "AIソングメーカー",
+          "description": "プロンプトから歌詞と音声を生成します。"
+        },
+        "pricing": {
+          "title": "料金",
+          "description": "クレジットとサブスクリプションを比較。"
+        },
+        "about": {
+          "title": "概要",
+          "description": "プラットフォームの仕組みを見る。"
+        }
+      }
+    },
+    "faq": {
+      "title": "AIソングジェネレーターFAQ",
+      "q1": "AIソングジェネレーターとは？",
+      "a1": "AIソングジェネレーターは、アイデアや物語、プロンプトを歌詞・スタイル方針・音声などの楽曲素材に変換します。Hit-Songは物語から歌詞、音声、プロデューサーレポート、公開ページまでを一気通貫で提供します。",
+      "q2": "自分の物語から曲を作れますか？",
+      "a2": "はい。Hit-Songは個人的な物語、感情、記憶、メッセージに合わせて設計されています。具体的な入力ほど、よりパーソナルな結果になります。",
+      "q3": "Hit-Songは歌詞と音声の両方を作れますか？",
+      "a3": "はい。まず構造化された歌詞を作成し、その後に楽曲音声を生成します。",
+      "q4": "公開楽曲ページは検索エンジンに載りますか？",
+      "a4": "はい。公開ページはサーバーサイドでレンダリングされ、メタデータ・歌詞・音声情報・構造化データを含みます。"
     },
     "steps": {
       "story": {
@@ -171,11 +201,114 @@
   },
   "dashboard": {
     "title": "マイソング",
-    "noSongs": "まだ曲がありません。最初のヒット曲を作りましょう。"
+    "noSongs": "まだ曲がありません。最初のヒット曲を作りましょう。",
+    "welcomeTitle": "おかえりなさい、{name}",
+    "welcomeSubtitle": "プラン管理、クレジット確認、楽曲保存状況をここでチェックできます。",
+    "songList": {
+      "title": "あなたの楽曲",
+      "subtitle": "公開リンク、再生指標、シェア実績を確認。",
+      "createSong": "曲を作成",
+      "emptyTitle": "まだ楽曲がありません",
+      "emptySubtitle": "最初の曲を作成して、検索可能な公開ページを作りましょう。",
+      "coverAlt": "{title} のカバー画像",
+      "statusPublic": "公開",
+      "statusPrivate": "非公開",
+      "createdOn": "作成日 {date}",
+      "expiresOn": "有効期限 {date}",
+      "metrics": {
+        "plays": "再生",
+        "full": "完聴",
+        "shares": "共有",
+        "cta": "CTA"
+      },
+      "copyLink": "リンクをコピー",
+      "preview": "プレビュー",
+      "report": "レポート",
+      "versionB": "Version B"
+    },
+    "creditsCard": {
+      "availableCredits": "利用可能クレジット",
+      "subscriberStorage": "サブスク中に作成した曲は永久保存されます。",
+      "freeStorage": "無料プランの曲は {days} 日保存されます。",
+      "recentActivity": "最近の履歴",
+      "noRecentActivity": "最近の履歴はありません。"
+    },
+    "subscriptionCard": {
+      "currentPlan": "現在のプラン",
+      "freePlan": "無料",
+      "basicPlan": "?????",
+      "proPlan": "??",
+      "storagePermanent": "サブスク楽曲は永久保存",
+      "storageFree": "無料楽曲は {days} 日保存",
+      "priorityEnabled": "優先生成が有効",
+      "priorityStandard": "通常キューで生成",
+      "statuses": {
+        "active": "{date} に更新",
+        "trialing": "トライアル終了: {date}",
+        "canceledGrace": "{date} まで利用可能",
+        "canceledEnded": "{date} に終了",
+        "pastDue": "支払い未処理 - {date} まで利用可能",
+        "unpaid": "支払いが必要です",
+        "paused": "{date} まで一時停止",
+        "incomplete": "設定が未完了です",
+        "expired": "{date} に期限切れ",
+        "noActivePlan": "有効なプランなし"
+      }
+    },
+    "portal": {
+      "viewPlans": "プランを見る",
+      "managePlan": "プラン管理",
+      "dialogTitle": "サブスクリプション管理",
+      "dialogDescription": "安全なカスタマーポータルでサブスクリプション設定を管理できます。",
+      "paymentMethodsTitle": "支払い方法",
+      "paymentMethodsDescription": "請求情報を更新",
+      "billingHistoryTitle": "請求履歴",
+      "billingHistoryDescription": "過去の請求と支払いを確認",
+      "planSettingsTitle": "プラン設定",
+      "planSettingsDescription": "プラン変更または解約",
+      "accessFailed": "サブスクポータルにアクセスできませんでした。",
+      "accessFailedDescription": "しばらくしてから再度お試しください。",
+      "redirecting": "移動中...",
+      "continueToPortal": "ポータルへ進む"
+    }
   },
   "achievements": {
     "title": "実績",
-    "progress": "{total}個中{unlocked}個を解除"
+    "progress": "{total}個中{unlocked}個を解除",
+    "items": {
+      "first_song": {
+        "title": "First Draft",
+        "description": "Create your first song idea."
+      },
+      "first_ready_song": {
+        "title": "First Release",
+        "description": "Generate audio for your first ready song."
+      },
+      "first_report": {
+        "title": "Producer Notes",
+        "description": "Generate your first judge report."
+      },
+      "score_80": {
+        "title": "Strong Signal",
+        "description": "Earn a report score of 80 or higher."
+      },
+      "score_90": {
+        "title": "Hit Potential",
+        "description": "Earn a report score of 90 or higher."
+      },
+      "songs_3": {
+        "title": "Three-Song Run",
+        "description": "Create at least three songs."
+      },
+      "plays_50": {
+        "title": "First Audience",
+        "description": "Reach 50 total plays across your songs."
+      },
+      "shares_10": {
+        "title": "Worth Sharing",
+        "description": "Reach 10 total shares across your songs."
+      }
+    }
   },
   "report": {
     "badge": "クリエイターレポート",
@@ -236,7 +369,10 @@
     "freePlan": "無料",
     "basicPlan": "Basic",
     "proPlan": "Pro",
-    "enterprisePlan": "Enterprise"
+    "enterprisePlan": "Enterprise",
+    "errorTitle": "エラー",
+    "checkoutFailed": "チェックアウトの作成に失敗しました",
+    "paymentFailed": "決済に失敗しました"
   },
   "pricingPage": {
     "seo": {
@@ -244,17 +380,17 @@
       "description": "AI歌詞、音声、プロデューサーレポート、公開ページを作成するHit-Songプランを選べます。クレジットは無期限です。"
     },
     "eyebrow": "料金",
-    "title": "Unlock Your Full Creative Potential",
+    "title": "創作ポテンシャルを最大化しよう",
     "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
     "creditPacksTitle": "クレジットパック",
-    "creditPacksSubtitle": "One-time purchase for creators who need extra songs now.",
+    "creditPacksSubtitle": "今すぐ追加曲が必要なクリエイター向けの買い切りプランです。",
     "subscriptionsTitle": "サブスクリプション",
-    "subscriptionsSubtitle": "Choose monthly or yearly billing and keep creating without interruption.",
+    "subscriptionsSubtitle": "月額または年額を選んで、途切れずに制作を続けられます。",
     "monthly": "月額",
     "yearly": "年額",
     "planCta": "はじめる",
     "freeCard": {
-      "description": "For new creators getting started with one song idea.",
+      "description": "1曲目のアイデアから始める新規クリエイター向け。",
       "priceLabel": "Free",
       "creditHint": "No subscription required",
       "feature1": "Create with pay-as-you-go credit packs",
@@ -263,14 +399,14 @@
     },
     "creditPacks": {
       "standard": {
-        "name": "Starter Pack",
+        "name": "スターターパック",
         "description": "Best for quick creation bursts.",
         "feature1": "1600 credits for complete songs",
         "feature2": "Lyrics + audio generation",
         "feature3": "Public shareable pages"
       },
       "pro_pack": {
-        "name": "Pro Pack",
+        "name": "プロパック",
         "description": "High-volume pack for frequent creation.",
         "feature1": "5000 credits for complete songs",
         "feature2": "Producer reports included",
@@ -281,14 +417,14 @@
       "basic": {
         "name": "Basic",
         "description": "曲を永久保存したい定期クリエイター向け。",
-        "feature1": "3000 credits per month",
+        "feature1": "毎月3000クレジット",
         "feature2": "曲を永久保存",
         "feature3": "プロデューサーレポート付き"
       },
       "pro": {
         "name": "Pro",
         "description": "優先生成と最大限のクリエイティブ出力。",
-        "feature1": "10000 credits per month",
+        "feature1": "毎月10000クレジット",
         "feature2": "曲を永久保存",
         "feature3": "音声の優先生成"
       }
@@ -307,8 +443,8 @@
       "a5": "主要なクレジットカードに対応しています。価格はUSD表示です。"
     },
     "save69": "Save 69%",
-    "subscribeNowCancelAnytime": "Subscribe now - cancel anytime.",
-    "songsUnit": "songs",
+    "subscribeNowCancelAnytime": "今すぐ登録 - いつでも解約可能。",
+    "songsUnit": "曲",
     "popularPack": "Popular"
   },
   "email": {
