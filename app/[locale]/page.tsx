@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { locales, type Locale } from "@/i18n/routing";
+import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;
@@ -25,27 +26,16 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "home.seo" });
   const url = absoluteLocaleUrl(locale);
 
-  return {
+  return buildMarketingMetadata({
     title: t("title"),
     description: t("description"),
+    url,
+    locale,
     alternates: {
       canonical: url,
       languages: localizedAlternates(),
     },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      type: "website",
-      url,
-      siteName: "Hit-Song",
-      locale,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-    },
-  };
+  });
 }
 
 export function generateStaticParams() {

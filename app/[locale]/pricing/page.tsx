@@ -9,6 +9,7 @@ import { PricingBuyButton } from "@/components/pricing/pricing-buy-button";
 import { SubscriptionPlanGrid } from "@/components/pricing/subscription-plan-grid";
 import { createClient } from "@/utils/supabase/server";
 import type { PlanTier } from "@/types/subscriptions";
+import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
 interface PricingPageProps {
   params: Promise<{ locale: Locale }>;
@@ -21,27 +22,16 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "pricingPage.seo" });
   const url = absoluteLocaleUrl(locale, "/pricing");
 
-  return {
+  return buildMarketingMetadata({
     title: t("title"),
     description: t("description"),
+    url,
+    locale,
     alternates: {
       canonical: url,
       languages: localizedAlternates("/pricing"),
     },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      type: "website",
-      url,
-      siteName: "Hit-Song",
-      locale,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-    },
-  };
+  });
 }
 
 export function generateStaticParams() {
