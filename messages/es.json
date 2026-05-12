@@ -357,6 +357,7 @@
     "topUpCredits": "Recargar creditos",
     "insufficientCredits": "No tienes creditos suficientes. Recarga tu saldo.",
     "generationFailed": "La generacion fallo. Intentalo de nuevo.",
+    "generationFailedWithRefund": "La generacion fallo y los creditos fueron devueltos. Intentalo de nuevo mas tarde.",
     "contentFlagged": "Esta historia no se puede escribir. Prueba con otra."
   }
 }

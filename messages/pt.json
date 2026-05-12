@@ -357,6 +357,7 @@
     "topUpCredits": "Comprar creditos",
     "insufficientCredits": "Creditos insuficientes. Recarregue seu saldo.",
     "generationFailed": "A geracao falhou. Tente novamente.",
+    "generationFailedWithRefund": "A geracao falhou e os creditos foram devolvidos. Tente novamente mais tarde.",
     "contentFlagged": "Esta historia nao pode ser escrita. Tente outra."
   }
 }

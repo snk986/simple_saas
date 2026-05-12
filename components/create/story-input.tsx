@@ -87,8 +87,35 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
   const [audioResult, setAudioResult] = useState<AudioResult | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const lastLyricsSubmitAtRef = useRef(0);
+  const pollInFlightRef = useRef(false);
+  const autoResumeAttemptedRef = useRef(false);
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
+
+  const updateGenerationUrlParams = (
+    songId: string | null,
+    taskId: string | null,
+  ) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const url = new URL(window.location.href);
+
+    if (songId) {
+      url.searchParams.set("songId", songId);
+    } else {
+      url.searchParams.delete("songId");
+    }
+
+    if (taskId) {
+      url.searchParams.set("taskId", taskId);
+    } else {
+      url.searchParams.delete("taskId");
+    }
+
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  };
 
   useEffect(() => {
     if (audioStatus !== "processing") {
@@ -101,6 +128,28 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
 
     return () => window.clearInterval(timer);
   }, [audioStatus]);
+
+  useEffect(() => {
+    if (autoResumeAttemptedRef.current || typeof window === "undefined") {
+      return;
+    }
+
+    autoResumeAttemptedRef.current = true;
+    const url = new URL(window.location.href);
+    const songId = url.searchParams.get("songId");
+    const taskId = url.searchParams.get("taskId");
+
+    if (!songId || pollInFlightRef.current) {
+      return;
+    }
+
+    setError("");
+    setErrorAction(null);
+    setElapsedSeconds(0);
+    setAudioStatus("processing");
+    setAudioResult({ songId, taskId: taskId ?? undefined });
+    void pollAudioStatus(songId, taskId ?? undefined);
+  }, []);
 
   async function submitLyrics() {
     const now = Date.now();
@@ -201,50 +250,68 @@ export function StoryInput({ initialDraft, recallCampaign }: StoryInputProps) {
       }
 
       setAudioResult({ songId: data.songId, taskId: data.taskId });
-      await pollAudioStatus(data.taskId, data.songId);
+      updateGenerationUrlParams(data.songId, data.taskId);
+      await pollAudioStatus(data.songId, data.taskId);
     } catch (caught) {
-      const message =
-        caught instanceof Error ? caught.message : "Audio generation failed";
-      setError(message);
+      const message = caught instanceof Error ? caught.message : "";
+      setError(
+        message === "GENERATION_FAILED_WITH_REFUND"
+          ? t("errors.generationFailedWithRefund")
+          : t("errors.generationFailed"),
+      );
       setErrorAction(null);
       setAudioStatus("failed");
+      updateGenerationUrlParams(result.songId, null);
     }
   }
 
-  async function pollAudioStatus(taskId: string, songId: string) {
-    for (let attempt = 0; attempt < 40; attempt += 1) {
-      const response = await fetch(
-        `/api/generate/audio/status?taskId=${encodeURIComponent(taskId)}`,
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error ?? "Failed to check audio status");
-      }
-
-      if (data.status === "completed") {
-        setAudioResult({
-          songId,
-          taskId,
-          audio_url: data.audio_url,
-          cover_url: data.cover_url,
-          altSongId: data.altSongId,
-          alt_audio_url: data.alt_audio_url,
-          alt_cover_url: data.alt_cover_url,
-        });
-        setAudioStatus("completed");
-        return;
-      }
-
-      if (data.status === "failed") {
-        throw new Error(data.error ?? "Audio generation failed");
-      }
-
-      await new Promise((resolve) => window.setTimeout(resolve, 3000));
+  async function pollAudioStatus(songId: string, taskId?: string) {
+    if (pollInFlightRef.current) {
+      return;
     }
 
-    setAudioResult({ songId, taskId });
-    setAudioStatus("timeout");
+    pollInFlightRef.current = true;
+
+    try {
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        const query = taskId
+          ? `songId=${encodeURIComponent(songId)}&taskId=${encodeURIComponent(taskId)}`
+          : `songId=${encodeURIComponent(songId)}`;
+        const response = await fetch(`/api/generate/audio/status?${query}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error ?? "Failed to check audio status");
+        }
+
+        if (data.status === "completed") {
+          setAudioResult({
+            songId,
+            taskId,
+            audio_url: data.audio_url,
+            cover_url: data.cover_url,
+            altSongId: data.altSongId,
+            alt_audio_url: data.alt_audio_url,
+            alt_cover_url: data.alt_cover_url,
+          });
+          setAudioStatus("completed");
+          updateGenerationUrlParams(songId, null);
+          return;
+        }
+
+        if (data.status === "failed") {
+          updateGenerationUrlParams(songId, null);
+          throw new Error("GENERATION_FAILED_WITH_REFUND");
+        }
+
+        await new Promise((resolve) => window.setTimeout(resolve, 3000));
+      }
+
+      setAudioResult({ songId, taskId });
+      setAudioStatus("timeout");
+    } finally {
+      pollInFlightRef.current = false;
+    }
   }
 
   return (

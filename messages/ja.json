@@ -357,6 +357,7 @@
     "topUpCredits": "クレジットを追加",
     "insufficientCredits": "クレジットが不足しています。チャージしてください。",
     "generationFailed": "生成に失敗しました。もう一度お試しください。",
+    "generationFailedWithRefund": "生成に失敗しました。クレジットは返却済みです。時間をおいて再試行してください。",
     "contentFlagged": "この物語は書けません。別の内容を試してください。"
   }
 }
