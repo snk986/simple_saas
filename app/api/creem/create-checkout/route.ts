@@ -78,7 +78,9 @@ export async function POST(request: Request) {
       }
     });
 
-    return NextResponse.json({ checkoutUrl: checkout.checkoutUrl });
+    return NextResponse.json({
+      checkoutUrl: checkout.checkoutUrl ?? (checkout as { checkout_url?: string }).checkout_url,
+    });
 
   } catch (error) {
     console.error('Checkout error:', error);

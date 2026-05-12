@@ -1,8 +1,9 @@
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { creem } from "@/lib/creem";
 
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   try {
     // Get the user from the session
     const supabase = await createClient();
@@ -35,29 +36,15 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Not a paid customer yet" }, { status: 404 });
     }
 
-    // Call Creem API to get the customer portal link
-    const response = await fetch(
-      `${process.env.CREEM_API_URL}/customers/billing`,
-      {
-        method: "POST",
-        headers: {
-          "x-api-key": process.env.CREEM_API_KEY!,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer_id: customer.creem_customer_id,
-        }),
-      }
-    );
+    const data = await creem.customers.generateBillingLinks({
+      customerId: customer.creem_customer_id,
+    });
 
-    if (!response.ok) {
-      throw new Error("Failed to get customer portal link");
-    }
-
-    const data = await response.json();
     return NextResponse.json({
       customer_portal_link:
-        data.customer_portal_link ?? data.customerPortalLink ?? data.url,
+        data.customerPortalLink ??
+        (data as { customer_portal_link?: string; url?: string }).customer_portal_link ??
+        (data as { customer_portal_link?: string; url?: string }).url,
     });
   } catch (error) {
     console.error("Error getting customer portal link:", error);

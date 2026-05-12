@@ -1,7 +1,8 @@
-import { createCreem } from 'creem_io';
+import { Creem } from "creem";
 
-// Initialize the Creem client
-export const creem = createCreem({
+const isTestMode = process.env.CREEM_TEST_MODE === "true";
+
+export const creem = new Creem({
   apiKey: process.env.CREEM_API_KEY!,
-  testMode: process.env.CREEM_TEST_MODE === 'true', // Explicitly set via environment variable
+  serverIdx: isTestMode ? 1 : 0,
 });
