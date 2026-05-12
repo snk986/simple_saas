@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { getPublicSong, getRelatedPublicSongs } from "@/lib/song/public-song";
+import { getPublicSong } from "@/lib/song/public-song";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { LyricsDisplay } from "@/components/song/lyrics-display";
 import { SongActionBand } from "@/components/song/song-action-band";
 import { SongHeaderStats } from "@/components/song/song-header-stats";
 import { SongCreatorReport } from "@/components/song/song-creator-report";
-import { RelatedSongs } from "@/components/song/related-songs";
 import {
   absoluteLocaleUrl,
   baseUrl,
@@ -38,8 +37,8 @@ function songUrl(locale: Locale, id: string) {
   return absoluteLocaleUrl(locale, `/song/${id}`);
 }
 
-function createHref(id: string) {
-  return `/create?ref=song&id=${id}`;
+function createHref() {
+  return "/create";
 }
 
 function moodColor(mood: string) {
@@ -167,6 +166,7 @@ export default async function SongPage({
   const { locale, id } = await params;
   const query = searchParams ? await searchParams : {};
   const t = await getTranslations("songPublic");
+  const tReport = await getTranslations("report");
 
   if (!locales.includes(locale)) {
     notFound();
@@ -178,7 +178,6 @@ export default async function SongPage({
     notFound();
   }
 
-  const relatedSongs = await getRelatedPublicSongs(song);
   const url = songUrl(locale, song.id);
   const prefix = localePrefix(locale);
   const publishedYear = new Intl.DateTimeFormat(locale, {
@@ -276,9 +275,6 @@ export default async function SongPage({
                 )}
               </div>
               <div>
-                <p className="mb-2 text-sm font-extrabold text-white sm:mb-3">
-                  {t("header.type")}
-                </p>
                 <h1 className="max-w-4xl text-4xl font-black leading-[0.96] tracking-normal text-white sm:text-7xl lg:text-8xl">
                   {song.title}
                 </h1>
@@ -302,7 +298,7 @@ export default async function SongPage({
             songId={song.id}
             title={song.title}
             audioUrl={song.audioUrl}
-            createHref={createHref(song.id)}
+            createHref={createHref()}
             labels={{
               play: t("actions.play"),
               pause: t("actions.pause"),
@@ -329,11 +325,6 @@ export default async function SongPage({
             <SongCreatorReport
               title={song.title}
               storySummary={song.storySummary}
-              genre={song.genre}
-              mood={song.mood}
-              bpm={song.bpm}
-              styleTags={song.styleTags}
-              totalScore={song.totalScore}
               reportData={song.reportData}
               labels={{
                 title: t("creatorReport.title"),
@@ -342,27 +333,16 @@ export default async function SongPage({
                 emotionalValue: t("creatorReport.emotionalValue"),
                 hookAnalysis: t("creatorReport.hookAnalysis"),
                 marketPositioning: t("creatorReport.marketPositioning"),
-                songDetails: t("creatorReport.songDetails"),
-                genre: t("creatorReport.genre"),
-                mood: t("creatorReport.mood"),
-                bpm: t("creatorReport.bpm"),
-                tags: t("creatorReport.tags"),
+                dimensions: {
+                  melody_potential: tReport("dimensions.melody_potential"),
+                  lyric_quality: tReport("dimensions.lyric_quality"),
+                  emotional_resonance: tReport("dimensions.emotional_resonance"),
+                  commercial_appeal: tReport("dimensions.commercial_appeal"),
+                  originality: tReport("dimensions.originality"),
+                },
                 fallbackIntro: t("creatorReport.fallbackIntro"),
               }}
             />
-
-            <div className="mt-12">
-              <RelatedSongs
-                songs={relatedSongs}
-                labels={{
-                  sectionLabel: t("related.sectionLabel"),
-                  title: t("related.title"),
-                  playCount: t("related.playCount"),
-                  coverAlt: t("related.coverAlt"),
-                  styleMoodSeparator: t("related.styleMoodSeparator"),
-                }}
-              />
-            </div>
           </section>
         </div>
       </div>

@@ -1,13 +1,9 @@
-import type { JudgeReport } from "@/types/judge";
+import type { JudgeReport, ScoreDimension } from "@/types/judge";
+import { cn } from "@/lib/utils";
 
 interface SongCreatorReportProps {
   title: string;
   storySummary: string;
-  genre: string;
-  mood: string;
-  bpm: number | null;
-  styleTags: string[];
-  totalScore: number | null;
   reportData: Record<string, unknown> | null;
   labels: {
     title: string;
@@ -16,11 +12,7 @@ interface SongCreatorReportProps {
     emotionalValue: string;
     hookAnalysis: string;
     marketPositioning: string;
-    songDetails: string;
-    genre: string;
-    mood: string;
-    bpm: string;
-    tags: string;
+    dimensions: Record<ScoreDimension, string>;
     fallbackIntro: string;
   };
 }
@@ -47,25 +39,30 @@ function TextBlock({ title, body }: { title: string; body?: string }) {
   );
 }
 
+function scoreTone(score: number) {
+  if (score >= 85) {
+    return "bg-emerald-500";
+  }
+
+  if (score >= 70) {
+    return "bg-sky-500";
+  }
+
+  if (score >= 55) {
+    return "bg-amber-500";
+  }
+
+  return "bg-rose-500";
+}
+
 export function SongCreatorReport({
   title,
   storySummary,
-  genre,
-  mood,
-  bpm,
-  styleTags,
-  totalScore,
   reportData,
   labels,
 }: SongCreatorReportProps) {
   const report = isJudgeReport(reportData) ? reportData : null;
-  const score = report?.total_score ?? totalScore;
-  const details = [
-    [labels.genre, genre],
-    [labels.mood, mood],
-    bpm ? [labels.bpm, `${bpm}`] : null,
-    styleTags.length > 0 ? [labels.tags, styleTags.join(", ")] : null,
-  ].filter((item): item is string[] => Boolean(item));
+  const topDimensions = report ? report.dimensions.slice(0, 4) : [];
 
   return (
     <article className="mt-12 max-w-5xl border-t border-white/10 pt-8">
@@ -101,39 +98,48 @@ export function SongCreatorReport({
           </div>
         </div>
 
-        <aside className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-          {typeof score === "number" ? (
+        {report ? (
+          <aside className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
             <div>
               <p className="text-xs font-bold uppercase tracking-normal text-[#1ed760]">
                 {labels.score}
               </p>
               <p className="mt-2 text-5xl font-black leading-none text-white">
-                {score}
-                <span className="ml-1 text-lg font-bold text-zinc-500">
-                  /100
-                </span>
+                {report.total_score}
+                <span className="ml-1 text-lg font-bold text-zinc-500">/100</span>
               </p>
             </div>
-          ) : null}
 
-          <div className={score ? "mt-7" : undefined}>
-            <h3 className="text-sm font-bold text-white">
-              {labels.songDetails}
-            </h3>
-            <dl className="mt-4 space-y-3">
-              {details.map(([label, value]) => (
-                <div key={label}>
-                  <dt className="text-xs font-bold uppercase tracking-normal text-zinc-500">
-                    {label}
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold leading-6 text-zinc-300">
-                    {value}
-                  </dd>
+            <div className="mt-6 grid gap-4">
+              {topDimensions.map((dimension) => (
+                <div key={dimension.dimension}>
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">
+                        {labels.dimensions[dimension.dimension]}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-zinc-400">
+                        {dimension.comment}
+                      </p>
+                    </div>
+                    <span className="shrink-0 text-sm font-semibold text-white">
+                      {dimension.score}
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div
+                      className={cn(
+                        "h-full rounded-full transition-[width]",
+                        scoreTone(dimension.score),
+                      )}
+                      style={{ width: `${dimension.score}%` }}
+                    />
+                  </div>
                 </div>
               ))}
-            </dl>
-          </div>
-        </aside>
+            </div>
+          </aside>
+        ) : null}
       </div>
     </article>
   );
