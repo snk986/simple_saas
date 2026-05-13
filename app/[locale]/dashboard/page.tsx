@@ -90,13 +90,18 @@ export default async function DashboardPage({
     .order("unlocked_at", { ascending: false });
 
   const songs: DashboardSong[] = (songsData ?? []).map((song) => {
-    const versionLabel = song.title.endsWith("(Version B)")
+    const isVersionB = /\s*\(Version B\)$/.test(song.title);
+    const displayTitle = isVersionB
+      ? song.title.replace(/\s*\(Version B\)$/, "")
+      : song.title;
+    const versionLabel = isVersionB
       ? t("songList.versionB")
-      : undefined;
+      : t("songList.versionA");
 
     return {
       listId: song.id,
       title: song.title,
+      displayTitle,
       versionLabel,
       status: song.status,
       isPublic: Boolean(song.is_public),
@@ -222,6 +227,7 @@ export default async function DashboardPage({
           upgradeToDownload: t("songList.upgradeToDownload"),
           preview: t("songList.preview"),
           report: t("songList.report"),
+          versionA: t("songList.versionA"),
           versionB: t("songList.versionB"),
         }}
       />

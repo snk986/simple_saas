@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 export interface DashboardSong {
   listId: string;
   title: string;
-  versionLabel?: string;
+  displayTitle: string;
+  versionLabel: string;
   status: string;
   isPublic: boolean;
   coverUrl: string | null;
@@ -50,6 +51,7 @@ interface SongListProps {
     upgradeToDownload: string;
     preview: string;
     report: string;
+    versionA: string;
     versionB: string;
   };
 }
@@ -98,14 +100,14 @@ export function SongList({
           {songs.map((song) => (
             <article
               key={song.listId}
-              className="grid gap-4 py-4 first:pt-0 last:pb-0 lg:grid-cols-[minmax(0,1fr)_360px]"
+              className="grid gap-4 py-4 first:pt-0 last:pb-0 xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)]"
             >
               <div className="flex min-w-0 gap-4">
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
                   {song.coverUrl ? (
                     <img
                       src={song.coverUrl}
-                      alt={labels.coverAlt.replace("{title}", song.title)}
+                      alt={labels.coverAlt.replace("{title}", song.displayTitle)}
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -122,13 +124,11 @@ export function SongList({
                     <Badge variant="outline">{song.status}</Badge>
                   </div>
                   <h3 className="truncate text-base font-semibold">
-                    {song.title}
+                    {song.displayTitle}
                   </h3>
-                  {song.versionLabel ? (
-                    <p className="mt-1 text-xs font-medium text-primary">
-                      {labels.versionB}
-                    </p>
-                  ) : null}
+                  <p className="mt-1 text-xs font-medium text-primary">
+                    {song.versionLabel}
+                  </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {formatLabel(
                       labels.createdOn,
@@ -146,8 +146,8 @@ export function SongList({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <div className="grid grid-cols-4 gap-2 text-center">
+              <div className="min-w-0 flex flex-col gap-3">
+                <div className="min-w-0 grid grid-cols-4 gap-2 text-center">
                   {[
                     [labels.metrics.plays, song.playCount],
                     [labels.metrics.full, song.completeCount],
@@ -164,15 +164,15 @@ export function SongList({
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-col gap-2 sm:flex-row">
+                <div className="flex min-w-0 flex-wrap gap-2">
                   {song.audioUrl && canDownload ? (
-                    <Button asChild size="sm" variant="outline" className="gap-2">
+                    <Button asChild size="sm" variant="outline" className="min-w-[120px] gap-2">
                       <a href={song.audioUrl} download>
                         {labels.download}
                       </a>
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" className="gap-2" disabled>
+                    <Button size="sm" variant="outline" className="min-w-[120px] gap-2" disabled>
                       {labels.upgradeToDownload}
                     </Button>
                   )}
@@ -180,7 +180,7 @@ export function SongList({
                     type="button"
                     size="sm"
                     variant="outline"
-                    className="gap-2"
+                    className="min-w-[120px] gap-2"
                     disabled={!song.isPublic || song.status !== "ready"}
                     onClick={() => {
                       const url = new URL(
@@ -198,7 +198,7 @@ export function SongList({
                       asChild
                       size="sm"
                       variant="outline"
-                      className="gap-2"
+                      className="min-w-[120px] gap-2"
                     >
                       <Link href={song.publicHref}>
                         {labels.preview}
@@ -209,14 +209,14 @@ export function SongList({
                     <Button
                       size="sm"
                       variant="outline"
-                      className="gap-2"
+                      className="min-w-[120px] gap-2"
                       disabled
                     >
                       {labels.preview}
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button asChild size="sm" variant="outline" className="gap-2">
+                  <Button asChild size="sm" variant="outline" className="min-w-[120px] gap-2">
                     <Link href={song.reportHref}>
                       {labels.report}
                       <ExternalLink className="h-4 w-4" />
