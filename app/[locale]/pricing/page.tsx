@@ -134,7 +134,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [1, 2, 3, 4, 5].map((i) => ({
+    mainEntity: [1, 2, 3, 4, 5, 6].map((i) => ({
       "@type": "Question",
       name: t(`faq.q${i}`),
       acceptedAnswer: { "@type": "Answer", text: t(`faq.a${i}`) },
@@ -321,7 +321,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold text-center">{t("faq.title")}</h2>
             <dl className="mt-8 space-y-6">
-              {[1, 2, 3, 4, 5].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i}>
                   <dt className="font-medium">{t(`faq.q${i}`)}</dt>
                   <dd className="mt-1 text-sm text-muted-foreground">
