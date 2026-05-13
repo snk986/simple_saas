@@ -155,7 +155,20 @@ export function StoryInput({
     setElapsedSeconds(0);
     setAudioStatus("processing");
     setAudioResult({ songId, taskId: taskId ?? undefined });
-    void pollAudioStatus(songId, taskId ?? undefined);
+    void pollAudioStatus(songId, taskId ?? undefined).catch((caught) => {
+      const message = caught instanceof Error ? caught.message : "";
+      setAudioStatus("idle");
+      setAudioResult(null);
+      updateGenerationUrlParams(null, null);
+      toast({
+        variant: "destructive",
+        description:
+          message === "GENERATION_FAILED_WITH_REFUND"
+            ? t("errors.generationFailedWithRefund")
+            : t("errors.generationFailed"),
+        duration: 1000,
+      });
+    });
   }, []);
 
   async function submitLyrics() {
@@ -262,8 +275,9 @@ export function StoryInput({
     } catch (caught) {
       const message = caught instanceof Error ? caught.message : "";
       setErrorAction(null);
-      setAudioStatus("failed");
-      updateGenerationUrlParams(result.songId, null);
+      setAudioStatus("idle");
+      setAudioResult(null);
+      updateGenerationUrlParams(null, null);
       toast({
         variant: "destructive",
         description:
@@ -317,8 +331,14 @@ export function StoryInput({
         await new Promise((resolve) => window.setTimeout(resolve, 3000));
       }
 
-      setAudioResult({ songId, taskId });
-      setAudioStatus("timeout");
+      setAudioResult(null);
+      setAudioStatus("idle");
+      updateGenerationUrlParams(null, null);
+      toast({
+        variant: "destructive",
+        description: t("errors.generationFailed"),
+        duration: 1000,
+      });
     } finally {
       pollInFlightRef.current = false;
     }
