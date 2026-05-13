@@ -6,6 +6,7 @@ import { Wand2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -63,6 +64,7 @@ export function StoryInput({
   canDownload,
 }: StoryInputProps) {
   const t = useTranslations();
+  const { toast } = useToast();
   const params = useParams<{ locale?: string }>();
   const [story, setStory] = useState(initialDraft?.userInput ?? "");
   const [result, setResult] = useState<LyricsResult | null>(
@@ -259,14 +261,17 @@ export function StoryInput({
       await pollAudioStatus(data.songId, data.taskId);
     } catch (caught) {
       const message = caught instanceof Error ? caught.message : "";
-      setError(
-        message === "GENERATION_FAILED_WITH_REFUND"
-          ? t("errors.generationFailedWithRefund")
-          : t("errors.generationFailed"),
-      );
       setErrorAction(null);
       setAudioStatus("failed");
       updateGenerationUrlParams(result.songId, null);
+      toast({
+        variant: "destructive",
+        description:
+          message === "GENERATION_FAILED_WITH_REFUND"
+            ? t("errors.generationFailedWithRefund")
+            : t("errors.generationFailed"),
+        duration: 1000,
+      });
     }
   }
 
