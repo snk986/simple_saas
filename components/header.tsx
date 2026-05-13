@@ -18,6 +18,9 @@ interface NavItem {
 }
 
 export default function Header({ user }: HeaderProps) {
+  const isDev = process.env.NODE_ENV === "development";
+  const visibleLocales = isDev ? locales : locales.filter((l) => l !== "zh-CN");
+
   const t = useTranslations("nav");
   const pathname = usePathname();
   const router = useRouter();
@@ -64,7 +67,7 @@ export default function Header({ user }: HeaderProps) {
             }
             className="h-9 rounded-md border bg-background px-2 text-xs text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
           >
-            {locales.map((item) => (
+            {visibleLocales.map((item) => (
               <option key={item} value={item}>
                 {item.toUpperCase()}
               </option>
