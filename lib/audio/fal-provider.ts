@@ -1,0 +1,206 @@
+import type { AudioProvider, GenerateParams, TaskResult } from "./types";
+
+const DEFAULT_MODEL_ID = "fal-ai/minimax-music/v2";
+const DEFAULT_QUEUE_BASE_URL = "https://queue.fal.run";
+
+class FalError extends Error {
+  status?: number;
+  code?: string;
+
+  constructor(message: string, status?: number, code?: string) {
+    super(message);
+    this.name = "FalError";
+    this.status = status;
+    this.code = code;
+  }
+}
+
+function getFalConfig() {
+  const apiKey = process.env.FAL_API_KEY ?? process.env.FAL_KEY;
+  if (!apiKey) {
+    throw new FalError("FAL_API_KEY (or FAL_KEY) is not configured");
+  }
+
+  const modelId = process.env.FAL_MUSIC_MODEL_ID ?? DEFAULT_MODEL_ID;
+  const queueBaseUrl = (
+    process.env.FAL_QUEUE_BASE_URL ?? DEFAULT_QUEUE_BASE_URL
+  ).replace(/\/$/, "");
+
+  const webhookUrl =
+    process.env.FAL_WEBHOOK_URL ??
+    `${(process.env.BASE_URL ?? "").replace(/\/$/, "")}/api/webhooks/fal`;
+
+  return { apiKey, modelId, queueBaseUrl, webhookUrl };
+}
+
+async function requestWithRetry<T>(
+  url: string,
+  init: RequestInit,
+  attempt = 0,
+): Promise<T> {
+  const response = await fetch(url, init);
+
+  if (!response.ok) {
+    if (attempt === 0 && response.status >= 500) {
+      return requestWithRetry<T>(url, init, attempt + 1);
+    }
+
+    const body = await response.text().catch(() => "");
+    throw new FalError(
+      body || `FAL request failed with ${response.status}`,
+      response.status,
+    );
+  }
+
+  return (await response.json()) as T;
+}
+
+function mapFalStatusToTask(status?: string): TaskResult["status"] {
+  if (status === "COMPLETED" || status === "OK") {
+    return "completed";
+  }
+
+  if (status === "IN_QUEUE" || status === "IN_PROGRESS") {
+    return "processing";
+  }
+
+  return "failed";
+}
+
+function normalizeTrack(
+  taskId: string,
+  payload: unknown,
+): TaskResult["songs"] {
+  const data = payload as
+    | {
+        data?: {
+          audio?: {
+            url?: string;
+          };
+          image?: {
+            url?: string;
+          };
+          duration?: number;
+          title?: string;
+        };
+        audio?: {
+          url?: string;
+        };
+        image?: {
+          url?: string;
+        };
+        duration?: number;
+        title?: string;
+      }
+    | undefined;
+
+  const audioUrl = data?.data?.audio?.url ?? data?.audio?.url;
+  if (!audioUrl) {
+    return [];
+  }
+
+  return [
+    {
+      id: taskId,
+      audio_url: audioUrl,
+      image_url: data?.data?.image?.url ?? data?.image?.url,
+      duration: data?.data?.duration ?? data?.duration ?? 0,
+      title: data?.data?.title ?? data?.title,
+    },
+  ];
+}
+
+export const falProvider: AudioProvider = {
+  name: "fal",
+
+  async generateSong(params: GenerateParams) {
+    const { apiKey, modelId, queueBaseUrl, webhookUrl } = getFalConfig();
+    const url = `${queueBaseUrl}/${modelId}`;
+
+    const json = await requestWithRetry<{
+      request_id?: string;
+      status?: string;
+    }>(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Key ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        input: {
+          prompt: params.prompt.slice(0, 500),
+          lyrics_prompt: params.lyrics,
+        },
+        webhook_url: webhookUrl,
+      }),
+    });
+
+    const taskId = json.request_id;
+    if (!taskId) {
+      throw new FalError("FAL did not return request_id");
+    }
+
+    return { taskId, providerStatus: json.status };
+  },
+
+  async getTaskStatus(taskId: string) {
+    const { apiKey, modelId, queueBaseUrl } = getFalConfig();
+    const statusUrl = `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/status`;
+
+    const statusJson = await requestWithRetry<{
+      status?: string;
+      response_url?: string;
+      error?: string;
+    }>(statusUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Key ${apiKey}`,
+      },
+    });
+
+    const mapped = mapFalStatusToTask(statusJson.status);
+    if (mapped === "processing") {
+      return {
+        status: "processing",
+        songs: [],
+        providerStatus: statusJson.status,
+      };
+    }
+
+    if (mapped === "failed") {
+      return {
+        status: "failed",
+        songs: [],
+        error: statusJson.error ?? "FAL task failed",
+        providerStatus: statusJson.status,
+      };
+    }
+
+    const resultUrl =
+      statusJson.response_url ??
+      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}`;
+    const resultJson = await requestWithRetry<{
+      status?: string;
+      payload?: unknown;
+      data?: unknown;
+      error?: string;
+    }>(resultUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Key ${apiKey}`,
+      },
+    });
+
+    const songs = normalizeTrack(taskId, resultJson.payload ?? resultJson);
+
+    return {
+      status: songs.length > 0 ? "completed" : "failed",
+      songs,
+      error:
+        songs.length > 0
+          ? undefined
+          : resultJson.error ?? "FAL result missing audio URL",
+      providerStatus: resultJson.status ?? statusJson.status,
+    };
+  },
+};

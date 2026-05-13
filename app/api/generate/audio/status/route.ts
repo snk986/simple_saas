@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { audioProvider } from "@/lib/audio";
+import { getAudioProviderByName } from "@/lib/audio";
 import {
   uploadPollinationsCover,
   uploadRemoteMedia,
@@ -125,17 +125,22 @@ export async function GET(request: NextRequest) {
     let songQuery = supabase
       .from("songs")
       .select(
-        "id,title,lyrics,user_input,status,kie_task_id,audio_url,audio_url_alt,cover_url,lyrics_regen_count,style_key,style_params,style_tags,locale,user_id,is_public,expires_at,created_at",
+        "id,title,lyrics,user_input,status,audio_provider,audio_provider_task_id,audio_provider_status,audio_url,audio_url_alt,cover_url,lyrics_regen_count,style_key,style_params,style_tags,locale,user_id,is_public,expires_at,created_at",
       )
       .eq("user_id", user.id);
 
     songQuery = query.data.songId
       ? songQuery.eq("id", query.data.songId)
-      : songQuery.eq("kie_task_id", query.data.taskId);
+      : songQuery.eq("audio_provider_task_id", query.data.taskId);
 
-    const { data: song, error: songError } = await songQuery.single();
+    const { data: song, error: songError } = await songQuery.maybeSingle();
 
-    if (songError || !song || !song.kie_task_id) {
+    if (
+      songError ||
+      !song ||
+      !song.audio_provider ||
+      !song.audio_provider_task_id
+    ) {
       return NextResponse.json({ error: "Song not found" }, { status: 404 });
     }
 
@@ -174,16 +179,31 @@ export async function GET(request: NextRequest) {
     }
 
     const entitlements = await getUserEntitlements(user.id);
-    const result = await audioProvider.getTaskStatus(song.kie_task_id);
+    const provider = getAudioProviderByName(song.audio_provider);
+    const result = await provider.getTaskStatus(song.audio_provider_task_id);
 
     if (result.status === "processing") {
+      if (result.providerStatus) {
+        await supabase
+          .from("songs")
+          .update({
+            audio_provider_status: result.providerStatus,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", song.id)
+          .eq("user_id", user.id);
+      }
       return NextResponse.json({ status: "processing", songId: song.id });
     }
 
     if (result.status === "failed" || result.songs.length === 0) {
       await supabase
         .from("songs")
-        .update({ status: "failed", updated_at: new Date().toISOString() })
+        .update({
+          status: "failed",
+          audio_provider_status: result.providerStatus ?? "failed",
+          updated_at: new Date().toISOString(),
+        })
         .eq("id", song.id)
         .eq("user_id", user.id);
       await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
@@ -196,7 +216,7 @@ export async function GET(request: NextRequest) {
         status: "failed",
         duration_ms: elapsedMs(startMs),
         error_code: ERROR_CODES.TIMEOUT,
-        provider_task_id: song.kie_task_id,
+        provider_task_id: song.audio_provider_task_id,
         provider_message: result.error ?? "provider returned failed",
         ...client,
       });
@@ -238,6 +258,7 @@ export async function GET(request: NextRequest) {
       cover_url: coverUrl,
       status: "ready",
       selected_audio: "primary",
+      audio_provider_status: result.providerStatus ?? "completed",
       updated_at: new Date().toISOString(),
     };
 
@@ -276,6 +297,9 @@ export async function GET(request: NextRequest) {
           style_tags: song.style_tags,
           locale: song.locale,
           status: "generating",
+          audio_provider: song.audio_provider,
+          audio_provider_task_id: `${song.audio_provider_task_id}:alt`,
+          audio_provider_status: result.providerStatus ?? "completed",
           is_public: song.is_public,
           expires_at: entitlements.canKeepSongsForever ? null : song.expires_at,
         })
@@ -308,6 +332,7 @@ export async function GET(request: NextRequest) {
           cover_url: altCoverUrl,
           status: "ready",
           selected_audio: "primary",
+          audio_provider_status: result.providerStatus ?? "completed",
           updated_at: new Date().toISOString(),
         })
         .eq("id", insertedAltSong.id)
@@ -345,7 +370,7 @@ export async function GET(request: NextRequest) {
       stage: "audio_poll",
       status: "succeeded",
       duration_ms: elapsedMs(startMs),
-      provider_task_id: song.kie_task_id,
+      provider_task_id: song.audio_provider_task_id,
       ...client,
     });
 

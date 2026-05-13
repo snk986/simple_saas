@@ -25,7 +25,9 @@ export interface Song {
   is_public: boolean;
   total_score: number | null;
   report_data: Record<string, unknown> | null;
-  kie_task_id: string | null;
+  audio_provider: string;
+  audio_provider_task_id: string;
+  audio_provider_status: string | null;
   play_count: number;
   complete_count: number;
   share_count: number;

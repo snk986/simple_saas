@@ -72,6 +72,8 @@ function normalizeStatus(status?: string): TaskResult["status"] {
 }
 
 export const kieProvider: AudioProvider = {
+  name: "kie",
+
   async generateSong(params: GenerateParams) {
     const { apiKey, baseUrl, callBackUrl, model } = getKieConfig();
     const style = params.prompt.slice(0, model.startsWith("V3") ? 200 : 1000);
@@ -157,6 +159,7 @@ export const kieProvider: AudioProvider = {
       status,
       songs,
       error: json.data?.errorMessage ?? undefined,
+      providerStatus: json.data?.status,
     };
   },
 };

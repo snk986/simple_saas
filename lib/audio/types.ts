@@ -5,6 +5,8 @@ export interface GenerateParams {
   make_instrumental: boolean;
 }
 
+export type AudioProviderName = "kie" | "fal";
+
 export interface GeneratedTrack {
   id: string;
   audio_url: string;
@@ -17,9 +19,11 @@ export interface TaskResult {
   status: "processing" | "completed" | "failed";
   songs: GeneratedTrack[];
   error?: string;
+  providerStatus?: string;
 }
 
 export interface AudioProvider {
-  generateSong(params: GenerateParams): Promise<{ taskId: string }>;
+  readonly name: AudioProviderName;
+  generateSong(params: GenerateParams): Promise<{ taskId: string; providerStatus?: string }>;
   getTaskStatus(taskId: string): Promise<TaskResult>;
 }

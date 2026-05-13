@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
 
     const lyrics = body.data.lyrics ?? song.lyrics;
     const style = getSongStyle(song.style_key);
-    const { taskId } = await audioProvider.generateSong({
+    const { taskId, providerStatus } = await audioProvider.generateSong({
       title: song.title,
       lyrics,
       prompt: style.prompt,
@@ -216,7 +216,9 @@ export async function POST(request: NextRequest) {
       .update({
         lyrics,
         status: "generating",
-        kie_task_id: taskId,
+        audio_provider: audioProvider.name,
+        audio_provider_task_id: taskId,
+        audio_provider_status: providerStatus ?? "submitted",
         expires_at: entitlements.canKeepSongsForever
           ? null
           : song.expires_at ?? getSongExpiryForEntitlements(entitlements),
