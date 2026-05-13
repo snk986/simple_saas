@@ -5,7 +5,7 @@ export interface GenerateParams {
   make_instrumental: boolean;
 }
 
-export type AudioProviderName = "kie" | "fal";
+export type AudioProviderName = "kie" | "fal" | "wavespeed";
 
 export interface GeneratedTrack {
   id: string;

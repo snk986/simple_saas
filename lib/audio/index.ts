@@ -1,10 +1,12 @@
 import { kieProvider } from "./kie-provider";
 import { falProvider } from "./fal-provider";
+import { wavespeedProvider } from "./wavespeed-provider";
 import type { AudioProvider, AudioProviderName } from "./types";
 
 const providers: Record<AudioProviderName, AudioProvider> = {
   kie: kieProvider,
   fal: falProvider,
+  wavespeed: wavespeedProvider,
 };
 
 function getProviderName() {
@@ -14,7 +16,7 @@ function getProviderName() {
     throw new Error("AUDIO_PROVIDER is not configured");
   }
 
-  if (provider !== "kie" && provider !== "fal") {
+  if (provider !== "kie" && provider !== "fal" && provider !== "wavespeed") {
     throw new Error(`Unsupported AUDIO_PROVIDER: ${provider}`);
   }
 
@@ -26,7 +28,7 @@ export function getAudioProvider() {
 }
 
 export function getAudioProviderByName(name: string) {
-  if (name !== "kie" && name !== "fal") {
+  if (name !== "kie" && name !== "fal" && name !== "wavespeed") {
     throw new Error(`Unsupported audio provider: ${name}`);
   }
 
