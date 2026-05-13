@@ -218,7 +218,15 @@ export async function POST(request: Request) {
         await handleSubscriptionUpdate(event, false);
         break;
       default:
-        console.log("Unhandled Creem webhook event:", event.eventType);
+        logInfo("payment_webhook_ignored", {
+          request_id: eventRequestId,
+          stage: "payment_webhook",
+          status: "ignored",
+          event_type: event.eventType,
+          event_id: event.id,
+          object_id: event.object?.id,
+          ...client,
+        });
     }
 
     return NextResponse.json({ received: true });

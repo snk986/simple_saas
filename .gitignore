@@ -48,3 +48,7 @@ next-env.d.ts
 #
 .github
 .vscode
+
+# local tool/cache dirs
+.rtk-home
+.pnpm-store
