@@ -78,8 +78,8 @@ npm i
 
    同样，Settings > API Keys 
    Legacy anon, service_role API keys
-   - 复制anon public 粘贴到NEXT_PUBLIC_SUPABASE_ANON_KEY
-   - 复制service_role 粘贴到SUPABASE_SERVICE_ROLE_KEY
+   - 复制anon public 粘贴到NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+   - 复制service_role 粘贴到SUPABASE_SECRET_KEY
 
 3. 配置登录方式
    - 选择【Authentication】>【Sign In / Providers】
