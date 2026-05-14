@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import Link from "next/link";
@@ -23,15 +24,39 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+function resolveAuthErrorMessage(
+  message: Message,
+  t: Awaited<ReturnType<typeof getTranslations>>,
+): Message {
+  if (!("error" in message)) {
+    return message;
+  }
+
+  const key = message.error;
+  if (!key.startsWith("authErrors.")) {
+    return { error: t("generic") };
+  }
+
+  const shortKey = key.slice("authErrors.".length);
+
+  try {
+    return { error: t(shortKey) };
+  } catch {
+    return { error: t("generic") };
+  }
+}
+
 export default async function SignUp(props: {
   params: Promise<{ locale: Locale }>;
   searchParams: Promise<Message>;
 }) {
   const { locale } = await props.params;
   const searchParams = await props.searchParams;
+  const tAuth = await getTranslations({ locale, namespace: "authErrors" });
   const signUpPath = localizedPath(locale, "/sign-up");
   const signInPath = localizedPath(locale, "/sign-in");
   const dashboardPath = localizedPath(locale, "/dashboard");
+  const displayMessage = resolveAuthErrorMessage(searchParams, tAuth);
 
   const signUpWithGoogle = async () => {
     "use server";
@@ -105,7 +130,7 @@ export default async function SignUp(props: {
           >
             Create account
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage message={displayMessage} />
         </form>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">

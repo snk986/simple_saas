@@ -501,6 +501,14 @@
       }
     }
   },
+  "authErrors": {
+    "invalidCredentials": "メールアドレスまたはパスワードが正しくありません。",
+    "emailAlreadyRegistered": "このメールアドレスは既に登録されています。",
+    "emailNotConfirmed": "ログイン前にメール認証を完了してください。",
+    "rateLimited": "試行回数が多すぎます。しばらくしてから再試行してください。",
+    "forgotPasswordFailed": "パスワード再設定メールを送信できませんでした。時間をおいて再試行してください。",
+    "generic": "エラーが発生しました。もう一度お試しください。"
+  },
   "errors": {
     "actionNeeded": "操作が必要です",
     "authRequired": "音楽を生成する前にサインインしてください。",

@@ -29,6 +29,36 @@ function safeRedirectPath(value: FormDataEntryValue | null) {
   return path;
 }
 
+function mapAuthErrorToKey(error: { message?: string; code?: string }) {
+  const message = (error.message ?? "").toLowerCase();
+  const code = (error.code ?? "").toLowerCase();
+
+  if (
+    code.includes("invalid_credentials") ||
+    message.includes("invalid login credentials")
+  ) {
+    return "authErrors.invalidCredentials";
+  }
+
+  if (
+    code.includes("email_exists") ||
+    message.includes("user already registered") ||
+    message.includes("already registered")
+  ) {
+    return "authErrors.emailAlreadyRegistered";
+  }
+
+  if (code.includes("email_not_confirmed") || message.includes("email not confirmed")) {
+    return "authErrors.emailNotConfirmed";
+  }
+
+  if (code.includes("over_request_rate_limit") || message.includes("rate limit")) {
+    return "authErrors.rateLimited";
+  }
+
+  return "authErrors.generic";
+}
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -59,7 +89,7 @@ export const signUpAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.code + " " + error.message);
-    return encodedRedirect("error", signUpPath, error.message);
+    return encodedRedirect("error", signUpPath, mapAuthErrorToKey(error));
   } else {
     return encodedRedirect("success", dashboardPath, "Thanks for signing up!");
   }
@@ -81,7 +111,7 @@ export const signInAction = async (formData: FormData) => {
   });
 
   if (error) {
-    return encodedRedirect("error", signInPath, error.message);
+    return encodedRedirect("error", signInPath, mapAuthErrorToKey(error));
   }
 
   return redirect(redirectTo ?? localizedPath(locale, "/dashboard"));
@@ -109,11 +139,13 @@ export const forgotPasswordAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.message);
-    return encodedRedirect(
-      "error",
-      forgotPasswordPath,
-      "Could not reset password",
-    );
+    const mappedError = mapAuthErrorToKey(error);
+    const errorKey =
+      mappedError === "authErrors.generic"
+        ? "authErrors.forgotPasswordFailed"
+        : mappedError;
+
+    return encodedRedirect("error", forgotPasswordPath, errorKey);
   }
 
   if (callbackUrl) {

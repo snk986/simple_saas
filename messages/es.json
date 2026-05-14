@@ -501,6 +501,14 @@
       }
     }
   },
+  "authErrors": {
+    "invalidCredentials": "Correo o contrasena incorrectos.",
+    "emailAlreadyRegistered": "Este correo ya esta registrado.",
+    "emailNotConfirmed": "Verifica tu correo antes de iniciar sesion.",
+    "rateLimited": "Demasiados intentos. Intentalo de nuevo mas tarde.",
+    "forgotPasswordFailed": "No pudimos enviar el correo de restablecimiento. Intentalo mas tarde.",
+    "generic": "Ocurrio un error. Intentalo de nuevo."
+  },
   "errors": {
     "actionNeeded": "Accion necesaria",
     "authRequired": "Inicia sesion antes de generar musica.",

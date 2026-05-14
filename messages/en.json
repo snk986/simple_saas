@@ -680,6 +680,14 @@
       }
     }
   },
+  "authErrors": {
+    "invalidCredentials": "Incorrect email or password.",
+    "emailAlreadyRegistered": "This email is already registered.",
+    "emailNotConfirmed": "Please verify your email before signing in.",
+    "rateLimited": "Too many attempts. Please try again later.",
+    "forgotPasswordFailed": "We couldn't send the reset email. Please try again later.",
+    "generic": "Something went wrong. Please try again."
+  },
   "errors": {
     "actionNeeded": "Action needed",
     "authRequired": "Please sign in before generating music.",
