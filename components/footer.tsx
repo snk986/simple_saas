@@ -10,7 +10,7 @@ export function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("features"), href: "/#how-it-works" },
+        { label: t("create"), href: "/create" },
         { label: t("pricing"), href: "/pricing" },
       ],
     },
@@ -34,9 +34,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-6">
           <div className="col-span-full lg:col-span-2">
             <Logo />
-            <p className="mt-4 text-sm text-muted-foreground">
-              {t("tagline")}
-            </p>
+            <p className="mt-4 text-sm text-muted-foreground">{t("tagline")}</p>
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
             {footerLinks.map((group) => (

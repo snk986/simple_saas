@@ -9,10 +9,15 @@
     "signOut": "退出登录",
     "language": "语言",
     "navigation": "导航",
-    "toggleMenu": "切换菜单"
+    "toggleMenu": "切换菜单",
+    "gallery": "作品库",
+    "styles": "风格",
+    "startFree": "免费开始",
+    "create": "创作",
+    "about": "关于"
   },
   "footer": {
-    "tagline": "将个人故事转化为歌词、音频和制作人风格报告。",
+    "tagline": "用提示词、歌词和简单想法创作 AI 歌曲。",
     "product": "产品",
     "features": "工作流程",
     "pricing": "定价",
@@ -21,84 +26,214 @@
     "legal": "法律",
     "privacy": "隐私",
     "terms": "条款",
-    "refund": "Refund"
+    "refund": "Refund",
+    "gallery": "作品库",
+    "styles": "风格",
+    "create": "创作"
   },
   "home": {
     "seo": {
-      "title": "Hit-Song - 把你的故事变成 AI 歌曲",
-      "description": "几分钟内把个人故事生成 AI 歌词、音频和制作人风格评审报告。"
+      "title": "AI 歌曲生成器 - 用文字创作 AI 音乐 | Calyra AI",
+      "description": "使用 Calyra AI 从提示词、歌词或简单想法生成带人声和乐器的 AI 歌曲，适合 YouTube、TikTok、播客、游戏和创意项目。"
     },
-    "eyebrow": "从你的故事开始 AI 音乐创作",
+    "eyebrow": "AI Song Generator - 订阅用户可商用",
     "hero": {
-      "title": "Hit-Song 将你的故事变成歌词、音频和可分享报告",
-      "subtitle": "描述一种情绪、记忆或信息。Hit-Song 会把它变成结构化歌词、生成 AI 音频、完成评分，并给你一个可分享的公开页面。",
-      "primaryCta": "开始创作歌曲",
-      "secondaryCta": "查看流程"
+      "title": "几秒钟内用文字创作 AI 歌曲",
+      "subtitle": "Calyra AI 是 AI 歌曲生成器和 AI 音乐制作工具，可将歌词、提示词或简单想法变成带人声和乐器的完整歌曲，用于视频、社交媒体、播客、游戏和创意项目。",
+      "promptLabel": "歌曲提示词",
+      "placeholder": "试试：一首关于夏日回忆的怀旧 J-pop，女声，大合唱",
+      "primaryCta": "免费生成歌曲",
+      "galleryCta": "试听示例",
+      "templatesCta": "提示词模板"
     },
     "proof": {
-      "lyrics": "个性化歌词",
-      "audio": "AI 音频",
-      "report": "制作人报告"
+      "vocals": "人声 + 乐器",
+      "prompt": "Prompt to Song",
+      "lyrics": "Lyrics to Song",
+      "free": "免费用户每天可试用"
     },
-    "demo": {
-      "label": "示例输入",
-      "prompt": "分手后的深夜火车上，努力让自己重新勇敢起来。",
-      "outputTitle": "生成方向",
-      "output": "已生成主歌、副歌和情绪推进，可直接进入音频生成。"
+    "player": {
+      "badge": "正在播放 - AI Pop Anthem",
+      "title": "Chasing Neon Dreams",
+      "meta": "Pop - Female Vocal - Emotional - 2:34",
+      "play": "播放示例歌曲",
+      "madeWith": "Made with Calyra AI"
     },
-    "howItWorks": {
-      "title": "AI 歌曲生成工作流",
-      "subtitle": "从故事到可分享歌曲，三步完成。",
-      "step": "步骤 {number}"
+    "gallery": {
+      "eyebrow": "Music Gallery",
+      "title": "发现用 Calyra 创作的 AI 歌曲",
+      "subtitle": "浏览创作者生成的 AI 歌曲，查看封面、播放量、评分、歌名和创作者名称，就像一个轻量音乐发现流。"
     },
-    "explore": {
-      "label": "探索 Hit-Song",
-      "title": "在一个流程里完成 AI 歌曲创作、定价选择和发布",
-      "subtitle": "先用歌曲生成器开始，再比较积分方案，了解 Hit-Song 如何把故事变成可分享的音乐页面。",
-      "cards": {
-        "songMaker": {
-          "title": "AI 歌曲生成器",
-          "description": "把一个提示词变成歌词和音频。"
+    "styles": {
+      "eyebrow": "热门风格",
+      "title": "用热门 AI 音乐风格创作歌曲",
+      "subtitle": "选择一种类型，从现成方向开始，更快用 AI 做出歌曲。",
+      "rap": {
+        "title": "AI Rap Generator",
+        "description": "创作带 flow、hook、歌词和强节奏的说唱歌曲。"
+      },
+      "songMaker": {
+        "title": "AI Song Maker",
+        "description": "从一个简单想法开始，变成完整歌曲方向。"
+      },
+      "lyrics": {
+        "title": "Lyrics to Song AI",
+        "description": "把你的歌词变成带人声、编曲和情绪的音乐。"
+      },
+      "text": {
+        "title": "Text to Song AI",
+        "description": "描述情绪、类型、故事和人声风格来生成歌曲。"
+      },
+      "phonk": {
+        "title": "AI Phonk Generator",
+        "description": "生成暗黑 drift phonk，重鼓、cowbell 和速度感。"
+      },
+      "lofi": {
+        "title": "AI Lo-fi Music",
+        "description": "制作适合学习视频、直播和背景使用的 chill lo-fi。"
+      },
+      "edm": {
+        "title": "AI EDM Generator",
+        "description": "创作舞曲、音乐节 drop 和电子 hook。"
+      },
+      "anime": {
+        "title": "AI Anime Song",
+        "description": "生成动漫 OP、J-pop rock 和明亮副歌灵感。"
+      }
+    },
+    "templates": {
+      "eyebrow": "提示词模板",
+      "title": "不知道输入什么？从提示词模板开始",
+      "subtitle": "用这些模板把 text to song 想法变成清晰提示词，组合类型、情绪、人声、歌词和用途。",
+      "items": {
+        "genre": {
+          "type": "类型 + 情绪 + 人声",
+          "title": "适合新歌曲想法",
+          "description": "描述类型、情绪、人声风格和副歌能量。",
+          "prompt": "A nostalgic J-pop song about summer memories, female vocal, upbeat rhythm, bright chorus, coming-of-age movie feeling."
         },
-        "pricing": {
-          "title": "定价",
-          "description": "比较积分包与订阅方案。"
+        "lyrics": {
+          "type": "歌词 + 编曲",
+          "title": "适合 lyrics to song AI",
+          "description": "粘贴歌词，再补充编曲、速度、人声语气和情绪。",
+          "prompt": "Turn these lyrics into an emotional piano ballad, soft male vocal, slow tempo, cinematic strings, restrained verse and powerful final chorus."
         },
-        "about": {
-          "title": "关于",
-          "description": "了解平台是如何构建的。"
+        "useCase": {
+          "type": "用途 + 能量",
+          "title": "适合内容创作者",
+          "description": "告诉 AI 这首歌会用于 YouTube、TikTok、播客、游戏或广告。",
+          "prompt": "Create a modern pop intro for a YouTube video, cinematic, inspiring, 15-second hook, suitable for a tech creator channel."
         }
       }
     },
-    "faq": {
-      "title": "AI 歌曲生成常见问题",
-      "q1": "什么是 AI 歌曲生成器？",
-      "a1": "AI 歌曲生成器可以把文字想法、故事或提示词转成歌词、风格方向和音频等音乐资产。Hit-Song 提供从故事到歌词、音频、制作人报告和公开页面的完整流程。",
-      "q2": "我可以用自己的故事创作歌曲吗？",
-      "a2": "可以。Hit-Song 专为个人故事、情绪、记忆和表达而设计。输入越具体，结果越有个人风格。",
-      "q3": "Hit-Song 会同时生成歌词和音频吗？",
-      "a3": "会。平台会先生成结构化歌词，再生成歌曲音频。",
-      "q4": "公开歌曲页面可以被搜索引擎收录吗？",
-      "a4": "可以。公开页面采用服务端渲染，包含元数据、歌词、音频信息和结构化数据，便于搜索引擎理解。"
-    },
-    "steps": {
-      "story": {
-        "title": "分享你的故事",
-        "description": "写下你希望歌曲表达的瞬间、情绪或信息。"
-      },
-      "lyrics": {
-        "title": "生成结构化歌词",
-        "description": "AI 会把故事整理成主歌、副歌和风格方向。"
-      },
-      "song": {
-        "title": "生成并分享",
-        "description": "生成音频、查看制作人报告，并发布公开歌曲页面。"
+    "commercial": {
+      "eyebrow": "商用",
+      "title": "为真实项目创作音乐",
+      "subtitle": "为 YouTube 视频、TikTok、Shorts、播客、游戏、广告、社交媒体和创意项目生成 AI 音乐。订阅用户可下载并按条款商用生成歌曲。",
+      "pricingCta": "查看价格",
+      "faqCta": "阅读 FAQ",
+      "uses": {
+        "youtube": "YouTube 视频",
+        "tiktok": "TikTok / Shorts",
+        "podcast": "播客片头",
+        "games": "游戏音乐",
+        "ads": "广告",
+        "social": "社交媒体"
       }
     },
-    "finalCta": {
-      "title": "准备好让你的故事唱出来了吗？",
-      "subtitle": "从一个真实细节开始，剩下的交给 Hit-Song。",
-      "button": "开始创作"
+    "howItWorks": {
+      "eyebrow": "工作方式",
+      "title": "3 步用 AI 制作歌曲"
+    },
+    "steps": {
+      "idea": {
+        "title": "输入你的想法",
+        "description": "描述情绪、类型、歌词、故事、人声风格或使用场景。"
+      },
+      "generate": {
+        "title": "生成歌曲",
+        "description": "Calyra AI 根据提示词生成带人声和乐器的歌曲方向。"
+      },
+      "download": {
+        "title": "下载并使用",
+        "description": "将生成的音乐用于视频、社交媒体、播客或创意项目。"
+      }
+    },
+    "benefits": {
+      "eyebrow": "优势",
+      "title": "为什么创作者使用 Calyra AI",
+      "subtitle": "Calyra AI 帮助创作者无需传统制作技能，也能从想法走到音乐。",
+      "items": {
+        "skills": {
+          "title": "无需音乐技能",
+          "description": "不需要 DAW、插件或乐理，从一个简单想法开始。"
+        },
+        "vocals": {
+          "title": "生成带人声的歌曲",
+          "description": "不止背景循环，可以生成带人声风格的完整歌曲方向。"
+        },
+        "prompts": {
+          "title": "从歌词或提示词开始",
+          "description": "使用自己的歌词，或描述情绪、类型、故事和用途。"
+        },
+        "creators": {
+          "title": "为内容创作者打造",
+          "description": "为 YouTube、TikTok、Shorts、播客和社交内容创作音乐。"
+        },
+        "genres": {
+          "title": "探索热门类型",
+          "description": "Rap、pop、J-pop、phonk、lo-fi、EDM、ballad、anime songs 等。"
+        },
+        "publish": {
+          "title": "下载和发布",
+          "description": "保存、下载并使用生成歌曲。订阅用户获得商用权。"
+        }
+      }
+    },
+    "pricingPreview": {
+      "eyebrow": "价格",
+      "title": "免费开始，需要更多歌曲时再升级",
+      "subtitle": "免费试用 Calyra AI。升级到 Basic 每月 30 首，或 Pro 每月 100 首。也可购买一次性点数包。",
+      "primaryCta": "免费开始创作",
+      "secondaryCta": "查看完整价格",
+      "plans": {
+        "free": {
+          "title": "Free",
+          "description": "$0 - 无需订阅即可测试歌曲想法。"
+        },
+        "basic": {
+          "title": "Basic",
+          "description": "$9/month - 每月 30 首，适合稳定创作。"
+        },
+        "pro": {
+          "title": "Pro",
+          "description": "$19/month - 每月 100 首，适合高频创作。"
+        }
+      }
+    },
+    "seoBlock": {
+      "eyebrow": "AI Music Generator",
+      "title": "面向创作者的 AI 音乐生成器",
+      "p1": "Calyra AI 是 AI song generator 和 AI music generator，帮助创作者把提示词、歌词和歌曲想法变成完整曲目。你可以描述想要的声音、选择风格，并生成带人声和乐器的音乐。",
+      "p2": "常见用途包括 AI rap、anime opening、phonk、lo-fi 背景音乐、EDM drop、情绪钢琴 ballad 和社交内容 pop 歌曲。创作者可为 YouTube、TikTok、Shorts、播客、游戏、广告和个人项目制作 AI 歌曲。"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "生成前的常见问题",
+      "q1": "什么是 AI song generator？",
+      "a1": "AI song generator 可以根据提示词、歌词、情绪和风格描述创建歌曲。Calyra AI 帮你无需传统制作技能也能生成带人声和乐器的音乐。",
+      "q2": "如何用 AI 做一首歌？",
+      "a2": "输入描述类型、情绪、故事、歌词、人声风格和用途的提示词，也可以从模板或示例歌曲开始。",
+      "q3": "可以把歌词变成歌曲吗？",
+      "a3": "可以。粘贴歌词并描述编曲、速度、情绪和人声方向，Calyra AI 可以帮助把歌词变成带人声和乐器的歌曲方向。",
+      "q4": "Calyra AI 是免费的 AI song maker 吗？",
+      "a4": "你可以免费开始测试歌曲想法。更多生成次数、月度歌曲额度、下载和商用权可通过付费计划或一次性点数包获得。",
+      "q5": "AI 生成歌曲可以商用吗？",
+      "a5": "订阅用户可以下载生成歌曲，并在最新条款约束下用于内容、商业项目和音乐发行。",
+      "q6": "可以生成带人声的歌曲吗？",
+      "a6": "可以。Calyra AI 面向完整歌曲生成，具体结果取决于提示词和生成模式。",
+      "q7": "可以为 YouTube 或 TikTok 创作音乐吗？",
+      "a7": "可以。你可以为 YouTube、TikTok、Shorts、播客和社交媒体生成 hook、背景音乐、片头、主题曲和完整歌曲。"
     }
   },
   "create": {

@@ -28,8 +28,8 @@ export default function Header({ user }: HeaderProps) {
   const isDashboard = pathname?.startsWith("/dashboard");
 
   const mainNavItems: NavItem[] = [
-    { label: t("home"), href: "/" },
-    { label: t("features"), href: "/#how-it-works" },
+    { label: t("create"), href: "/create" },
+    { label: t("about"), href: "/about" },
     { label: t("pricing"), href: "/pricing" },
   ];
 
@@ -43,7 +43,6 @@ export default function Header({ user }: HeaderProps) {
           <Logo />
         </div>
 
-        {/* Centered Navigation */}
         <nav className="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
           {navItems.map((item) => (
             <Link
@@ -91,9 +90,6 @@ export default function Header({ user }: HeaderProps) {
             <div className="hidden md:flex gap-2">
               <Button asChild size="sm" variant="outline">
                 <Link href="/sign-in">{t("signIn")}</Link>
-              </Button>
-              <Button asChild size="sm">
-                <Link href="/sign-up">{t("signUp")}</Link>
               </Button>
             </div>
           )}

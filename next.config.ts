@@ -4,8 +4,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./config/i18n.ts");
 
 const nextConfig: NextConfig = {
-  devIndicators: {
-  },
+  allowedDevOrigins: ["198.18.0.1"],
+  devIndicators: {},
   turbopack: {
     // 默认开启 Turbopack，添加空配置以消除与 webpack 配置共存时的警告
   },
@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   webpack: (config: any) => {
     config.watchOptions = {
       ...config.watchOptions,
-      ignored: ['**/node_modules/**'],
+      ignored: ["**/node_modules/**"],
     };
     return config;
   },

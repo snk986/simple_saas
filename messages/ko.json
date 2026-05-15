@@ -9,10 +9,15 @@
     "signOut": "로그아웃",
     "language": "언어",
     "navigation": "내비게이션",
-    "toggleMenu": "메뉴 열기"
+    "toggleMenu": "메뉴 열기",
+    "gallery": "갤러리",
+    "styles": "스타일",
+    "startFree": "무료 시작",
+    "create": "만들기",
+    "about": "소개"
   },
   "footer": {
-    "tagline": "개인적인 이야기를 가사, 오디오, 프로듀서 스타일 리포트로 바꿉니다.",
+    "tagline": "프롬프트, 가사, 간단한 아이디어로 AI 노래를 만드세요.",
     "product": "제품",
     "features": "작동 방식",
     "pricing": "요금",
@@ -21,84 +26,214 @@
     "legal": "법적 고지",
     "privacy": "개인정보",
     "terms": "이용 약관",
-    "refund": "Refund"
+    "refund": "Refund",
+    "gallery": "갤러리",
+    "styles": "스타일",
+    "create": "만들기"
   },
   "home": {
     "seo": {
-      "title": "Hit-Song - 당신의 이야기를 AI 노래로",
-      "description": "개인적인 이야기에서 AI 가사, 오디오, 프로듀서 스타일 리포트를 몇 분 안에 만드세요."
+      "title": "AI 노래 생성기 - 텍스트로 AI 음악 만들기 | Calyra AI",
+      "description": "Calyra AI로 프롬프트, 가사, 간단한 아이디어를 보컬과 악기가 있는 AI 노래로 만드세요. YouTube, TikTok, 팟캐스트, 게임, 창작 프로젝트에 활용할 수 있습니다."
     },
-    "eyebrow": "이야기에서 시작하는 AI 음악 제작",
+    "eyebrow": "AI Song Generator - Commercial use for subscribers",
     "hero": {
-      "title": "Hit-Song은 이야기를 가사, 오디오, 공유용 리포트로 바꿉니다",
-      "subtitle": "감정, 기억, 메시지를 설명하세요. Hit-Song이 구조화된 가사를 만들고, AI 오디오를 생성하고, 결과를 평가한 뒤 공유 가능한 공개 페이지를 제공합니다.",
-      "primaryCta": "노래 만들기",
-      "secondaryCta": "작동 방식 보기"
+      "title": "텍스트로 몇 초 만에 AI 노래 만들기",
+      "subtitle": "Calyra AI is an AI song generator and AI music maker that turns lyrics, prompts, or simple ideas into full songs with vocals and instruments for videos, social media, podcasts, games, and creative projects.",
+      "promptLabel": "Song prompt",
+      "placeholder": "Try: A nostalgic J-pop song about summer memories, female vocal, huge chorus",
+      "primaryCta": "무료 노래 생성",
+      "galleryCta": "Listen to Examples",
+      "templatesCta": "Prompt Templates"
     },
     "proof": {
-      "lyrics": "개인 맞춤 가사",
-      "audio": "AI 오디오",
-      "report": "프로듀서 리포트"
+      "vocals": "Vocals + instruments",
+      "prompt": "Prompt to Song",
+      "lyrics": "Lyrics to Song",
+      "free": "Free users can try daily"
     },
-    "demo": {
-      "label": "프롬프트 예시",
-      "prompt": "이별 후 늦은 밤 기차를 타고 다시 용기를 느끼려는 이야기.",
-      "outputTitle": "생성된 방향",
-      "output": "오디오 생성을 위한 verse, chorus, 감정 흐름."
+    "player": {
+      "badge": "Now Playing - AI Pop Anthem",
+      "title": "Chasing Neon Dreams",
+      "meta": "Pop - Female Vocal - Emotional - 2:34",
+      "play": "Play example song",
+      "madeWith": "Made with Calyra AI"
     },
-    "howItWorks": {
-      "title": "AI 노래 생성 워크플로우",
-      "subtitle": "원본 이야기에서 공유 가능한 노래까지 세 단계로 진행됩니다.",
-      "step": "단계 {number}"
+    "gallery": {
+      "eyebrow": "Music Gallery",
+      "title": "Calyra로 만든 AI 노래 둘러보기",
+      "subtitle": "Browse AI-generated songs from creators. See cover art, plays, likes, song titles, and creator names, just like a lightweight music discovery feed."
     },
-    "explore": {
-      "label": "Hit-Song 살펴보기",
-      "title": "하나의 워크플로우로 AI 노래 생성, 요금 선택, 공개까지",
-      "subtitle": "노래 만들기에서 시작해 크레딧 옵션을 비교하고, Hit-Song이 스토리를 공유 가능한 음악 페이지로 바꾸는 과정을 확인하세요.",
-      "cards": {
-        "songMaker": {
-          "title": "AI 노래 메이커",
-          "description": "프롬프트를 가사와 오디오로 변환합니다."
+    "styles": {
+      "eyebrow": "인기 스타일",
+      "title": "Create Songs in Popular AI Music Styles",
+      "subtitle": "Choose a genre, start with a ready-made direction, and make a song with AI faster. These style entries help users move from search intent to generation.",
+      "rap": {
+        "title": "AI Rap Generator",
+        "description": "Create rap songs with flow, hooks, lyrics, and punchy beats."
+      },
+      "songMaker": {
+        "title": "AI Song Maker",
+        "description": "Start from a simple idea and turn it into a complete song direction."
+      },
+      "lyrics": {
+        "title": "Lyrics to Song AI",
+        "description": "Turn your lyrics into music with vocals, arrangement, and emotion."
+      },
+      "text": {
+        "title": "Text to Song AI",
+        "description": "Describe a mood, genre, story, and vocal style to generate a song."
+      },
+      "phonk": {
+        "title": "AI Phonk Generator",
+        "description": "Generate dark drift phonk with heavy drums, cowbell, and speed."
+      },
+      "lofi": {
+        "title": "AI Lo-fi Music",
+        "description": "Make chill lo-fi music for study videos, streams, and background use."
+      },
+      "edm": {
+        "title": "AI EDM Generator",
+        "description": "Create dance music, festival drops, and electronic hooks."
+      },
+      "anime": {
+        "title": "AI Anime Song",
+        "description": "Generate anime openings, J-pop rock, and bright chorus ideas."
+      }
+    },
+    "templates": {
+      "eyebrow": "프롬프트 템플릿",
+      "title": "Not Sure What to Type? Start with a Prompt Template",
+      "subtitle": "Use these templates to turn text to song ideas into clear prompts. Combine genre, mood, vocals, lyrics, and use case to guide the AI song generator.",
+      "items": {
+        "genre": {
+          "type": "Genre + Mood + Vocal",
+          "title": "Best for a new song idea",
+          "description": "Describe the genre, emotion, vocal style, and chorus energy.",
+          "prompt": "A nostalgic J-pop song about summer memories, female vocal, upbeat rhythm, bright chorus, coming-of-age movie feeling."
         },
-        "pricing": {
-          "title": "요금제",
-          "description": "크레딧과 구독을 비교하세요."
+        "lyrics": {
+          "type": "Lyrics + Arrangement",
+          "title": "Best for lyrics to song AI",
+          "description": "Paste lyrics, then add arrangement, tempo, vocal tone, and emotion.",
+          "prompt": "Turn these lyrics into an emotional piano ballad, soft male vocal, slow tempo, cinematic strings, restrained verse and powerful final chorus."
         },
-        "about": {
-          "title": "소개",
-          "description": "플랫폼이 어떻게 만들어졌는지 확인하세요."
+        "useCase": {
+          "type": "Use Case + Energy",
+          "title": "Best for content creators",
+          "description": "Tell the AI where the song will be used, such as YouTube, TikTok, podcast, game, or ad.",
+          "prompt": "Create a modern pop intro for a YouTube video, cinematic, inspiring, 15-second hook, suitable for a tech creator channel."
         }
       }
     },
-    "faq": {
-      "title": "AI 노래 생성 FAQ",
-      "q1": "AI 노래 생성기는 무엇인가요?",
-      "a1": "AI 노래 생성기는 아이디어, 스토리, 프롬프트를 가사, 스타일 방향, 오디오 같은 음악 자산으로 바꿉니다. Hit-Song은 스토리부터 가사, 오디오, 프로듀서 리포트, 공개 페이지까지 한 번에 제공합니다.",
-      "q2": "내 이야기로 노래를 만들 수 있나요?",
-      "a2": "네. Hit-Song은 개인적인 이야기, 감정, 기억, 메시지에 맞춰 설계되었습니다. 더 구체적으로 입력할수록 결과가 더 개인화됩니다.",
-      "q3": "Hit-Song은 가사와 오디오를 모두 생성하나요?",
-      "a3": "네. 먼저 구조화된 가사를 만들고, 그 다음 오디오를 생성합니다.",
-      "q4": "공개 노래 페이지는 검색에 노출되나요?",
-      "a4": "네. 공개 페이지는 서버 렌더링으로 메타데이터, 가사, 오디오 정보, 구조화 데이터를 포함합니다."
-    },
-    "steps": {
-      "story": {
-        "title": "이야기 공유",
-        "description": "노래에 담고 싶은 순간, 분위기, 메시지를 작성하세요."
-      },
-      "lyrics": {
-        "title": "구조화된 가사 받기",
-        "description": "AI가 이야기를 verse, chorus, 스타일 방향으로 바꿉니다."
-      },
-      "song": {
-        "title": "생성하고 공유",
-        "description": "오디오를 만들고, 프로듀서 리포트를 확인하고, 공개 노래 페이지를 게시하세요."
+    "commercial": {
+      "eyebrow": "상업적 사용",
+      "title": "실제 프로젝트를 위한 음악 만들기",
+      "subtitle": "Generate AI music for YouTube videos, TikTok, Shorts, podcasts, games, ads, social media, and creative projects. Subscribers can download generated songs and use them commercially, subject to our terms.",
+      "pricingCta": "View Pricing",
+      "faqCta": "Read FAQ",
+      "uses": {
+        "youtube": "YouTube Videos",
+        "tiktok": "TikTok / Shorts",
+        "podcast": "Podcast Intros",
+        "games": "Game Music",
+        "ads": "Ads",
+        "social": "Social Media"
       }
     },
-    "finalCta": {
-      "title": "당신의 이야기를 노래하게 할 준비가 됐나요?",
-      "subtitle": "진짜 디테일 하나에서 시작하세요. Hit-Song이 나머지를 다듬어 줍니다.",
-      "button": "만들기 시작"
+    "howItWorks": {
+      "eyebrow": "How It Works",
+      "title": "3단계로 AI 노래 만들기"
+    },
+    "steps": {
+      "idea": {
+        "title": "Enter your idea",
+        "description": "Describe the mood, genre, lyrics, story, vocal style, or use case."
+      },
+      "generate": {
+        "title": "Generate your song",
+        "description": "Calyra AI creates a song direction with vocals and instruments based on your prompt."
+      },
+      "download": {
+        "title": "Download and use it",
+        "description": "Use your generated music for videos, social media, podcasts, or creative projects."
+      }
+    },
+    "benefits": {
+      "eyebrow": "Benefits",
+      "title": "크리에이터가 Calyra AI를 쓰는 이유",
+      "subtitle": "Calyra AI helps creators move from idea to music without traditional production skills.",
+      "items": {
+        "skills": {
+          "title": "Create without music skills",
+          "description": "No DAW, plugins, or music theory required. Start from a simple idea."
+        },
+        "vocals": {
+          "title": "Generate songs with vocals",
+          "description": "Go beyond background loops and create full song directions with vocal styles."
+        },
+        "prompts": {
+          "title": "Start from lyrics or prompts",
+          "description": "Use your own lyrics, or describe a mood, genre, story, and use case."
+        },
+        "creators": {
+          "title": "Built for content creators",
+          "description": "Create music for YouTube, TikTok, Shorts, podcasts, and social content."
+        },
+        "genres": {
+          "title": "Explore popular genres",
+          "description": "Rap, pop, J-pop, phonk, lo-fi, EDM, ballads, anime songs, and more."
+        },
+        "publish": {
+          "title": "Download and publish",
+          "description": "Save, download, and use generated songs. Subscribers get commercial use rights."
+        }
+      }
+    },
+    "pricingPreview": {
+      "eyebrow": "가격",
+      "title": "Start Free, Upgrade When You Need More Songs",
+      "subtitle": "Try Calyra AI for free. Upgrade to Basic for 30 songs/month or Pro for 100 songs/month. One-time credit packs are also available.",
+      "primaryCta": "Start Creating Free",
+      "secondaryCta": "View Full Pricing",
+      "plans": {
+        "free": {
+          "title": "Free",
+          "description": "$0 - Start testing song ideas without a subscription."
+        },
+        "basic": {
+          "title": "Basic",
+          "description": "$9/month - 30 songs/month for steady creators."
+        },
+        "pro": {
+          "title": "Pro",
+          "description": "$19/month - 100 songs/month for higher-volume creation."
+        }
+      }
+    },
+    "seoBlock": {
+      "eyebrow": "AI Music Generator",
+      "title": "AI Music Generator for Creators",
+      "p1": "Calyra AI is an AI song generator and AI music generator designed to help creators turn prompts, lyrics, and song ideas into complete tracks. Instead of starting from a blank music project, you can describe the sound you want, choose a style, and generate music with vocals and instruments. Use Calyra AI as an AI song maker when you have a simple idea, a text to song AI tool when you want to describe a mood, or a lyrics to song AI workflow when you already have words.",
+      "p2": "Popular use cases include AI rap songs, anime openings, phonk tracks, lo-fi background music, EDM drops, emotional piano ballads, and pop songs for social content. Creators can make AI songs for YouTube videos, TikTok, Shorts, podcasts, games, ads, and personal creative projects. Subscribers can download generated songs and use them commercially, subject to our terms."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions Before You Generate",
+      "q1": "What is an AI song generator?",
+      "a1": "An AI song generator creates songs from prompts, lyrics, moods, and style descriptions. Calyra AI helps you generate music with vocals and instruments without traditional production skills.",
+      "q2": "How do I make a song with AI?",
+      "a2": "Enter a prompt that describes the genre, mood, story, lyrics, vocal style, and use case. You can also start from a template or use a song example as inspiration.",
+      "q3": "Can I turn lyrics into a song with AI?",
+      "a3": "Yes. Paste your lyrics and describe the arrangement, tempo, mood, and vocal direction. Calyra AI can help turn lyrics into a song direction with vocals and instruments.",
+      "q4": "Is Calyra AI a free AI song maker?",
+      "a4": "You can start testing song ideas for free. More generations, monthly song credits, downloads, and commercial use rights are available through paid plans or one-time credit packs.",
+      "q5": "Can I use AI-generated songs commercially?",
+      "a5": "Subscribers can download generated songs and use them commercially for content, commercial projects, and music distribution, subject to the latest terms.",
+      "q6": "Can I generate songs with vocals?",
+      "a6": "Yes. Calyra AI is positioned for full song generation, including vocal-style songs and instrumental arrangements depending on the prompt and generation mode.",
+      "q7": "Can I create music for YouTube or TikTok?",
+      "a7": "Yes. You can generate hooks, background music, intros, theme songs, and full songs for YouTube, TikTok, Shorts, podcasts, and social media content."
     }
   },
   "create": {
