@@ -237,7 +237,7 @@
     }
   },
   "create": {
-    "title": "把你的故事变成一首爆款歌曲",
+    "title": "用文字创作 AI 歌曲",
     "subtitle": "从一个瞬间、心事、记忆或情绪开始。我们会将它打磨成结构化歌词草稿。",
     "inputPlaceholder": "讲讲你的故事...",
     "inputHint": "多一些具体细节，歌曲会更有个人风格。",
@@ -273,9 +273,9 @@
   },
   "songPublic": {
     "seo": {
-      "title": "{title} - AI 生成的 {style} 歌曲 | calyra-ai",
-      "description": "收听《{title}》，这是一首 AI 生成的 {style} 风格歌曲，情绪为 {mood}。{story} 你也可以用 calyra-ai 创作自己的歌曲。",
-      "notFoundTitle": "歌曲未找到 | calyra-ai",
+      "title": "{title} - AI 生成的 {style} 歌曲 | Calyra AI",
+      "description": "收听《{title}》，这是一首 AI 生成的 {style} 风格歌曲，情绪为 {mood}。{story} 你也可以用 Calyra AI 创作自己的歌曲。",
+      "notFoundTitle": "歌曲未找到 | Calyra AI",
       "ogImageAlt": "{title} 分享图"
     },
     "previewLyrics": "预览歌词",
@@ -338,7 +338,7 @@
     },
     "cta": {
       "title": "把你的故事变成下一首歌",
-      "description": "从一个瞬间开始，calyra-ai 会帮你完成歌词、音频与可分享页面。",
+      "description": "从一个瞬间开始，Calyra AI 会帮你完成歌词、音频与可分享页面。",
       "create": "开始创作",
       "copy": "复制本页链接"
     },
@@ -526,8 +526,8 @@
   },
   "pricingPage": {
     "seo": {
-      "title": "calyra-ai 定价 - AI 歌曲创作方案",
-      "description": "选择适合你的 calyra-ai 方案，创作 AI 歌词、音频、制作人报告和可分享公开页面。积分永不过期。"
+      "title": "Calyra AI 定价 - AI 歌曲创作方案",
+      "description": "选择适合你的 Calyra AI 方案，创作 AI 歌词、音频、制作人报告和可分享公开页面。积分永不过期。"
     },
     "eyebrow": "定价",
     "title": "解锁你的完整创作潜力",
@@ -606,9 +606,9 @@
         "subject": "你的歌词已准备好，来生成音乐吧",
         "preheader": "随时把 {songTitle} 变成可播放音频。",
         "title": "给 {songTitle} 加上声音",
-        "body": "你的歌词草稿正在 calyra-ai 等你。回来生成音频，听听这段故事还能走向哪里。",
+        "body": "你的歌词草稿正在 Calyra AI 等你。回来生成音频，听听这段故事还能走向哪里。",
         "cta": "生成音频",
-        "footer": "你之所以收到这封邮件，是因为你在 calyra-ai 开始了歌曲创作。如果你已完成，可忽略本邮件。"
+        "footer": "你之所以收到这封邮件，是因为你在 Calyra AI 开始了歌曲创作。如果你已完成，可忽略本邮件。"
       },
       "ready_no_report": {
         "subject": "你的歌曲已准备好，来生成制作人报告",
@@ -616,7 +616,7 @@
         "title": "看看 {songTitle} 的优势在哪里",
         "body": "音频已准备完成。生成制作人风格报告，查看评分维度、Hook 建议与可分享摘要。",
         "cta": "查看报告",
-        "footer": "你之所以收到这封邮件，是因为你在 calyra-ai 创建过歌曲。"
+        "footer": "你之所以收到这封邮件，是因为你在 Calyra AI 创建过歌曲。"
       },
       "report_no_share": {
         "subject": "你的歌曲报告已就绪，准备分享吧",
@@ -624,15 +624,15 @@
         "title": "把 {songTitle} 分享给更多人",
         "body": "报告已经准备好，但这首歌还未被分享。打开公开页面，让更多人听到它。",
         "cta": "打开歌曲页面",
-        "footer": "你之所以收到这封邮件，是因为你在 calyra-ai 创建过歌曲。"
+        "footer": "你之所以收到这封邮件，是因为你在 Calyra AI 创建过歌曲。"
       },
       "inactive_creator": {
         "subject": "有新的故事想写成歌曲吗？",
-        "preheader": "从新的记忆或情绪开始下一首 calyra-ai。",
+        "preheader": "从新的记忆或情绪开始下一首 Calyra AI。",
         "title": "你的下一首歌，只差一个细节",
         "body": "距离你上次完成歌曲已经有一段时间。带着新的情绪、记忆或表达回来，再创作一首可播放的作品吧。",
         "cta": "创作新歌曲",
-        "footer": "你之所以收到这封邮件，是因为你在 calyra-ai 创作过音乐。"
+        "footer": "你之所以收到这封邮件，是因为你在 Calyra AI 创作过音乐。"
       }
     }
   },
@@ -673,12 +673,12 @@
     },
     "privacy": {
       "seo": {
-        "title": "Privacy Policy | calyra-ai",
-        "description": "How calyra-ai collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+        "title": "Privacy Policy | Calyra AI",
+        "description": "How Calyra AI collects, uses, and protects personal data for account, payment, and AI song creation workflows."
       },
       "badge": "Privacy",
       "title": "Privacy Policy",
-      "subtitle": "This policy explains what data calyra-ai handles, why we handle it, and the choices you have.",
+      "subtitle": "This policy explains what data Calyra AI handles, why we handle it, and the choices you have.",
       "sections": [
         {
           "title": "Data we collect",
@@ -707,7 +707,7 @@
         {
           "title": "Third-party services",
           "body": [
-            "calyra-ai relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+            "Calyra AI relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
           ],
           "bullets": [
             "Hosting and database services",
@@ -731,17 +731,17 @@
     },
     "terms": {
       "seo": {
-        "title": "Terms of Service | calyra-ai",
-        "description": "Terms governing use of calyra-ai, including account responsibilities, generated content, credits, subscriptions, and limitations."
+        "title": "Terms of Service | Calyra AI",
+        "description": "Terms governing use of Calyra AI, including account responsibilities, generated content, credits, subscriptions, and limitations."
       },
       "badge": "Terms",
       "title": "Terms of Service",
-      "subtitle": "By using calyra-ai, you agree to these terms for account access, AI generation, and paid features.",
+      "subtitle": "By using Calyra AI, you agree to these terms for account access, AI generation, and paid features.",
       "sections": [
         {
           "title": "Service scope",
           "body": [
-            "calyra-ai provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+            "Calyra AI provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
           ]
         },
         {
@@ -758,7 +758,7 @@
         {
           "title": "Content and intellectual property",
           "body": [
-            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. calyra-ai and its licensors retain rights in the platform, models, and infrastructure."
+            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Calyra AI and its licensors retain rights in the platform, models, and infrastructure."
           ]
         },
         {
@@ -782,8 +782,8 @@
     },
     "refund": {
       "seo": {
-        "title": "Refund Policy | calyra-ai",
-        "description": "Refund eligibility, timelines, and process for calyra-ai credit purchases and subscriptions."
+        "title": "Refund Policy | Calyra AI",
+        "description": "Refund eligibility, timelines, and process for Calyra AI credit purchases and subscriptions."
       },
       "badge": "Refund",
       "title": "Refund Policy",
@@ -797,7 +797,7 @@
           "bullets": [
             "Request must be submitted within 7 calendar days",
             "Credits tied to the request must be unused",
-            "The purchase must be made through an official calyra-ai checkout flow"
+            "The purchase must be made through an official Calyra AI checkout flow"
           ]
         },
         {

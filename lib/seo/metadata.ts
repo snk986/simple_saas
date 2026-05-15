@@ -26,7 +26,7 @@ export function buildMarketingMetadata({
     url: defaultOgImageUrl,
     width: 1536,
     height: 1024,
-    alt: "calyra-ai: Turn Your Story Into an AI Song",
+    alt: "Calyra AI: Create AI Music from Text",
   };
 
   return {
@@ -38,7 +38,7 @@ export function buildMarketingMetadata({
       description,
       type: "website",
       url,
-      siteName: "calyra-ai",
+      siteName: "Calyra AI",
       locale,
       images: [defaultImage],
       ...openGraph,

@@ -5,21 +5,21 @@ import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = buildMarketingMetadata({
-  title: "About calyra-ai - AI Music Creation From Personal Stories",
+  title: "About Calyra AI - AI Music Creation From Personal Stories",
   description:
-    "Learn how calyra-ai turns personal stories into AI-generated lyrics, audio, producer-style reports, and shareable song pages.",
+    "Learn how Calyra AI turns personal stories into AI-generated lyrics, audio, producer-style reports, and shareable song pages.",
   url: absoluteLocaleUrl(defaultLocale, "/about"),
   alternates: {
     canonical: absoluteLocaleUrl(defaultLocale, "/about"),
     languages: localizedAlternates("/about"),
   },
   openGraph: {
-    title: "About calyra-ai",
+    title: "About Calyra AI",
     description:
-      "calyra-ai is an AI music creation platform for turning stories into lyrics, audio, reports, and public song pages.",
+      "Calyra AI is an AI music creation platform for turning stories into lyrics, audio, reports, and public song pages.",
   },
   twitter: {
-    title: "About calyra-ai",
+    title: "About Calyra AI",
     description:
       "Turn personal stories into AI-generated lyrics, audio, reports, and shareable song pages.",
   },

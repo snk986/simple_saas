@@ -79,7 +79,7 @@ export function buildRecallEmail(input: RecallTemplateInput) {
     <div style="display:none;max-height:0;overflow:hidden;">${escapeHtml(preheader)}</div>
     <main style="max-width:560px;margin:0 auto;padding:32px 20px;">
       <section style="background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;padding:28px;">
-        <p style="margin:0 0 18px;color:#6b7280;font-size:14px;">calyra-ai</p>
+        <p style="margin:0 0 18px;color:#6b7280;font-size:14px;">Calyra AI</p>
         <h1 style="margin:0 0 16px;color:#111827;font-size:24px;line-height:1.25;">${escapeHtml(title)}</h1>
         <p style="margin:0 0 24px;color:#374151;font-size:16px;line-height:1.6;">${escapeHtml(body)}</p>
         <a href="${escapeHtml(input.ctaUrl)}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;border-radius:6px;padding:12px 18px;font-weight:700;">${escapeHtml(cta)}</a>

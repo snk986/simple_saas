@@ -136,7 +136,7 @@ export async function generateMetadata({
       description,
       type: "music.song",
       url,
-      siteName: "calyra-ai",
+      siteName: "Calyra AI",
       locale,
       images: ogImageUrl
         ? [
@@ -214,7 +214,7 @@ export default async function SongPage({
     },
     byArtist: {
       "@type": "Organization",
-      name: "calyra-ai AI",
+      name: "Calyra AI",
     },
     interactionStatistic: [
       {

@@ -56,7 +56,7 @@ export function SongHeaderStats({
 
   return (
     <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-bold text-white/80">
-      <strong className="text-white">calyra-ai AI</strong>
+      <strong className="text-white">Calyra AI</strong>
       {stats.map((item) => (
         <span
           key={item}

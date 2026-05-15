@@ -5,13 +5,13 @@ const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
-  title: "calyra-ai — Turn Your Story Into a Hit Song",
+  title: "Calyra AI - Create AI Music from Text",
   description:
-    "Share your story, get professional AI-generated lyrics and music in minutes.",
+    "Create AI songs from prompts, lyrics, and simple ideas with vocals and instruments.",
   openGraph: {
-    title: "calyra-ai",
+    title: "Calyra AI",
     description:
-      "Share your story, get professional AI-generated lyrics and music in minutes.",
+      "Create AI songs from prompts, lyrics, and simple ideas with vocals and instruments.",
     type: "website",
     url: baseUrl,
   },

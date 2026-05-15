@@ -13,7 +13,7 @@ type ResendError = {
 };
 
 const RESEND_API_URL = "https://api.resend.com/emails";
-const DEFAULT_FROM = "calyra-ai <noreply@calyra-ai.ai>";
+const DEFAULT_FROM = "Calyra AI <noreply@calyra-ai.ai>";
 
 function getFromAddress() {
   return process.env.RESEND_FROM_EMAIL ?? process.env.EMAIL_FROM ?? DEFAULT_FROM;
