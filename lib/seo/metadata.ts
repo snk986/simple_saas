@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { baseUrl } from "@/lib/i18n/urls";
 
-const defaultOgImageUrl = `${baseUrl}/og/hit-song-cover.png`;
+const defaultOgImageUrl = `${baseUrl}/og/calyra-ai-cover.png`;
 
 type BuildMarketingMetadataInput = {
   title: string;
@@ -26,7 +26,7 @@ export function buildMarketingMetadata({
     url: defaultOgImageUrl,
     width: 1536,
     height: 1024,
-    alt: "Hit-Song: Turn Your Story Into an AI Song",
+    alt: "calyra-ai: Turn Your Story Into an AI Song",
   };
 
   return {
@@ -38,7 +38,7 @@ export function buildMarketingMetadata({
       description,
       type: "website",
       url,
-      siteName: "Hit-Song",
+      siteName: "calyra-ai",
       locale,
       images: [defaultImage],
       ...openGraph,

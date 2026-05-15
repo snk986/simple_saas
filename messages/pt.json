@@ -273,9 +273,9 @@
   },
   "songPublic": {
     "seo": {
-      "title": "{title} - Musica {style} gerada com IA | Hit-Song",
-      "description": "Ou莽a \"{title}\", uma musica {style} gerada com IA e clima {mood}. {story} Crie sua propria musica com Hit-Song.",
-      "notFoundTitle": "Musica nao encontrada | Hit-Song",
+      "title": "{title} - Musica {style} gerada com IA | calyra-ai",
+      "description": "Ou莽a \"{title}\", uma musica {style} gerada com IA e clima {mood}. {story} Crie sua propria musica com calyra-ai.",
+      "notFoundTitle": "Musica nao encontrada | calyra-ai",
       "ogImageAlt": "Imagem de compartilhamento de {title}"
     },
     "previewLyrics": "Previa da letra",
@@ -338,7 +338,7 @@
     },
     "cta": {
       "title": "Transforme sua historia em uma musica",
-      "description": "Comece com uma memoria, clima ou mensagem. Hit-Song transforma isso em letras, audio e uma pagina publica pronta para compartilhar.",
+      "description": "Comece com uma memoria, clima ou mensagem. calyra-ai transforma isso em letras, audio e uma pagina publica pronta para compartilhar.",
       "create": "Criar minha propria musica",
       "copy": "Copiar link"
     },
@@ -526,8 +526,8 @@
   },
   "pricingPage": {
     "seo": {
-      "title": "Precos do Hit-Song - Planos para criar musicas com IA",
-      "description": "Escolha um plano do Hit-Song para criar letras, audio, relatorios de produtor e paginas publicas. Creditos nunca expiram."
+      "title": "Precos do calyra-ai - Planos para criar musicas com IA",
+      "description": "Escolha um plano do calyra-ai para criar letras, audio, relatorios de produtor e paginas publicas. Creditos nunca expiram."
     },
     "eyebrow": "Precos",
     "title": "Desbloqueie todo o seu potencial criativo",
@@ -606,9 +606,9 @@
         "subject": "Sua letra est谩 pronta para virar m煤sica",
         "preheader": "Transforme {songTitle} em 谩udio quando quiser.",
         "title": "D锚 som a {songTitle}",
-        "body": "Seu rascunho de letra est谩 esperando no Hit-Song. Volte para gerar o 谩udio e ouvir para onde a hist贸ria pode ir.",
+        "body": "Seu rascunho de letra est谩 esperando no calyra-ai. Volte para gerar o 谩udio e ouvir para onde a hist贸ria pode ir.",
         "cta": "Gerar 谩udio",
-        "footer": "Voc锚 recebeu este email porque come莽ou uma m煤sica no Hit-Song. Ignore se j谩 terminou."
+        "footer": "Voc锚 recebeu este email porque come莽ou uma m煤sica no calyra-ai. Ignore se j谩 terminou."
       },
       "ready_no_report": {
         "subject": "Sua m煤sica est谩 pronta para o relat贸rio de produtor",
@@ -616,7 +616,7 @@
         "title": "Veja o que funciona em {songTitle}",
         "body": "O 谩udio est谩 pronto. Gere o relat贸rio estilo produtor para revisar pontua莽玫es, notas de gancho e texto pronto para compartilhar.",
         "cta": "Ver relat贸rio",
-        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Hit-Song."
+        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no calyra-ai."
       },
       "report_no_share": {
         "subject": "O relat贸rio da sua m煤sica est谩 pronto para compartilhar",
@@ -624,15 +624,15 @@
         "title": "Compartilhe {songTitle} com algu茅m",
         "body": "Seu relat贸rio est谩 pronto, mas a m煤sica ainda n茫o foi compartilhada. Abra a p谩gina p煤blica e deixe algu茅m ouvir a faixa.",
         "cta": "Abrir p谩gina da m煤sica",
-        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Hit-Song."
+        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no calyra-ai."
       },
       "inactive_creator": {
         "subject": "Tem outra hist贸ria para virar m煤sica?",
-        "preheader": "Comece um novo Hit-Song a partir de uma mem贸ria ou clima.",
+        "preheader": "Comece um novo calyra-ai a partir de uma mem贸ria ou clima.",
         "title": "Sua pr贸xima m煤sica pode come莽ar com um detalhe",
         "body": "Faz algum tempo desde sua 煤ltima m煤sica finalizada. Volte com um sentimento, mem贸ria ou mensagem nova e transforme isso em algo para ouvir.",
         "cta": "Criar nova m煤sica",
-        "footer": "Voc锚 recebeu este email porque criou m煤sica no Hit-Song."
+        "footer": "Voc锚 recebeu este email porque criou m煤sica no calyra-ai."
       }
     }
   },
@@ -673,12 +673,12 @@
     },
     "privacy": {
       "seo": {
-        "title": "Privacy Policy | Hit-Song",
-        "description": "How Hit-Song collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+        "title": "Privacy Policy | calyra-ai",
+        "description": "How calyra-ai collects, uses, and protects personal data for account, payment, and AI song creation workflows."
       },
       "badge": "Privacy",
       "title": "Privacy Policy",
-      "subtitle": "This policy explains what data Hit-Song handles, why we handle it, and the choices you have.",
+      "subtitle": "This policy explains what data calyra-ai handles, why we handle it, and the choices you have.",
       "sections": [
         {
           "title": "Data we collect",
@@ -707,7 +707,7 @@
         {
           "title": "Third-party services",
           "body": [
-            "Hit-Song relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+            "calyra-ai relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
           ],
           "bullets": [
             "Hosting and database services",
@@ -731,17 +731,17 @@
     },
     "terms": {
       "seo": {
-        "title": "Terms of Service | Hit-Song",
-        "description": "Terms governing use of Hit-Song, including account responsibilities, generated content, credits, subscriptions, and limitations."
+        "title": "Terms of Service | calyra-ai",
+        "description": "Terms governing use of calyra-ai, including account responsibilities, generated content, credits, subscriptions, and limitations."
       },
       "badge": "Terms",
       "title": "Terms of Service",
-      "subtitle": "By using Hit-Song, you agree to these terms for account access, AI generation, and paid features.",
+      "subtitle": "By using calyra-ai, you agree to these terms for account access, AI generation, and paid features.",
       "sections": [
         {
           "title": "Service scope",
           "body": [
-            "Hit-Song provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+            "calyra-ai provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
           ]
         },
         {
@@ -758,7 +758,7 @@
         {
           "title": "Content and intellectual property",
           "body": [
-            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Hit-Song and its licensors retain rights in the platform, models, and infrastructure."
+            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. calyra-ai and its licensors retain rights in the platform, models, and infrastructure."
           ]
         },
         {
@@ -782,8 +782,8 @@
     },
     "refund": {
       "seo": {
-        "title": "Refund Policy | Hit-Song",
-        "description": "Refund eligibility, timelines, and process for Hit-Song credit purchases and subscriptions."
+        "title": "Refund Policy | calyra-ai",
+        "description": "Refund eligibility, timelines, and process for calyra-ai credit purchases and subscriptions."
       },
       "badge": "Refund",
       "title": "Refund Policy",
@@ -797,7 +797,7 @@
           "bullets": [
             "Request must be submitted within 7 calendar days",
             "Credits tied to the request must be unused",
-            "The purchase must be made through an official Hit-Song checkout flow"
+            "The purchase must be made through an official calyra-ai checkout flow"
           ]
         },
         {

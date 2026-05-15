@@ -17,7 +17,7 @@ const pillars = [
   {
     title: "Story-first songwriting",
     description:
-      "Hit-Song starts with the user's real memory, mood, or message, then turns it into structured lyrics with a clear emotional arc.",
+      "calyra-ai starts with the user's real memory, mood, or message, then turns it into structured lyrics with a clear emotional arc.",
     icon: FileText,
   },
   {
@@ -41,13 +41,13 @@ export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-              About Hit-Song
+              About calyra-ai
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-normal md:text-5xl">
               An AI music creation platform built around personal stories
             </h1>
             <p className="mt-5 text-lg leading-8 text-muted-foreground">
-              Hit-Song helps people turn emotions, memories, and messages into
+              calyra-ai helps people turn emotions, memories, and messages into
               lyrics, audio, and shareable song pages. The product is designed
               for creators who want a complete song workflow without starting
               from a blank studio session.
@@ -107,7 +107,7 @@ export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
             </div>
             <div className="space-y-5 text-base leading-8 text-muted-foreground">
               <p>
-                Many AI music tools stop at generation. Hit-Song connects the
+                Many AI music tools stop at generation. calyra-ai connects the
                 full path: capture the story, shape the lyric, generate audio,
                 evaluate the result, and publish a page that listeners and
                 search engines can understand.

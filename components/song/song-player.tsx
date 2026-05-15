@@ -77,7 +77,7 @@ export function SongPlayer({
     const nextProgress = audio.currentTime / audio.duration;
     setProgress(nextProgress);
     window.dispatchEvent(
-      new CustomEvent(`hit-song:timeupdate:${songId}`, {
+      new CustomEvent(`calyra-ai:timeupdate:${songId}`, {
         detail: {
           currentTime: audio.currentTime,
           duration: audio.duration,

@@ -5,11 +5,11 @@ const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
-  title: "Hit-Song — Turn Your Story Into a Hit Song",
+  title: "calyra-ai — Turn Your Story Into a Hit Song",
   description:
     "Share your story, get professional AI-generated lyrics and music in minutes.",
   openGraph: {
-    title: "Hit-Song",
+    title: "calyra-ai",
     description:
       "Share your story, get professional AI-generated lyrics and music in minutes.",
     type: "website",

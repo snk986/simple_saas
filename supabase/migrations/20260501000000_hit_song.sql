@@ -1,4 +1,4 @@
--- Hit-Song tables migration
+-- calyra-ai tables migration
 -- Run after existing init schema
 
 -- Songs table

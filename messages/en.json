@@ -273,9 +273,9 @@
   },
   "songPublic": {
     "seo": {
-      "title": "{title} - AI Generated {style} Song | Hit-Song",
-      "description": "Listen to \"{title}\", an AI-generated {style} song with a {mood} mood. {story} Create your own song with Hit-Song.",
-      "notFoundTitle": "Song not found | Hit-Song",
+      "title": "{title} - AI Generated {style} Song | calyra-ai",
+      "description": "Listen to \"{title}\", an AI-generated {style} song with a {mood} mood. {story} Create your own song with calyra-ai.",
+      "notFoundTitle": "Song not found | calyra-ai",
       "ogImageAlt": "{title} share image"
     },
     "previewLyrics": "Preview lyrics",
@@ -338,7 +338,7 @@
     },
     "cta": {
       "title": "Turn your story into a song",
-      "description": "Start with a memory, mood, or message. Hit-Song turns it into lyrics, audio, and a public page built for sharing.",
+      "description": "Start with a memory, mood, or message. calyra-ai turns it into lyrics, audio, and a public page built for sharing.",
       "create": "Create your own song",
       "copy": "Copy link"
     },
@@ -526,8 +526,8 @@
   },
   "pricingPage": {
     "seo": {
-      "title": "Hit-Song Pricing - AI Song Creation Plans",
-      "description": "Choose a Hit-Song plan for creating AI lyrics, audio, producer reports, and shareable public song pages. Credits never expire."
+      "title": "calyra-ai Pricing - AI Song Creation Plans",
+      "description": "Choose a calyra-ai plan for creating AI lyrics, audio, producer reports, and shareable public song pages. Credits never expire."
     },
     "eyebrow": "Pricing",
     "title": "Unlock Your Full Creative Potential",
@@ -616,12 +616,12 @@
     },
     "privacy": {
       "seo": {
-        "title": "Privacy Policy | Hit-Song",
-        "description": "How Hit-Song collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+        "title": "Privacy Policy | calyra-ai",
+        "description": "How calyra-ai collects, uses, and protects personal data for account, payment, and AI song creation workflows."
       },
       "badge": "Privacy",
       "title": "Privacy Policy",
-      "subtitle": "This policy explains what data Hit-Song handles, why we handle it, and the choices you have.",
+      "subtitle": "This policy explains what data calyra-ai handles, why we handle it, and the choices you have.",
       "sections": [
         {
           "title": "Data we collect",
@@ -650,7 +650,7 @@
         {
           "title": "Third-party services",
           "body": [
-            "Hit-Song relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+            "calyra-ai relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
           ],
           "bullets": [
             "Hosting and database services",
@@ -674,17 +674,17 @@
     },
     "terms": {
       "seo": {
-        "title": "Terms of Service | Hit-Song",
-        "description": "Terms governing use of Hit-Song, including account responsibilities, generated content, credits, subscriptions, and limitations."
+        "title": "Terms of Service | calyra-ai",
+        "description": "Terms governing use of calyra-ai, including account responsibilities, generated content, credits, subscriptions, and limitations."
       },
       "badge": "Terms",
       "title": "Terms of Service",
-      "subtitle": "By using Hit-Song, you agree to these terms for account access, AI generation, and paid features.",
+      "subtitle": "By using calyra-ai, you agree to these terms for account access, AI generation, and paid features.",
       "sections": [
         {
           "title": "Service scope",
           "body": [
-            "Hit-Song provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+            "calyra-ai provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
           ]
         },
         {
@@ -701,7 +701,7 @@
         {
           "title": "Content and intellectual property",
           "body": [
-            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Hit-Song and its licensors retain rights in the platform, models, and infrastructure."
+            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. calyra-ai and its licensors retain rights in the platform, models, and infrastructure."
           ]
         },
         {
@@ -725,8 +725,8 @@
     },
     "refund": {
       "seo": {
-        "title": "Refund Policy | Hit-Song",
-        "description": "Refund eligibility, timelines, and process for Hit-Song credit purchases and subscriptions."
+        "title": "Refund Policy | calyra-ai",
+        "description": "Refund eligibility, timelines, and process for calyra-ai credit purchases and subscriptions."
       },
       "badge": "Refund",
       "title": "Refund Policy",
@@ -740,7 +740,7 @@
           "bullets": [
             "Request must be submitted within 7 calendar days",
             "Credits tied to the request must be unused",
-            "The purchase must be made through an official Hit-Song checkout flow"
+            "The purchase must be made through an official calyra-ai checkout flow"
           ]
         },
         {
@@ -785,9 +785,9 @@
         "subject": "Your lyrics are ready for music",
         "preheader": "Turn {songTitle} into audio when you are ready.",
         "title": "Give {songTitle} its sound",
-        "body": "Your lyric draft is waiting in Hit-Song. Come back to generate audio and hear where the story can go next.",
+        "body": "Your lyric draft is waiting in calyra-ai. Come back to generate audio and hear where the story can go next.",
         "cta": "Generate audio",
-        "footer": "You are receiving this because you started a song on Hit-Song. You can ignore this email if you already finished it."
+        "footer": "You are receiving this because you started a song on calyra-ai. You can ignore this email if you already finished it."
       },
       "ready_no_report": {
         "subject": "Your song is ready for its producer report",
@@ -795,7 +795,7 @@
         "title": "See what works in {songTitle}",
         "body": "The audio is ready. Generate the producer-style report to review score dimensions, hook notes, and share-ready summary copy.",
         "cta": "View report",
-        "footer": "You are receiving this because you created a song on Hit-Song."
+        "footer": "You are receiving this because you created a song on calyra-ai."
       },
       "report_no_share": {
         "subject": "Your song report is ready to share",
@@ -803,15 +803,15 @@
         "title": "Share {songTitle} with someone",
         "body": "Your report is ready, but the song has not been shared yet. Open the public page and let someone hear the track.",
         "cta": "Open song page",
-        "footer": "You are receiving this because you created a song on Hit-Song."
+        "footer": "You are receiving this because you created a song on calyra-ai."
       },
       "inactive_creator": {
         "subject": "Have another story to turn into a song?",
-        "preheader": "Start a new Hit-Song from a fresh memory or mood.",
+        "preheader": "Start a new calyra-ai from a fresh memory or mood.",
         "title": "Your next song can start with one detail",
         "body": "It has been a little while since your last finished song. Come back with a new feeling, memory, or message and shape it into something playable.",
         "cta": "Create a new song",
-        "footer": "You are receiving this because you have created music on Hit-Song."
+        "footer": "You are receiving this because you have created music on calyra-ai."
       }
     }
   },

@@ -26,7 +26,7 @@ interface ReportPageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Song Report | Hit-Song",
+  title: "Song Report | calyra-ai",
   robots: {
     index: false,
     follow: false,

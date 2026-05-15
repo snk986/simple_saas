@@ -41,9 +41,9 @@ export function SongHeaderStats({
       }
     };
 
-    window.addEventListener("hit-song:metric", handler as EventListener);
+    window.addEventListener("calyra-ai:metric", handler as EventListener);
     return () => {
-      window.removeEventListener("hit-song:metric", handler as EventListener);
+      window.removeEventListener("calyra-ai:metric", handler as EventListener);
     };
   }, []);
 
@@ -56,7 +56,7 @@ export function SongHeaderStats({
 
   return (
     <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-bold text-white/80">
-      <strong className="text-white">Hit-Song AI</strong>
+      <strong className="text-white">calyra-ai AI</strong>
       {stats.map((item) => (
         <span
           key={item}

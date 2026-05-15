@@ -1,7 +1,7 @@
-# Hit-Song Project
+# calyra-ai Project
 
 ## 项目背景
-Hit-Song 是一个 AI 音乐创作平台，用户输入情绪/故事，生成歌词 + 音频 + 评判报告。
+calyra-ai 是一个 AI 音乐创作平台，用户输入情绪/故事，生成歌词 + 音频 + 评判报告。
 核心流程：输入故事 → 歌词生成（Claude）→ 音频生成（kie.ai Suno）→ 评判报告（Claude）→ 分享卡片
 
 ## 技术栈

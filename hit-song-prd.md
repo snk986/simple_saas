@@ -1,8 +1,8 @@
-# Hit-Song PRD
+# calyra-ai PRD
 ## 产品需求文档 v1.0
 
-**产品名称：** Hit-Song  
-**域名：** hit-song.ai  
+**产品名称：** calyra-ai  
+**域名：** calyra-ai.ai  
 **技术栈：** Next.js + Supabase + Vercel + Creem.io  
 **文档版本：** 2026年5月  
 
@@ -625,7 +625,7 @@ const generateCover = (style: Style) => {
 ```
 [AI生成的风格封面图]
 
-✦ Hit-Song
+✦ calyra-ai
 《She's Doing Fine》
 
 "那句'走那条路回家'
@@ -634,7 +634,7 @@ const generateCover = (style: Style) => {
 
 #都市夜晚  #情绪说唱  #真实系
 
-hit-song.ai
+calyra-ai.ai
 ```
 
 ### 风格标签体系
@@ -707,7 +707,7 @@ const tagMap = {
 ### Song落地页
 
 ```
-URL：https://hit-song.ai/song/{song_id}
+URL：https://calyra-ai.ai/song/{song_id}
 
 页面结构：
 - 音频播放器
@@ -797,7 +797,7 @@ OG image: 分享卡片图
 
 [继续创作 →]
 
-— Hit-Song 制作人团队
+— calyra-ai 制作人团队
 ```
 
 **无数据时的兜底文案**
@@ -930,7 +930,7 @@ const emailRateLimit = {
 
 ```
 每封邮件底部：
-"退订这类邮件 | 管理邮件偏好 | Hit-Song"
+"退订这类邮件 | 管理邮件偏好 | calyra-ai"
 
 退订后：
 - 停止所有营销邮件
@@ -998,7 +998,7 @@ const onAuthCallback = async (userId: string) => {
 ### 登录页面设计
 
 ```
-✦ Hit-Song
+✦ calyra-ai
 
 说出你的故事
 我来写成歌
@@ -1386,4 +1386,4 @@ Creem.io不可用   → 提示"支付系统维护中，请稍后再试"
 
 ---
 
-*Hit-Song PRD v1.0 — 2026年5月*
+*calyra-ai PRD v1.0 — 2026年5月*

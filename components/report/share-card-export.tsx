@@ -44,7 +44,7 @@ export function ShareCardExport({
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
       <Button asChild type="button" variant="outline" className="gap-2">
-        <a href={imageHref} download={`hit-song-${songId}.png`}>
+        <a href={imageHref} download={`calyra-ai-${songId}.png`}>
           <Download className="h-4 w-4" />
           {t("downloadShareCard")}
         </a>

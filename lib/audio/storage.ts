@@ -1,6 +1,6 @@
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
-const DEFAULT_BUCKET = "hit-song-media";
+const DEFAULT_BUCKET = "calyra-ai-media";
 
 function getBucketName() {
   return process.env.SUPABASE_MEDIA_BUCKET ?? DEFAULT_BUCKET;

@@ -4,7 +4,7 @@ import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 export const dynamic = "force-dynamic";
 
-const DEFAULT_BUCKET = "hit-song-media";
+const DEFAULT_BUCKET = "calyra-ai-media";
 const CLEANUP_BATCH_SIZE = 50;
 
 function getBucketName() {

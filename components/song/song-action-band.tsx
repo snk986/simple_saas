@@ -50,7 +50,7 @@ function emitMetric(type: "play" | "share" | "like") {
   if (typeof window === "undefined") {
     return;
   }
-  window.dispatchEvent(new CustomEvent("hit-song:metric", { detail: { type } }));
+  window.dispatchEvent(new CustomEvent("calyra-ai:metric", { detail: { type } }));
 }
 
 export function SongActionBand({
@@ -149,7 +149,7 @@ export function SongActionBand({
     const nextProgress = audio.currentTime / audio.duration;
     setProgress(nextProgress);
     window.dispatchEvent(
-      new CustomEvent(`hit-song:timeupdate:${songId}`, {
+      new CustomEvent(`calyra-ai:timeupdate:${songId}`, {
         detail: {
           currentTime: audio.currentTime,
           duration: audio.duration,
