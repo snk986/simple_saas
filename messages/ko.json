@@ -638,6 +638,8 @@
     }
   },
   "authErrors": {
+    "oauthProviderNotEnabled": "Google sign-in is temporarily unavailable. Please use email sign-in.",
+    "oauthConfigInvalid": "Google sign-in is temporarily misconfigured. Please try again later or use email sign-in.",
     "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
     "emailAlreadyRegistered": "이미 등록된 이메일입니다.",
     "emailNotConfirmed": "로그인 전에 이메일 인증을 완료해 주세요.",

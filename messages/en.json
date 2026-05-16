@@ -823,6 +823,8 @@
     "emailNotConfirmed": "Please verify your email before signing in.",
     "rateLimited": "Too many attempts. Please try again later.",
     "forgotPasswordFailed": "We couldn't send the reset email. Please try again later.",
+    "oauthProviderNotEnabled": "Google sign-in is temporarily unavailable. Please use email sign-in.",
+    "oauthConfigInvalid": "Google sign-in is temporarily misconfigured. Please try again later or use email sign-in.",
     "generic": "Something went wrong. Please try again."
   },
   "errors": {

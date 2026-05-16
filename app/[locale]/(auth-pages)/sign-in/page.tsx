@@ -10,6 +10,7 @@ import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
+import { mapOAuthErrorToKey } from "@/lib/auth/error-map";
 import Link from "next/link";
 
 type SignInSearchParams = Message & {
@@ -98,7 +99,7 @@ export default async function Login(props: {
     });
 
     if (error) {
-      return encodedRedirect("error", signInPath, error.message);
+      return encodedRedirect("error", signInPath, mapOAuthErrorToKey(error));
     }
 
     if (data.url) {

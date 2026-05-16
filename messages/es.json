@@ -643,6 +643,8 @@
     "emailNotConfirmed": "Verifica tu correo antes de iniciar sesion.",
     "rateLimited": "Demasiados intentos. Intentalo de nuevo mas tarde.",
     "forgotPasswordFailed": "No pudimos enviar el correo de restablecimiento. Intentalo mas tarde.",
+    "oauthProviderNotEnabled": "El inicio de sesion con Google no esta disponible temporalmente. Usa el inicio por correo.",
+    "oauthConfigInvalid": "El inicio de sesion con Google esta mal configurado temporalmente. Intentalo mas tarde o usa correo.",
     "generic": "Ocurrio un error. Intentalo de nuevo."
   },
   "errors": {

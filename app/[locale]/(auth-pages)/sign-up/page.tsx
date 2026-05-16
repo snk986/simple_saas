@@ -10,6 +10,7 @@ import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
+import { mapOAuthErrorToKey } from "@/lib/auth/error-map";
 import Link from "next/link";
 
 function localePrefix(locale: Locale) {
@@ -78,7 +79,7 @@ export default async function SignUp(props: {
     });
 
     if (error) {
-      return encodedRedirect("error", signUpPath, error.message);
+      return encodedRedirect("error", signUpPath, mapOAuthErrorToKey(error));
     }
 
     if (data.url) {

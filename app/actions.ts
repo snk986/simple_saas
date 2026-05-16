@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
+import { mapAuthErrorToKey } from "@/lib/auth/error-map";
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
@@ -27,36 +28,6 @@ function safeRedirectPath(value: FormDataEntryValue | null) {
   }
 
   return path;
-}
-
-function mapAuthErrorToKey(error: { message?: string; code?: string }) {
-  const message = (error.message ?? "").toLowerCase();
-  const code = (error.code ?? "").toLowerCase();
-
-  if (
-    code.includes("invalid_credentials") ||
-    message.includes("invalid login credentials")
-  ) {
-    return "authErrors.invalidCredentials";
-  }
-
-  if (
-    code.includes("email_exists") ||
-    message.includes("user already registered") ||
-    message.includes("already registered")
-  ) {
-    return "authErrors.emailAlreadyRegistered";
-  }
-
-  if (code.includes("email_not_confirmed") || message.includes("email not confirmed")) {
-    return "authErrors.emailNotConfirmed";
-  }
-
-  if (code.includes("over_request_rate_limit") || message.includes("rate limit")) {
-    return "authErrors.rateLimited";
-  }
-
-  return "authErrors.generic";
 }
 
 export const signUpAction = async (formData: FormData) => {

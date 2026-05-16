@@ -643,6 +643,8 @@
     "emailNotConfirmed": "Verifique seu email antes de entrar.",
     "rateLimited": "Muitas tentativas. Tente novamente mais tarde.",
     "forgotPasswordFailed": "Nao foi possivel enviar o email de redefinicao. Tente novamente mais tarde.",
+    "oauthProviderNotEnabled": "O login com Google esta temporariamente indisponivel. Use login por email.",
+    "oauthConfigInvalid": "O login com Google esta temporariamente mal configurado. Tente mais tarde ou use email.",
     "generic": "Algo deu errado. Tente novamente."
   },
   "errors": {
