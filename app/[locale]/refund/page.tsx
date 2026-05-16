@@ -71,6 +71,7 @@ export default async function RefundPage({ params }: RefundPageProps) {
       contactBody={common("contactBody")}
       contactCtaLabel={common("contactCta")}
       contactCtaHref="/pricing"
+      contactEmailLabel={common("contactEmailLabel")}
     />
   );
 }

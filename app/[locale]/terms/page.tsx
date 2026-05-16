@@ -71,6 +71,7 @@ export default async function TermsPage({ params }: TermsPageProps) {
       contactBody={common("contactBody")}
       contactCtaLabel={common("contactCta")}
       contactCtaHref="/pricing"
+      contactEmailLabel={common("contactEmailLabel")}
     />
   );
 }

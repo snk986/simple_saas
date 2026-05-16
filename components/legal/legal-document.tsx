@@ -21,6 +21,7 @@ type LegalDocumentProps = {
   contactBody: string;
   contactCtaLabel: string;
   contactCtaHref: string;
+  contactEmailLabel?: string;
 };
 
 export function LegalDocument({
@@ -38,6 +39,7 @@ export function LegalDocument({
   contactBody,
   contactCtaLabel,
   contactCtaHref,
+  contactEmailLabel = "Email support",
 }: LegalDocumentProps) {
   return (
     <div className="bg-background">
@@ -109,13 +111,19 @@ export function LegalDocument({
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               {contactBody}
             </p>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <Link
                 href={contactCtaHref}
                 className="inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 {contactCtaLabel}
               </Link>
+              <a
+                href="mailto:support@calyraai.com"
+                className="text-sm text-primary underline-offset-4 hover:underline"
+              >
+                {contactEmailLabel}
+              </a>
             </div>
           </section>
         </div>

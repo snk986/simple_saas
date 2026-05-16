@@ -71,6 +71,7 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
       contactBody={common("contactBody")}
       contactCtaLabel={common("contactCta")}
       contactCtaHref="/create"
+      contactEmailLabel={common("contactEmailLabel")}
     />
   );
 }

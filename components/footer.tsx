@@ -26,6 +26,10 @@ export function Footer() {
         { label: t("refund"), href: "/refund" },
       ],
     },
+    {
+      title: t("contact"),
+      links: [{ label: "support@calyraai.com", href: "mailto:support@calyraai.com" }],
+    },
   ];
 
   return (

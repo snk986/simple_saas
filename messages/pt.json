@@ -27,6 +27,7 @@
     "privacy": "Privacidade",
     "terms": "Termos",
     "refund": "Refund",
+    "contact": "Contact",
     "gallery": "Galeria",
     "styles": "Estilos",
     "create": "Criar"
@@ -663,8 +664,9 @@
       "lastUpdated": "May 13, 2026",
       "relatedTitle": "Related legal pages",
       "contactTitle": "Need help?",
-      "contactBody": "For questions about these policies or your account, contact support from your dashboard or reach out through our support channel.",
+      "contactBody": "For questions about these policies or your account, contact support at support@calyraai.com or through your dashboard support channel.",
       "contactCta": "Go to pricing",
+      "contactEmailLabel": "Email support",
       "links": {
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
