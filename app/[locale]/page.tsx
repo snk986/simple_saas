@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { HeroGeneratorForm } from "@/components/home/hero-generator-form";
 import {
   ArrowRight,
   Car,
-  CheckCircle2,
   CirclePlay,
   Coffee,
   FileText,
@@ -24,7 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
-import { locales, type Locale } from "@/i18n/routing";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
 interface HomePageProps {
@@ -142,6 +142,13 @@ export function generateStaticParams() {
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations("home");
+  const createPath = locale === defaultLocale ? "/create" : `/${locale}/create`;
+  const signInPath =
+    locale === defaultLocale ? "/sign-in" : `/${locale}/sign-in`;
+  const pricingPath =
+    locale === defaultLocale ? "/pricing" : `/${locale}/pricing`;
+  const heroText = (key: string, fallback: string) =>
+    t.has(`hero.${key}`) ? t(`hero.${key}`) : fallback;
 
   const styleCards = [
     {
@@ -186,13 +193,6 @@ export default async function Home({ params }: HomePageProps) {
     },
   ];
 
-  const templates = ["genre", "lyrics", "useCase"].map((key) => ({
-    type: t(`templates.items.${key}.type`),
-    title: t(`templates.items.${key}.title`),
-    description: t(`templates.items.${key}.description`),
-    prompt: t(`templates.items.${key}.prompt`),
-  }));
-
   const useCases = [
     { icon: Youtube, label: t("commercial.uses.youtube") },
     { icon: Play, label: t("commercial.uses.tiktok") },
@@ -206,18 +206,6 @@ export default async function Home({ params }: HomePageProps) {
     number: index + 1,
     title: t(`steps.${key}.title`),
     description: t(`steps.${key}.description`),
-  }));
-
-  const benefits = [
-    "skills",
-    "vocals",
-    "prompts",
-    "creators",
-    "genres",
-    "publish",
-  ].map((key) => ({
-    title: t(`benefits.items.${key}.title`),
-    description: t(`benefits.items.${key}.description`),
   }));
 
   const priceCards = ["free", "basic", "pro"].map((key) => ({
@@ -274,53 +262,63 @@ export default async function Home({ params }: HomePageProps) {
         className="relative border-b border-white/10 bg-[radial-gradient(circle_at_18%_-4%,rgba(139,92,246,0.26),transparent_34%),radial-gradient(circle_at_82%_4%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_50%_42%,rgba(219,39,119,0.09),transparent_31%),linear-gradient(180deg,#07070b_0%,#050509_46%,#030306_100%)] py-12 md:py-20"
       >
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.65),transparent_70%)]" />
-        <div className="container relative grid gap-10 px-4 md:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)] lg:items-center">
+        <div className="container relative px-4 md:px-6">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-slate-200 shadow-2xl shadow-black/20">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.9)]" />
               {t("eyebrow")}
             </div>
-            <h1 className="max-w-4xl text-5xl font-black leading-none tracking-normal text-white md:text-7xl lg:text-8xl">
+            <h1 className="max-w-4xl text-5xl font-black leading-none tracking-normal text-white md:text-7xl">
               {t("hero.title")}
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
               {t("hero.subtitle")}
             </p>
 
-            <div className="mt-8 grid max-w-3xl gap-3 rounded-[28px] border border-white/20 bg-white/[0.07] p-2 shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur sm:grid-cols-[1fr_auto]">
-              <input
-                aria-label={t("hero.promptLabel")}
-                className="min-h-14 rounded-2xl bg-transparent px-4 text-sm text-white outline-none placeholder:text-slate-500"
-                placeholder={t("hero.placeholder")}
-              />
-              <Button
-                asChild
-                size="lg"
-                className="h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 px-6 text-base font-black text-white shadow-[0_22px_56px_rgba(139,92,246,0.25)] hover:brightness-110"
-              >
-                <Link href="/create">
-                  {t("hero.primaryCta")}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 rounded-2xl border-white/15 bg-white/[0.06] px-5 font-bold text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href="#gallery">{t("hero.galleryCta")}</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 rounded-2xl border-white/15 bg-white/[0.06] px-5 font-bold text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href="#templates">{t("hero.templatesCta")}</Link>
-              </Button>
-            </div>
+            <HeroGeneratorForm
+              createPath={createPath}
+              signInPath={signInPath}
+              pricingPath={pricingPath}
+              locale={locale}
+              modeTextLabel={heroText("modeText", "Text to Song")}
+              modeLyricsLabel={heroText("modeLyrics", "Lyrics to Song")}
+              promptLabel={t("hero.promptLabel")}
+              textPlaceholder={heroText(
+                "textPlaceholder",
+                "Describe the song you want to create, such as mood, genre, story, vocal, and instruments...",
+              )}
+              lyricsPlaceholder={heroText(
+                "lyricsPlaceholder",
+                "Paste your lyrics here and choose a style to turn them into a complete song...",
+              )}
+              styleLabel={heroText("styleLabel", "Style")}
+              stylePlaceholder={heroText(
+                "stylePlaceholder",
+                "Pop, emotional female vocal, cinematic drums",
+              )}
+              styleDefault={heroText(
+                "styleDefault",
+                "Pop, emotional female vocal, cinematic drums",
+              )}
+              titleLabel={heroText("titleLabel", "Title")}
+              titlePlaceholder={heroText("titlePlaceholder", "My AI Song")}
+              titleDefault={heroText("titleDefault", "My AI Song")}
+              submitLabel={t("hero.primaryCta")}
+              styleTags={[
+                "Pop",
+                "Rap",
+                "Rock",
+                "EDM",
+                "Anime",
+                "Lo-fi",
+                "Country",
+                "Cinematic",
+                "Sad",
+                "Happy",
+                "Female Vocal",
+                "Male Vocal",
+              ]}
+            />
 
             <div className="mt-6 flex flex-wrap gap-2.5">
               {["vocals", "prompt", "lyrics", "free"].map((key) => (
@@ -331,40 +329,6 @@ export default async function Home({ params }: HomePageProps) {
                   {t(`proof.${key}`)}
                 </span>
               ))}
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-[36px] border border-white/20 bg-white/[0.07] p-5 shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur">
-            <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-violet-500/40 blur-2xl" />
-            <div className="relative h-64 overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_28%_22%,rgba(255,255,255,0.32),transparent_16%),radial-gradient(circle_at_70%_32%,rgba(34,211,238,0.36),transparent_19%),linear-gradient(135deg,#27105e_0%,#64194d_52%,#0b5361_100%)] md:h-72">
-              <span className="absolute left-5 top-5 z-10 rounded-full border border-white/20 bg-black/35 px-3 py-2 text-xs font-semibold text-slate-200 backdrop-blur">
-                {t("player.badge")}
-              </span>
-              <span className="absolute bottom-6 right-7 z-10 h-32 w-32 animate-spin rounded-full border border-white/20 bg-[radial-gradient(circle,rgba(255,255,255,0.88)_0_5px,transparent_6px),repeating-radial-gradient(circle,rgba(255,255,255,0.22)_0_2px,rgba(255,255,255,0.04)_2px_8px),rgba(0,0,0,0.24)] [animation-duration:14s]" />
-            </div>
-            <div className="mt-5 flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-black tracking-normal">
-                  {t("player.title")}
-                </h2>
-                <p className="mt-1 text-sm text-slate-400">
-                  {t("player.meta")}
-                </p>
-              </div>
-              <button
-                aria-label={t("player.play")}
-                className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white text-black shadow-2xl shadow-white/10"
-              >
-                <Play className="h-5 w-5 fill-current" />
-              </button>
-            </div>
-            <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
-              <span>0:58</span>
-              <span>{t("player.madeWith")}</span>
-              <span>2:34</span>
-            </div>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-              <div className="h-full w-[48%] rounded-full bg-gradient-to-r from-violet-500 via-pink-600 to-cyan-400" />
             </div>
           </div>
         </div>
@@ -424,29 +388,24 @@ export default async function Home({ params }: HomePageProps) {
       </MarketingSection>
 
       <MarketingSection
-        id="templates"
-        eyebrow={t("templates.eyebrow")}
-        title={t("templates.title")}
-        description={t("templates.subtitle")}
+        eyebrow={t("howItWorks.eyebrow")}
+        title={t("howItWorks.title")}
       >
-        <div className="grid gap-5 lg:grid-cols-3">
-          {templates.map((item) => (
+        <div className="grid gap-5 md:grid-cols-3">
+          {steps.map((step) => (
             <article
-              key={item.type}
+              key={step.number}
               className="rounded-[26px] border border-white/10 bg-white/[0.055] p-6"
             >
-              <span className="rounded-full border border-violet-300/20 bg-violet-300/10 px-3 py-2 text-xs font-black uppercase text-violet-200">
-                {item.type}
-              </span>
-              <h3 className="mt-5 text-xl font-black tracking-normal">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                {item.description}
-              </p>
-              <div className="mt-5 min-h-32 rounded-2xl border border-white/10 bg-white/[0.055] p-4 text-sm leading-7 text-slate-200">
-                {item.prompt}
+              <div className="mb-5 grid h-10 w-10 place-items-center rounded-xl bg-white text-base font-black text-black">
+                {step.number}
               </div>
+              <h3 className="text-xl font-black tracking-normal">
+                {step.title}
+              </h3>
+              <p className="mt-2 leading-7 text-slate-400">
+                {step.description}
+              </p>
             </article>
           ))}
         </div>
@@ -497,53 +456,6 @@ export default async function Home({ params }: HomePageProps) {
         </div>
       </section>
 
-      <MarketingSection
-        eyebrow={t("howItWorks.eyebrow")}
-        title={t("howItWorks.title")}
-      >
-        <div className="grid gap-5 md:grid-cols-3">
-          {steps.map((step) => (
-            <article
-              key={step.number}
-              className="rounded-[26px] border border-white/10 bg-white/[0.055] p-6"
-            >
-              <div className="mb-5 grid h-10 w-10 place-items-center rounded-xl bg-white text-base font-black text-black">
-                {step.number}
-              </div>
-              <h3 className="text-xl font-black tracking-normal">
-                {step.title}
-              </h3>
-              <p className="mt-2 leading-7 text-slate-400">
-                {step.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </MarketingSection>
-
-      <MarketingSection
-        eyebrow={t("benefits.eyebrow")}
-        title={t("benefits.title")}
-        description={t("benefits.subtitle")}
-      >
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {benefits.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-[26px] border border-white/10 bg-white/[0.055] p-6"
-            >
-              <CheckCircle2 className="mb-4 h-6 w-6 text-emerald-300" />
-              <h3 className="text-xl font-black tracking-normal">
-                {item.title}
-              </h3>
-              <p className="mt-2 leading-7 text-slate-400">
-                {item.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </MarketingSection>
-
       <section className="bg-[#050509] py-16">
         <div className="container px-4 md:px-6">
           <div className="rounded-[38px] border border-white/20 bg-[radial-gradient(circle_at_20%_18%,rgba(219,39,119,0.18),transparent_26%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.24),transparent_30%),rgba(255,255,255,0.058)] px-6 py-14 text-center shadow-[0_34px_120px_rgba(0,0,0,0.52)]">
@@ -588,16 +500,6 @@ export default async function Home({ params }: HomePageProps) {
         </div>
       </section>
 
-      <MarketingSection
-        eyebrow={t("seoBlock.eyebrow")}
-        title={t("seoBlock.title")}
-      >
-        <div className="columns-1 rounded-[30px] border border-white/10 bg-white/[0.035] p-6 leading-8 text-slate-400 md:columns-2 md:gap-10 md:p-8">
-          <p>{t("seoBlock.p1")}</p>
-          <p className="mt-6 md:mt-0">{t("seoBlock.p2")}</p>
-        </div>
-      </MarketingSection>
-
       <section id="faq" className="bg-[#050509] py-16">
         <div className="container px-4 md:px-6">
           <div className="mb-8 flex items-center gap-3">
@@ -630,6 +532,22 @@ export default async function Home({ params }: HomePageProps) {
                 </div>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#050509] pb-16">
+        <div className="container px-4 md:px-6">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 md:px-6">
+            <h2 className="text-base font-bold text-slate-100">
+              {t("seoBlock.title")}
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-slate-400 line-clamp-2">
+              {t("seoBlock.p1")}
+            </p>
+            <p className="mt-2 text-sm leading-7 text-slate-400 line-clamp-2">
+              {t("seoBlock.p2")}
+            </p>
           </div>
         </div>
       </section>

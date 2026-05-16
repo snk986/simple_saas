@@ -56,16 +56,52 @@ interface StoryInputProps {
   initialDraft?: InitialDraft | null;
   recallCampaign?: string | null;
   canDownload: boolean;
+  initialPrompt?: string | null;
+  initialStyle?: string | null;
+  initialTitle?: string | null;
+  initialMode?: "text" | "lyrics";
+  initialJobId?: string | null;
+}
+
+interface GenerationJobPayload {
+  jobId: string;
+  songId: string;
+  taskId?: string | null;
+  status: "idle" | "processing" | "completed" | "failed";
+  title: string;
+  lyrics: string;
+  userInput: string;
+  style_key: string;
+  style_params: StyleParams;
+  style_tags: string[];
+  audio_url?: string | null;
+  cover_url?: string | null;
+  altSongId?: string | null;
+  alt_audio_url?: string | null;
+  alt_cover_url?: string | null;
 }
 
 export function StoryInput({
   initialDraft,
   recallCampaign,
   canDownload,
+  initialPrompt,
+  initialStyle,
+  initialTitle,
+  initialMode = "text",
+  initialJobId,
 }: StoryInputProps) {
   const t = useTranslations();
   const { toast } = useToast();
   const params = useParams<{ locale?: string }>();
+  const starterText = [
+    initialMode === "lyrics" ? "Mode: Lyrics to Song" : "Mode: Text to Song",
+    initialTitle?.trim() ? `Title: ${initialTitle.trim()}` : null,
+    initialStyle?.trim() ? `Style: ${initialStyle.trim()}` : null,
+    initialPrompt?.trim() ? `Prompt: ${initialPrompt.trim()}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
   const [story, setStory] = useState(initialDraft?.userInput ?? "");
   const [result, setResult] = useState<LyricsResult | null>(
     initialDraft
@@ -96,6 +132,7 @@ export function StoryInput({
   const lastLyricsSubmitAtRef = useRef(0);
   const pollInFlightRef = useRef(false);
   const autoResumeAttemptedRef = useRef(false);
+  const jobBootstrapDoneRef = useRef(false);
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
@@ -343,6 +380,102 @@ export function StoryInput({
       pollInFlightRef.current = false;
     }
   }
+
+  useEffect(() => {
+    if (initialDraft || initialJobId) {
+      return;
+    }
+
+    if (starterText && !story.trim()) {
+      setStory(starterText);
+    }
+  }, [initialDraft, starterText, story]);
+
+  useEffect(() => {
+    if (!initialJobId || jobBootstrapDoneRef.current) {
+      return;
+    }
+
+    jobBootstrapDoneRef.current = true;
+
+    void (async () => {
+      try {
+        const response = await fetch(
+          `/api/generations/${encodeURIComponent(initialJobId)}`,
+          {
+            cache: "no-store",
+          },
+        );
+        const data = (await response.json()) as GenerationJobPayload & {
+          error?: string;
+        };
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            setError(t("errors.authRequired"));
+            setErrorAction("sign-in");
+            return;
+          }
+          throw new Error(data.error ?? t("errors.generationFailed"));
+        }
+
+        setStory(data.userInput ?? "");
+        setResult({
+          songId: data.songId,
+          title: data.title,
+          lyrics: data.lyrics,
+          style_key: data.style_key,
+          style_params: data.style_params,
+          style_tags: data.style_tags,
+          lyrics_regen_count: 1,
+        });
+        setEditableLyrics(data.lyrics ?? "");
+
+        if (data.status === "completed") {
+          setAudioStatus("completed");
+          setAudioResult({
+            songId: data.songId,
+            taskId: data.taskId ?? undefined,
+            audio_url: data.audio_url ?? null,
+            cover_url: data.cover_url ?? null,
+            altSongId: data.altSongId ?? null,
+            alt_audio_url: data.alt_audio_url ?? null,
+            alt_cover_url: data.alt_cover_url ?? null,
+          });
+          updateGenerationUrlParams(data.songId, null);
+          return;
+        }
+
+        if (data.status === "processing") {
+          setAudioStatus("processing");
+          setAudioResult({
+            songId: data.songId,
+            taskId: data.taskId ?? undefined,
+          });
+          setElapsedSeconds(0);
+          updateGenerationUrlParams(data.songId, data.taskId ?? null);
+          await pollAudioStatus(data.songId, data.taskId ?? undefined);
+          return;
+        }
+
+        if (data.status === "failed") {
+          setAudioStatus("failed");
+          setAudioResult(null);
+          updateGenerationUrlParams(data.songId, null);
+        }
+      } catch (caught) {
+        const message =
+          caught instanceof Error ? caught.message : t("errors.generationFailed");
+        setAudioStatus("idle");
+        setAudioResult(null);
+        toast({
+          variant: "destructive",
+          description: message,
+          duration: 1000,
+        });
+      }
+    })();
+  }, [initialJobId, t, toast]);
 
   return (
     <>

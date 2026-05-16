@@ -45,7 +45,15 @@
       "placeholder": "试试：一首关于夏日回忆的怀旧 J-pop，女声，大合唱",
       "primaryCta": "免费生成歌曲",
       "galleryCta": "试听示例",
-      "templatesCta": "提示词模板"
+      "templatesCta": "提示词模板",
+      "modeText": "Text to Song",
+      "modeLyrics": "Lyrics to Song",
+      "styleLabel": "Style",
+      "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
+      "styleDefault": "Pop, emotional female vocal, cinematic drums",
+      "titleLabel": "Title",
+      "titlePlaceholder": "My AI Song",
+      "titleDefault": "My AI Song"
     },
     "proof": {
       "vocals": "人声 + 乐器",
@@ -148,16 +156,16 @@
     },
     "steps": {
       "idea": {
-        "title": "输入你的想法",
-        "description": "描述情绪、类型、歌词、故事、人声风格或使用场景。"
+        "title": "Describe your song",
+        "description": "Share your idea, mood, story, or lyrics to start the song."
       },
       "generate": {
-        "title": "生成歌曲",
-        "description": "Calyra AI 根据提示词生成带人声和乐器的歌曲方向。"
+        "title": "Choose a style",
+        "description": "Pick a genre and vocal direction that matches your idea."
       },
       "download": {
-        "title": "下载并使用",
-        "description": "将生成的音乐用于视频、社交媒体、播客或创意项目。"
+        "title": "Generate and download",
+        "description": "Create your song, preview it, and download when ready."
       }
     },
     "benefits": {

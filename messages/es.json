@@ -45,7 +45,15 @@
       "placeholder": "Try: A nostalgic J-pop song about summer memories, female vocal, huge chorus",
       "primaryCta": "Generar cancion gratis",
       "galleryCta": "Listen to Examples",
-      "templatesCta": "Prompt Templates"
+      "templatesCta": "Prompt Templates",
+      "modeText": "Text to Song",
+      "modeLyrics": "Lyrics to Song",
+      "styleLabel": "Style",
+      "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
+      "styleDefault": "Pop, emotional female vocal, cinematic drums",
+      "titleLabel": "Title",
+      "titlePlaceholder": "My AI Song",
+      "titleDefault": "My AI Song"
     },
     "proof": {
       "vocals": "Vocals + instruments",
@@ -148,16 +156,16 @@
     },
     "steps": {
       "idea": {
-        "title": "Enter your idea",
-        "description": "Describe the mood, genre, lyrics, story, vocal style, or use case."
+        "title": "Describe your song",
+        "description": "Share your idea, mood, story, or lyrics to start the song."
       },
       "generate": {
-        "title": "Generate your song",
-        "description": "Calyra AI creates a song direction with vocals and instruments based on your prompt."
+        "title": "Choose a style",
+        "description": "Pick a genre and vocal direction that matches your idea."
       },
       "download": {
-        "title": "Download and use it",
-        "description": "Use your generated music for videos, social media, podcasts, or creative projects."
+        "title": "Generate and download",
+        "description": "Create your song, preview it, and download when ready."
       }
     },
     "benefits": {

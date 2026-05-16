@@ -12,6 +12,11 @@ interface CreatePageProps {
     ref?: string;
     utm_campaign?: string;
     upgraded?: string;
+    mode?: string;
+    prompt?: string;
+    style?: string;
+    title?: string;
+    jobId?: string;
   }>;
 }
 
@@ -103,6 +108,11 @@ export default async function CreatePage({
         initialDraft={initialDraft}
         recallCampaign={query.utm_campaign ?? null}
         canDownload={canDownload}
+        initialPrompt={query.prompt ?? null}
+        initialStyle={query.style ?? null}
+        initialTitle={query.title ?? null}
+        initialMode={query.mode === "lyrics" ? "lyrics" : "text"}
+        initialJobId={query.jobId ?? null}
       />
     </div>
   );
