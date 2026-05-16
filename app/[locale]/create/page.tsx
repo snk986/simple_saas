@@ -20,6 +20,21 @@ interface CreatePageProps {
   }>;
 }
 
+interface InitialWorkspaceSong {
+  id: string;
+  title: string;
+  user_input: string;
+  style_tags: string[] | null;
+  status: "draft" | "generating" | "ready" | "failed" | "expired";
+  is_public: boolean;
+  cover_url: string | null;
+  audio_url: string | null;
+  created_at: string;
+  audio_provider: string;
+  audio_provider_task_id: string;
+  like_count: number | null;
+}
+
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
 }
@@ -60,6 +75,7 @@ export default async function CreatePage({
 
   const shouldResumeDraft = query.ref === "song" && Boolean(query.id);
   let initialDraft = null;
+  let initialWorkspaceSongs: InitialWorkspaceSong[] = [];
 
   if (shouldResumeDraft) {
     if (!user) {
@@ -94,6 +110,19 @@ export default async function CreatePage({
     };
   }
 
+  if (user) {
+    const { data: songs } = await supabase
+      .from("songs")
+      .select(
+        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,audio_provider,audio_provider_task_id,like_count",
+      )
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    initialWorkspaceSongs = (songs ?? []) as InitialWorkspaceSong[];
+  }
+
   return (
     <div className="container px-4 py-8 md:px-6 md:py-12">
       {query.upgraded === "true" && (
@@ -108,11 +137,13 @@ export default async function CreatePage({
         initialDraft={initialDraft}
         recallCampaign={query.utm_campaign ?? null}
         canDownload={canDownload}
+        creditsBalance={entitlements?.creditsBalance ?? 0}
         initialPrompt={query.prompt ?? null}
         initialStyle={query.style ?? null}
         initialTitle={query.title ?? null}
         initialMode={query.mode === "lyrics" ? "lyrics" : "text"}
         initialJobId={query.jobId ?? null}
+        initialWorkspaceSongs={initialWorkspaceSongs}
       />
     </div>
   );

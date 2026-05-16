@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Wand2 } from "lucide-react";
+import {
+  Download,
+  Heart,
+  MoreHorizontal,
+  Play,
+  Search,
+  SlidersHorizontal,
+  Wand2,
+} from "lucide-react";
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -16,30 +23,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { AudioPlayer } from "./audio-player";
-import { GenerationStatus } from "./generation-status";
-import { LyricsEditor } from "./lyrics-editor";
 import type { StyleParams } from "@/types/song";
-
-interface LyricsResult {
-  songId: string;
-  title: string;
-  lyrics: string;
-  style_key: string;
-  style_params: StyleParams;
-  style_tags: string[];
-  lyrics_regen_count: number;
-}
-
-interface AudioResult {
-  taskId?: string;
-  songId: string;
-  audio_url?: string | null;
-  cover_url?: string | null;
-  altSongId?: string | null;
-  alt_audio_url?: string | null;
-  alt_cover_url?: string | null;
-}
 
 interface InitialDraft {
   songId: string;
@@ -56,11 +40,52 @@ interface StoryInputProps {
   initialDraft?: InitialDraft | null;
   recallCampaign?: string | null;
   canDownload: boolean;
+  creditsBalance: number;
   initialPrompt?: string | null;
   initialStyle?: string | null;
   initialTitle?: string | null;
   initialMode?: "text" | "lyrics";
   initialJobId?: string | null;
+  initialWorkspaceSongs: Array<{
+    id: string;
+    title: string;
+    user_input: string;
+    style_tags: string[] | null;
+    status: "draft" | "generating" | "ready" | "failed" | "expired";
+    is_public: boolean;
+    cover_url: string | null;
+    audio_url: string | null;
+    created_at: string;
+    audio_provider: string;
+    audio_provider_task_id: string;
+    like_count: number | null;
+  }>;
+}
+
+type WorkspaceSongStatus = "draft" | "processing" | "completed" | "failed";
+type WorkspaceFilter = "all" | "liked" | "public" | "uploads";
+
+interface WorkspaceSongItem {
+  id: string;
+  title: string;
+  promptSummary: string;
+  styleSummary: string;
+  status: WorkspaceSongStatus;
+  isPublic: boolean;
+  coverUrl: string | null;
+  audioUrl: string | null;
+  modelTag: string;
+  versionTag: string;
+  liked: boolean;
+  createdAt: string;
+  taskId?: string | null;
+}
+
+interface GenerationCreateResponse {
+  jobId: string;
+  songId: string;
+  taskId: string;
+  status: "processing";
 }
 
 interface GenerationJobPayload {
@@ -69,413 +94,339 @@ interface GenerationJobPayload {
   taskId?: string | null;
   status: "idle" | "processing" | "completed" | "failed";
   title: string;
-  lyrics: string;
   userInput: string;
-  style_key: string;
-  style_params: StyleParams;
   style_tags: string[];
   audio_url?: string | null;
   cover_url?: string | null;
-  altSongId?: string | null;
-  alt_audio_url?: string | null;
-  alt_cover_url?: string | null;
+}
+
+const STYLE_TAGS = [
+  "Pop",
+  "Rap",
+  "Rock",
+  "EDM",
+  "Anime",
+  "Lo-fi",
+  "Country",
+  "Cinematic",
+  "Sad",
+  "Happy",
+  "Female Vocal",
+  "Male Vocal",
+];
+
+function normalizeStatus(
+  status: "draft" | "generating" | "ready" | "failed" | "expired",
+): WorkspaceSongStatus {
+  if (status === "ready") return "completed";
+  if (status === "generating") return "processing";
+  if (status === "failed" || status === "expired") return "failed";
+  return "draft";
+}
+
+function formatDuration(seconds: number | null) {
+  if (!seconds || Number.isNaN(seconds)) {
+    return "--:--";
+  }
+  const total = Math.max(0, Math.floor(seconds));
+  const mm = String(Math.floor(total / 60)).padStart(2, "0");
+  const ss = String(total % 60).padStart(2, "0");
+  return `${mm}:${ss}`;
 }
 
 export function StoryInput({
   initialDraft,
-  recallCampaign,
   canDownload,
+  creditsBalance,
   initialPrompt,
   initialStyle,
   initialTitle,
   initialMode = "text",
   initialJobId,
+  initialWorkspaceSongs,
 }: StoryInputProps) {
-  const t = useTranslations();
   const { toast } = useToast();
   const params = useParams<{ locale?: string }>();
-  const starterText = [
-    initialMode === "lyrics" ? "Mode: Lyrics to Song" : "Mode: Text to Song",
-    initialTitle?.trim() ? `Title: ${initialTitle.trim()}` : null,
-    initialStyle?.trim() ? `Style: ${initialStyle.trim()}` : null,
-    initialPrompt?.trim() ? `Prompt: ${initialPrompt.trim()}` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
-  const [story, setStory] = useState(initialDraft?.userInput ?? "");
-  const [result, setResult] = useState<LyricsResult | null>(
-    initialDraft
-      ? {
-          songId: initialDraft.songId,
-          title: initialDraft.title,
-          lyrics: initialDraft.lyrics,
-          style_key: initialDraft.style_key,
-          style_params: initialDraft.style_params,
-          style_tags: initialDraft.style_tags,
-          lyrics_regen_count: initialDraft.lyrics_regen_count,
-        }
-      : null,
-  );
-  const [editableLyrics, setEditableLyrics] = useState(
-    initialDraft?.lyrics ?? "",
-  );
-  const [error, setError] = useState("");
-  const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
-    null,
-  );
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [audioStatus, setAudioStatus] = useState<
-    "idle" | "processing" | "completed" | "failed" | "timeout"
-  >("idle");
-  const [audioResult, setAudioResult] = useState<AudioResult | null>(null);
-  const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const lastLyricsSubmitAtRef = useRef(0);
-  const pollInFlightRef = useRef(false);
-  const autoResumeAttemptedRef = useRef(false);
-  const jobBootstrapDoneRef = useRef(false);
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
-  const updateGenerationUrlParams = (
-    songId: string | null,
-    taskId: string | null,
-  ) => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const url = new URL(window.location.href);
-
-    if (songId) {
-      url.searchParams.set("songId", songId);
-    } else {
-      url.searchParams.delete("songId");
-    }
-
-    if (taskId) {
-      url.searchParams.set("taskId", taskId);
-    } else {
-      url.searchParams.delete("taskId");
-    }
-
-    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
-  };
+  const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
+  const [panelMode, setPanelMode] = useState<"simple" | "advanced">("simple");
+  const [prompt, setPrompt] = useState(initialPrompt ?? initialDraft?.userInput ?? "");
+  const [style, setStyle] = useState(initialStyle ?? "");
+  const [title, setTitle] = useState(initialTitle ?? initialDraft?.title ?? "My AI Song");
+  const [instrumental, setInstrumental] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
+    null,
+  );
+  const [workspaceSongs, setWorkspaceSongs] = useState<WorkspaceSongItem[]>([]);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<WorkspaceFilter>("all");
+  const [durations, setDurations] = useState<Record<string, number | null>>({});
 
   useEffect(() => {
-    if (audioStatus !== "processing") {
+    const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.map((song) => ({
+      id: song.id,
+      title: song.title,
+      promptSummary: song.user_input,
+      styleSummary: (song.style_tags ?? []).join(", "),
+      status: normalizeStatus(song.status),
+      isPublic: Boolean(song.is_public),
+      coverUrl: song.cover_url,
+      audioUrl: song.audio_url,
+      modelTag: (song.audio_provider ?? "kie").toUpperCase(),
+      versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
+      liked: (song.like_count ?? 0) > 0,
+      createdAt: song.created_at,
+      taskId: song.audio_provider_task_id,
+    }));
+    setWorkspaceSongs(mapped);
+  }, [initialWorkspaceSongs]);
+
+  useEffect(() => {
+    if (!initialJobId) return;
+    const exists = workspaceSongs.some((song) => song.id === initialJobId);
+    if (exists) return;
+
+    void (async () => {
+      const response = await fetch(`/api/generations/${encodeURIComponent(initialJobId)}`);
+      if (!response.ok) return;
+      const data = (await response.json()) as GenerationJobPayload;
+      setWorkspaceSongs((current) => [
+        {
+          id: data.songId,
+          title: data.title,
+          promptSummary: data.userInput,
+          styleSummary: (data.style_tags ?? []).join(", "),
+          status:
+            data.status === "completed"
+              ? "completed"
+              : data.status === "failed"
+                ? "failed"
+                : "processing",
+          isPublic: true,
+          coverUrl: data.cover_url ?? null,
+          audioUrl: data.audio_url ?? null,
+          modelTag: "KIE",
+          versionTag: "V1",
+          liked: false,
+          createdAt: new Date().toISOString(),
+          taskId: data.taskId ?? null,
+        },
+        ...current,
+      ]);
+    })();
+  }, [initialJobId, workspaceSongs]);
+
+  useEffect(() => {
+    const processingSongs = workspaceSongs.filter((song) => song.status === "processing");
+    if (processingSongs.length === 0) {
       return;
     }
 
     const timer = window.setInterval(() => {
-      setElapsedSeconds((current) => current + 1);
-    }, 1000);
+      processingSongs.forEach((song) => {
+        void (async () => {
+          const response = await fetch(`/api/generations/${encodeURIComponent(song.id)}`, {
+            cache: "no-store",
+          });
+          if (!response.ok) return;
+          const data = (await response.json()) as GenerationJobPayload;
+          setWorkspaceSongs((current) =>
+            current.map((item) =>
+              item.id !== song.id
+                ? item
+                : {
+                    ...item,
+                    status:
+                      data.status === "completed"
+                        ? "completed"
+                        : data.status === "failed"
+                          ? "failed"
+                          : "processing",
+                    audioUrl: data.audio_url ?? item.audioUrl,
+                    coverUrl: data.cover_url ?? item.coverUrl,
+                  },
+            ),
+          );
+        })();
+      });
+    }, 3000);
 
     return () => window.clearInterval(timer);
-  }, [audioStatus]);
+  }, [workspaceSongs]);
 
   useEffect(() => {
-    if (autoResumeAttemptedRef.current || typeof window === "undefined") {
-      return;
-    }
+    workspaceSongs.forEach((song) => {
+      if (!song.audioUrl || song.id in durations) return;
+      const audio = new Audio(song.audioUrl);
+      audio.preload = "metadata";
+      const onLoaded = () => {
+        setDurations((current) => ({ ...current, [song.id]: audio.duration }));
+      };
+      const onError = () => {
+        setDurations((current) => ({ ...current, [song.id]: null }));
+      };
+      audio.addEventListener("loadedmetadata", onLoaded);
+      audio.addEventListener("error", onError);
+      audio.load();
+    });
+  }, [workspaceSongs, durations]);
 
-    autoResumeAttemptedRef.current = true;
-    const url = new URL(window.location.href);
-    const songId = url.searchParams.get("songId");
-    const taskId = url.searchParams.get("taskId");
+  const filteredSongs = useMemo(() => {
+    const searchLower = search.trim().toLowerCase();
+    return workspaceSongs
+      .filter((song) => {
+        if (filter === "liked" && !song.liked) return false;
+        if (filter === "public" && !song.isPublic) return false;
+        if (filter === "uploads") return true;
+        return true;
+      })
+      .filter((song) => {
+        if (!searchLower) return true;
+        return (
+          song.title.toLowerCase().includes(searchLower) ||
+          song.promptSummary.toLowerCase().includes(searchLower) ||
+          song.styleSummary.toLowerCase().includes(searchLower)
+        );
+      })
+      .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  }, [filter, search, workspaceSongs]);
 
-    if (!songId || pollInFlightRef.current) {
-      return;
-    }
-
-    setError("");
-    setErrorAction(null);
-    setElapsedSeconds(0);
-    setAudioStatus("processing");
-    setAudioResult({ songId, taskId: taskId ?? undefined });
-    void pollAudioStatus(songId, taskId ?? undefined).catch((caught) => {
-      const message = caught instanceof Error ? caught.message : "";
-      setAudioStatus("idle");
-      setAudioResult(null);
-      updateGenerationUrlParams(null, null);
+  const submitGeneration = async () => {
+    if (!prompt.trim() || prompt.trim().length < 10) {
       toast({
         variant: "destructive",
-        description:
-          message === "GENERATION_FAILED_WITH_REFUND"
-            ? t("errors.generationFailedWithRefund")
-            : t("errors.generationFailed"),
-        duration: 1000,
+        description: "Please provide more details before generating.",
       });
-    });
-  }, []);
-
-  async function submitLyrics() {
-    const now = Date.now();
-    if (now - lastLyricsSubmitAtRef.current < 1200) {
-      return;
-    }
-    lastLyricsSubmitAtRef.current = now;
-
-    const trimmedStory = story.trim();
-
-    if (!trimmedStory || trimmedStory.length < 10) {
-      setError(t("create.inputTooShort"));
       return;
     }
 
-    setError("");
-    setErrorAction(null);
-    setIsGenerating(true);
-
+    setIsSubmitting(true);
     try {
-      const songId = result?.songId;
-      const response = await fetch("/api/generate/lyrics", {
+      const response = await fetch("/api/generations", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          userInput: trimmedStory,
+          mode,
+          prompt,
+          style,
+          title,
           locale: params.locale ?? "en",
-          songId,
-          currentLyrics: songId ? editableLyrics : undefined,
+          instrumental,
+          panelMode,
         }),
       });
-      const data = await response.json();
 
-      if (!response.ok) {
-        if (response.status === 401) {
-          setError(t("errors.authRequired"));
-          setErrorAction("sign-in");
-          return;
-        }
-
-        throw new Error(data.error ?? t("errors.generationFailed"));
+      if (response.status === 401) {
+        setErrorAction("sign-in");
+        return;
       }
 
-      setResult(data);
-      setEditableLyrics(data.lyrics);
-      setAudioStatus("idle");
-      setAudioResult(null);
-      setElapsedSeconds(0);
+      if (response.status === 402) {
+        setErrorAction("pricing");
+        return;
+      }
+
+      const data = (await response.json()) as GenerationCreateResponse & {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Generation failed");
+      }
+
+      const optimistic: WorkspaceSongItem = {
+        id: data.jobId,
+        title: title.trim() || "Untitled Song",
+        promptSummary: prompt,
+        styleSummary: style,
+        status: "processing",
+        isPublic: true,
+        coverUrl: null,
+        audioUrl: null,
+        modelTag: "KIE",
+        versionTag: "V1",
+        liked: false,
+        createdAt: new Date().toISOString(),
+        taskId: data.taskId,
+      };
+
+      setWorkspaceSongs((current) => [optimistic, ...current.filter((song) => song.id !== optimistic.id)]);
+
+      if (typeof window !== "undefined") {
+        const url = new URL(window.location.href);
+        url.searchParams.set("jobId", data.jobId);
+        window.history.replaceState({}, "", `${url.pathname}${url.search}`);
+      }
     } catch (caught) {
-      const message =
-        caught instanceof Error ? caught.message : t("errors.generationFailed");
-      setError(
-        message === "Content flagged" ? t("errors.contentFlagged") : message,
-      );
+      toast({
+        variant: "destructive",
+        description:
+          caught instanceof Error ? caught.message : "Generation failed",
+      });
     } finally {
-      setIsGenerating(false);
+      setIsSubmitting(false);
     }
-  }
+  };
 
-  async function generateMusic() {
-    if (!result) {
-      return;
-    }
-
-    setError("");
-    setErrorAction(null);
-    setElapsedSeconds(0);
-    setAudioStatus("processing");
-    setAudioResult(null);
-
+  const retrySong = async (song: WorkspaceSongItem) => {
     try {
+      const job = await fetch(`/api/generations/${encodeURIComponent(song.id)}`, {
+        cache: "no-store",
+      });
+      if (!job.ok) {
+        throw new Error("Failed to load song for retry");
+      }
+      const detail = (await job.json()) as GenerationJobPayload & { lyrics?: string };
       const response = await fetch("/api/generate/audio", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          songId: result.songId,
-          lyrics: editableLyrics,
+          songId: song.id,
+          lyrics: detail.lyrics,
         }),
       });
       const data = await response.json();
-
+      if (response.status === 402) {
+        setErrorAction("pricing");
+        return;
+      }
       if (!response.ok) {
-        if (response.status === 401) {
-          setError(t("errors.authRequired"));
-          setErrorAction("sign-in");
-          setAudioStatus("idle");
-          return;
-        }
-
-        if (response.status === 402) {
-          setError(t("errors.insufficientCredits"));
-          setErrorAction("pricing");
-          setAudioStatus("idle");
-          return;
-        }
-
-        throw new Error(data.error ?? "Audio generation failed");
+        throw new Error(data.error ?? "Retry failed");
       }
 
-      setAudioResult({ songId: data.songId, taskId: data.taskId });
-      updateGenerationUrlParams(data.songId, data.taskId);
-      await pollAudioStatus(data.songId, data.taskId);
+      setWorkspaceSongs((current) =>
+        current.map((item) =>
+          item.id === song.id
+            ? { ...item, status: "processing", taskId: data.taskId ?? item.taskId }
+            : item,
+        ),
+      );
     } catch (caught) {
-      const message = caught instanceof Error ? caught.message : "";
-      setErrorAction(null);
-      setAudioStatus("idle");
-      setAudioResult(null);
-      updateGenerationUrlParams(null, null);
       toast({
         variant: "destructive",
-        description:
-          message === "GENERATION_FAILED_WITH_REFUND"
-            ? t("errors.generationFailedWithRefund")
-            : t("errors.generationFailed"),
-        duration: 1000,
+        description: caught instanceof Error ? caught.message : "Retry failed",
       });
     }
-  }
+  };
 
-  async function pollAudioStatus(songId: string, taskId?: string) {
-    if (pollInFlightRef.current) {
+  const appendStyleTag = (tag: string) => {
+    const next = style.trim();
+    if (!next) {
+      setStyle(tag);
       return;
     }
-
-    pollInFlightRef.current = true;
-
-    try {
-      for (let attempt = 0; attempt < 40; attempt += 1) {
-        const query = taskId
-          ? `songId=${encodeURIComponent(songId)}&taskId=${encodeURIComponent(taskId)}`
-          : `songId=${encodeURIComponent(songId)}`;
-        const response = await fetch(`/api/generate/audio/status?${query}`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error ?? "Failed to check audio status");
-        }
-
-        if (data.status === "completed") {
-          setAudioResult({
-            songId,
-            taskId,
-            audio_url: data.audio_url,
-            cover_url: data.cover_url,
-            altSongId: data.altSongId,
-            alt_audio_url: data.alt_audio_url,
-            alt_cover_url: data.alt_cover_url,
-          });
-          setAudioStatus("completed");
-          updateGenerationUrlParams(songId, null);
-          return;
-        }
-
-        if (data.status === "failed") {
-          updateGenerationUrlParams(songId, null);
-          throw new Error("GENERATION_FAILED_WITH_REFUND");
-        }
-
-        await new Promise((resolve) => window.setTimeout(resolve, 3000));
-      }
-
-      setAudioResult(null);
-      setAudioStatus("idle");
-      updateGenerationUrlParams(null, null);
-      toast({
-        variant: "destructive",
-        description: t("errors.generationFailed"),
-        duration: 1000,
-      });
-    } finally {
-      pollInFlightRef.current = false;
+    const exists = next
+      .toLowerCase()
+      .split(",")
+      .map((part) => part.trim())
+      .includes(tag.toLowerCase());
+    if (!exists) {
+      setStyle(`${next}, ${tag}`);
     }
-  }
-
-  useEffect(() => {
-    if (initialDraft || initialJobId) {
-      return;
-    }
-
-    if (starterText && !story.trim()) {
-      setStory(starterText);
-    }
-  }, [initialDraft, starterText, story]);
-
-  useEffect(() => {
-    if (!initialJobId || jobBootstrapDoneRef.current) {
-      return;
-    }
-
-    jobBootstrapDoneRef.current = true;
-
-    void (async () => {
-      try {
-        const response = await fetch(
-          `/api/generations/${encodeURIComponent(initialJobId)}`,
-          {
-            cache: "no-store",
-          },
-        );
-        const data = (await response.json()) as GenerationJobPayload & {
-          error?: string;
-        };
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            setError(t("errors.authRequired"));
-            setErrorAction("sign-in");
-            return;
-          }
-          throw new Error(data.error ?? t("errors.generationFailed"));
-        }
-
-        setStory(data.userInput ?? "");
-        setResult({
-          songId: data.songId,
-          title: data.title,
-          lyrics: data.lyrics,
-          style_key: data.style_key,
-          style_params: data.style_params,
-          style_tags: data.style_tags,
-          lyrics_regen_count: 1,
-        });
-        setEditableLyrics(data.lyrics ?? "");
-
-        if (data.status === "completed") {
-          setAudioStatus("completed");
-          setAudioResult({
-            songId: data.songId,
-            taskId: data.taskId ?? undefined,
-            audio_url: data.audio_url ?? null,
-            cover_url: data.cover_url ?? null,
-            altSongId: data.altSongId ?? null,
-            alt_audio_url: data.alt_audio_url ?? null,
-            alt_cover_url: data.alt_cover_url ?? null,
-          });
-          updateGenerationUrlParams(data.songId, null);
-          return;
-        }
-
-        if (data.status === "processing") {
-          setAudioStatus("processing");
-          setAudioResult({
-            songId: data.songId,
-            taskId: data.taskId ?? undefined,
-          });
-          setElapsedSeconds(0);
-          updateGenerationUrlParams(data.songId, data.taskId ?? null);
-          await pollAudioStatus(data.songId, data.taskId ?? undefined);
-          return;
-        }
-
-        if (data.status === "failed") {
-          setAudioStatus("failed");
-          setAudioResult(null);
-          updateGenerationUrlParams(data.songId, null);
-        }
-      } catch (caught) {
-        const message =
-          caught instanceof Error ? caught.message : t("errors.generationFailed");
-        setAudioStatus("idle");
-        setAudioResult(null);
-        toast({
-          variant: "destructive",
-          description: message,
-          duration: 1000,
-        });
-      }
-    })();
-  }, [initialJobId, t, toast]);
+  };
 
   return (
     <>
@@ -484,17 +435,16 @@ export function StoryInput({
         onOpenChange={(open) => {
           if (!open) {
             setErrorAction(null);
-            setError("");
           }
         }}
       >
         <DialogContent className="max-w-md rounded-lg border-border bg-card p-6">
           <DialogHeader>
-            <DialogTitle>{t("errors.actionNeeded")}</DialogTitle>
+            <DialogTitle>Action needed</DialogTitle>
             <DialogDescription>
               {errorAction === "sign-in"
-                ? t("errors.authRequiredDescription")
-                : t("errors.insufficientCreditsDescription")}
+                ? "Please sign in before generating music."
+                : "Your credits are too low for this generation."}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -506,103 +456,256 @@ export function StoryInput({
                     : `${localePrefix}/pricing`
                 }
               >
-                {errorAction === "sign-in"
-                  ? t("errors.signInToCreate")
-                  : t("errors.topUpCredits")}
+                {errorAction === "sign-in" ? "Sign in" : "Top up credits"}
               </Link>
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(280px,420px)_1fr]">
-        <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
-          <div className="mb-4">
-            <h1 className="text-3xl font-semibold tracking-normal">
-              {t("create.title")}
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t("create.subtitle")}
-            </p>
+      <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
+        <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
+          <div className="mb-4 flex items-center justify-between">
+            <h1 className="text-xl font-semibold">Song Generator</h1>
+            <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+              Credits {creditsBalance}
+            </span>
           </div>
 
-          {recallCampaign === "inactive_creator" ? (
-            <div className="mb-4 rounded-md border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-foreground">
-              {t("create.recall.inactiveCreator")}
-            </div>
-          ) : null}
+          <div className="mb-4 inline-flex rounded-lg border border-border p-1">
+            <button
+              type="button"
+              onClick={() => setPanelMode("simple")}
+              className={`rounded-md px-3 py-1.5 text-sm ${panelMode === "simple" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+            >
+              Simple
+            </button>
+            <button
+              type="button"
+              onClick={() => setPanelMode("advanced")}
+              className={`rounded-md px-3 py-1.5 text-sm ${panelMode === "advanced" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+            >
+              Advanced
+            </button>
+          </div>
 
-          {initialDraft ? (
-            <div className="mb-4 rounded-md border border-sky-500/30 bg-sky-500/10 px-3 py-2 text-sm text-sky-100">
-              {t("create.recall.draftNoAudio")}
-            </div>
-          ) : null}
+          <div className="mb-4 inline-flex rounded-lg border border-border p-1">
+            <button
+              type="button"
+              onClick={() => setMode("text")}
+              className={`rounded-md px-3 py-1.5 text-sm ${mode === "text" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
+            >
+              Text to Song
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("lyrics")}
+              className={`rounded-md px-3 py-1.5 text-sm ${mode === "lyrics" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
+            >
+              Lyrics to Song
+            </button>
+          </div>
 
           <Textarea
-            value={story}
-            maxLength={2000}
-            onChange={(event) => setStory(event.target.value)}
-            placeholder={t("create.inputPlaceholder")}
-            className="min-h-[260px] resize-y text-base leading-7"
+            value={prompt}
+            onChange={(event) => setPrompt(event.target.value)}
+            placeholder={
+              mode === "lyrics"
+                ? "Paste your lyrics here..."
+                : "Describe the song you want to create..."
+            }
+            className="min-h-[180px] w-full resize-y text-sm"
           />
-          <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-            <span>{t("create.inputHint")}</span>
-            <span>{story.length}/2000</span>
+
+          <input
+            value={style}
+            onChange={(event) => setStyle(event.target.value)}
+            placeholder="Style"
+            className="mt-3 h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none"
+          />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {STYLE_TAGS.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => appendStyleTag(tag)}
+                className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs"
+              >
+                {tag}
+              </button>
+            ))}
           </div>
 
-          {error && !errorAction ? (
-            <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              <p>{error}</p>
-            </div>
-          ) : null}
+          <input
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            placeholder="Title"
+            className="mt-3 h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none"
+          />
+
+          <label className="mt-4 flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={instrumental}
+              onChange={(event) => setInstrumental(event.target.checked)}
+            />
+            Instrumental
+          </label>
 
           <Button
             type="button"
             size="lg"
-            disabled={isGenerating || audioStatus === "processing"}
-            onClick={() => submitLyrics()}
+            disabled={isSubmitting}
+            onClick={submitGeneration}
             className="mt-5 w-full gap-2"
           >
-            <Wand2
-              className={isGenerating ? "h-4 w-4 animate-pulse" : "h-4 w-4"}
-            />
-            {isGenerating ? t("create.generating") : t("create.generateLyrics")}
+            <Wand2 className={`h-4 w-4 ${isSubmitting ? "animate-pulse" : ""}`} />
+            {isSubmitting ? "Generating..." : "Generate Song"}
           </Button>
-        </section>
+        </aside>
 
-        {result ? (
-          <div className="grid gap-6">
-            <LyricsEditor
-              title={result.title}
-              lyrics={editableLyrics}
-              styleTags={result.style_tags}
-              styleParams={result.style_params}
-              isGeneratingMusic={audioStatus === "processing"}
-              onLyricsChange={setEditableLyrics}
-              onGenerateMusic={generateMusic}
-            />
-            <GenerationStatus
-              status={audioStatus}
-              elapsedSeconds={elapsedSeconds}
-            />
-            {audioResult?.audio_url && audioStatus === "completed" ? (
-              <AudioPlayer
-                songId={audioResult.songId}
-                title={result.title}
-                coverUrl={audioResult.cover_url}
-                audioUrl={audioResult.audio_url}
-                altSongId={audioResult.altSongId}
-                altAudioUrl={audioResult.alt_audio_url}
-                altCoverUrl={audioResult.alt_cover_url}
-                canDownload={canDownload}
+        <section className="rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">
+          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="relative w-full md:max-w-md">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search songs"
+                className="h-10 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none"
               />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-xs text-muted-foreground">
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                Sort: Newest
+              </span>
+              {(["all", "liked", "public", "uploads"] as WorkspaceFilter[]).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setFilter(item)}
+                  className={`rounded-md border px-2.5 py-1 text-xs ${
+                    filter === item
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border text-muted-foreground"
+                  }`}
+                >
+                  {item === "all"
+                    ? "All"
+                    : item === "liked"
+                      ? "Liked"
+                      : item === "public"
+                        ? "Public"
+                        : "Uploads"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {filteredSongs.map((song) => (
+              <article
+                key={song.id}
+                className="rounded-lg border border-border bg-muted/20 p-3"
+              >
+                <div className="flex gap-3">
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
+                    {song.coverUrl ? (
+                      <img src={song.coverUrl} alt={song.title} className="h-full w-full object-cover" />
+                    ) : null}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="truncate text-sm font-semibold">{song.title}</h3>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[11px] ${
+                          song.status === "completed"
+                            ? "bg-emerald-500/15 text-emerald-300"
+                            : song.status === "failed"
+                              ? "bg-red-500/15 text-red-300"
+                              : "bg-amber-500/15 text-amber-300"
+                        }`}
+                      >
+                        {song.status}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      {song.modelTag} · {song.versionTag} · {formatDuration(durations[song.id] ?? null)}
+                    </p>
+                    <p className="mt-1 truncate text-xs text-muted-foreground">
+                      {song.styleSummary || song.promptSummary}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={!song.audioUrl}
+                  >
+                    <Play className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      if (!song.isPublic || song.status !== "completed") return;
+                      void fetch(`/api/song/${song.id}/count`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ event: "like" }),
+                        keepalive: true,
+                      });
+                      setWorkspaceSongs((current) =>
+                        current.map((item) =>
+                          item.id === song.id ? { ...item, liked: true } : item,
+                        ),
+                      );
+                    }}
+                  >
+                    <Heart className={`h-3.5 w-3.5 ${song.liked ? "fill-current" : ""}`} />
+                  </Button>
+                  {song.audioUrl && canDownload ? (
+                    <Button asChild type="button" size="sm" variant="outline">
+                      <a href={song.audioUrl} download>
+                        <Download className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button type="button" size="sm" variant="outline" disabled>
+                      <Download className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
+                  <Button asChild type="button" size="sm" variant="outline">
+                    <Link href={`/report/${song.id}`}>Report</Link>
+                  </Button>
+                  {song.status === "failed" ? (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => retrySong(song)}
+                    >
+                      Retry
+                    </Button>
+                  ) : null}
+                  <Button type="button" size="sm" variant="outline">
+                    <MoreHorizontal className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              </article>
+            ))}
+
+            {filteredSongs.length === 0 ? (
+              <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+                No songs found.
+              </div>
             ) : null}
           </div>
-        ) : (
-          <section className="flex min-h-[560px] items-center justify-center rounded-lg border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
-            {t("create.emptyState")}
-          </section>
-        )}
+        </section>
       </div>
     </>
   );
