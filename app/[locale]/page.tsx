@@ -264,10 +264,6 @@ export default async function Home({ params }: HomePageProps) {
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.65),transparent_70%)]" />
         <div className="container relative px-4 md:px-6">
           <div className="mx-auto max-w-5xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-slate-200 shadow-2xl shadow-black/20">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.9)]" />
-              {t("eyebrow")}
-            </div>
             <h1 className="mx-auto max-w-4xl text-5xl font-black leading-none tracking-normal text-white md:text-7xl">
               {t("hero.title")}
             </h1>
@@ -320,7 +316,7 @@ export default async function Home({ params }: HomePageProps) {
               ]}
             />
 
-            <div className="mt-6 flex flex-wrap gap-2.5">
+            <div className="mt-6 flex flex-wrap justify-center gap-2.5">
               {["vocals", "prompt", "lyrics", "free"].map((key) => (
                 <span
                   key={key}
@@ -350,8 +346,8 @@ export default async function Home({ params }: HomePageProps) {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#050509] to-transparent md:w-24" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#050509] to-transparent md:w-24" />
           <div className="flex w-max gap-4 pb-2 [animation:music-scroll_52s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
-            {[...gallerySongs, ...gallerySongs].map((song, index) => (
-              <GalleryCard key={`${song.key}-${index}`} song={song} />
+            {gallerySongs.map((song) => (
+              <GalleryCard key={song.key} song={song} />
             ))}
           </div>
         </div>
