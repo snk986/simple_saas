@@ -121,7 +121,7 @@ export function HeroGeneratorForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-8 max-w-4xl rounded-[30px] border border-white/20 bg-white/[0.07] p-5 shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur"
+      className="mx-auto mt-8 max-w-4xl rounded-[30px] border border-white/20 bg-white/[0.07] p-5 shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur"
     >
       <input type="hidden" name="mode" value={mode} />
 

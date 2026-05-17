@@ -259,7 +259,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
               {t("creditPacksSubtitle")}
             </p>
           </div>
-          <div className="mt-8 grid max-w-5xl gap-4 mx-auto lg:grid-cols-3">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-4 lg:grid-cols-2">
             {CREDIT_PACKS.map((pack, index) => {
               const key = creditPackKeys[index];
               return (
