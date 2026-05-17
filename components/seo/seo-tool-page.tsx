@@ -64,31 +64,15 @@ export function SeoToolPage({
 }: SeoToolPageProps) {
   return (
     <div className="bg-background">
-      <section className="border-b bg-muted/30 py-12 md:py-16">
-        <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(380px,0.72fr)] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-              {eyebrow}
-            </p>
-            <h1 className="mt-3 max-w-3xl text-4xl font-bold leading-tight tracking-normal md:text-5xl">
-              {title}
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-              {description}
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="gap-2">
-                <Link href={primaryHref}>
-                  {primaryCta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href={secondaryHref}>{secondaryCta}</Link>
-              </Button>
-            </div>
+      <section className="border-b bg-muted/30 py-8 md:py-12">
+        <div className="container px-4 md:px-6">
+          <div className="sr-only">
+            <p>{eyebrow}</p>
+            <h1>{title}</h1>
+            <p>{description}</p>
+            <a href={secondaryHref}>{secondaryCta}</a>
           </div>
-          {form}
+          <div className="mx-auto max-w-3xl">{form}</div>
         </div>
       </section>
 
