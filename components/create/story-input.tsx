@@ -14,15 +14,11 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  ActionNeededDialog,
+  type ActionNeededType,
+} from "@/components/create/action-needed-dialog";
 
 interface StoryInputProps {
   recallCampaign?: string | null;
@@ -147,9 +143,7 @@ export function StoryInput({
   const [title, setTitle] = useState(initialTitle ?? "My AI Song");
   const [instrumental, setInstrumental] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
-    null,
-  );
+  const [errorAction, setErrorAction] = useState<ActionNeededType | null>(null);
   const [workspaceSongs, setWorkspaceSongs] = useState<WorkspaceSongItem[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
@@ -468,38 +462,11 @@ export function StoryInput({
 
   return (
     <>
-      <Dialog
-        open={Boolean(errorAction)}
-        onOpenChange={(open) => {
-          if (!open) {
-            setErrorAction(null);
-          }
-        }}
-      >
-        <DialogContent className="max-w-md rounded-lg border-border bg-card p-6">
-          <DialogHeader>
-            <DialogTitle>Action needed</DialogTitle>
-            <DialogDescription>
-              {errorAction === "sign-in"
-                ? "Please sign in before generating music."
-                : "Your credits are too low for this generation."}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button asChild className="w-full sm:w-auto">
-              <Link
-                href={
-                  errorAction === "sign-in"
-                    ? `${localePrefix}/sign-in`
-                    : `${localePrefix}/pricing`
-                }
-              >
-                {errorAction === "sign-in" ? "Sign in" : "Top up credits"}
-              </Link>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ActionNeededDialog
+        action={errorAction}
+        localePrefix={localePrefix}
+        onClose={() => setErrorAction(null)}
+      />
 
       <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
         <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">

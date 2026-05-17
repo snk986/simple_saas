@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, FileText, Loader2 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
+import {
+  ActionNeededDialog,
+  type ActionNeededType,
+} from "@/components/create/action-needed-dialog";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import type { StyleParams } from "@/types/song";
 
@@ -58,12 +62,14 @@ export function LyricsOnlyGeneratorForm({
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<LyricsResponse | null>(null);
   const [isGeneratingSong, setIsGeneratingSong] = useState(false);
+  const [errorAction, setErrorAction] = useState<ActionNeededType | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsSubmitting(true);
     setNeedsSignIn(false);
+    setErrorAction(null);
     setError(null);
 
     try {
@@ -110,6 +116,7 @@ export function LyricsOnlyGeneratorForm({
 
     setIsGeneratingSong(true);
     setNeedsSignIn(false);
+    setErrorAction(null);
     setError(null);
 
     try {
@@ -132,7 +139,12 @@ export function LyricsOnlyGeneratorForm({
       };
 
       if (response.status === 401) {
-        setNeedsSignIn(true);
+        setErrorAction("sign-in");
+        return;
+      }
+
+      if (response.status === 402) {
+        setErrorAction("pricing");
         return;
       }
 
@@ -152,6 +164,12 @@ export function LyricsOnlyGeneratorForm({
 
   return (
     <div className="grid gap-4">
+      <ActionNeededDialog
+        action={errorAction}
+        localePrefix={prefix}
+        onClose={() => setErrorAction(null)}
+      />
+
       <form
         onSubmit={handleSubmit}
         className="rounded-lg border border-border bg-card p-4 shadow-sm md:p-5"
