@@ -1,0 +1,205 @@
+import type { ReactNode } from "react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Music2,
+  Search,
+  Sparkles,
+} from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+
+interface ToolPageCard {
+  title: string;
+  description: string;
+}
+
+interface ToolPageFaq {
+  question: string;
+  answer: string;
+}
+
+interface SeoToolPageProps {
+  eyebrow: string;
+  title: string;
+  description: string;
+  primaryCta: string;
+  primaryHref: string;
+  secondaryCta: string;
+  secondaryHref: string;
+  form: ReactNode;
+  benefitsTitle: string;
+  benefitsDescription: string;
+  benefits: ToolPageCard[];
+  stepsTitle: string;
+  stepsDescription: string;
+  steps: ToolPageCard[];
+  faqTitle: string;
+  faqs: ToolPageFaq[];
+  finalCtaTitle: string;
+  finalCtaDescription: string;
+}
+
+const icons = [Sparkles, Music2, Search];
+
+export function SeoToolPage({
+  eyebrow,
+  title,
+  description,
+  primaryCta,
+  primaryHref,
+  secondaryCta,
+  secondaryHref,
+  form,
+  benefitsTitle,
+  benefitsDescription,
+  benefits,
+  stepsTitle,
+  stepsDescription,
+  steps,
+  faqTitle,
+  faqs,
+  finalCtaTitle,
+  finalCtaDescription,
+}: SeoToolPageProps) {
+  return (
+    <div className="bg-background">
+      <section className="border-b bg-muted/30 py-12 md:py-16">
+        <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(380px,0.72fr)] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-normal text-primary">
+              {eyebrow}
+            </p>
+            <h1 className="mt-3 max-w-3xl text-4xl font-bold leading-tight tracking-normal md:text-5xl">
+              {title}
+            </h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+              {description}
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="gap-2">
+                <Link href={primaryHref}>
+                  {primaryCta}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href={secondaryHref}>{secondaryCta}</Link>
+              </Button>
+            </div>
+          </div>
+          {form}
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl font-bold tracking-normal md:text-4xl">
+              {benefitsTitle}
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
+              {benefitsDescription}
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {benefits.map((item, index) => {
+              const Icon = icons[index % icons.length];
+              return (
+                <article
+                  key={item.title}
+                  className="rounded-lg border bg-card p-5 shadow-sm"
+                >
+                  <Icon className="h-5 w-5 text-primary" />
+                  <h3 className="mt-4 text-lg font-semibold tracking-normal">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {item.description}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y bg-muted/30 py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1fr] lg:items-start">
+            <div>
+              <h2 className="text-3xl font-bold tracking-normal md:text-4xl">
+                {stepsTitle}
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
+                {stepsDescription}
+              </p>
+            </div>
+            <ol className="grid gap-3">
+              {steps.map((step, index) => (
+                <li
+                  key={step.title}
+                  className="grid gap-3 rounded-lg border bg-card p-5 shadow-sm sm:grid-cols-[42px_1fr]"
+                >
+                  <span className="grid h-10 w-10 place-items-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
+                    {index + 1}
+                  </span>
+                  <span>
+                    <strong className="text-base">{step.title}</strong>
+                    <span className="mt-1 block text-sm leading-6 text-muted-foreground">
+                      {step.description}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl font-bold tracking-normal md:text-4xl">
+            {faqTitle}
+          </h2>
+          <div className="mt-6 grid gap-3">
+            {faqs.map((item, index) => (
+              <details
+                key={item.question}
+                open={index === 0}
+                className="rounded-lg border bg-card p-5"
+              >
+                <summary className="flex cursor-pointer list-none items-center gap-3 font-semibold [&::-webkit-details-marker]:hidden">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  {item.question}
+                </summary>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-14 md:pb-16">
+        <div className="container px-4 md:px-6">
+          <div className="rounded-lg border bg-card p-6 text-center shadow-sm md:p-8">
+            <h2 className="text-2xl font-bold tracking-normal md:text-3xl">
+              {finalCtaTitle}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
+              {finalCtaDescription}
+            </p>
+            <Button asChild size="lg" className="mt-6 gap-2">
+              <Link href={primaryHref}>
+                {primaryCta}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

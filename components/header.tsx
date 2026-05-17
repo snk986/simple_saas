@@ -28,9 +28,11 @@ export default function Header({ user }: HeaderProps) {
   const isDashboard = pathname?.startsWith("/dashboard");
 
   const mainNavItems: NavItem[] = [
-    { label: t("create"), href: "/create" },
-    { label: t("about"), href: "/about" },
+    { label: t("textToSong"), href: "/text-to-song" },
+    { label: t("lyricsToSong"), href: "/lyrics-to-song" },
+    { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
     { label: t("pricing"), href: "/pricing" },
+    { label: t("about"), href: "/about" },
   ];
 
   const dashboardItems: NavItem[] = [];
@@ -43,12 +45,12 @@ export default function Header({ user }: HeaderProps) {
           <Logo />
         </div>
 
-        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
+        <nav className="hidden md:flex items-center gap-5 absolute left-1/2 transform -translate-x-1/2">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
+              className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary lg:text-base"
             >
               {item.label}
             </Link>

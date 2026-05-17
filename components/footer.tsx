@@ -10,7 +10,9 @@ export function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("create"), href: "/create" },
+        { label: t("textToSong"), href: "/text-to-song" },
+        { label: t("lyricsToSong"), href: "/lyrics-to-song" },
+        { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
         { label: t("pricing"), href: "/pricing" },
       ],
     },
@@ -28,7 +30,9 @@ export function Footer() {
     },
     {
       title: t("contact"),
-      links: [{ label: "support@calyraai.com", href: "mailto:support@calyraai.com" }],
+      links: [
+        { label: "support@calyraai.com", href: "mailto:support@calyraai.com" },
+      ],
     },
   ];
 

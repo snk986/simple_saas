@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { locales, type Locale } from "@/i18n/routing";
+import { SEO_TOOL_PAGE_KEYS, SEO_TOOL_PAGE_PATHS } from "@/config/seo-pages";
 import { getPublicSongsForSitemap } from "@/lib/song/public-song";
 import { absoluteLocaleUrl } from "@/lib/i18n/urls";
 
@@ -21,6 +22,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localizedEntries("/", 1),
     ...localizedEntries("/about", 0.75),
     ...localizedEntries("/create", 0.9),
+    ...SEO_TOOL_PAGE_KEYS.flatMap((key) =>
+      localizedEntries(SEO_TOOL_PAGE_PATHS[key], 0.9),
+    ),
     ...localizedEntries("/pricing", 0.85),
     ...songs.flatMap((song) =>
       locales.map((locale: Locale) => ({
