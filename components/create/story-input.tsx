@@ -151,7 +151,6 @@ export function StoryInput({
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
   const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
-  const [panelMode, setPanelMode] = useState<"simple" | "advanced">("simple");
   const [prompt, setPrompt] = useState(initialPrompt ?? initialDraft?.userInput ?? "");
   const [style, setStyle] = useState(initialStyle ?? "");
   const [title, setTitle] = useState(initialTitle ?? initialDraft?.title ?? "My AI Song");
@@ -315,7 +314,6 @@ export function StoryInput({
           title,
           locale: params.locale ?? "en",
           instrumental,
-          panelMode,
         }),
       });
 
@@ -475,23 +473,6 @@ export function StoryInput({
           <div className="mb-4 inline-flex rounded-lg border border-border p-1">
             <button
               type="button"
-              onClick={() => setPanelMode("simple")}
-              className={`rounded-md px-3 py-1.5 text-sm ${panelMode === "simple" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
-            >
-              Simple
-            </button>
-            <button
-              type="button"
-              onClick={() => setPanelMode("advanced")}
-              className={`rounded-md px-3 py-1.5 text-sm ${panelMode === "advanced" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
-            >
-              Advanced
-            </button>
-          </div>
-
-          <div className="mb-4 inline-flex rounded-lg border border-border p-1">
-            <button
-              type="button"
               onClick={() => setMode("text")}
               className={`rounded-md px-3 py-1.5 text-sm ${mode === "text" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
             >
@@ -506,13 +487,24 @@ export function StoryInput({
             </button>
           </div>
 
+          <div className="mb-2">
+            <p className="text-sm font-medium">
+              {mode === "lyrics" ? "Lyrics" : "Song idea"}
+            </p>
+            {mode === "text" ? (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Start from an idea. Calyra will write lyrics and generate a full song.
+              </p>
+            ) : null}
+          </div>
+
           <Textarea
             value={prompt}
             onChange={(event) => setPrompt(event.target.value)}
             placeholder={
               mode === "lyrics"
                 ? "Paste your lyrics here..."
-                : "Describe the song you want to create..."
+                : "Describe your song idea, mood, story, or genre..."
             }
             className="min-h-[180px] w-full resize-y text-sm"
           />
@@ -549,7 +541,7 @@ export function StoryInput({
               checked={instrumental}
               onChange={(event) => setInstrumental(event.target.checked)}
             />
-            Instrumental
+            Instrumental only (no vocals)
           </label>
 
           <Button
