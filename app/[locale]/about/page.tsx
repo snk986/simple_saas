@@ -63,7 +63,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
   return (
     <AboutContent
-      createHref={localePath(locale, "/create")}
+      createHref={localePath(locale, "/ai-song-maker")}
       pricingHref={localePath(locale, "/pricing")}
     />
   );

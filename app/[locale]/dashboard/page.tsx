@@ -29,7 +29,15 @@ function localizedSignInHref(locale: Locale) {
 }
 
 function localizedCreateHref(locale: Locale) {
-  return `${locale === defaultLocale ? "" : `/${locale}`}/create`;
+  return `${locale === defaultLocale ? "" : `/${locale}`}/ai-song-maker`;
+}
+
+function normalizeRows<T>(value: T | T[] | null | undefined): T[] {
+  if (!value) {
+    return [];
+  }
+
+  return Array.isArray(value) ? value : [value];
 }
 
 export default async function DashboardPage({
@@ -70,10 +78,12 @@ export default async function DashboardPage({
     `,
     )
     .eq("user_id", user.id)
-    .single();
+    .maybeSingle();
 
-  const subscription = customerData?.subscriptions?.[0];
-  const recentCreditsHistory = customerData?.credits_history?.slice(0, 2) || [];
+  const subscription = normalizeRows(customerData?.subscriptions)[0] ?? null;
+  const recentCreditsHistory = normalizeRows(
+    customerData?.credits_history,
+  ).slice(0, 2);
   const { data: songsData } = await supabase
     .from("songs")
     .select(

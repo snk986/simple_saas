@@ -1,23 +1,16 @@
 import createMiddleware from "next-intl/middleware";
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/utils/supabase/middleware";
+import type { NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
+import { updateSession } from "@/utils/supabase/middleware";
 
-const intlMiddleware = createMiddleware(routing);
+const handleI18nRouting = createMiddleware(routing);
 
 export async function proxy(request: NextRequest) {
-  const intlResponse = intlMiddleware(request);
-  const supabaseResponse = await updateSession(request, intlResponse);
+  const response = handleI18nRouting(request);
 
-  intlResponse.headers.getSetCookie().forEach((cookie) => {
-    if (!supabaseResponse.headers.getSetCookie().includes(cookie)) {
-      supabaseResponse.headers.append("set-cookie", cookie);
-    }
-  });
-
-  return supabaseResponse;
+  return updateSession(request, response);
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|favicon.ico|auth|.*\\..*).*)"],
+  matcher: ["/((?!api|auth|_next|_vercel|.*\\..*).*)"],
 };

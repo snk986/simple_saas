@@ -40,7 +40,7 @@ function songUrl(locale: Locale, id: string) {
 }
 
 function createHref() {
-  return "/create";
+  return "/ai-song-maker";
 }
 
 function moodColor(mood: string) {
@@ -237,7 +237,7 @@ export default async function SongPage({
         "@type": "ListItem",
         position: 1,
         name: t("breadcrumbCreate"),
-        item: `${baseUrl}${prefix}/create`,
+        item: `${baseUrl}${prefix}/ai-song-maker`,
       },
       {
         "@type": "ListItem",
@@ -349,7 +349,9 @@ export default async function SongPage({
                 dimensions: {
                   melody_potential: tReport("dimensions.melody_potential"),
                   lyric_quality: tReport("dimensions.lyric_quality"),
-                  emotional_resonance: tReport("dimensions.emotional_resonance"),
+                  emotional_resonance: tReport(
+                    "dimensions.emotional_resonance",
+                  ),
                   commercial_appeal: tReport("dimensions.commercial_appeal"),
                   originality: tReport("dimensions.originality"),
                 },

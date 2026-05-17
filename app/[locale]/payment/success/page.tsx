@@ -11,5 +11,5 @@ export default async function PaymentSuccessPage({
   const { locale } = await params;
   const prefix = locale === defaultLocale ? "" : `/${locale}`;
 
-  redirect(`${prefix}/create?upgraded=true`);
+  redirect(`${prefix}/ai-song-maker?upgraded=true`);
 }

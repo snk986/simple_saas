@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
-import { creem } from '@/lib/creem';
-import { getTierById } from '@/config/subscriptions';
-import { defaultLocale, isLocale, type Locale } from '@/i18n/routing';
+import { NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
+import { creem } from "@/lib/creem";
+import { getTierById } from "@/config/subscriptions";
+import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import crypto from "crypto";
 import {
   getClientContext,
@@ -31,7 +31,10 @@ export async function POST(request: Request) {
   const client = getClientContext(request.headers.get("user-agent"));
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       logError("checkout_failed", {
@@ -90,7 +93,7 @@ export async function POST(request: Request) {
       });
       return NextResponse.json(
         { error: "Payment plan is not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -106,7 +109,7 @@ export async function POST(request: Request) {
     const origin = request.headers.get("origin") ?? process.env.BASE_URL ?? "";
     const successUrl =
       process.env.CREEM_SUCCESS_URL ||
-      `${origin}${locale === "en" ? "" : `/${locale}`}/create?upgraded=true`;
+      `${origin}${locale === "en" ? "" : `/${locale}`}/ai-song-maker?upgraded=true`;
 
     const checkout = await creem.checkouts.create({
       productId: tier.productId,
@@ -120,17 +123,19 @@ export async function POST(request: Request) {
         plan: tier.plan,
         billing_period: tier.billingPeriod,
         credit_amount: tier.creditAmount,
-        product_type: tier.billingPeriod === "one_time" ? "credits" : "subscription",
+        product_type:
+          tier.billingPeriod === "one_time" ? "credits" : "subscription",
         locale,
         idempotency_key: crypto.randomUUID(),
-      }
+      },
     });
 
     return NextResponse.json({
       request_id: requestId,
-      checkoutUrl: checkout.checkoutUrl ?? (checkout as { checkout_url?: string }).checkout_url,
+      checkoutUrl:
+        checkout.checkoutUrl ??
+        (checkout as { checkout_url?: string }).checkout_url,
     });
-
   } catch (error) {
     logError("checkout_failed", {
       request_id: requestId,
@@ -139,6 +144,9 @@ export async function POST(request: Request) {
       failure_reason: error instanceof Error ? error.message : String(error),
       ...client,
     });
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

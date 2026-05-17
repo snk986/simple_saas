@@ -28,8 +28,9 @@ export default function Header({ user }: HeaderProps) {
   const isDashboard = pathname?.startsWith("/dashboard");
 
   const mainNavItems: NavItem[] = [
-    { label: t("textToSong"), href: "/text-to-song" },
-    { label: t("lyricsToSong"), href: "/lyrics-to-song" },
+    { label: t("aiSongMaker"), href: "/ai-song-maker" },
+    { label: t("textToSong"), href: "/ai-text-to-song" },
+    { label: t("lyricsToSong"), href: "/ai-lyrics-to-song" },
     { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
     { label: t("pricing"), href: "/pricing" },
     { label: t("about"), href: "/about" },

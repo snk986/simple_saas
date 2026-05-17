@@ -53,17 +53,24 @@ function appendUtm(url: string, scenario: RecallScenario, songId?: string) {
 function songCtaUrl(song: SongCandidate, scenario: RecallScenario) {
   const locale = normalizeLocale(song.locale);
   const paths: Record<RecallScenario, string> = {
-    draft_no_audio: `/create?ref=song&id=${encodeURIComponent(song.id)}`,
+    draft_no_audio: `/ai-lyrics-to-song?ref=song&id=${encodeURIComponent(song.id)}`,
     ready_no_report: `/report/${song.id}`,
     report_no_share: `/song/${song.id}`,
-    inactive_creator: "/create",
+    inactive_creator: "/ai-song-maker",
   };
 
-  return appendUtm(absoluteLocaleUrl(locale, paths[scenario]), scenario, song.id);
+  return appendUtm(
+    absoluteLocaleUrl(locale, paths[scenario]),
+    scenario,
+    song.id,
+  );
 }
 
 function inactiveCtaUrl(locale: Locale) {
-  return appendUtm(absoluteLocaleUrl(locale, "/create"), "inactive_creator");
+  return appendUtm(
+    absoluteLocaleUrl(locale, "/ai-song-maker"),
+    "inactive_creator",
+  );
 }
 
 async function fetchCustomers(userIds: string[]) {
@@ -215,20 +222,28 @@ async function reportNoShareCandidates() {
 async function inactiveCreatorCandidates() {
   const supabase = createServiceRoleClient();
   const recentSince = daysAgo(7);
-  const [{ data: recentSongs, error: recentError }, { data: readySongs, error: readyError }] =
-    await Promise.all([
-      supabase.from("songs").select("user_id").gte("created_at", recentSince).limit(2000),
-      supabase
-        .from("songs")
-        .select("id,user_id,title,locale,created_at,updated_at")
-        .eq("status", "ready")
-        .lte("created_at", recentSince)
-        .order("updated_at", { ascending: false })
-        .limit(QUERY_LIMIT),
-    ]);
+  const [
+    { data: recentSongs, error: recentError },
+    { data: readySongs, error: readyError },
+  ] = await Promise.all([
+    supabase
+      .from("songs")
+      .select("user_id")
+      .gte("created_at", recentSince)
+      .limit(2000),
+    supabase
+      .from("songs")
+      .select("id,user_id,title,locale,created_at,updated_at")
+      .eq("status", "ready")
+      .lte("created_at", recentSince)
+      .order("updated_at", { ascending: false })
+      .limit(QUERY_LIMIT),
+  ]);
 
   if (recentError || readyError || !recentSongs || !readySongs) {
-    throw recentError ?? readyError ?? new Error("Failed to load inactive creators");
+    throw (
+      recentError ?? readyError ?? new Error("Failed to load inactive creators")
+    );
   }
 
   const recentlyActiveUsers = new Set(
@@ -237,7 +252,10 @@ async function inactiveCreatorCandidates() {
   const latestReadyByUser = new Map<string, SongCandidate>();
 
   for (const song of readySongs as SongCandidate[]) {
-    if (!recentlyActiveUsers.has(song.user_id) && !latestReadyByUser.has(song.user_id)) {
+    if (
+      !recentlyActiveUsers.has(song.user_id) &&
+      !latestReadyByUser.has(song.user_id)
+    ) {
       latestReadyByUser.set(song.user_id, song);
     }
   }
@@ -276,12 +294,19 @@ async function loadScenarioCandidates(scenario: RecallScenario) {
 export async function getRecallCandidates(scenario?: RecallScenario) {
   const scenarios: RecallScenario[] = scenario
     ? [scenario]
-    : ["draft_no_audio", "ready_no_report", "report_no_share", "inactive_creator"];
+    : [
+        "draft_no_audio",
+        "ready_no_report",
+        "report_no_share",
+        "inactive_creator",
+      ];
   const rawCandidates = (
     await Promise.all(scenarios.map((item) => loadScenarioCandidates(item)))
   ).flat();
   const dedupedCandidates = dedupeCandidates(rawCandidates);
-  const userIds = Array.from(new Set(dedupedCandidates.map((candidate) => candidate.userId)));
+  const userIds = Array.from(
+    new Set(dedupedCandidates.map((candidate) => candidate.userId)),
+  );
   const [customers, recentEmailKeys] = await Promise.all([
     fetchCustomers(userIds),
     fetchRecentEmailKeys(userIds, scenarios),
@@ -292,7 +317,9 @@ export async function getRecallCandidates(scenario?: RecallScenario) {
 
   for (const candidate of dedupedCandidates) {
     const contact = customers.get(candidate.userId);
-    const alreadySent = recentEmailKeys.has(`${candidate.userId}:${candidate.scenario}`);
+    const alreadySent = recentEmailKeys.has(
+      `${candidate.userId}:${candidate.scenario}`,
+    );
 
     if (!contact?.email || alreadySent) {
       skipped += 1;

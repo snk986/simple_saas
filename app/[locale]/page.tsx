@@ -142,7 +142,14 @@ export function generateStaticParams() {
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations("home");
-  const createPath = locale === defaultLocale ? "/create" : `/${locale}/create`;
+  const textToSongPath =
+    locale === defaultLocale
+      ? "/ai-text-to-song"
+      : `/${locale}/ai-text-to-song`;
+  const lyricsToSongPath =
+    locale === defaultLocale
+      ? "/ai-lyrics-to-song"
+      : `/${locale}/ai-lyrics-to-song`;
   const signInPath =
     locale === defaultLocale ? "/sign-in" : `/${locale}/sign-in`;
   const pricingPath =
@@ -272,7 +279,8 @@ export default async function Home({ params }: HomePageProps) {
             </p>
 
             <HeroGeneratorForm
-              createPath={createPath}
+              textToSongPath={textToSongPath}
+              lyricsToSongPath={lyricsToSongPath}
               signInPath={signInPath}
               pricingPath={pricingPath}
               locale={locale}
@@ -365,7 +373,7 @@ export default async function Home({ params }: HomePageProps) {
             return (
               <Link
                 key={item.title}
-                href="/create"
+                href="/ai-song-maker"
                 className="group min-h-40 rounded-[26px] border border-white/10 bg-white/[0.055] p-5 transition hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.085]"
               >
                 <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 text-white">
@@ -482,7 +490,9 @@ export default async function Home({ params }: HomePageProps) {
                 asChild
                 className="h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 px-5 font-black"
               >
-                <Link href="/create">{t("pricingPreview.primaryCta")}</Link>
+                <Link href="/ai-song-maker">
+                  {t("pricingPreview.primaryCta")}
+                </Link>
               </Button>
               <Button
                 asChild

@@ -191,7 +191,9 @@ export function LyricsOnlyGeneratorForm({
             />
           </label>
           <Button asChild className="mt-4 gap-2">
-            <Link href={`${prefix}/create?ref=song&id=${result.songId}`}>
+            <Link
+              href={`${prefix}/ai-lyrics-to-song?ref=song&id=${result.songId}`}
+            >
               {labels.turnIntoSong}
               <ArrowRight className="h-4 w-4" />
             </Link>

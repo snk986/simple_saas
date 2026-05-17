@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 type Mode = "text" | "lyrics";
 
 interface HeroGeneratorFormProps {
-  createPath: string;
+  textToSongPath: string;
+  lyricsToSongPath: string;
   signInPath: string;
   pricingPath: string;
   locale: string;
@@ -28,7 +29,8 @@ interface HeroGeneratorFormProps {
 }
 
 export function HeroGeneratorForm({
-  createPath,
+  textToSongPath,
+  lyricsToSongPath,
   signInPath,
   pricingPath,
   locale,
@@ -112,7 +114,8 @@ export function HeroGeneratorForm({
         throw new Error(data.error ?? "Generation failed");
       }
 
-      router.push(`${createPath}?jobId=${encodeURIComponent(data.jobId)}`);
+      const nextPath = mode === "lyrics" ? lyricsToSongPath : textToSongPath;
+      router.push(`${nextPath}?jobId=${encodeURIComponent(data.jobId)}`);
     } finally {
       setIsSubmitting(false);
     }

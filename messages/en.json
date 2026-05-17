@@ -17,7 +17,8 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
-    "about": "About"
+    "about": "About",
+    "aiSongMaker": "AI Song Maker"
   },
   "footer": {
     "tagline": "Create AI songs from prompts, lyrics, and simple ideas.",
@@ -36,7 +37,8 @@
     "create": "Create",
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
-    "aiLyricsGenerator": "AI Lyrics Generator"
+    "aiLyricsGenerator": "AI Lyrics Generator",
+    "aiSongMaker": "AI Song Maker"
   },
   "home": {
     "seo": {
@@ -252,18 +254,103 @@
     }
   },
   "seoPages": {
-    "textToSong": {
+    "aiSongMaker": {
       "seo": {
-        "title": "Text to Song AI - Create Songs from Prompts | Calyra AI",
-        "description": "Turn text prompts, moods, stories, and ideas into AI songs with vocals and instruments. Start a text to song workflow with Calyra AI."
+        "title": "AI Song Maker - Create AI Songs Online | Calyra AI",
+        "description": "Use Calyra AI as an AI song maker to create songs from text prompts, lyrics, styles, and ideas with vocals and instruments."
       },
       "hero": {
-        "eyebrow": "Text to Song AI",
-        "title": "Turn Text Into a Complete AI Song",
-        "description": "Describe a mood, story, genre, vocal style, or use case, then continue into the Calyra AI song workspace with the right mode already selected."
+        "eyebrow": "AI Song Maker",
+        "title": "AI Song Maker for Text, Lyrics, and Music",
+        "description": "Start from a prompt or lyrics, choose a style, and generate a complete AI song with vocals, instruments, and a shareable report."
       },
       "cta": {
-        "primary": "Start Text to Song",
+        "primary": "Start AI Song Maker",
+        "secondary": "View Pricing"
+      },
+      "form": {
+        "prompt": "Song idea",
+        "placeholder": "Describe the song you want: mood, story, genre, vocal tone, audience, and where you will use it.",
+        "style": "Style",
+        "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
+        "styleDefault": "Pop, emotional female vocal, cinematic drums",
+        "title": "Title",
+        "titlePlaceholder": "My AI Song",
+        "titleDefault": "My AI Song",
+        "submit": "Continue to Generator"
+      },
+      "benefits": {
+        "title": "A Faster Way to Start a Song",
+        "description": "Text to song is best when you have a feeling, scene, or content idea but do not have finished lyrics yet.",
+        "items": {
+          "ideas": {
+            "title": "Start from any idea",
+            "description": "Use a short prompt, story, mood, or content brief as the seed for a full song direction."
+          },
+          "vocals": {
+            "title": "Shape vocals and instruments",
+            "description": "Guide genre, tempo, singer energy, arrangement, and production style before generation."
+          },
+          "creators": {
+            "title": "Built for creator use cases",
+            "description": "Make songs for YouTube, TikTok, podcasts, games, ads, and social media concepts."
+          }
+        }
+      },
+      "steps": {
+        "title": "How Text to Song Works",
+        "description": "Move from a plain-language prompt to a generated song without opening a music production tool.",
+        "items": {
+          "prompt": {
+            "title": "Write a clear prompt",
+            "description": "Describe the emotion, story, audience, genre, and vocal direction you want."
+          },
+          "style": {
+            "title": "Add style guidance",
+            "description": "Pick a style so the generator understands the sound and arrangement you are aiming for."
+          },
+          "create": {
+            "title": "Generate the song",
+            "description": "Continue to the workspace, review the setup, and generate lyrics plus audio."
+          }
+        }
+      },
+      "faq": {
+        "title": "AI Song Maker FAQ",
+        "one": {
+          "question": "What is an AI song maker?",
+          "answer": "An AI song maker creates songs from prompts, lyrics, style direction, and creative ideas, including vocals and instruments."
+        },
+        "two": {
+          "question": "Can I start with text or lyrics?",
+          "answer": "Yes. Start with a text prompt when you have an idea, or use lyrics mode when you already have words for the song."
+        },
+        "three": {
+          "question": "Can I choose the music style?",
+          "answer": "Yes. Add genre, mood, vocal tone, tempo, and instrument details to guide the generated song."
+        },
+        "four": {
+          "question": "Can I use generated songs commercially?",
+          "answer": "Subscribers can download generated songs and use them commercially, subject to the latest terms."
+        }
+      },
+      "finalCta": {
+        "title": "Create Your Next AI Song",
+        "description": "Use the AI Song Maker to turn a prompt, lyric idea, or finished lyrics into a complete track."
+      }
+    },
+    "aiTextToSong": {
+      "seo": {
+        "title": "AI Text to Song Generator - Create Songs from Prompts | Calyra AI",
+        "description": "Turn text prompts, moods, stories, and ideas into AI songs with vocals and instruments using Calyra AI."
+      },
+      "hero": {
+        "eyebrow": "AI Text to Song",
+        "title": "AI Text to Song Generator",
+        "description": "Describe a mood, story, genre, vocal style, or use case, then generate a complete AI song from your text."
+      },
+      "cta": {
+        "primary": "Start AI Text to Song",
         "secondary": "View Pricing"
       },
       "form": {
@@ -333,22 +420,22 @@
         }
       },
       "finalCta": {
-        "title": "Ready to Turn an Idea Into Music?",
-        "description": "Start with a clear text prompt and continue into the Calyra AI song workspace."
+        "title": "Ready to Turn Text Into Music?",
+        "description": "Start with a clear prompt and generate a complete AI song with vocals and instruments."
       }
     },
-    "lyricsToSong": {
+    "aiLyricsToSong": {
       "seo": {
-        "title": "Lyrics to Song AI - Turn Lyrics Into Music | Calyra AI",
-        "description": "Paste your lyrics and turn them into an AI song with vocals, instruments, arrangement, and style direction using Calyra AI."
+        "title": "AI Lyrics to Song Generator - Turn Lyrics Into Music | Calyra AI",
+        "description": "Paste your lyrics and turn them into an AI song with vocals, instruments, arrangement, and style direction."
       },
       "hero": {
-        "eyebrow": "Lyrics to Song AI",
-        "title": "Turn Your Lyrics Into a Full AI Song",
-        "description": "Bring existing lyrics, add arrangement and vocal direction, then continue into the song workspace with Lyrics to Song mode selected."
+        "eyebrow": "AI Lyrics to Song",
+        "title": "AI Lyrics to Song Generator",
+        "description": "Bring existing lyrics, add arrangement and vocal direction, then generate a full AI song from your words."
       },
       "cta": {
-        "primary": "Start Lyrics to Song",
+        "primary": "Start AI Lyrics to Song",
         "secondary": "Try Text to Song"
       },
       "form": {
@@ -419,7 +506,7 @@
       },
       "finalCta": {
         "title": "Have Lyrics Ready?",
-        "description": "Paste them into the Lyrics to Song workflow and shape the music around your words."
+        "description": "Paste them into the AI Lyrics to Song workflow and shape the music around your words."
       }
     },
     "aiLyricsGenerator": {

@@ -24,8 +24,11 @@ interface SeoSongStartFormProps {
   };
 }
 
-function localizedCreatePath(locale: string) {
-  return `${locale === defaultLocale ? "" : `/${locale}`}/create`;
+function localizedSongMakerPath(locale: string, mode: SongStartMode) {
+  const prefix = locale === defaultLocale ? "" : `/${locale}`;
+  const path = mode === "lyrics" ? "/ai-lyrics-to-song" : "/ai-text-to-song";
+
+  return `${prefix}${path}`;
 }
 
 export function SeoSongStartForm({ mode, labels }: SeoSongStartFormProps) {
@@ -39,13 +42,12 @@ export function SeoSongStartForm({ mode, labels }: SeoSongStartFormProps) {
     event.preventDefault();
 
     const params = new URLSearchParams({
-      mode,
       prompt: prompt.trim(),
       style: style.trim(),
       title: title.trim(),
     });
 
-    router.push(`${localizedCreatePath(locale)}?${params.toString()}`);
+    router.push(`${localizedSongMakerPath(locale, mode)}?${params.toString()}`);
   };
 
   return (

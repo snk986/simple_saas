@@ -45,8 +45,8 @@ export default async function AiLyricsGeneratorPage({
 }: AiLyricsGeneratorPageProps) {
   const { locale } = await params;
   const t = await getTranslations(`seoPages.${pageKey}`);
-  const createHref = "/create?mode=text";
-  const lyricsToSongHref = SEO_TOOL_PAGE_PATHS.lyricsToSong;
+  const createHref = SEO_TOOL_PAGE_PATHS.aiTextToSong;
+  const lyricsToSongHref = SEO_TOOL_PAGE_PATHS.aiLyricsToSong;
   const benefitKeys = ["draft", "structure", "nextStep"] as const;
   const stepKeys = ["brief", "review", "song"] as const;
   const faqKeys = ["one", "two", "three", "four"] as const;

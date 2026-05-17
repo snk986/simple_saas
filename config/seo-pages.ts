@@ -1,6 +1,7 @@
 export const SEO_TOOL_PAGE_PATHS = {
-  textToSong: "/text-to-song",
-  lyricsToSong: "/lyrics-to-song",
+  aiSongMaker: "/ai-song-maker",
+  aiTextToSong: "/ai-text-to-song",
+  aiLyricsToSong: "/ai-lyrics-to-song",
   aiLyricsGenerator: "/ai-lyrics-generator",
 } as const;
 

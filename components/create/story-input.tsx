@@ -11,7 +11,7 @@ import {
   SlidersHorizontal,
   Wand2,
 } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -46,6 +46,10 @@ interface StoryInputProps {
   initialTitle?: string | null;
   initialMode?: "text" | "lyrics";
   initialJobId?: string | null;
+  modeRoutes?: {
+    text: string;
+    lyrics: string;
+  };
   initialWorkspaceSongs: Array<{
     id: string;
     title: string;
@@ -143,17 +147,23 @@ export function StoryInput({
   initialTitle,
   initialMode = "text",
   initialJobId,
+  modeRoutes,
   initialWorkspaceSongs,
 }: StoryInputProps) {
   const { toast } = useToast();
+  const router = useRouter();
   const params = useParams<{ locale?: string }>();
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
   const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
-  const [prompt, setPrompt] = useState(initialPrompt ?? initialDraft?.userInput ?? "");
+  const [prompt, setPrompt] = useState(
+    initialPrompt ?? initialDraft?.userInput ?? "",
+  );
   const [style, setStyle] = useState(initialStyle ?? "");
-  const [title, setTitle] = useState(initialTitle ?? initialDraft?.title ?? "My AI Song");
+  const [title, setTitle] = useState(
+    initialTitle ?? initialDraft?.title ?? "My AI Song",
+  );
   const [instrumental, setInstrumental] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
@@ -163,6 +173,10 @@ export function StoryInput({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
   const [durations, setDurations] = useState<Record<string, number | null>>({});
+
+  useEffect(() => {
+    setMode(initialMode);
+  }, [initialMode]);
 
   useEffect(() => {
     const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.map((song) => ({
@@ -189,7 +203,9 @@ export function StoryInput({
     if (exists) return;
 
     void (async () => {
-      const response = await fetch(`/api/generations/${encodeURIComponent(initialJobId)}`);
+      const response = await fetch(
+        `/api/generations/${encodeURIComponent(initialJobId)}`,
+      );
       if (!response.ok) return;
       const data = (await response.json()) as GenerationJobPayload;
       setWorkspaceSongs((current) => [
@@ -219,7 +235,9 @@ export function StoryInput({
   }, [initialJobId, workspaceSongs]);
 
   useEffect(() => {
-    const processingSongs = workspaceSongs.filter((song) => song.status === "processing");
+    const processingSongs = workspaceSongs.filter(
+      (song) => song.status === "processing",
+    );
     if (processingSongs.length === 0) {
       return;
     }
@@ -227,9 +245,12 @@ export function StoryInput({
     const timer = window.setInterval(() => {
       processingSongs.forEach((song) => {
         void (async () => {
-          const response = await fetch(`/api/generations/${encodeURIComponent(song.id)}`, {
-            cache: "no-store",
-          });
+          const response = await fetch(
+            `/api/generations/${encodeURIComponent(song.id)}`,
+            {
+              cache: "no-store",
+            },
+          );
           if (!response.ok) return;
           const data = (await response.json()) as GenerationJobPayload;
           setWorkspaceSongs((current) =>
@@ -351,7 +372,10 @@ export function StoryInput({
         taskId: data.taskId,
       };
 
-      setWorkspaceSongs((current) => [optimistic, ...current.filter((song) => song.id !== optimistic.id)]);
+      setWorkspaceSongs((current) => [
+        optimistic,
+        ...current.filter((song) => song.id !== optimistic.id),
+      ]);
 
       if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
@@ -371,13 +395,18 @@ export function StoryInput({
 
   const retrySong = async (song: WorkspaceSongItem) => {
     try {
-      const job = await fetch(`/api/generations/${encodeURIComponent(song.id)}`, {
-        cache: "no-store",
-      });
+      const job = await fetch(
+        `/api/generations/${encodeURIComponent(song.id)}`,
+        {
+          cache: "no-store",
+        },
+      );
       if (!job.ok) {
         throw new Error("Failed to load song for retry");
       }
-      const detail = (await job.json()) as GenerationJobPayload & { lyrics?: string };
+      const detail = (await job.json()) as GenerationJobPayload & {
+        lyrics?: string;
+      };
       const response = await fetch("/api/generate/audio", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -398,7 +427,11 @@ export function StoryInput({
       setWorkspaceSongs((current) =>
         current.map((item) =>
           item.id === song.id
-            ? { ...item, status: "processing", taskId: data.taskId ?? item.taskId }
+            ? {
+                ...item,
+                status: "processing",
+                taskId: data.taskId ?? item.taskId,
+              }
             : item,
         ),
       );
@@ -424,6 +457,31 @@ export function StoryInput({
     if (!exists) {
       setStyle(`${next}, ${tag}`);
     }
+  };
+
+  const switchModeRoute = (nextMode: "text" | "lyrics") => {
+    if (nextMode === mode) {
+      return;
+    }
+
+    if (!modeRoutes) {
+      setMode(nextMode);
+      return;
+    }
+
+    const params = new URLSearchParams();
+    if (prompt.trim()) {
+      params.set("prompt", prompt.trim());
+    }
+    if (style.trim()) {
+      params.set("style", style.trim());
+    }
+    if (title.trim()) {
+      params.set("title", title.trim());
+    }
+
+    const query = params.toString();
+    router.push(`${modeRoutes[nextMode]}${query ? `?${query}` : ""}`);
   };
 
   return (
@@ -473,14 +531,14 @@ export function StoryInput({
           <div className="mb-4 inline-flex rounded-lg border border-border p-1">
             <button
               type="button"
-              onClick={() => setMode("text")}
+              onClick={() => switchModeRoute("text")}
               className={`rounded-md px-3 py-1.5 text-sm ${mode === "text" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
             >
               Text to Song
             </button>
             <button
               type="button"
-              onClick={() => setMode("lyrics")}
+              onClick={() => switchModeRoute("lyrics")}
               className={`rounded-md px-3 py-1.5 text-sm ${mode === "lyrics" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
             >
               Lyrics to Song
@@ -493,7 +551,8 @@ export function StoryInput({
             </p>
             {mode === "text" ? (
               <p className="mt-1 text-xs text-muted-foreground">
-                Start from an idea. Calyra will write lyrics and generate a full song.
+                Start from an idea. Calyra will write lyrics and generate a full
+                song.
               </p>
             ) : null}
           </div>
@@ -551,7 +610,9 @@ export function StoryInput({
             onClick={submitGeneration}
             className="mt-5 w-full gap-2"
           >
-            <Wand2 className={`h-4 w-4 ${isSubmitting ? "animate-pulse" : ""}`} />
+            <Wand2
+              className={`h-4 w-4 ${isSubmitting ? "animate-pulse" : ""}`}
+            />
             {isSubmitting ? "Generating..." : "Generate Song"}
           </Button>
         </aside>
@@ -572,26 +633,28 @@ export function StoryInput({
                 <SlidersHorizontal className="h-3.5 w-3.5" />
                 Sort: Newest
               </span>
-              {(["all", "liked", "public", "uploads"] as WorkspaceFilter[]).map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => setFilter(item)}
-                  className={`rounded-md border px-2.5 py-1 text-xs ${
-                    filter === item
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border text-muted-foreground"
-                  }`}
-                >
-                  {item === "all"
-                    ? "All"
-                    : item === "liked"
-                      ? "Liked"
-                      : item === "public"
-                        ? "Public"
-                        : "Uploads"}
-                </button>
-              ))}
+              {(["all", "liked", "public", "uploads"] as WorkspaceFilter[]).map(
+                (item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setFilter(item)}
+                    className={`rounded-md border px-2.5 py-1 text-xs ${
+                      filter === item
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border text-muted-foreground"
+                    }`}
+                  >
+                    {item === "all"
+                      ? "All"
+                      : item === "liked"
+                        ? "Liked"
+                        : item === "public"
+                          ? "Public"
+                          : "Uploads"}
+                  </button>
+                ),
+              )}
             </div>
           </div>
 
@@ -604,12 +667,18 @@ export function StoryInput({
                 <div className="flex gap-3">
                   <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
                     {song.coverUrl ? (
-                      <img src={song.coverUrl} alt={song.title} className="h-full w-full object-cover" />
+                      <img
+                        src={song.coverUrl}
+                        alt={song.title}
+                        className="h-full w-full object-cover"
+                      />
                     ) : null}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="truncate text-sm font-semibold">{song.title}</h3>
+                      <h3 className="truncate text-sm font-semibold">
+                        {song.title}
+                      </h3>
                       <span
                         className={`rounded-full px-2 py-0.5 text-[11px] ${
                           song.status === "completed"
@@ -623,7 +692,8 @@ export function StoryInput({
                       </span>
                     </div>
                     <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {song.modelTag} · {song.versionTag} · {formatDuration(durations[song.id] ?? null)}
+                      {song.modelTag} · {song.versionTag} ·{" "}
+                      {formatDuration(durations[song.id] ?? null)}
                     </p>
                     <p className="mt-1 truncate text-xs text-muted-foreground">
                       {song.styleSummary || song.promptSummary}
@@ -658,7 +728,9 @@ export function StoryInput({
                       );
                     }}
                   >
-                    <Heart className={`h-3.5 w-3.5 ${song.liked ? "fill-current" : ""}`} />
+                    <Heart
+                      className={`h-3.5 w-3.5 ${song.liked ? "fill-current" : ""}`}
+                    />
                   </Button>
                   {song.audioUrl && canDownload ? (
                     <Button asChild type="button" size="sm" variant="outline">

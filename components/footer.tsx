@@ -10,8 +10,9 @@ export function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("textToSong"), href: "/text-to-song" },
-        { label: t("lyricsToSong"), href: "/lyrics-to-song" },
+        { label: t("aiSongMaker"), href: "/ai-song-maker" },
+        { label: t("textToSong"), href: "/ai-text-to-song" },
+        { label: t("lyricsToSong"), href: "/ai-lyrics-to-song" },
         { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
         { label: t("pricing"), href: "/pricing" },
       ],

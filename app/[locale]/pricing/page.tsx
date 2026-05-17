@@ -39,7 +39,7 @@ export function generateStaticParams() {
 }
 
 function localizedCreateHref(locale: Locale) {
-  return `${locale === defaultLocale ? "" : `/${locale}`}/create`;
+  return `${locale === defaultLocale ? "" : `/${locale}`}/ai-song-maker`;
 }
 
 export default async function PricingPage({ params }: PricingPageProps) {
@@ -58,7 +58,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const subscriptionYearly = SUBSCRIPTION_TIERS.filter(
     (tier) => tier.billingPeriod === "yearly",
   );
-  const basicMonthly = subscriptionMonthly.find((tier) => tier.plan === "basic");
+  const basicMonthly = subscriptionMonthly.find(
+    (tier) => tier.plan === "basic",
+  );
   const basicYearly = subscriptionYearly.find((tier) => tier.plan === "basic");
   const proMonthly = subscriptionMonthly.find((tier) => tier.plan === "pro");
   const proYearly = subscriptionYearly.find((tier) => tier.plan === "pro");
@@ -265,7 +267,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
               return (
                 <article
                   key={pack.id}
-                    className={`relative flex h-full flex-col rounded-lg border bg-card p-5 shadow-sm shadow-black/15 ${
+                  className={`relative flex h-full flex-col rounded-lg border bg-card p-5 shadow-sm shadow-black/15 ${
                     pack.featured ? "border-primary ring-1 ring-primary" : ""
                   }`}
                 >

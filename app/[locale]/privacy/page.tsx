@@ -70,7 +70,7 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
       contactTitle={common("contactTitle")}
       contactBody={common("contactBody")}
       contactCtaLabel={common("contactCta")}
-      contactCtaHref="/create"
+      contactCtaHref="/ai-song-maker"
       contactEmailLabel={common("contactEmailLabel")}
     />
   );
