@@ -424,95 +424,95 @@
     },
     "aiLyricsGenerator": {
       "seo": {
-        "title": "AI Lyrics Generator - Write Song Lyrics Online | Calyra AI",
-        "description": "Generate song lyrics from a theme, story, mood, or title. Use Calyra AI to draft lyrics, then turn them into a complete song."
+        "title": "AI Lyrics Generator - Free Song Lyrics Writer Online | Calyra AI",
+        "description": "Generate complete song lyrics from a topic, mood, keyword, or title. Get verse and chorus ideas instantly, then turn lyrics into a full song."
       },
       "hero": {
         "eyebrow": "AI Lyrics Generator",
-        "title": "Generate Lyrics Before You Make the Song",
-        "description": "Write a lyric draft from a theme, story, or emotion, then continue directly into the song generator when the words feel right."
+        "title": "Generate Song Lyrics in Seconds",
+        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit your draft, then convert it into a full song with vocals."
       },
       "cta": {
-        "primary": "Create a Full Song",
-        "secondary": "Lyrics to Song"
+        "primary": "Generate Lyrics Now",
+        "secondary": "Turn Lyrics into Song"
       },
       "form": {
-        "prompt": "Lyric brief",
-        "placeholder": "Describe the story, emotion, theme, perspective, hook idea, or audience for the lyrics.",
+        "prompt": "Lyrics idea",
+        "placeholder": "Example: a late-night breakup song, soft male vocal, rainy city mood, memorable chorus hook.",
         "style": "Style",
-        "stylePlaceholder": "Indie pop, bittersweet, conversational chorus",
-        "styleDefault": "Indie pop, emotional, memorable chorus",
-        "title": "Title seed",
-        "titlePlaceholder": "Midnight Letters",
+        "stylePlaceholder": "Pop ballad, emotional, modern, radio-friendly",
+        "styleDefault": "Pop ballad, emotional, memorable chorus",
+        "title": "Song title",
+        "titlePlaceholder": "Last Message at 2AM",
         "titleDefault": "My AI Lyrics",
         "submit": "Generate Lyrics",
-        "submitting": "Writing Lyrics",
+        "submitting": "Generating Lyrics",
         "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Calyra saves lyric drafts to your account so you can turn them into songs later.",
+        "signInDescription": "Sign in to save your lyric drafts and continue to song generation anytime.",
         "signInCta": "Sign in",
-        "errorFallback": "Failed to generate lyrics",
-        "resultEyebrow": "Lyrics Draft",
+        "errorFallback": "Could not generate lyrics",
+        "resultEyebrow": "Generated Lyrics",
         "lyricsLabel": "Generated lyrics",
         "turnIntoSong": "Turn Into Song"
       },
       "benefits": {
-        "title": "Write Better Song Seeds",
-        "description": "Use the lyrics generator when you need words first, then bring the draft into the music workflow.",
+        "title": "Built for Fast Songwriting",
+        "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
         "items": {
           "draft": {
-            "title": "Draft from a theme",
-            "description": "Start with a story, feeling, title, or hook idea and generate a structured lyric draft."
+            "title": "From idea to draft",
+            "description": "Turn a topic, feeling, or keyword into a complete first draft in seconds."
           },
           "structure": {
-            "title": "Get song-ready sections",
-            "description": "Create lyrics with verses, chorus ideas, emotional progression, and a clear center."
+            "title": "Clear song structure",
+            "description": "Generate organized verse and chorus sections with a coherent emotional flow."
           },
           "nextStep": {
-            "title": "Continue into music",
-            "description": "Use the saved draft as the starting point for Lyrics to Song generation."
+            "title": "One-click to music",
+            "description": "Take generated lyrics directly into the song generator and create audio immediately."
           }
         }
       },
       "steps": {
-        "title": "How the AI Lyrics Generator Works",
-        "description": "Create a lyric draft first, then decide whether to keep editing or generate music.",
+        "title": "How It Works",
+        "description": "Three simple steps from lyrics idea to full song.",
         "items": {
           "brief": {
-            "title": "Describe the lyric idea",
-            "description": "Give the generator a theme, story, mood, point of view, and style."
+            "title": "Describe your idea",
+            "description": "Enter your theme, mood, story, or hook line."
           },
           "review": {
-            "title": "Review the draft",
-            "description": "Read the generated lyrics and keep the parts that match your song."
+            "title": "Get instant lyrics",
+            "description": "Receive structured lyrics and refine any line you want."
           },
           "song": {
-            "title": "Turn it into a song",
-            "description": "Continue to the song workspace and generate audio from the saved lyrics."
+            "title": "Turn lyrics into song",
+            "description": "Send your lyrics into the generator to create vocals and instrumental."
           }
         }
       },
       "faq": {
         "title": "AI Lyrics Generator FAQ",
         "one": {
-          "question": "What can I generate lyrics from?",
-          "answer": "You can start from a title, theme, story, emotion, genre, hook idea, or short creative brief."
+          "question": "What can I use as input?",
+          "answer": "Use a keyword, topic, story, emotion, title, genre, or short prompt. The generator can expand it into full lyrics."
         },
         "two": {
-          "question": "Can I turn the lyrics into music?",
-          "answer": "Yes. After generating lyrics, use the Turn Into Song action to continue into the song workspace."
+          "question": "Can I turn generated lyrics into a song?",
+          "answer": "Yes. Click Turn Into Song to continue in the Create workspace and generate music from your lyrics."
         },
         "three": {
-          "question": "Do I need to sign in?",
-          "answer": "Yes. Lyrics are saved as drafts so you can return to them and generate audio later."
+          "question": "Is this free to try?",
+          "answer": "You can start for free. Sign in to save drafts and continue your workflow."
         },
         "four": {
-          "question": "Can I edit the lyrics?",
-          "answer": "You can review and edit the draft in the next workflow before creating the final song."
+          "question": "Can I edit the lyrics before generating audio?",
+          "answer": "Yes. You can review and revise the generated lyrics before turning them into a song."
         }
       },
       "finalCta": {
-        "title": "Want Music for These Lyrics?",
-        "description": "Generate a lyric draft now, then turn it into a full song when you are ready."
+        "title": "Ready to Turn Lyrics into Music?",
+        "description": "Generate your lyrics now and produce a complete song in the next step."
       }
     }
   },

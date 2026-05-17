@@ -1026,95 +1026,95 @@
     },
     "aiLyricsGenerator": {
       "seo": {
-        "title": "AI Lyrics Generator - Write Song Lyrics Online | Calyra AI",
-        "description": "Generate song lyrics from a theme, story, mood, or title. Use Calyra AI to draft lyrics, then turn them into a complete song."
+        "title": "AI 歌词生成器 - 免费在线写歌词 | Calyra AI",
+        "description": "输入主题、情绪、关键词或歌名，快速生成完整歌词。先拿到主歌和副歌草稿，再一键转成完整歌曲。"
       },
       "hero": {
-        "eyebrow": "AI Lyrics Generator",
-        "title": "Generate Lyrics Before You Make the Song",
-        "description": "Write a lyric draft from a theme, story, or emotion, then continue directly into the song generator when the words feel right."
+        "eyebrow": "AI 歌词生成器",
+        "title": "几秒生成可用歌词",
+        "description": "输入一个想法、故事或情绪，直接生成结构清晰的歌词草稿。修改满意后，一键生成带人声的完整歌曲。"
       },
       "cta": {
-        "primary": "Create a Full Song",
-        "secondary": "Lyrics to Song"
+        "primary": "立即生成歌词",
+        "secondary": "歌词转歌曲"
       },
       "form": {
-        "prompt": "Lyric brief",
-        "placeholder": "Describe the story, emotion, theme, perspective, hook idea, or audience for the lyrics.",
-        "style": "Style",
-        "stylePlaceholder": "Indie pop, bittersweet, conversational chorus",
-        "styleDefault": "Indie pop, emotional, memorable chorus",
-        "title": "Title seed",
-        "titlePlaceholder": "Midnight Letters",
-        "titleDefault": "My AI Lyrics",
-        "submit": "Generate Lyrics",
-        "submitting": "Writing Lyrics",
-        "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Calyra saves lyric drafts to your account so you can turn them into songs later.",
-        "signInCta": "Sign in",
-        "errorFallback": "Failed to generate lyrics",
-        "resultEyebrow": "Lyrics Draft",
-        "lyricsLabel": "Generated lyrics",
-        "turnIntoSong": "Turn Into Song"
+        "prompt": "歌词需求",
+        "placeholder": "示例：深夜分手主题，雨夜城市感，男声，副歌要有记忆点。",
+        "style": "风格",
+        "stylePlaceholder": "流行抒情，情绪化，现代感，适合传唱",
+        "styleDefault": "流行抒情，情绪化，副歌抓耳",
+        "title": "歌曲标题",
+        "titlePlaceholder": "凌晨两点的最后一条消息",
+        "titleDefault": "我的 AI 歌词",
+        "submit": "生成歌词",
+        "submitting": "歌词生成中",
+        "signInTitle": "登录后可生成歌词",
+        "signInDescription": "登录后可保存歌词草稿，随时继续生成歌曲。",
+        "signInCta": "去登录",
+        "errorFallback": "歌词生成失败",
+        "resultEyebrow": "生成结果",
+        "lyricsLabel": "生成的歌词",
+        "turnIntoSong": "一键生成歌曲"
       },
       "benefits": {
-        "title": "Write Better Song Seeds",
-        "description": "Use the lyrics generator when you need words first, then bring the draft into the music workflow.",
+        "title": "为高效写歌而生",
+        "description": "从一个想法出发，快速拿到可直接使用的歌词结构，再进入完整作曲流程。",
         "items": {
           "draft": {
-            "title": "Draft from a theme",
-            "description": "Start with a story, feeling, title, or hook idea and generate a structured lyric draft."
+            "title": "想法秒变草稿",
+            "description": "用主题、情绪或关键词，几秒生成完整歌词初稿。"
           },
           "structure": {
-            "title": "Get song-ready sections",
-            "description": "Create lyrics with verses, chorus ideas, emotional progression, and a clear center."
+            "title": "结构清晰可唱",
+            "description": "自动组织主歌、副歌和情绪推进，歌词更像一首完整作品。"
           },
           "nextStep": {
-            "title": "Continue into music",
-            "description": "Use the saved draft as the starting point for Lyrics to Song generation."
+            "title": "无缝进入成歌",
+            "description": "歌词生成后可直接转入歌曲生成，快速得到带人声音频。"
           }
         }
       },
       "steps": {
-        "title": "How the AI Lyrics Generator Works",
-        "description": "Create a lyric draft first, then decide whether to keep editing or generate music.",
+        "title": "使用流程",
+        "description": "三步完成：输入想法、生成歌词、转成歌曲。",
         "items": {
           "brief": {
-            "title": "Describe the lyric idea",
-            "description": "Give the generator a theme, story, mood, point of view, and style."
+            "title": "输入歌词想法",
+            "description": "填写主题、情绪、故事或一句 hook。"
           },
           "review": {
-            "title": "Review the draft",
-            "description": "Read the generated lyrics and keep the parts that match your song."
+            "title": "获得即时歌词",
+            "description": "系统自动生成分段歌词，你可以继续微调。"
           },
           "song": {
-            "title": "Turn it into a song",
-            "description": "Continue to the song workspace and generate audio from the saved lyrics."
+            "title": "一键转成歌曲",
+            "description": "将歌词送入生成器，输出带人声和伴奏的完整歌曲。"
           }
         }
       },
       "faq": {
-        "title": "AI Lyrics Generator FAQ",
+        "title": "AI 歌词生成器 FAQ",
         "one": {
-          "question": "What can I generate lyrics from?",
-          "answer": "You can start from a title, theme, story, emotion, genre, hook idea, or short creative brief."
+          "question": "可以用什么内容生成歌词？",
+          "answer": "可以输入关键词、主题、故事、情绪、歌名、风格或简短描述，系统会扩展成完整歌词。"
         },
         "two": {
-          "question": "Can I turn the lyrics into music?",
-          "answer": "Yes. After generating lyrics, use the Turn Into Song action to continue into the song workspace."
+          "question": "生成歌词后可以直接做成歌曲吗？",
+          "answer": "可以，点击“一键生成歌曲”即可进入 Create 工作区继续生成音频。"
         },
         "three": {
-          "question": "Do I need to sign in?",
-          "answer": "Yes. Lyrics are saved as drafts so you can return to them and generate audio later."
+          "question": "可以免费试用吗？",
+          "answer": "可以先免费体验。登录后可保存草稿并继续后续流程。"
         },
         "four": {
-          "question": "Can I edit the lyrics?",
-          "answer": "You can review and edit the draft in the next workflow before creating the final song."
+          "question": "转成歌曲前能修改歌词吗？",
+          "answer": "可以，建议先调整满意再进行歌曲生成。"
         }
       },
       "finalCta": {
-        "title": "Want Music for These Lyrics?",
-        "description": "Generate a lyric draft now, then turn it into a full song when you are ready."
+        "title": "准备把歌词变成音乐了吗？",
+        "description": "先生成歌词，再一键进入歌曲生成，快速完成你的作品。"
       }
     }
   }
