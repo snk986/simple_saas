@@ -114,7 +114,27 @@ const gallerySongs: GallerySong[] = [
     cover: "linear-gradient(135deg, #052e16 0%, #0e7490 52%, #fde68a 100%)",
     avatar: "linear-gradient(135deg, #0e7490, #fde68a)",
   },
+  {
+    key: "silver-rain",
+    title: "Silver Rain",
+    author: "Nora Vale",
+    plays: "248.9K",
+    rating: "4.8",
+    cover: "linear-gradient(135deg, #111827 0%, #64748b 52%, #e0f2fe 100%)",
+    avatar: "linear-gradient(135deg, #64748b, #e0f2fe)",
+  },
+  {
+    key: "velvet-sunrise",
+    title: "Velvet Sunrise",
+    author: "Mika Ray",
+    plays: "301.5K",
+    rating: "4.7",
+    cover: "linear-gradient(135deg, #3b0764 0%, #db2777 52%, #fb923c 100%)",
+    avatar: "linear-gradient(135deg, #db2777, #fb923c)",
+  },
 ];
+
+const galleryLoopSongs = [...gallerySongs, ...gallerySongs];
 
 export async function generateMetadata({
   params,
@@ -354,8 +374,8 @@ export default async function Home({ params }: HomePageProps) {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#050509] to-transparent md:w-24" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#050509] to-transparent md:w-24" />
           <div className="flex w-max gap-4 pb-2 [animation:music-scroll_52s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
-            {gallerySongs.map((song) => (
-              <GalleryCard key={song.key} song={song} />
+            {galleryLoopSongs.map((song, index) => (
+              <GalleryCard key={`${song.key}-${index}`} song={song} />
             ))}
           </div>
         </div>
