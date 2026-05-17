@@ -255,7 +255,7 @@
   },
   "create": {
     "title": "用文字创作 AI 歌曲",
-    "subtitle": "从一个瞬间、心事、记忆或情绪开始。我们会将它打磨成结构化歌词草稿。",
+    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into structured lyrics.",
     "inputPlaceholder": "讲讲你的故事...",
     "inputHint": "多一些具体细节，歌曲会更有个人风格。",
     "generateLyrics": "生成歌词",
@@ -264,11 +264,10 @@
     "regenerate": "重新生成",
     "regenerateLimit": "最多可重新生成 3 次",
     "inputTooShort": "先再多讲一点故事吧。",
-    "emptyState": "首次草稿完成后，这里会显示你的歌词。",
+    "emptyState": "Your lyrics will appear here after generation.",
     "paymentSuccessTitle": "支付已确认",
     "paymentSuccessDescription": "你的积分或订阅正在同步中。如果余额暂未更新，请稍后刷新。",
     "recall": {
-      "draftNoAudio": "你的歌词草稿已恢复，确认后即可继续生成音频。",
       "inactiveCreator": "欢迎回来。用一个新细节开始你的下一首歌吧。"
     },
     "audioPlayer": {
@@ -619,14 +618,6 @@
   "email": {
     "recall": {
       "fallbackSongTitle": "你的歌曲",
-      "draft_no_audio": {
-        "subject": "你的歌词已准备好，来生成音乐吧",
-        "preheader": "随时把 {songTitle} 变成可播放音频。",
-        "title": "给 {songTitle} 加上声音",
-        "body": "你的歌词草稿正在 Calyra AI 等你。回来生成音频，听听这段故事还能走向哪里。",
-        "cta": "生成音频",
-        "footer": "你之所以收到这封邮件，是因为你在 Calyra AI 开始了歌曲创作。如果你已完成，可忽略本邮件。"
-      },
       "ready_no_report": {
         "subject": "你的歌曲已准备好，来生成制作人报告",
         "preheader": "解锁 {songTitle} 的亮点与下一步建议。",
@@ -1119,7 +1110,7 @@
       "hero": {
         "eyebrow": "AI 歌词生成器",
         "title": "几秒生成可用歌词",
-        "description": "输入一个想法、故事或情绪，直接生成结构清晰的歌词草稿。修改满意后，一键生成带人声的完整歌曲。"
+        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit the lyrics, then convert them into a full song with vocals."
       },
       "cta": {
         "primary": "立即生成歌词",
@@ -1137,46 +1128,46 @@
         "submit": "生成歌词",
         "submitting": "歌词生成中",
         "signInTitle": "登录后可生成歌词",
-        "signInDescription": "登录后可保存歌词草稿，随时继续生成歌曲。",
+        "signInDescription": "Sign in to generate lyrics and continue to song generation.",
         "signInCta": "去登录",
         "errorFallback": "歌词生成失败",
-        "resultEyebrow": "生成结果",
+        "resultEyebrow": "Generated Lyrics",
         "lyricsLabel": "生成的歌词",
         "turnIntoSong": "一键生成歌曲"
       },
       "benefits": {
         "title": "为高效写歌而生",
-        "description": "从一个想法出发，快速拿到可直接使用的歌词结构，再进入完整作曲流程。",
+        "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
         "items": {
-          "draft": {
-            "title": "想法秒变草稿",
-            "description": "用主题、情绪或关键词，几秒生成完整歌词初稿。"
-          },
           "structure": {
             "title": "结构清晰可唱",
             "description": "自动组织主歌、副歌和情绪推进，歌词更像一首完整作品。"
           },
           "nextStep": {
             "title": "无缝进入成歌",
-            "description": "歌词生成后可直接转入歌曲生成，快速得到带人声音频。"
+            "description": "Take generated lyrics directly into song generation and create audio immediately."
+          },
+          "lyrics": {
+            "title": "Lyrics from an idea",
+            "description": "Turn a topic, feeling, or keyword into complete lyrics in seconds."
           }
         }
       },
       "steps": {
         "title": "使用流程",
-        "description": "三步完成：输入想法、生成歌词、转成歌曲。",
+        "description": "Three simple steps from lyrics idea to full song.",
         "items": {
           "brief": {
             "title": "输入歌词想法",
             "description": "填写主题、情绪、故事或一句 hook。"
           },
           "review": {
-            "title": "获得即时歌词",
-            "description": "系统自动生成分段歌词，你可以继续微调。"
+            "title": "Review the lyrics",
+            "description": "Read and edit generated lyrics before creating music."
           },
           "song": {
             "title": "一键转成歌曲",
-            "description": "将歌词送入生成器，输出带人声和伴奏的完整歌曲。"
+            "description": "Generate vocals and instrumental directly from your edited lyrics."
           }
         }
       },
@@ -1192,16 +1183,16 @@
         },
         "three": {
           "question": "可以免费试用吗？",
-          "answer": "可以先免费体验。登录后可保存草稿并继续后续流程。"
+          "answer": "Yes. Sign in to generate lyrics and turn them into songs."
         },
         "four": {
           "question": "转成歌曲前能修改歌词吗？",
-          "answer": "可以，建议先调整满意再进行歌曲生成。"
+          "answer": "Yes. You can edit the generated lyrics before creating the final song."
         }
       },
       "finalCta": {
         "title": "准备把歌词变成音乐了吗？",
-        "description": "先生成歌词，再一键进入歌曲生成，快速完成你的作品。"
+        "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
       }
     }
   }

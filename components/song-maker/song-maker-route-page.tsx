@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { StoryInput } from "@/components/create/story-input";
 import { SEO_TOOL_PAGE_PATHS } from "@/config/seo-pages";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
@@ -17,8 +17,6 @@ export type SongMakerRouteKey =
 type SongMakerMode = "text" | "lyrics";
 
 type SongMakerSearchParams = {
-  id?: string;
-  ref?: string;
   utm_campaign?: string;
   upgraded?: string;
   prompt?: string;
@@ -39,7 +37,7 @@ interface InitialWorkspaceSong {
   title: string;
   user_input: string;
   style_tags: string[] | null;
-  status: "draft" | "generating" | "ready" | "failed" | "expired";
+  status: "generating" | "ready" | "failed" | "expired";
   is_public: boolean;
   cover_url: string | null;
   audio_url: string | null;
@@ -51,23 +49,6 @@ interface InitialWorkspaceSong {
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
-}
-
-function buildRedirectPath(
-  locale: Locale,
-  routePath: string,
-  searchParams: SongMakerSearchParams,
-) {
-  const params = new URLSearchParams();
-
-  Object.entries(searchParams).forEach(([key, value]) => {
-    if (value) {
-      params.set(key, value);
-    }
-  });
-
-  const query = params.toString();
-  return `${localePrefix(locale)}${routePath}${query ? `?${query}` : ""}`;
 }
 
 export async function buildSongMakerMetadata({
@@ -115,43 +96,7 @@ export async function SongMakerRoutePage({
   } = await supabase.auth.getUser();
   const entitlements = user ? await getUserEntitlements(user.id) : null;
   const canDownload = entitlements ? entitlements.plan !== "free" : false;
-  const shouldResumeDraft =
-    searchParams.ref === "song" && Boolean(searchParams.id);
-  let initialDraft = null;
   let initialWorkspaceSongs: InitialWorkspaceSong[] = [];
-
-  if (shouldResumeDraft) {
-    if (!user) {
-      const redirectTo = buildRedirectPath(locale, routePath, searchParams);
-      redirect(
-        `${localePrefix(locale)}/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`,
-      );
-    }
-
-    const { data: song, error } = await supabase
-      .from("songs")
-      .select(
-        "id,title,lyrics,user_input,style_key,style_params,style_tags,lyrics_regen_count,status,audio_url,user_id",
-      )
-      .eq("id", searchParams.id)
-      .eq("user_id", user.id)
-      .single();
-
-    if (error || !song) {
-      notFound();
-    }
-
-    initialDraft = {
-      songId: song.id,
-      title: song.title,
-      lyrics: song.lyrics,
-      userInput: song.user_input,
-      style_key: song.style_key,
-      style_params: song.style_params,
-      style_tags: song.style_tags ?? [],
-      lyrics_regen_count: song.lyrics_regen_count ?? 0,
-    };
-  }
 
   if (user) {
     const { data: songs } = await supabase
@@ -231,7 +176,6 @@ export async function SongMakerRoutePage({
         )}
 
         <StoryInput
-          initialDraft={initialDraft}
           recallCampaign={searchParams.utm_campaign ?? null}
           canDownload={canDownload}
           creditsBalance={entitlements?.creditsBalance ?? 0}

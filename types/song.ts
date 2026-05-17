@@ -1,9 +1,4 @@
-export type SongStatus =
-  | "draft"
-  | "generating"
-  | "ready"
-  | "failed"
-  | "expired";
+export type SongStatus = "generating" | "ready" | "failed" | "expired";
 export type SelectedAudio = "primary" | "alt";
 
 export interface Song {
@@ -52,7 +47,6 @@ export interface CreateSongInput {
 }
 
 export interface GenerateLyricsResponse {
-  songId: string;
   lyrics: string;
   title: string;
   style_key: string;

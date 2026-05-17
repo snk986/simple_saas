@@ -92,7 +92,8 @@ export function HeroGeneratorForm({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           mode,
-          prompt: promptValue,
+          prompt: mode === "text" ? promptValue : undefined,
+          lyrics: mode === "lyrics" ? promptValue : undefined,
           style: styleValue,
           title: titleValue,
           locale,

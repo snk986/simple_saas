@@ -1,0 +1,11 @@
+delete from public.songs
+where status = 'draft';
+
+alter table public.songs
+  drop constraint if exists songs_status_check;
+
+alter table public.songs
+  add constraint songs_status_check
+  check (status in ('generating', 'ready', 'failed', 'expired'));
+
+notify pgrst, 'reload schema';

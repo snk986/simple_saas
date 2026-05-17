@@ -5,7 +5,7 @@ import { createServiceRoleClient } from "@/utils/supabase/service-role";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import type { RecallCandidate, RecallScenario } from "@/lib/recall/types";
 
-type RecallCandidateDraft = Omit<RecallCandidate, "email">;
+type RecallCandidateSeed = Omit<RecallCandidate, "email">;
 
 type SongCandidate = {
   id: string;
@@ -53,7 +53,6 @@ function appendUtm(url: string, scenario: RecallScenario, songId?: string) {
 function songCtaUrl(song: SongCandidate, scenario: RecallScenario) {
   const locale = normalizeLocale(song.locale);
   const paths: Record<RecallScenario, string> = {
-    draft_no_audio: `/ai-lyrics-to-song?ref=song&id=${encodeURIComponent(song.id)}`,
     ready_no_report: `/report/${song.id}`,
     report_no_share: `/song/${song.id}`,
     inactive_creator: "/ai-song-maker",
@@ -122,9 +121,9 @@ async function fetchRecentEmailKeys(
   );
 }
 
-function dedupeCandidates(candidates: RecallCandidateDraft[]) {
+function dedupeCandidates(candidates: RecallCandidateSeed[]) {
   const seen = new Set<string>();
-  const deduped: RecallCandidateDraft[] = [];
+  const deduped: RecallCandidateSeed[] = [];
 
   for (const candidate of candidates) {
     const key = `${candidate.userId}:${candidate.scenario}`;
@@ -138,32 +137,6 @@ function dedupeCandidates(candidates: RecallCandidateDraft[]) {
   }
 
   return deduped;
-}
-
-async function draftNoAudioCandidates() {
-  const supabase = createServiceRoleClient();
-  const { data, error } = await supabase
-    .from("songs")
-    .select("id,user_id,title,locale,created_at,updated_at")
-    .eq("status", "draft")
-    .is("audio_url", null)
-    .lte("created_at", hoursAgo(6))
-    .order("created_at", { ascending: true })
-    .limit(QUERY_LIMIT);
-
-  if (error || !data) {
-    throw error ?? new Error("Failed to load draft recall candidates");
-  }
-
-  return (data as SongCandidate[]).map((song) => ({
-    userId: song.user_id,
-    locale: normalizeLocale(song.locale),
-    scenario: "draft_no_audio" as const,
-    songId: song.id,
-    songTitle: song.title,
-    ctaUrl: songCtaUrl(song, "draft_no_audio"),
-    metadata: { songStatus: "draft" },
-  }));
 }
 
 async function readyNoReportCandidates() {
@@ -276,10 +249,6 @@ async function inactiveCreatorCandidates() {
 }
 
 async function loadScenarioCandidates(scenario: RecallScenario) {
-  if (scenario === "draft_no_audio") {
-    return draftNoAudioCandidates();
-  }
-
   if (scenario === "ready_no_report") {
     return readyNoReportCandidates();
   }
@@ -294,12 +263,7 @@ async function loadScenarioCandidates(scenario: RecallScenario) {
 export async function getRecallCandidates(scenario?: RecallScenario) {
   const scenarios: RecallScenario[] = scenario
     ? [scenario]
-    : [
-        "draft_no_audio",
-        "ready_no_report",
-        "report_no_share",
-        "inactive_creator",
-      ];
+    : ["ready_no_report", "report_no_share", "inactive_creator"];
   const rawCandidates = (
     await Promise.all(scenarios.map((item) => loadScenarioCandidates(item)))
   ).flat();

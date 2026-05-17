@@ -255,7 +255,7 @@
   },
   "create": {
     "title": "Create AI Songs from Text",
-    "subtitle": "순간, 고백, 기억, 감정에서 시작하세요. 구조가 잡힌 가사 초안으로 다듬어 드립니다.",
+    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into structured lyrics.",
     "inputPlaceholder": "이야기를 들려주세요...",
     "inputHint": "생생한 디테일이 있을수록 노래가 더 개인적으로 느껴집니다.",
     "generateLyrics": "가사 생성",
@@ -264,11 +264,10 @@
     "regenerate": "다시 생성",
     "regenerateLimit": "최대 3회 다시 생성할 수 있습니다",
     "inputTooShort": "먼저 이야기를 조금 더 들려주세요.",
-    "emptyState": "첫 초안이 생성되면 여기에 가사가 표시됩니다.",
+    "emptyState": "Your lyrics will appear here after generation.",
     "paymentSuccessTitle": "결제가 확인되었습니다",
     "paymentSuccessDescription": "크레딧 또는 플랜을 동기화하고 있습니다. 잔액이 아직 업데이트되지 않았다면 잠시 후 새로고침하세요.",
     "recall": {
-      "draftNoAudio": "저장된 가사를 불러왔습니다. 검토한 뒤 준비되면 오디오를 생성하세요.",
       "inactiveCreator": "다시 오신 것을 환영합니다. 새로운 디테일로 다음 이야기를 노래로 만들어보세요."
     },
     "audioPlayer": {
@@ -619,14 +618,6 @@
   "email": {
     "recall": {
       "fallbackSongTitle": "내 노래",
-      "draft_no_audio": {
-        "subject": "가사를 음악으로 만들 준비가 됐어요",
-        "preheader": "원할 때 {songTitle}의 오디오를 생성하세요.",
-        "title": "{songTitle}에 사운드를 입혀보세요",
-        "body": "Calyra AI에 가사 초안이 기다리고 있습니다. 돌아와서 오디오를 만들고 이야기가 어디까지 갈 수 있는지 들어보세요.",
-        "cta": "오디오 생성",
-        "footer": "Calyra AI에서 노래를 시작하셨기 때문에 이 이메일을 보내드립니다. 이미 완료했다면 무시하셔도 됩니다."
-      },
       "ready_no_report": {
         "subject": "노래의 프로듀서 리포트를 만들 수 있어요",
         "preheader": "{songTitle}의 강점과 다음 단계를 확인하세요.",
@@ -1119,7 +1110,7 @@
       "hero": {
         "eyebrow": "AI Lyrics Generator",
         "title": "Generate Lyrics Before You Make the Song",
-        "description": "Write a lyric draft from a theme, story, or emotion, then continue directly into the song generator when the words feel right."
+        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit the lyrics, then convert them into a full song with vocals."
       },
       "cta": {
         "primary": "Create a Full Song",
@@ -1137,46 +1128,46 @@
         "submit": "Generate Lyrics",
         "submitting": "Writing Lyrics",
         "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Calyra saves lyric drafts to your account so you can turn them into songs later.",
+        "signInDescription": "Sign in to generate lyrics and continue to song generation.",
         "signInCta": "Sign in",
         "errorFallback": "Failed to generate lyrics",
-        "resultEyebrow": "Lyrics Draft",
+        "resultEyebrow": "Generated Lyrics",
         "lyricsLabel": "Generated lyrics",
         "turnIntoSong": "Turn Into Song"
       },
       "benefits": {
         "title": "Write Better Song Seeds",
-        "description": "Use the lyrics generator when you need words first, then bring the draft into the music workflow.",
+        "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
         "items": {
-          "draft": {
-            "title": "Draft from a theme",
-            "description": "Start with a story, feeling, title, or hook idea and generate a structured lyric draft."
-          },
           "structure": {
             "title": "Get song-ready sections",
             "description": "Create lyrics with verses, chorus ideas, emotional progression, and a clear center."
           },
           "nextStep": {
             "title": "Continue into music",
-            "description": "Use the saved draft as the starting point for Lyrics to Song generation."
+            "description": "Take generated lyrics directly into song generation and create audio immediately."
+          },
+          "lyrics": {
+            "title": "Lyrics from an idea",
+            "description": "Turn a topic, feeling, or keyword into complete lyrics in seconds."
           }
         }
       },
       "steps": {
         "title": "How the AI Lyrics Generator Works",
-        "description": "Create a lyric draft first, then decide whether to keep editing or generate music.",
+        "description": "Three simple steps from lyrics idea to full song.",
         "items": {
           "brief": {
             "title": "Describe the lyric idea",
             "description": "Give the generator a theme, story, mood, point of view, and style."
           },
           "review": {
-            "title": "Review the draft",
-            "description": "Read the generated lyrics and keep the parts that match your song."
+            "title": "Review the lyrics",
+            "description": "Read and edit generated lyrics before creating music."
           },
           "song": {
             "title": "Turn it into a song",
-            "description": "Continue to the song workspace and generate audio from the saved lyrics."
+            "description": "Generate vocals and instrumental directly from your edited lyrics."
           }
         }
       },
@@ -1192,16 +1183,16 @@
         },
         "three": {
           "question": "Do I need to sign in?",
-          "answer": "Yes. Lyrics are saved as drafts so you can return to them and generate audio later."
+          "answer": "Yes. Sign in to generate lyrics and turn them into songs."
         },
         "four": {
           "question": "Can I edit the lyrics?",
-          "answer": "You can review and edit the draft in the next workflow before creating the final song."
+          "answer": "Yes. You can edit the generated lyrics before creating the final song."
         }
       },
       "finalCta": {
         "title": "Want Music for These Lyrics?",
-        "description": "Generate a lyric draft now, then turn it into a full song when you are ready."
+        "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
       }
     }
   }

@@ -23,21 +23,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import type { StyleParams } from "@/types/song";
-
-interface InitialDraft {
-  songId: string;
-  title: string;
-  lyrics: string;
-  userInput: string;
-  style_key: string;
-  style_params: StyleParams;
-  style_tags: string[];
-  lyrics_regen_count: number;
-}
 
 interface StoryInputProps {
-  initialDraft?: InitialDraft | null;
   recallCampaign?: string | null;
   canDownload: boolean;
   creditsBalance: number;
@@ -55,7 +42,7 @@ interface StoryInputProps {
     title: string;
     user_input: string;
     style_tags: string[] | null;
-    status: "draft" | "generating" | "ready" | "failed" | "expired";
+    status: "generating" | "ready" | "failed" | "expired";
     is_public: boolean;
     cover_url: string | null;
     audio_url: string | null;
@@ -66,7 +53,7 @@ interface StoryInputProps {
   }>;
 }
 
-type WorkspaceSongStatus = "draft" | "processing" | "completed" | "failed";
+type WorkspaceSongStatus = "processing" | "completed" | "failed";
 type WorkspaceFilter = "all" | "liked" | "public" | "uploads";
 
 interface WorkspaceSongItem {
@@ -120,12 +107,11 @@ const STYLE_TAGS = [
 ];
 
 function normalizeStatus(
-  status: "draft" | "generating" | "ready" | "failed" | "expired",
+  status: "generating" | "ready" | "failed" | "expired",
 ): WorkspaceSongStatus {
   if (status === "ready") return "completed";
   if (status === "generating") return "processing";
-  if (status === "failed" || status === "expired") return "failed";
-  return "draft";
+  return "failed";
 }
 
 function formatDuration(seconds: number | null) {
@@ -139,7 +125,6 @@ function formatDuration(seconds: number | null) {
 }
 
 export function StoryInput({
-  initialDraft,
   canDownload,
   creditsBalance,
   initialPrompt,
@@ -157,13 +142,9 @@ export function StoryInput({
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
 
   const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
-  const [prompt, setPrompt] = useState(
-    initialPrompt ?? initialDraft?.userInput ?? "",
-  );
+  const [prompt, setPrompt] = useState(initialPrompt ?? "");
   const [style, setStyle] = useState(initialStyle ?? "");
-  const [title, setTitle] = useState(
-    initialTitle ?? initialDraft?.title ?? "My AI Song",
-  );
+  const [title, setTitle] = useState(initialTitle ?? "My AI Song");
   const [instrumental, setInstrumental] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorAction, setErrorAction] = useState<"sign-in" | "pricing" | null>(
@@ -330,7 +311,8 @@ export function StoryInput({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           mode,
-          prompt,
+          prompt: mode === "text" ? prompt : undefined,
+          lyrics: mode === "lyrics" ? prompt : undefined,
           style,
           title,
           locale: params.locale ?? "en",

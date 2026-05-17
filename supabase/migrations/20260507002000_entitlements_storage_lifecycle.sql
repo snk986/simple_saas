@@ -5,7 +5,7 @@ alter table public.songs
 
 alter table public.songs
   add constraint songs_status_check
-  check (status in ('draft', 'generating', 'ready', 'failed', 'expired'));
+  check (status in ('generating', 'ready', 'failed', 'expired'));
 
 create index if not exists songs_expires_at_idx
   on public.songs(expires_at)

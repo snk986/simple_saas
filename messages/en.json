@@ -517,7 +517,7 @@
       "hero": {
         "eyebrow": "AI Lyrics Generator",
         "title": "Generate Song Lyrics in Seconds",
-        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit your draft, then convert it into a full song with vocals."
+        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit the lyrics, then convert them into a full song with vocals."
       },
       "cta": {
         "primary": "Generate Lyrics Now",
@@ -535,7 +535,7 @@
         "submit": "Generate Lyrics",
         "submitting": "Generating Lyrics",
         "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Sign in to save your lyric drafts and continue to song generation anytime.",
+        "signInDescription": "Sign in to generate lyrics and continue to song generation.",
         "signInCta": "Sign in",
         "errorFallback": "Could not generate lyrics",
         "resultEyebrow": "Generated Lyrics",
@@ -546,17 +546,17 @@
         "title": "Built for Fast Songwriting",
         "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
         "items": {
-          "draft": {
-            "title": "From idea to draft",
-            "description": "Turn a topic, feeling, or keyword into a complete first draft in seconds."
-          },
           "structure": {
             "title": "Clear song structure",
             "description": "Generate organized verse and chorus sections with a coherent emotional flow."
           },
           "nextStep": {
             "title": "One-click to music",
-            "description": "Take generated lyrics directly into the song generator and create audio immediately."
+            "description": "Take generated lyrics directly into song generation and create audio immediately."
+          },
+          "lyrics": {
+            "title": "Lyrics from an idea",
+            "description": "Turn a topic, feeling, or keyword into complete lyrics in seconds."
           }
         }
       },
@@ -569,12 +569,12 @@
             "description": "Enter your theme, mood, story, or hook line."
           },
           "review": {
-            "title": "Get instant lyrics",
-            "description": "Receive structured lyrics and refine any line you want."
+            "title": "Review the lyrics",
+            "description": "Read and edit generated lyrics before creating music."
           },
           "song": {
             "title": "Turn lyrics into song",
-            "description": "Send your lyrics into the generator to create vocals and instrumental."
+            "description": "Generate vocals and instrumental directly from your edited lyrics."
           }
         }
       },
@@ -590,22 +590,22 @@
         },
         "three": {
           "question": "Is this free to try?",
-          "answer": "You can start for free. Sign in to save drafts and continue your workflow."
+          "answer": "Yes. Sign in to generate lyrics and turn them into songs."
         },
         "four": {
           "question": "Can I edit the lyrics before generating audio?",
-          "answer": "Yes. You can review and revise the generated lyrics before turning them into a song."
+          "answer": "Yes. You can edit the generated lyrics before creating the final song."
         }
       },
       "finalCta": {
         "title": "Ready to Turn Lyrics into Music?",
-        "description": "Generate your lyrics now and produce a complete song in the next step."
+        "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
       }
     }
   },
   "create": {
     "title": "Create AI Songs from Text",
-    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into a structured lyric draft.",
+    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into structured lyrics.",
     "inputPlaceholder": "Tell your story...",
     "inputHint": "A few vivid details help the song feel personal.",
     "generateLyrics": "Generate Lyrics",
@@ -614,11 +614,10 @@
     "regenerate": "Regenerate",
     "regenerateLimit": "Max 3 regenerations reached",
     "inputTooShort": "Tell a little more of the story first.",
-    "emptyState": "Your lyrics will appear here after the first draft.",
+    "emptyState": "Your lyrics will appear here after generation.",
     "paymentSuccessTitle": "Payment confirmed",
     "paymentSuccessDescription": "Your credits or plan are being synced. If the balance has not updated yet, refresh in a moment.",
     "recall": {
-      "draftNoAudio": "Your saved lyrics are loaded. Review them, then generate the audio when you are ready.",
       "inactiveCreator": "Welcome back. Start with a fresh detail and turn the next story into a song."
     },
     "audioPlayer": {
@@ -1149,14 +1148,6 @@
   "email": {
     "recall": {
       "fallbackSongTitle": "your song",
-      "draft_no_audio": {
-        "subject": "Your lyrics are ready for music",
-        "preheader": "Turn {songTitle} into audio when you are ready.",
-        "title": "Give {songTitle} its sound",
-        "body": "Your lyric draft is waiting in Calyra AI. Come back to generate audio and hear where the story can go next.",
-        "cta": "Generate audio",
-        "footer": "You are receiving this because you started a song on Calyra AI. You can ignore this email if you already finished it."
-      },
       "ready_no_report": {
         "subject": "Your song is ready for its producer report",
         "preheader": "Unlock the strengths and next steps for {songTitle}.",

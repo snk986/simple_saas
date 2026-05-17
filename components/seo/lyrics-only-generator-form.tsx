@@ -2,10 +2,12 @@
 
 import { type FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight, FileText, Loader2 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { defaultLocale, type Locale } from "@/i18n/routing";
+import type { StyleParams } from "@/types/song";
 
 interface LyricsOnlyGeneratorFormProps {
   labels: {
@@ -30,9 +32,11 @@ interface LyricsOnlyGeneratorFormProps {
 }
 
 interface LyricsResponse {
-  songId: string;
   title: string;
   lyrics: string;
+  style_key: string;
+  style_params: StyleParams;
+  style_tags: string[];
   error?: string;
 }
 
@@ -43,6 +47,7 @@ function localePrefix(locale: string) {
 export function LyricsOnlyGeneratorForm({
   labels,
 }: LyricsOnlyGeneratorFormProps) {
+  const router = useRouter();
   const locale = useLocale() as Locale;
   const prefix = localePrefix(locale);
   const [prompt, setPrompt] = useState("");
@@ -52,6 +57,7 @@ export function LyricsOnlyGeneratorForm({
   const [needsSignIn, setNeedsSignIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<LyricsResponse | null>(null);
+  const [isGeneratingSong, setIsGeneratingSong] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -94,6 +100,53 @@ export function LyricsOnlyGeneratorForm({
       setError(caught instanceof Error ? caught.message : labels.errorFallback);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleGenerateSong = async () => {
+    if (!result || isGeneratingSong) {
+      return;
+    }
+
+    setIsGeneratingSong(true);
+    setNeedsSignIn(false);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/generations", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          mode: "lyrics",
+          lyrics: result.lyrics,
+          prompt,
+          style,
+          title: result.title,
+          locale,
+        }),
+      });
+      const data = (await response.json()) as {
+        songId?: string;
+        jobId?: string;
+        error?: string;
+      };
+
+      if (response.status === 401) {
+        setNeedsSignIn(true);
+        return;
+      }
+
+      if (!response.ok || !data.songId) {
+        throw new Error(data.error ?? labels.errorFallback);
+      }
+
+      router.push(
+        `${prefix}/ai-song-maker?jobId=${encodeURIComponent(data.songId)}`,
+      );
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : labels.errorFallback);
+    } finally {
+      setIsGeneratingSong(false);
     }
   };
 
@@ -183,20 +236,43 @@ export function LyricsOnlyGeneratorForm({
             {result.title}
           </h2>
           <label className="mt-4 block text-sm font-medium">
+            {labels.title}
+            <input
+              value={result.title}
+              onChange={(event) =>
+                setResult((current) =>
+                  current ? { ...current, title: event.target.value } : current,
+                )
+              }
+              className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </label>
+          <label className="mt-4 block text-sm font-medium">
             {labels.lyricsLabel}
             <textarea
-              readOnly
               value={result.lyrics}
+              onChange={(event) =>
+                setResult((current) =>
+                  current
+                    ? { ...current, lyrics: event.target.value }
+                    : current,
+                )
+              }
               className="mt-2 min-h-80 w-full resize-y rounded-md border border-input bg-background px-3 py-3 font-mono text-sm leading-6 outline-none"
             />
           </label>
-          <Button asChild className="mt-4 gap-2">
-            <Link
-              href={`${prefix}/ai-lyrics-to-song?ref=song&id=${result.songId}`}
-            >
-              {labels.turnIntoSong}
+          <Button
+            type="button"
+            className="mt-4 gap-2"
+            disabled={isGeneratingSong || result.lyrics.trim().length < 20}
+            onClick={handleGenerateSong}
+          >
+            {isGeneratingSong ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            )}
+            {labels.turnIntoSong}
           </Button>
         </section>
       ) : null}

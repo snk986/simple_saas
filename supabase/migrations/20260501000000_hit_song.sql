@@ -18,8 +18,8 @@ create table public.songs (
   style_params  jsonb not null default '{}',
   style_tags    text[] default '{}',
   locale        text not null default 'en',
-  status        text not null default 'draft'
-    check (status in ('draft', 'generating', 'ready', 'failed')),
+  status        text not null default 'generating'
+    check (status in ('generating', 'ready', 'failed', 'expired')),
   is_public     boolean default true,
   total_score   integer,
   report_data   jsonb,

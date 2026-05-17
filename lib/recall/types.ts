@@ -1,7 +1,6 @@
 import type { Locale } from "@/i18n/routing";
 
 export const recallScenarios = [
-  "draft_no_audio",
   "ready_no_report",
   "report_no_share",
   "inactive_creator",
