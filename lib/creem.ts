@@ -45,12 +45,19 @@ export const creem = {
       successUrl: string;
       metadata?: Record<string, unknown>;
     }) {
-      return postJson("/checkouts", payload);
+      return postJson("/checkouts", {
+        product_id: payload.productId,
+        customer: payload.customer,
+        success_url: payload.successUrl,
+        metadata: payload.metadata,
+      });
     },
   },
   customers: {
     generateBillingLinks(payload: { customerId: string }) {
-      return postJson("/customers/billing", payload);
+      return postJson("/customers/billing", {
+        customer_id: payload.customerId,
+      });
     },
   },
 };
