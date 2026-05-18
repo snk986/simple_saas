@@ -109,6 +109,7 @@ const CREEM_CHECKOUT_QUERY_KEYS = [
   "order_id",
   "customer_id",
   "product_id",
+  "subscription_id",
   "signature",
 ];
 
