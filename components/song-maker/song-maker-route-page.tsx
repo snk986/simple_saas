@@ -184,6 +184,8 @@ export async function SongMakerRoutePage({
           initialTitle={searchParams.title ?? null}
           initialMode={initialMode}
           initialJobId={searchParams.jobId ?? null}
+          paymentSuccessTitle={tCreate("paymentSuccessTitle")}
+          paymentSuccessDescription={tCreate("paymentSuccessDescription")}
           initialWorkspaceSongs={initialWorkspaceSongs}
           modeRoutes={{
             text: `${localePrefix(locale)}${SEO_TOOL_PAGE_PATHS.aiTextToSong}`,

@@ -29,6 +29,8 @@ interface StoryInputProps {
   initialTitle?: string | null;
   initialMode?: "text" | "lyrics";
   initialJobId?: string | null;
+  paymentSuccessTitle?: string;
+  paymentSuccessDescription?: string;
   modeRoutes?: {
     text: string;
     lyrics: string;
@@ -102,6 +104,14 @@ const STYLE_TAGS = [
   "Male Vocal",
 ];
 
+const CREEM_CHECKOUT_QUERY_KEYS = [
+  "checkout_id",
+  "order_id",
+  "customer_id",
+  "product_id",
+  "signature",
+];
+
 function normalizeStatus(
   status: "generating" | "ready" | "failed" | "expired",
 ): WorkspaceSongStatus {
@@ -128,6 +138,8 @@ export function StoryInput({
   initialTitle,
   initialMode = "text",
   initialJobId,
+  paymentSuccessTitle,
+  paymentSuccessDescription,
   modeRoutes,
   initialWorkspaceSongs,
 }: StoryInputProps) {
@@ -148,6 +160,32 @@ export function StoryInput({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
   const [durations, setDurations] = useState<Record<string, number | null>>({});
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const hasCheckoutParams = CREEM_CHECKOUT_QUERY_KEYS.some((key) =>
+      url.searchParams.has(key),
+    );
+
+    if (!hasCheckoutParams) {
+      return;
+    }
+
+    toast({
+      title: paymentSuccessTitle,
+      description: paymentSuccessDescription,
+    });
+
+    CREEM_CHECKOUT_QUERY_KEYS.forEach((key) => {
+      url.searchParams.delete(key);
+    });
+
+    window.history.replaceState(
+      {},
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, [paymentSuccessDescription, paymentSuccessTitle, toast]);
 
   useEffect(() => {
     setMode(initialMode);
