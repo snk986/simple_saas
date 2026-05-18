@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { ensureCustomerInitialized } from "@/lib/auth/ensure-customer-initialized";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,6 +14,18 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient();
     await supabase.auth.exchangeCodeForSession(code);
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user?.id) {
+      try {
+        await ensureCustomerInitialized(user.id, user.email, "auth_callback");
+      } catch (error) {
+        console.error("Failed to ensure customer initialization:", error);
+      }
+    }
   }
 
   if (redirectTo) {

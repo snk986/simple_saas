@@ -2,6 +2,7 @@
 
 import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
+import { ensureCustomerInitialized } from "@/lib/auth/ensure-customer-initialized";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
@@ -76,13 +77,21 @@ export const signInAction = async (formData: FormData) => {
     ? `${localizedPath(locale, "/sign-in")}?redirectTo=${encodeURIComponent(redirectTo)}`
     : localizedPath(locale, "/sign-in");
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
     return encodedRedirect("error", signInPath, mapAuthErrorToKey(error));
+  }
+
+  if (data.user?.id) {
+    try {
+      await ensureCustomerInitialized(data.user.id, data.user.email, "sign_in");
+    } catch (ensureError) {
+      console.error("Failed to ensure customer initialization on sign in:", ensureError);
+    }
   }
 
   return redirect(redirectTo ?? localizedPath(locale, "/dashboard"));
