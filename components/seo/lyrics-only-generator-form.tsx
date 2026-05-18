@@ -188,7 +188,7 @@ export function LyricsOnlyGeneratorForm({
           />
         </div>
 
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
+        <div className="mt-4">
           <label className="text-sm font-medium text-foreground">
             {labels.style}
             <input
@@ -197,16 +197,6 @@ export function LyricsOnlyGeneratorForm({
               value={style}
               onChange={(event) => setStyle(event.target.value)}
               maxLength={300}
-            />
-          </label>
-          <label className="text-sm font-medium text-foreground">
-            {labels.title}
-            <input
-              className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder={labels.titlePlaceholder}
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              maxLength={120}
             />
           </label>
         </div>
@@ -246,39 +236,47 @@ export function LyricsOnlyGeneratorForm({
 
       {result ? (
         <section className="rounded-lg border border-border bg-card p-4 shadow-sm md:p-5">
-          <p className="flex items-center gap-2 text-sm font-medium text-primary">
-            <FileText className="h-4 w-4" />
-            {labels.resultEyebrow}
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-normal">
-            {result.title}
-          </h2>
-          <label className="mt-4 block text-sm font-medium">
-            {labels.title}
-            <input
-              value={result.title}
-              onChange={(event) =>
-                setResult((current) =>
-                  current ? { ...current, title: event.target.value } : current,
-                )
-              }
-              className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-            />
-          </label>
-          <label className="mt-4 block text-sm font-medium">
-            {labels.lyricsLabel}
-            <textarea
-              value={result.lyrics}
-              onChange={(event) =>
-                setResult((current) =>
-                  current
-                    ? { ...current, lyrics: event.target.value }
-                    : current,
-                )
-              }
-              className="mt-2 min-h-80 w-full resize-y rounded-md border border-input bg-background px-3 py-3 font-mono text-sm leading-6 outline-none"
-            />
-          </label>
+          <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
+            <div className="rounded-md border border-border bg-background p-3">
+              <p className="flex items-center gap-2 text-sm font-medium text-primary">
+                <FileText className="h-4 w-4" />
+                {labels.resultEyebrow}
+              </p>
+              <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
+                {prompt}
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium">
+                {labels.title}
+                <input
+                  value={result.title}
+                  onChange={(event) =>
+                    setResult((current) =>
+                      current
+                        ? { ...current, title: event.target.value }
+                        : current,
+                    )
+                  }
+                  className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+                />
+              </label>
+              <label className="mt-4 block text-sm font-medium">
+                {labels.lyricsLabel}
+                <textarea
+                  value={result.lyrics}
+                  onChange={(event) =>
+                    setResult((current) =>
+                      current
+                        ? { ...current, lyrics: event.target.value }
+                        : current,
+                    )
+                  }
+                  className="mt-2 min-h-80 w-full resize-y rounded-md border border-input bg-background px-3 py-3 font-mono text-sm leading-6 outline-none"
+                />
+              </label>
+            </div>
+          </div>
           <Button
             type="button"
             className="mt-4 gap-2"
