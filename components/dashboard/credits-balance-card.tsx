@@ -1,27 +1,20 @@
 "use client";
 
 import { Coins } from "lucide-react";
-import { CreditTransaction } from "@/types/creem";
 
 type CreditsBalanceCardProps = {
   credits: number;
-  recentHistory: CreditTransaction[];
   songRetentionDays: number | null;
-  locale: string;
   labels: {
     availableCredits: string;
     subscriberStorage: string;
     freeStorage: string;
-    recentActivity: string;
-    noRecentActivity: string;
   };
 };
 
 export function CreditsBalanceCard({
   credits,
-  recentHistory,
   songRetentionDays,
-  locale,
   labels,
 }: CreditsBalanceCardProps) {
   return (
@@ -40,35 +33,6 @@ export function CreditsBalanceCard({
           ? labels.subscriberStorage
           : labels.freeStorage.replace("{days}", String(songRetentionDays))}
       </p>
-      <div className="mt-4 space-y-2">
-        <p className="text-sm text-muted-foreground">{labels.recentActivity}</p>
-        <div className="space-y-1">
-          {recentHistory.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{labels.noRecentActivity}</p>
-          ) : (
-            recentHistory.map((history, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between text-sm"
-              >
-                <span
-                  className={
-                    history.type === "add" ? "text-primary" : "text-destructive"
-                  }
-                >
-                  {history.type === "add" ? "+" : "-"}
-                  {history.amount}
-                </span>
-                <span className="text-muted-foreground">
-                  {new Intl.DateTimeFormat(locale).format(
-                    new Date(history.created_at),
-                  )}
-                </span>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
     </div>
   );
 }

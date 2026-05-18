@@ -69,11 +69,6 @@ export default async function DashboardPage({
         status,
         current_period_end,
         creem_product_id
-      ),
-      credits_history (
-        amount,
-        type,
-        created_at
       )
     `,
     )
@@ -81,9 +76,6 @@ export default async function DashboardPage({
     .maybeSingle();
 
   const subscription = normalizeRows(customerData?.subscriptions)[0] ?? null;
-  const recentCreditsHistory = normalizeRows(
-    customerData?.credits_history,
-  ).slice(0, 2);
   const { data: songsData } = await supabase
     .from("songs")
     .select(
@@ -151,15 +143,11 @@ export default async function DashboardPage({
         {/* Credits Card */}
         <CreditsBalanceCard
           credits={entitlements.creditsBalance}
-          recentHistory={recentCreditsHistory}
           songRetentionDays={entitlements.songRetentionDays}
-          locale={locale}
           labels={{
             availableCredits: t("creditsCard.availableCredits"),
             subscriberStorage: t("creditsCard.subscriberStorage"),
             freeStorage: t.raw("creditsCard.freeStorage") as string,
-            recentActivity: t("creditsCard.recentActivity"),
-            noRecentActivity: t("creditsCard.noRecentActivity"),
           }}
         />
 
