@@ -538,15 +538,6 @@ export function StoryInput({
             className="mt-3 h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none"
           />
 
-          <label className="mt-4 flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={instrumental}
-              onChange={(event) => setInstrumental(event.target.checked)}
-            />
-            Instrumental only (no vocals)
-          </label>
-
           <Button
             type="button"
             size="lg"
