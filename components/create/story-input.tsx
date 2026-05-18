@@ -51,7 +51,7 @@ interface StoryInputProps {
   }>;
 }
 
-type WorkspaceSongStatus = "processing" | "completed" | "failed";
+type WorkspaceSongStatus = "processing" | "completed";
 type WorkspaceFilter = "all" | "liked" | "public" | "uploads";
 
 interface WorkspaceSongItem {
@@ -115,10 +115,10 @@ const CREEM_CHECKOUT_QUERY_KEYS = [
 
 function normalizeStatus(
   status: "generating" | "ready" | "failed" | "expired",
-): WorkspaceSongStatus {
+): WorkspaceSongStatus | null {
   if (status === "ready") return "completed";
   if (status === "generating") return "processing";
-  return "failed";
+  return null;
 }
 
 function formatDuration(seconds: number | null) {
@@ -193,21 +193,31 @@ export function StoryInput({
   }, [initialMode]);
 
   useEffect(() => {
-    const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.map((song) => ({
-      id: song.id,
-      title: song.title,
-      promptSummary: song.user_input,
-      styleSummary: (song.style_tags ?? []).join(", "),
-      status: normalizeStatus(song.status),
-      isPublic: Boolean(song.is_public),
-      coverUrl: song.cover_url,
-      audioUrl: song.audio_url,
-      modelTag: (song.audio_provider ?? "kie").toUpperCase(),
-      versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
-      liked: (song.like_count ?? 0) > 0,
-      createdAt: song.created_at,
-      taskId: song.audio_provider_task_id,
-    }));
+    const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.flatMap((song) => {
+      const status = normalizeStatus(song.status);
+
+      if (!status) {
+        return [];
+      }
+
+      return [
+        {
+          id: song.id,
+          title: song.title,
+          promptSummary: song.user_input,
+          styleSummary: (song.style_tags ?? []).join(", "),
+          status,
+          isPublic: Boolean(song.is_public),
+          coverUrl: song.cover_url,
+          audioUrl: song.audio_url,
+          modelTag: (song.audio_provider ?? "kie").toUpperCase(),
+          versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
+          liked: (song.like_count ?? 0) > 0,
+          createdAt: song.created_at,
+          taskId: song.audio_provider_task_id,
+        },
+      ];
+    });
     setWorkspaceSongs(mapped);
   }, [initialWorkspaceSongs]);
 
@@ -222,18 +232,16 @@ export function StoryInput({
       );
       if (!response.ok) return;
       const data = (await response.json()) as GenerationJobPayload;
+      if (data.status === "failed") {
+        return;
+      }
       setWorkspaceSongs((current) => [
         {
           id: data.songId,
           title: data.title,
           promptSummary: data.userInput,
           styleSummary: (data.style_tags ?? []).join(", "),
-          status:
-            data.status === "completed"
-              ? "completed"
-              : data.status === "failed"
-                ? "failed"
-                : "processing",
+          status: data.status === "completed" ? "completed" : "processing",
           isPublic: true,
           coverUrl: data.cover_url ?? null,
           audioUrl: data.audio_url ?? null,
@@ -268,21 +276,19 @@ export function StoryInput({
           if (!response.ok) return;
           const data = (await response.json()) as GenerationJobPayload;
           setWorkspaceSongs((current) =>
-            current.map((item) =>
-              item.id !== song.id
-                ? item
-                : {
-                    ...item,
-                    status:
-                      data.status === "completed"
-                        ? "completed"
-                        : data.status === "failed"
-                          ? "failed"
-                          : "processing",
-                    audioUrl: data.audio_url ?? item.audioUrl,
-                    coverUrl: data.cover_url ?? item.coverUrl,
-                  },
-            ),
+            data.status === "failed"
+              ? current.filter((item) => item.id !== song.id)
+              : current.map((item) =>
+                  item.id !== song.id
+                    ? item
+                    : {
+                        ...item,
+                        status:
+                          data.status === "completed" ? "completed" : "processing",
+                        audioUrl: data.audio_url ?? item.audioUrl,
+                        coverUrl: data.cover_url ?? item.coverUrl,
+                      },
+                ),
           );
         })();
       });
@@ -405,56 +411,6 @@ export function StoryInput({
       });
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const retrySong = async (song: WorkspaceSongItem) => {
-    try {
-      const job = await fetch(
-        `/api/generations/${encodeURIComponent(song.id)}`,
-        {
-          cache: "no-store",
-        },
-      );
-      if (!job.ok) {
-        throw new Error("Failed to load song for retry");
-      }
-      const detail = (await job.json()) as GenerationJobPayload & {
-        lyrics?: string;
-      };
-      const response = await fetch("/api/generate/audio", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          songId: song.id,
-          lyrics: detail.lyrics,
-        }),
-      });
-      const data = await response.json();
-      if (response.status === 402) {
-        setErrorAction("pricing");
-        return;
-      }
-      if (!response.ok) {
-        throw new Error(data.error ?? "Retry failed");
-      }
-
-      setWorkspaceSongs((current) =>
-        current.map((item) =>
-          item.id === song.id
-            ? {
-                ...item,
-                status: "processing",
-                taskId: data.taskId ?? item.taskId,
-              }
-            : item,
-        ),
-      );
-    } catch (caught) {
-      toast({
-        variant: "destructive",
-        description: caught instanceof Error ? caught.message : "Retry failed",
-      });
     }
   };
 
@@ -671,9 +627,7 @@ export function StoryInput({
                         className={`rounded-full px-2 py-0.5 text-[11px] ${
                           song.status === "completed"
                             ? "bg-emerald-500/15 text-emerald-300"
-                            : song.status === "failed"
-                              ? "bg-red-500/15 text-red-300"
-                              : "bg-amber-500/15 text-amber-300"
+                            : "bg-amber-500/15 text-amber-300"
                         }`}
                       >
                         {song.status}
@@ -734,16 +688,6 @@ export function StoryInput({
                   <Button asChild type="button" size="sm" variant="outline">
                     <Link href={`/report/${song.id}`}>Report</Link>
                   </Button>
-                  {song.status === "failed" ? (
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                      onClick={() => retrySong(song)}
-                    >
-                      Retry
-                    </Button>
-                  ) : null}
                   <Button type="button" size="sm" variant="outline">
                     <MoreHorizontal className="h-3.5 w-3.5" />
                   </Button>
