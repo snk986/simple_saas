@@ -157,7 +157,7 @@ export default async function DashboardPage({
           labels={{
             availableCredits: t("creditsCard.availableCredits"),
             subscriberStorage: t("creditsCard.subscriberStorage"),
-            freeStorage: t("creditsCard.freeStorage"),
+            freeStorage: t.raw("creditsCard.freeStorage") as string,
             recentActivity: t("creditsCard.recentActivity"),
             noRecentActivity: t("creditsCard.noRecentActivity"),
           }}
@@ -174,19 +174,23 @@ export default async function DashboardPage({
             basicPlan: t("subscriptionCard.basicPlan"),
             proPlan: t("subscriptionCard.proPlan"),
             storagePermanent: t("subscriptionCard.storagePermanent"),
-            storageFree: t("subscriptionCard.storageFree"),
+            storageFree: t.raw("subscriptionCard.storageFree") as string,
             priorityEnabled: t("subscriptionCard.priorityEnabled"),
             priorityStandard: t("subscriptionCard.priorityStandard"),
             statuses: {
-              active: t("subscriptionCard.statuses.active"),
-              trialing: t("subscriptionCard.statuses.trialing"),
-              canceledGrace: t("subscriptionCard.statuses.canceledGrace"),
-              canceledEnded: t("subscriptionCard.statuses.canceledEnded"),
-              pastDue: t("subscriptionCard.statuses.pastDue"),
+              active: t.raw("subscriptionCard.statuses.active") as string,
+              trialing: t.raw("subscriptionCard.statuses.trialing") as string,
+              canceledGrace: t.raw(
+                "subscriptionCard.statuses.canceledGrace",
+              ) as string,
+              canceledEnded: t.raw(
+                "subscriptionCard.statuses.canceledEnded",
+              ) as string,
+              pastDue: t.raw("subscriptionCard.statuses.pastDue") as string,
               unpaid: t("subscriptionCard.statuses.unpaid"),
-              paused: t("subscriptionCard.statuses.paused"),
+              paused: t.raw("subscriptionCard.statuses.paused") as string,
               incomplete: t("subscriptionCard.statuses.incomplete"),
-              expired: t("subscriptionCard.statuses.expired"),
+              expired: t.raw("subscriptionCard.statuses.expired") as string,
               noActivePlan: t("subscriptionCard.statuses.noActivePlan"),
             },
             portal: {
@@ -221,11 +225,11 @@ export default async function DashboardPage({
           createSong: t("songList.createSong"),
           emptyTitle: t("songList.emptyTitle"),
           emptySubtitle: t("songList.emptySubtitle"),
-          coverAlt: t("songList.coverAlt"),
+          coverAlt: t.raw("songList.coverAlt") as string,
           statusPublic: t("songList.statusPublic"),
           statusPrivate: t("songList.statusPrivate"),
-          createdOn: t("songList.createdOn"),
-          expiresOn: t("songList.expiresOn"),
+          createdOn: t.raw("songList.createdOn") as string,
+          expiresOn: t.raw("songList.expiresOn") as string,
           metrics: {
             plays: t("songList.metrics.plays"),
             full: t("songList.metrics.full"),
@@ -246,7 +250,7 @@ export default async function DashboardPage({
         unlocked={unlockedAchievements}
         locale={locale}
         title={ta("title")}
-        progressTemplate={ta("progress")}
+        progressTemplate={ta.raw("progress") as string}
       />
     </div>
   );
