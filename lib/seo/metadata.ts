@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { baseUrl } from "@/lib/i18n/urls";
 
-const defaultOgImageUrl = `${baseUrl}/og/calyra-ai-cover.png`;
+const defaultOgImageUrl = `${baseUrl}/og/calyra-ai-cover.jpg`;
 
 type BuildMarketingMetadataInput = {
   title: string;
@@ -24,8 +24,8 @@ export function buildMarketingMetadata({
 }: BuildMarketingMetadataInput): Metadata {
   const defaultImage = {
     url: defaultOgImageUrl,
-    width: 1536,
-    height: 1024,
+    width: 1200,
+    height: 630,
     alt: "Calyra AI: Create AI Music from Text",
   };
 
