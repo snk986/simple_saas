@@ -176,81 +176,93 @@ export function LyricsOnlyGeneratorForm({
         }}
       />
 
-      <form
-        onSubmit={handleSubmit}
-        className="rounded-lg border border-border bg-card p-4 shadow-sm md:p-5"
-      >
-        <div>
-          <label className="text-sm font-medium text-foreground">
-            {labels.prompt}
-          </label>
-          <textarea
-            className="mt-2 min-h-36 w-full resize-y rounded-md border border-input bg-background px-3 py-3 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-            placeholder={labels.placeholder}
-            value={prompt}
-            onChange={(event) => setPrompt(event.target.value)}
-            maxLength={2000}
-            required
-          />
-        </div>
-
-        <div className="mt-4">
-          <label className="text-sm font-medium text-foreground">
-            {labels.style}
-            <input
-              className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder={labels.stylePlaceholder}
-              value={style}
-              onChange={(event) => setStyle(event.target.value)}
-              maxLength={300}
-            />
-          </label>
-        </div>
-
-        {needsSignIn ? (
-          <div className="mt-4 rounded-md border border-primary/30 bg-primary/10 p-3 text-sm">
-            <p className="font-medium">{labels.signInTitle}</p>
-            <p className="mt-1 text-muted-foreground">
-              {labels.signInDescription}
-            </p>
-            <Button asChild size="sm" className="mt-3">
-              <Link href={`${prefix}/sign-in`}>{labels.signInCta}</Link>
-            </Button>
-          </div>
-        ) : null}
-
-        <Button
-          type="submit"
-          size="lg"
-          disabled={isSubmitting || prompt.trim().length < 10}
-          className="mt-5 w-full gap-2 md:w-auto"
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,0.96fr)_40px_minmax(0,1.04fr)] lg:items-stretch">
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5"
         >
-          {isSubmitting ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <FileText className="h-4 w-4" />
-          )}
-          {isSubmitting ? labels.submitting : labels.submit}
-        </Button>
-      </form>
+          <div>
+            <label className="text-sm font-medium text-foreground">
+              {labels.prompt}
+            </label>
+            <textarea
+              className="mt-2 min-h-40 w-full resize-y rounded-xl border border-input bg-background px-3 py-3 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+              placeholder={labels.placeholder}
+              value={prompt}
+              onChange={(event) => setPrompt(event.target.value)}
+              maxLength={2000}
+              required
+            />
+          </div>
 
-      {result ? (
-        <section className="rounded-lg border border-border bg-card p-4 shadow-sm md:p-5">
-          <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
-            <div className="rounded-md border border-border bg-background p-3">
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <label className="text-sm font-medium text-foreground">
+              {labels.title}
+              <input
+                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+                placeholder={labels.titlePlaceholder}
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                maxLength={120}
+              />
+            </label>
+
+            <label className="text-sm font-medium text-foreground">
+              {labels.style}
+              <input
+                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+                placeholder={labels.stylePlaceholder}
+                value={style}
+                onChange={(event) => setStyle(event.target.value)}
+                maxLength={300}
+              />
+            </label>
+          </div>
+
+          {needsSignIn ? (
+            <div className="mt-4 rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm">
+              <p className="font-medium">{labels.signInTitle}</p>
+              <p className="mt-1 text-muted-foreground">
+                {labels.signInDescription}
+              </p>
+              <Button asChild size="sm" className="mt-3">
+                <Link href={`${prefix}/sign-in`}>{labels.signInCta}</Link>
+              </Button>
+            </div>
+          ) : null}
+
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting || prompt.trim().length < 10}
+            className="mt-5 w-full gap-2"
+          >
+            {isSubmitting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <FileText className="h-4 w-4" />
+            )}
+            {isSubmitting ? labels.submitting : labels.submit}
+          </Button>
+        </form>
+
+        <div className="hidden items-center justify-center lg:flex">
+          <span className="grid h-10 w-10 place-items-center rounded-full border bg-background text-muted-foreground shadow-sm">
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </div>
+
+        <section className="flex min-h-[460px] flex-col rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
+          <div className="flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
               <p className="flex items-center gap-2 text-sm font-medium text-primary">
                 <FileText className="h-4 w-4" />
                 {labels.resultEyebrow}
               </p>
-              <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
-                {prompt}
-              </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium">
+              <label className="mt-3 block text-sm font-medium">
                 {labels.title}
                 <input
-                  value={result.title}
+                  value={result?.title ?? title}
                   onChange={(event) =>
                     setResult((current) =>
                       current
@@ -258,40 +270,45 @@ export function LyricsOnlyGeneratorForm({
                         : current,
                     )
                   }
-                  className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-                />
-              </label>
-              <label className="mt-4 block text-sm font-medium">
-                {labels.lyricsLabel}
-                <textarea
-                  value={result.lyrics}
-                  onChange={(event) =>
-                    setResult((current) =>
-                      current
-                        ? { ...current, lyrics: event.target.value }
-                        : current,
-                    )
-                  }
-                  className="mt-2 min-h-80 w-full resize-y rounded-md border border-input bg-background px-3 py-3 font-mono text-sm leading-6 outline-none"
+                  disabled={!result}
+                  className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition disabled:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
                 />
               </label>
             </div>
+
+            <Button
+              type="button"
+              className="gap-2 sm:mt-8"
+              disabled={
+                !result || isGeneratingSong || result.lyrics.trim().length < 20
+              }
+              onClick={handleGenerateSong}
+            >
+              {isGeneratingSong ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <ArrowRight className="h-4 w-4" />
+              )}
+              {labels.turnIntoSong}
+            </Button>
           </div>
-          <Button
-            type="button"
-            className="mt-4 gap-2"
-            disabled={isGeneratingSong || result.lyrics.trim().length < 20}
-            onClick={handleGenerateSong}
-          >
-            {isGeneratingSong ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <ArrowRight className="h-4 w-4" />
-            )}
-            {labels.turnIntoSong}
-          </Button>
+
+          <label className="mt-4 flex min-h-0 flex-1 flex-col text-sm font-medium">
+            {labels.lyricsLabel}
+            <textarea
+              value={result?.lyrics ?? ""}
+              onChange={(event) =>
+                setResult((current) =>
+                  current ? { ...current, lyrics: event.target.value } : current,
+                )
+              }
+              disabled={!result}
+              placeholder={labels.placeholder}
+              className="mt-2 min-h-80 flex-1 resize-y rounded-xl border border-input bg-background px-3 py-3 font-mono text-sm leading-6 outline-none transition disabled:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </label>
         </section>
-      ) : null}
+      </div>
     </div>
   );
 }

@@ -45,7 +45,6 @@ export default async function AiLyricsGeneratorPage({
 }: AiLyricsGeneratorPageProps) {
   const { locale } = await params;
   const t = await getTranslations(`seoPages.${pageKey}`);
-  const createHref = SEO_TOOL_PAGE_PATHS.aiTextToSong;
   const lyricsToSongHref = SEO_TOOL_PAGE_PATHS.aiLyricsToSong;
   const benefitKeys = ["lyrics", "structure", "nextStep"] as const;
   const stepKeys = ["brief", "review", "song"] as const;
@@ -96,8 +95,6 @@ export default async function AiLyricsGeneratorPage({
         eyebrow={t("hero.eyebrow")}
         title={t("hero.title")}
         description={t("hero.description")}
-        primaryCta={t("cta.primary")}
-        primaryHref={createHref}
         secondaryCta={t("cta.secondary")}
         secondaryHref={lyricsToSongHref}
         form={
@@ -137,8 +134,6 @@ export default async function AiLyricsGeneratorPage({
         }))}
         faqTitle={t("faq.title")}
         faqs={faqs}
-        finalCtaTitle={t("finalCta.title")}
-        finalCtaDescription={t("finalCta.description")}
       />
     </>
   );

@@ -1,13 +1,10 @@
 import type { ReactNode } from "react";
 import {
-  ArrowRight,
   CheckCircle2,
   Music2,
   Search,
   Sparkles,
 } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
 
 interface ToolPageCard {
   title: string;
@@ -23,8 +20,6 @@ interface SeoToolPageProps {
   eyebrow: string;
   title: string;
   description: string;
-  primaryCta: string;
-  primaryHref: string;
   secondaryCta: string;
   secondaryHref: string;
   form: ReactNode;
@@ -36,8 +31,6 @@ interface SeoToolPageProps {
   steps: ToolPageCard[];
   faqTitle: string;
   faqs: ToolPageFaq[];
-  finalCtaTitle: string;
-  finalCtaDescription: string;
 }
 
 const icons = [Sparkles, Music2, Search];
@@ -46,8 +39,6 @@ export function SeoToolPage({
   eyebrow,
   title,
   description,
-  primaryCta,
-  primaryHref,
   secondaryCta,
   secondaryHref,
   form,
@@ -59,8 +50,6 @@ export function SeoToolPage({
   steps,
   faqTitle,
   faqs,
-  finalCtaTitle,
-  finalCtaDescription,
 }: SeoToolPageProps) {
   return (
     <div className="bg-background">
@@ -72,7 +61,7 @@ export function SeoToolPage({
             <p>{description}</p>
             <a href={secondaryHref}>{secondaryCta}</a>
           </div>
-          <div className="mx-auto max-w-3xl">{form}</div>
+          <div className="mx-auto max-w-6xl">{form}</div>
         </div>
       </section>
 
@@ -162,25 +151,6 @@ export function SeoToolPage({
                 </p>
               </details>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-14 md:pb-16">
-        <div className="container px-4 md:px-6">
-          <div className="rounded-lg border bg-card p-6 text-center shadow-sm md:p-8">
-            <h2 className="text-2xl font-bold tracking-normal md:text-3xl">
-              {finalCtaTitle}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
-              {finalCtaDescription}
-            </p>
-            <Button asChild size="lg" className="mt-6 gap-2">
-              <Link href={primaryHref}>
-                {primaryCta}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>
