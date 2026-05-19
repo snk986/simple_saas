@@ -1,6 +1,17 @@
 const DEFAULT_TEST_API_URL = "https://test-api.creem.io/v1";
 const DEFAULT_PROD_API_URL = "https://api.creem.io/v1";
 
+export class CreemApiError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+    public body: string,
+  ) {
+    super(message);
+    this.name = "CreemApiError";
+  }
+}
+
 function getCreemConfig() {
   const isTestMode = process.env.CREEM_TEST_MODE === "true";
   const apiKey = process.env.CREEM_API_KEY;
@@ -31,7 +42,11 @@ async function postJson(path: string, body: Record<string, unknown>) {
 
   if (!response.ok) {
     const text = await response.text().catch(() => "");
-    throw new Error(`Creem API ${response.status}: ${text || response.statusText}`);
+    throw new CreemApiError(
+      `Creem API ${response.status}: ${text || response.statusText}`,
+      response.status,
+      text,
+    );
   }
 
   return response.json();

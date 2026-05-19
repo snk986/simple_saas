@@ -1,7 +1,7 @@
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-import { creem } from "@/lib/creem";
+import { CreemApiError, creem } from "@/lib/creem";
 
 export async function GET(_request: Request) {
   try {
@@ -39,14 +39,33 @@ export async function GET(_request: Request) {
     const data = await creem.customers.generateBillingLinks({
       customerId: customer.creem_customer_id,
     });
+    const customerPortalLink =
+      data.customerPortalLink ??
+      (data as { customer_portal_link?: string; url?: string })
+        .customer_portal_link ??
+      (data as { customer_portal_link?: string; url?: string }).url;
+
+    if (!customerPortalLink) {
+      return NextResponse.json(
+        { error: "Customer portal link unavailable" },
+        { status: 502 },
+      );
+    }
 
     return NextResponse.json({
-      customer_portal_link:
-        data.customerPortalLink ??
-        (data as { customer_portal_link?: string; url?: string }).customer_portal_link ??
-        (data as { customer_portal_link?: string; url?: string }).url,
+      customer_portal_link: customerPortalLink,
     });
   } catch (error) {
+    if (error instanceof CreemApiError && error.status === 404) {
+      return NextResponse.json(
+        {
+          error:
+            "Customer was not found in the configured Creem environment",
+        },
+        { status: 404 },
+      );
+    }
+
     console.error("Error getting customer portal link:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
