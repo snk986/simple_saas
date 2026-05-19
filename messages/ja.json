@@ -15,10 +15,10 @@
     "startFree": "無料で始める",
     "create": "作成",
     "about": "概要",
-    "textToSong": "Text to Song",
-    "lyricsToSong": "Lyrics to Song",
-    "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "textToSong": "テキストから曲",
+    "lyricsToSong": "歌詞から曲",
+    "aiLyricsGenerator": "AI歌詞ジェネレーター",
+    "aiSongMaker": "AIソングメーカー"
   },
   "footer": {
     "tagline": "プロンプト、歌詞、アイデアからAI楽曲を作成します。",
@@ -30,232 +30,232 @@
     "legal": "法務",
     "privacy": "プライバシー",
     "terms": "利用規約",
-    "refund": "Refund",
-    "contact": "Contact",
+    "refund": "返金",
+    "contact": "お問い合わせ",
     "gallery": "ギャラリー",
     "styles": "スタイル",
     "create": "作成",
-    "textToSong": "Text to Song",
-    "lyricsToSong": "Lyrics to Song",
-    "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "textToSong": "テキストから曲",
+    "lyricsToSong": "歌詞から曲",
+    "aiLyricsGenerator": "AI歌詞ジェネレーター",
+    "aiSongMaker": "AIソングメーカー"
   },
   "home": {
     "seo": {
-      "title": "AIソングジェネレーター - テキストから音楽を作成 | Calyra AI",
-      "description": "Calyra AIでプロンプト、歌詞、簡単なアイデアからボーカルと楽器入りのAI楽曲を作成。YouTube、TikTok、ポッドキャスト、ゲーム、創作に使えます。"
+      "title": "AIソングジェネレーター - テキストからAI音楽を作成 | Calyra AI",
+      "description": "プロンプト、歌詞、アイデアから、YouTube、TikTok、ポッドキャスト、ゲーム、創作プロジェクト向けの歌声と楽器入りAI楽曲を作成できます。"
     },
-    "eyebrow": "AI Song Generator - Commercial use for subscribers",
+    "eyebrow": "AIソングジェネレーター - サブスクユーザーは商用利用可能",
     "hero": {
-      "title": "テキストから数秒でAIソングを作成",
-      "subtitle": "Turn your story into lyrics, music, and a shareable song report in minutes.",
-      "promptLabel": "Song prompt",
-      "placeholder": "Try: A nostalgic J-pop song about summer memories, female vocal, huge chorus",
-      "primaryCta": "無料で曲を生成",
-      "galleryCta": "Listen to Examples",
-      "templatesCta": "Prompt Templates",
-      "modeText": "Text to Song",
-      "modeLyrics": "Lyrics to Song",
-      "styleLabel": "Style",
-      "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-      "styleDefault": "Pop, emotional female vocal, cinematic drums",
-      "titleLabel": "Title",
-      "titlePlaceholder": "My AI Song",
-      "titleDefault": "My AI Song"
+      "title": "AIソングジェネレーター",
+      "subtitle": "あなたのストーリーを、歌詞、音楽、共有できる楽曲レポートへ数分で変えます。",
+      "promptLabel": "曲のプロンプト",
+      "placeholder": "作りたい曲を説明してください...",
+      "primaryCta": "曲を生成",
+      "galleryCta": "サンプルを聴く",
+      "templatesCta": "プロンプトテンプレート",
+      "modeText": "テキストから曲",
+      "modeLyrics": "歌詞から曲",
+      "styleLabel": "スタイル",
+      "stylePlaceholder": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+      "styleDefault": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+      "titleLabel": "タイトル",
+      "titlePlaceholder": "私のAIソング",
+      "titleDefault": "私のAIソング"
     },
     "proof": {
-      "vocals": "Vocals + instruments",
-      "prompt": "Prompt to Song",
-      "lyrics": "Lyrics to Song",
-      "free": "Free users can try daily"
+      "vocals": "ボーカル + 楽器",
+      "prompt": "プロンプトから曲",
+      "lyrics": "歌詞から曲",
+      "free": "無料ユーザーは毎日試せます"
     },
     "player": {
-      "badge": "Now Playing - AI Pop Anthem",
-      "title": "Chasing Neon Dreams",
-      "meta": "Pop - Female Vocal - Emotional - 2:34",
-      "play": "Play example song",
-      "madeWith": "Made with Calyra AI"
+      "badge": "再生中 - AIポップアンセム",
+      "title": "ネオンの夢を追いかけて",
+      "meta": "ポップ - 女性ボーカル - エモーショナル - 2:34",
+      "play": "サンプル曲を再生",
+      "madeWith": "Calyra AIで作成"
     },
     "gallery": {
-      "eyebrow": "Music Gallery",
-      "title": "Calyraで作られたAIソングを発見",
-      "subtitle": "Browse AI-generated songs from creators. See cover art, plays, likes, song titles, and creator names, just like a lightweight music discovery feed."
+      "eyebrow": "音楽ギャラリー",
+      "title": "Calyraで作られたAI楽曲を発見",
+      "subtitle": "クリエイターが作成したAI生成楽曲を閲覧できます。カバー画像、再生数、いいね、曲名、クリエイター名を、軽量な音楽発見フィードのように確認できます。"
     },
     "styles": {
       "eyebrow": "人気スタイル",
-      "title": "Create Songs in Popular AI Music Styles",
-      "subtitle": "Choose a genre, start with a ready-made direction, and make a song with AI faster. These style entries help users move from search intent to generation.",
+      "title": "人気のAI音楽スタイルで曲を作成",
+      "subtitle": "ジャンルを選び、用意された方向性から始めることで、より速くAI楽曲を作成できます。",
       "rap": {
-        "title": "AI Rap Generator",
-        "description": "Create rap songs with flow, hooks, lyrics, and punchy beats."
+        "title": "AIラップジェネレーター",
+        "description": "フロウ、フック、歌詞、力強いビートのあるラップ曲を作成します。"
       },
       "songMaker": {
-        "title": "AI Song Maker",
-        "description": "Start from a simple idea and turn it into a complete song direction."
+        "title": "AIソングメーカー",
+        "description": "シンプルなアイデアから、曲全体の方向性を作ります。"
       },
       "lyrics": {
-        "title": "Lyrics to Song AI",
-        "description": "Turn your lyrics into music with vocals, arrangement, and emotion."
+        "title": "歌詞から曲を作るAI",
+        "description": "歌詞を、ボーカル、アレンジ、感情のある音楽に変えます。"
       },
       "text": {
-        "title": "Text to Song AI",
-        "description": "Describe a mood, genre, story, and vocal style to generate a song."
+        "title": "テキストから曲を作るAI",
+        "description": "ムード、ジャンル、ストーリー、ボーカルスタイルを説明して曲を生成します。"
       },
       "phonk": {
-        "title": "AI Phonk Generator",
-        "description": "Generate dark drift phonk with heavy drums, cowbell, and speed."
+        "title": "AI phonkジェネレーター",
+        "description": "重いドラム、cowbell、スピード感のあるダークなdrift phonkを生成します。"
       },
       "lofi": {
-        "title": "AI Lo-fi Music",
-        "description": "Make chill lo-fi music for study videos, streams, and background use."
+        "title": "AI lo-fi音楽",
+        "description": "勉強動画、配信、BGM向けのチルなlo-fi音楽を作成します。"
       },
       "edm": {
-        "title": "AI EDM Generator",
-        "description": "Create dance music, festival drops, and electronic hooks."
+        "title": "AI EDMジェネレーター",
+        "description": "ダンスミュージック、フェス向けドロップ、電子的なフックを作成します。"
       },
       "anime": {
-        "title": "AI Anime Song",
-        "description": "Generate anime openings, J-pop rock, and bright chorus ideas."
+        "title": "AIアニメソング",
+        "description": "アニメOP、J-popロック、明るいサビのアイデアを生成します。"
       }
     },
     "templates": {
       "eyebrow": "プロンプトテンプレート",
-      "title": "Not Sure What to Type? Start with a Prompt Template",
-      "subtitle": "Use these templates to turn text to song ideas into clear prompts. Combine genre, mood, vocals, lyrics, and use case to guide the AI song generator.",
+      "title": "何を書けばよいかわからない時はテンプレートから",
+      "subtitle": "テンプレートを使って、テキストから曲のアイデアを明確なプロンプトにできます。",
       "items": {
         "genre": {
-          "type": "Genre + Mood + Vocal",
-          "title": "Best for a new song idea",
-          "description": "Describe the genre, emotion, vocal style, and chorus energy.",
-          "prompt": "A nostalgic J-pop song about summer memories, female vocal, upbeat rhythm, bright chorus, coming-of-age movie feeling."
+          "type": "ジャンル + ムード + ボーカル",
+          "title": "新しい曲のアイデアに最適",
+          "description": "ジャンル、感情、ボーカルスタイル、サビのエネルギーを説明します。",
+          "prompt": "夏の思い出をテーマにしたノスタルジックなJ-pop、女性ボーカル、明るいリズム、輝くサビ、青春映画の雰囲気。"
         },
         "lyrics": {
-          "type": "Lyrics + Arrangement",
-          "title": "Best for lyrics to song AI",
-          "description": "Paste lyrics, then add arrangement, tempo, vocal tone, and emotion.",
-          "prompt": "Turn these lyrics into an emotional piano ballad, soft male vocal, slow tempo, cinematic strings, restrained verse and powerful final chorus."
+          "type": "歌詞 + アレンジ",
+          "title": "歌詞から曲に最適",
+          "description": "歌詞を貼り付け、アレンジ、テンポ、声のトーン、感情を追加します。",
+          "prompt": "この歌詞を感情的なピアノバラードに。柔らかい男性ボーカル、遅めのテンポ、シネマティックなストリングス、抑えたAメロと力強い最後のサビ。"
         },
         "useCase": {
-          "type": "Use Case + Energy",
-          "title": "Best for content creators",
-          "description": "Tell the AI where the song will be used, such as YouTube, TikTok, podcast, game, or ad.",
-          "prompt": "Create a modern pop intro for a YouTube video, cinematic, inspiring, 15-second hook, suitable for a tech creator channel."
+          "type": "用途 + エネルギー",
+          "title": "コンテンツクリエイターに最適",
+          "description": "YouTube、TikTok、ポッドキャスト、ゲーム、広告など、曲の用途をAIに伝えます。",
+          "prompt": "テック系YouTubeチャンネル向けに、現代的なポップイントロを作成。シネマティックで前向き、15秒のフック。"
         }
       }
     },
     "commercial": {
       "eyebrow": "商用利用",
-      "title": "実際のプロジェクト向け音楽を作成",
-      "subtitle": "Generate AI music for YouTube videos, TikTok, Shorts, podcasts, games, ads, social media, and creative projects. Subscribers can download generated songs and use them commercially, subject to our terms.",
-      "pricingCta": "View Pricing",
-      "faqCta": "Read FAQ",
+      "title": "実際のプロジェクト向けに音楽を作成",
+      "subtitle": "YouTube動画、TikTok、Shorts、ポッドキャスト、ゲーム、広告、SNS、創作プロジェクト向けにAI音楽を生成できます。サブスクユーザーは生成した曲をダウンロードし、利用規約に従って商用利用できます。",
+      "pricingCta": "料金を見る",
+      "faqCta": "FAQを読む",
       "uses": {
-        "youtube": "YouTube Videos",
+        "youtube": "YouTube動画",
         "tiktok": "TikTok / Shorts",
-        "podcast": "Podcast Intros",
-        "games": "Game Music",
-        "ads": "Ads",
-        "social": "Social Media"
+        "podcast": "ポッドキャストイントロ",
+        "games": "ゲーム音楽",
+        "ads": "広告",
+        "social": "SNS"
       }
     },
     "howItWorks": {
-      "eyebrow": "How It Works",
-      "title": "3ステップでAIソングを作成"
+      "eyebrow": "使い方",
+      "title": "3ステップでAI楽曲を作成"
     },
     "steps": {
       "idea": {
-        "title": "Describe your song",
-        "description": "Share your idea, mood, story, or lyrics to start the song."
+        "title": "曲を説明する",
+        "description": "アイデア、ムード、ストーリー、歌詞を共有して始めます。"
       },
       "generate": {
-        "title": "Choose a style",
-        "description": "Pick a genre and vocal direction that matches your idea."
+        "title": "スタイルを選ぶ",
+        "description": "アイデアに合うジャンルとボーカルの方向性を選びます。"
       },
       "download": {
-        "title": "Generate and download",
-        "description": "Create your song, preview it, and download when ready."
+        "title": "生成してダウンロード",
+        "description": "曲を作成し、プレビューして、準備ができたらダウンロードします。"
       }
     },
     "benefits": {
-      "eyebrow": "Benefits",
+      "eyebrow": "メリット",
       "title": "クリエイターがCalyra AIを使う理由",
-      "subtitle": "Calyra AI helps creators move from idea to music without traditional production skills.",
+      "subtitle": "Calyra AIは、従来の音楽制作スキルがなくてもアイデアを音楽へ進められるようにします。",
       "items": {
         "skills": {
-          "title": "Create without music skills",
-          "description": "No DAW, plugins, or music theory required. Start from a simple idea."
+          "title": "音楽スキルなしで作成",
+          "description": "DAW、プラグイン、音楽理論は不要です。シンプルなアイデアから始められます。"
         },
         "vocals": {
-          "title": "Generate songs with vocals",
-          "description": "Go beyond background loops and create full song directions with vocal styles."
+          "title": "ボーカル入り楽曲を生成",
+          "description": "BGMループを超えて、ボーカルスタイルを含む曲の方向性を作れます。"
         },
         "prompts": {
-          "title": "Start from lyrics or prompts",
-          "description": "Use your own lyrics, or describe a mood, genre, story, and use case."
+          "title": "歌詞やプロンプトから開始",
+          "description": "自分の歌詞を使うか、ムード、ジャンル、ストーリー、用途を説明します。"
         },
         "creators": {
-          "title": "Built for content creators",
-          "description": "Create music for YouTube, TikTok, Shorts, podcasts, and social content."
+          "title": "コンテンツクリエイター向け",
+          "description": "YouTube、TikTok、Shorts、ポッドキャスト、SNS向けの音楽を作成できます。"
         },
         "genres": {
-          "title": "Explore popular genres",
-          "description": "Rap, pop, J-pop, phonk, lo-fi, EDM, ballads, anime songs, and more."
+          "title": "人気ジャンルを探索",
+          "description": "ラップ、ポップ、J-pop、phonk、lo-fi、EDM、バラード、アニメソングなど。"
         },
         "publish": {
-          "title": "Download and publish",
-          "description": "Save, download, and use generated songs. Subscribers get commercial use rights."
+          "title": "ダウンロードして公開",
+          "description": "生成した曲を保存、ダウンロード、利用できます。サブスクユーザーは商用利用権を得られます。"
         }
       }
     },
     "pricingPreview": {
       "eyebrow": "料金",
-      "title": "Start Free, Upgrade When You Need More Songs",
-      "subtitle": "Try Calyra AI for free. Upgrade to Basic for 30 songs/month or Pro for 100 songs/month. One-time credit packs are also available.",
-      "primaryCta": "Start Creating Free",
-      "secondaryCta": "View Full Pricing",
+      "title": "無料で始めて、もっと曲が必要になったらアップグレード",
+      "subtitle": "Calyra AIを無料で試せます。Basicでは月30曲、Proでは月100曲まで作成できます。買い切りのクレジットパックも利用できます。",
+      "primaryCta": "無料で作成を開始",
+      "secondaryCta": "料金を詳しく見る",
       "plans": {
         "free": {
-          "title": "Free",
-          "description": "$0 - Start testing song ideas without a subscription."
+          "title": "無料",
+          "description": "$0 - サブスクリプションなしで曲のアイデアを試せます。"
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/month - 30 songs/month for steady creators."
+          "description": "$9/月 - 継続的なクリエイター向けに月30曲。"
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/month - 100 songs/month for higher-volume creation."
+          "description": "$19/月 - より多く作成する方向けに月100曲。"
         }
       }
     },
     "seoBlock": {
-      "eyebrow": "AI Music Generator",
-      "title": "AI Music Generator for Creators",
-      "p1": "Calyra AI is an AI song generator and AI music generator designed to help creators turn prompts, lyrics, and song ideas into complete tracks. Instead of starting from a blank music project, you can describe the sound you want, choose a style, and generate music with vocals and instruments. Use Calyra AI as an AI song maker when you have a simple idea, a text to song AI tool when you want to describe a mood, or a lyrics to song AI workflow when you already have words.",
-      "p2": "Popular use cases include AI rap songs, anime openings, phonk tracks, lo-fi background music, EDM drops, emotional piano ballads, and pop songs for social content. Creators can make AI songs for YouTube videos, TikTok, Shorts, podcasts, games, ads, and personal creative projects. Subscribers can download generated songs and use them commercially, subject to our terms."
+      "eyebrow": "AI音楽ジェネレーター",
+      "title": "クリエイター向けAI音楽ジェネレーター",
+      "p1": "Calyra AIは、プロンプト、歌詞、曲のアイデアを完成したトラックへ変えるためのAIソングジェネレーター兼AI音楽ジェネレーターです。空の音楽プロジェクトから始める代わりに、欲しいサウンドを説明し、スタイルを選び、ボーカルと楽器のある音楽を生成できます。",
+      "p2": "人気の用途には、AIラップ、アニメOP、phonkトラック、lo-fi BGM、EDMドロップ、感情的なピアノバラード、SNS向けポップソングなどがあります。YouTube、TikTok、Shorts、ポッドキャスト、ゲーム、広告、個人制作向けにAI楽曲を作成できます。サブスクユーザーは生成した曲をダウンロードし、規約に従って商用利用できます。"
     },
     "faq": {
       "eyebrow": "FAQ",
-      "title": "Questions Before You Generate",
-      "q1": "What is an AI song generator?",
-      "a1": "An AI song generator creates songs from prompts, lyrics, moods, and style descriptions. Calyra AI helps you generate music with vocals and instruments without traditional production skills.",
-      "q2": "How do I make a song with AI?",
-      "a2": "Enter a prompt that describes the genre, mood, story, lyrics, vocal style, and use case. You can also start from a template or use a song example as inspiration.",
-      "q3": "Can I turn lyrics into a song with AI?",
-      "a3": "Yes. Paste your lyrics and describe the arrangement, tempo, mood, and vocal direction. Calyra AI can help turn lyrics into a song direction with vocals and instruments.",
-      "q4": "Is Calyra AI a free AI song maker?",
-      "a4": "You can start testing song ideas for free. More generations, monthly song credits, downloads, and commercial use rights are available through paid plans or one-time credit packs.",
-      "q5": "Can I use AI-generated songs commercially?",
-      "a5": "Subscribers can download generated songs and use them commercially for content, commercial projects, and music distribution, subject to the latest terms.",
-      "q6": "Can I generate songs with vocals?",
-      "a6": "Yes. Calyra AI is positioned for full song generation, including vocal-style songs and instrumental arrangements depending on the prompt and generation mode.",
-      "q7": "Can I create music for YouTube or TikTok?",
-      "a7": "Yes. You can generate hooks, background music, intros, theme songs, and full songs for YouTube, TikTok, Shorts, podcasts, and social media content."
+      "title": "生成前によくある質問",
+      "q1": "AIソングジェネレーターとは何ですか？",
+      "a1": "AIソングジェネレーターは、プロンプト、歌詞、ムード、スタイル説明から曲を作成します。Calyra AIは、従来の制作スキルなしでボーカルと楽器入りの音楽生成を支援します。",
+      "q2": "AIで曲を作るには？",
+      "a2": "ジャンル、ムード、ストーリー、歌詞、ボーカルスタイル、用途を説明するプロンプトを入力します。テンプレートやサンプル曲から始めることもできます。",
+      "q3": "歌詞をAIで曲にできますか？",
+      "a3": "はい。歌詞を貼り付け、アレンジ、テンポ、ムード、ボーカルの方向性を説明します。",
+      "q4": "Calyra AIは無料で試せますか？",
+      "a4": "曲のアイデアを無料で試せます。より多くの生成、月間クレジット、ダウンロード、商用利用権は有料プランまたはクレジットパックで利用できます。",
+      "q5": "AI生成曲を商用利用できますか？",
+      "a5": "サブスクユーザーは生成した曲をダウンロードし、最新の規約に従ってコンテンツ、商用プロジェクト、音楽配信に利用できます。",
+      "q6": "ボーカル入りの曲を生成できますか？",
+      "a6": "はい。Calyra AIは、プロンプトと生成モードに応じて、ボーカルスタイルの曲やインストアレンジを含む楽曲生成を想定しています。",
+      "q7": "YouTubeやTikTok向けの音楽を作れますか？",
+      "a7": "はい。YouTube、TikTok、Shorts、ポッドキャスト、SNS向けにフック、BGM、イントロ、テーマ曲、フルソングを生成できます。"
     }
   },
   "create": {
-    "title": "Create AI Songs from Text",
-    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into structured lyrics.",
+    "title": "テキストからAI楽曲を作成",
+    "subtitle": "瞬間、告白、記憶、感情から始めてください。構成のある歌詞へ整えます。",
     "inputPlaceholder": "物語を書いてください...",
     "inputHint": "具体的なディテールがあるほど、自分らしい曲になります。",
     "generateLyrics": "歌詞を生成",
@@ -264,21 +264,21 @@
     "regenerate": "再生成",
     "regenerateLimit": "再生成は最大3回までです",
     "inputTooShort": "まずはもう少し物語を聞かせてください。",
-    "emptyState": "Your lyrics will appear here after generation.",
+    "emptyState": "生成後、ここに歌詞が表示されます。",
     "paymentSuccessTitle": "支払いを確認しました",
     "paymentSuccessDescription": "クレジットまたはプランを同期しています。残高がまだ更新されない場合は、少し待ってから更新してください。",
     "recall": {
       "inactiveCreator": "おかえりなさい。新しいディテールから、次の物語を曲にしましょう。"
     },
     "audioPlayer": {
-      "readyForPreview": "Ready for preview",
-      "savedAsSeparate": "Each version is saved as its own song with an independent public page and listening metrics.",
-      "openPage": "Open page",
-      "download": "Download",
-      "upgradeToDownload": "Upgrade to download",
-      "openPublicPage": "Open public page",
-      "viewDashboard": "View dashboard",
-      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
+      "readyForPreview": "プレビューの準備ができました",
+      "savedAsSeparate": "各バージョンは独立した公開ページと再生指標を持つ別の曲として保存されます。",
+      "openPage": "ページを開く",
+      "download": "ダウンロード",
+      "upgradeToDownload": "ダウンロードするにはアップグレード",
+      "openPublicPage": "公開ページを開く",
+      "viewDashboard": "ダッシュボードを見る",
+      "rightsNotice": "生成した曲はYouTube、SNS、商用コンテンツに利用できます。"
     }
   },
   "song": {
@@ -581,14 +581,14 @@
     },
     "subscriptions": {
       "basic": {
-        "name": "ベーシック",
+        "name": "Basic",
         "description": "曲を永久保存したい定期クリエイター向け。",
         "feature1": "毎月3000クレジット",
         "feature2": "曲を永久保存",
         "feature3": "プロデューサーレポート付き"
       },
       "pro": {
-        "name": "プロ",
+        "name": "Pro",
         "description": "優先生成と最大限のクリエイティブ出力。",
         "feature1": "毎月10000クレジット",
         "feature2": "曲を永久保存",
@@ -606,7 +606,7 @@
       "q4": "サブスク後に得られる著作権・商用利用権は？",
       "a4": "サブスクユーザーは生成済みの全楽曲をダウンロードでき、コンテンツ公開、商用プロジェクト、音楽プラットフォーム配信を含む完全な商用利用権を取得できます。",
       "q5": "無料ユーザーは1日に何回生成できますか？",
-      "a5": "24時間ごとに1〜2回の無料生成が可能で、合計2〜4曲を作成できます。ローリング方式のため、無料析を使い切った時刻を基準に次回のリセット時刻が決まります。",
+      "a5": "24時間ごとに1〜2回の無料生成が可能で、合計2〜4曲を作成できます。ローリング方式のため、無料枠を使い切った時刻を基準に次回のリセット時刻が決まります。",
       "q6": "作品はどれくらい保存されますか？削除されますか？",
       "a6": "現在のルール：無料ユーザーの楽曲は30日保存されます。Basic / Pro の有効期間中に生成した楽曲は長期保存されます。長期運用やカタログ蓄積が必要な場合は上位プランがおすすめです。"
     },
@@ -668,179 +668,179 @@
   },
   "legal": {
     "common": {
-      "backToHome": "Back to home",
-      "lastUpdatedLabel": "Last updated",
-      "lastUpdated": "May 13, 2026",
-      "relatedTitle": "Related legal pages",
-      "contactTitle": "Need help?",
-      "contactBody": "For questions about these policies or your account, contact support at support@calyraai.com or through your dashboard support channel.",
-      "contactCta": "Go to pricing",
-      "contactEmailLabel": "Email support",
+      "backToHome": "ホームに戻る",
+      "lastUpdatedLabel": "最終更新日",
+      "lastUpdated": "2026年5月13日",
+      "relatedTitle": "関連する法的ページ",
+      "contactTitle": "お困りですか？",
+      "contactBody": "これらのポリシーやアカウントについて質問がある場合は、support@calyraai.com またはダッシュボードのサポート窓口からお問い合わせください。",
+      "contactCta": "料金を見る",
+      "contactEmailLabel": "サポートにメール",
       "links": {
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
-        "refund": "Refund Policy"
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
+        "refund": "返金ポリシー"
       }
     },
     "privacy": {
       "seo": {
-        "title": "Privacy Policy | Calyra AI",
-        "description": "How Calyra AI collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+        "title": "プライバシーポリシー | Calyra AI",
+        "description": "Calyra AIがアカウント、決済、AI楽曲作成のワークフローで個人データを収集、使用、保護する方法について説明します。"
       },
-      "badge": "Privacy",
-      "title": "Privacy Policy",
-      "subtitle": "This policy explains what data Calyra AI handles, why we handle it, and the choices you have.",
+      "badge": "プライバシー",
+      "title": "プライバシーポリシー",
+      "subtitle": "このポリシーでは、Calyra AIが扱うデータ、その理由、ユーザーが選べる内容を説明します。",
       "sections": [
         {
-          "title": "Data we collect",
+          "title": "収集するデータ",
           "body": [
-            "We collect account identifiers such as email and authentication data, song creation inputs such as stories and prompts, generation outputs such as lyrics and audio metadata, and billing records needed to process purchases."
+            "メールアドレスや認証データなどのアカウント識別子、ストーリーや指示文などの作成入力、歌詞や音声メタデータなどの生成結果、購入処理に必要な請求記録を収集します。"
           ],
           "bullets": [
-            "Account data: email, auth provider identifiers, profile basics",
-            "Creation data: story text, style selections, generated lyrics/audio references",
-            "Usage data: logs, device/browser metadata, anti-abuse signals",
-            "Billing data: transaction references from payment processors"
+            "アカウントデータ: メール、認証プロバイダー識別子、基本プロフィール",
+            "作成データ: ストーリーテキスト、スタイル選択、生成された歌詞や音声の参照",
+            "利用データ: ログ、デバイスやブラウザのメタデータ、不正利用対策シグナル",
+            "請求データ: 決済処理業者からの取引参照"
           ]
         },
         {
-          "title": "How we use data",
+          "title": "データの利用方法",
           "body": [
-            "We use data to operate core product flows, deliver purchased services, prevent abuse, improve reliability, and communicate important account or policy updates."
+            "データは、主要なプロダクト機能の運用、購入済みサービスの提供、不正利用の防止、信頼性の改善、重要なアカウントやポリシー更新の連絡に使用します。"
           ],
           "bullets": [
-            "Run lyric, audio, and report generation workflows",
-            "Store and serve your songs and public share pages",
-            "Process credits, subscriptions, and refunds",
-            "Investigate incidents and maintain security"
+            "歌詞、音声、レポート生成ワークフローの実行",
+            "楽曲と公開共有ページの保存および配信",
+            "クレジット、サブスクリプション、返金の処理",
+            "インシデント調査とセキュリティ維持"
           ]
         },
         {
-          "title": "Third-party services",
+          "title": "第三者サービス",
           "body": [
-            "Calyra AI relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+            "Calyra AIはサービス提供のため、選定したインフラおよびモデル提供者を利用します。これらの提供者は、適用される契約に基づき、必要なデータのみを処理します。"
           ],
           "bullets": [
-            "Hosting and database services",
-            "Payment processing services",
-            "Email and notification services",
-            "AI generation providers for lyrics, audio, and analysis"
+            "ホスティングおよびデータベースサービス",
+            "決済処理サービス",
+            "メールおよび通知サービス",
+            "歌詞、音声、分析のためのAI生成プロバイダー"
           ]
         },
         {
-          "title": "Retention and your choices",
+          "title": "保存期間と選択肢",
           "body": [
-            "We retain data for as long as needed to provide the service, meet legal obligations, and resolve disputes. You can request deletion of your account data subject to operational and legal constraints."
+            "サービス提供、法的義務の履行、紛争解決に必要な期間、データを保持します。運用上および法的な制約の範囲で、アカウントデータの削除をリクエストできます。"
           ],
           "bullets": [
-            "You may delete songs and account data from product surfaces where available",
-            "Backups and legal records may persist for limited periods",
-            "Public song pages remain public until you change visibility or remove them"
+            "利用可能な画面から楽曲やアカウントデータを削除できます",
+            "バックアップや法的記録は一定期間残る場合があります",
+            "公開楽曲ページは、表示設定を変更または削除するまで公開状態のままです"
           ]
         }
       ]
     },
     "terms": {
       "seo": {
-        "title": "Terms of Service | Calyra AI",
-        "description": "Terms governing use of Calyra AI, including account responsibilities, generated content, credits, subscriptions, and limitations."
+        "title": "利用規約 | Calyra AI",
+        "description": "アカウント責任、生成コンテンツ、クレジット、サブスクリプション、制限を含むCalyra AIの利用条件です。"
       },
-      "badge": "Terms",
-      "title": "Terms of Service",
-      "subtitle": "By using Calyra AI, you agree to these terms for account access, AI generation, and paid features.",
+      "badge": "規約",
+      "title": "利用規約",
+      "subtitle": "Calyra AIを利用することで、アカウントアクセス、AI生成、有料機能に関する本規約に同意したものとみなされます。",
       "sections": [
         {
-          "title": "Service scope",
+          "title": "サービス範囲",
           "body": [
-            "Calyra AI provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+            "Calyra AIは、ユーザーの指示文を歌詞、音声、クリエイター向けレポートへ変換するツールを提供します。機能は時間とともに変更される場合があり、プランや地域によって異なることがあります。"
           ]
         },
         {
-          "title": "Accounts and acceptable use",
+          "title": "アカウントと許容される利用",
           "body": [
-            "You are responsible for activity under your account and for complying with law and platform policies."
+            "ユーザーは自分のアカウントで行われる活動と、法令およびプラットフォームポリシーの遵守について責任を負います。"
           ],
           "bullets": [
-            "Do not misuse the service, attempt unauthorized access, or automate abuse",
-            "Do not upload unlawful, infringing, or harmful content",
-            "Keep account credentials secure and accurate"
+            "サービスの不正利用、無許可アクセスの試行、不正な自動化を行わないでください",
+            "違法、権利侵害、有害なコンテンツをアップロードしないでください",
+            "アカウント認証情報を安全かつ正確に管理してください"
           ]
         },
         {
-          "title": "Content and intellectual property",
+          "title": "コンテンツと知的財産",
           "body": [
-            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Calyra AI and its licensors retain rights in the platform, models, and infrastructure."
+            "送信した入力に関する権利はユーザーに帰属します。適用法および本規約に従い、アカウントで生成された出力を使用できます。Calyra AIおよびライセンサーは、プラットフォーム、モデル、インフラに関する権利を保持します。"
           ]
         },
         {
-          "title": "Payments, credits, and refunds",
+          "title": "支払い、クレジット、返金",
           "body": [
-            "Paid features include credit packs and subscriptions. Charges are processed by our payment providers. Refund eligibility is governed by our Refund Policy."
+            "有料機能にはクレジットパックとサブスクリプションが含まれます。請求は決済プロバイダーによって処理されます。返金の可否は返金ポリシーに従います。"
           ],
           "bullets": [
-            "Credits are consumed by eligible generation actions",
-            "Subscription access and benefits follow the active billing period",
-            "Refund requests are reviewed under stated policy conditions"
+            "対象となる生成アクションでクレジットが消費されます",
+            "サブスクリプションのアクセスと特典は有効な請求期間に従います",
+            "返金リクエストは記載されたポリシー条件に基づき確認されます"
           ]
         },
         {
-          "title": "Disclaimers and limitation",
+          "title": "免責および責任制限",
           "body": [
-            "The service is provided on an as-available basis. We do not guarantee uninterrupted operation or specific creative outcomes. To the maximum extent permitted by law, liability is limited to amounts paid for the relevant service period."
+            "サービスは利用可能な状態で提供されます。中断のない運用や特定の創作結果を保証するものではありません。法律で認められる最大限の範囲で、責任は該当するサービス期間に支払われた金額に限定されます。"
           ]
         }
       ]
     },
     "refund": {
       "seo": {
-        "title": "Refund Policy | Calyra AI",
-        "description": "Refund eligibility, timelines, and process for Calyra AI credit purchases and subscriptions."
+        "title": "返金ポリシー | Calyra AI",
+        "description": "Calyra AIのクレジット購入とサブスクリプションに関する返金対象、期限、手続きについて説明します。"
       },
-      "badge": "Refund",
-      "title": "Refund Policy",
-      "subtitle": "This policy explains when refunds are available and how to request one.",
+      "badge": "返金",
+      "title": "返金ポリシー",
+      "subtitle": "このポリシーでは、返金が可能な条件と申請方法を説明します。",
       "sections": [
         {
-          "title": "Eligibility",
+          "title": "対象条件",
           "body": [
-            "Refunds are available for unused credits requested within 7 days of purchase."
+            "購入から7日以内に申請された未使用クレジットは返金対象となります。"
           ],
           "bullets": [
-            "Request must be submitted within 7 calendar days",
-            "Credits tied to the request must be unused",
-            "The purchase must be made through an official Calyra AI checkout flow"
+            "申請は7暦日以内に提出する必要があります",
+            "申請対象のクレジットが未使用である必要があります",
+            "購入はCalyra AIの公式チェックアウト経由で行われている必要があります"
           ]
         },
         {
-          "title": "Non-refundable cases",
+          "title": "返金対象外のケース",
           "body": [
-            "Refunds are generally not available for credits that have been used, expired windows, or abuse-related account restrictions."
+            "使用済みクレジット、期限を過ぎた申請、不正利用に関連するアカウント制限については、通常返金できません。"
           ],
           "bullets": [
-            "Partially or fully consumed credits",
-            "Requests beyond the 7-day window",
-            "Fraud, chargeback abuse, or policy violations"
+            "一部または全部が消費されたクレジット",
+            "7日間の期限を過ぎた申請",
+            "不正、チャージバックの濫用、ポリシー違反"
           ]
         },
         {
-          "title": "How to request a refund",
+          "title": "返金の申請方法",
           "body": [
-            "Contact support with your account email, order identifier, and reason for the request. We may ask for additional verification to protect account security."
+            "アカウントのメールアドレス、注文ID、申請理由を添えてサポートへ連絡してください。アカウント保護のため、追加確認をお願いする場合があります。"
           ],
           "bullets": [
-            "Include order ID and purchase date",
-            "Use the same account email used for purchase",
-            "Allow support time to verify credit usage status"
+            "注文IDと購入日を含めてください",
+            "購入に使用したものと同じアカウントメールを使用してください",
+            "サポートがクレジット使用状況を確認する時間を確保してください"
           ]
         },
         {
-          "title": "Processing timeline",
+          "title": "処理期間",
           "body": [
-            "Approved refunds are issued to the original payment method. Processing time depends on your payment provider and card network."
+            "承認された返金は元の支払い方法へ行われます。処理時間は決済プロバイダーとカードネットワークによって異なります。"
           ],
           "bullets": [
-            "Policy review: typically within 3 business days",
-            "Payment reversal: usually 5-10 business days after approval"
+            "ポリシー確認: 通常3営業日以内",
+            "支払いの取り消し: 承認後、通常5〜10営業日"
           ]
         }
       ]
@@ -849,351 +849,427 @@
   "seoPages": {
     "aiSongMaker": {
       "seo": {
-        "title": "AI Song Maker - Create AI Songs Online | Calyra AI",
-        "description": "Use Calyra AI as an AI song maker to create songs from text prompts, lyrics, styles, and ideas with vocals and instruments."
+        "title": "AIソングメーカー - オンラインでAI楽曲を作成 | Calyra AI",
+        "description": "Calyra AIを使って、テキスト、歌詞、スタイル、アイデアからボーカルと楽器入りのAI楽曲を作成できます。"
       },
       "hero": {
-        "eyebrow": "AI Song Maker",
-        "title": "AI Song Maker for Text, Lyrics, and Music",
-        "description": "Start from a prompt or lyrics, choose a style, and generate a complete AI song with vocals, instruments, and a shareable report."
+        "eyebrow": "AIソングメーカー",
+        "title": "テキスト、歌詞、音楽のためのAIソングメーカー",
+        "description": "プロンプトや歌詞から始め、スタイルを選び、ボーカル、楽器、共有できるレポート付きのAI楽曲を生成します。"
       },
       "cta": {
-        "primary": "Start AI Song Maker",
-        "secondary": "View Pricing"
+        "primary": "AIソングメーカーを始める",
+        "secondary": "料金を見る"
       },
       "form": {
-        "prompt": "Song idea",
-        "placeholder": "Describe the song you want: mood, story, genre, vocal tone, audience, and where you will use it.",
-        "style": "Style",
-        "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-        "styleDefault": "Pop, emotional female vocal, cinematic drums",
-        "title": "Title",
-        "titlePlaceholder": "My AI Song",
-        "titleDefault": "My AI Song",
-        "submit": "Continue to Generator"
+        "prompt": "曲のアイデア",
+        "placeholder": "作りたい曲のムード、ストーリー、ジャンル、声のトーン、対象、用途を説明してください。",
+        "style": "スタイル",
+        "stylePlaceholder": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+        "styleDefault": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+        "title": "タイトル",
+        "titlePlaceholder": "私のAIソング",
+        "titleDefault": "私のAIソング",
+        "submit": "ジェネレーターへ進む"
       },
       "benefits": {
-        "title": "A Faster Way to Start a Song",
-        "description": "Text to song is best when you have a feeling, scene, or content idea but do not have finished lyrics yet.",
+        "title": "曲作りをより速く始める方法",
+        "description": "テキストから曲は、感情、シーン、コンテンツのアイデアはあるものの、完成した歌詞がまだない場合に最適です。",
         "items": {
           "ideas": {
-            "title": "Start from any idea",
-            "description": "Use a short prompt, story, mood, or content brief as the seed for a full song direction."
+            "title": "どんなアイデアからでも開始",
+            "description": "短いプロンプト、ストーリー、ムード、企画メモを曲全体の方向性の種にできます。"
           },
           "vocals": {
-            "title": "Shape vocals and instruments",
-            "description": "Guide genre, tempo, singer energy, arrangement, and production style before generation."
+            "title": "ボーカルと楽器を形にする",
+            "description": "生成前にジャンル、テンポ、歌い手のエネルギー、アレンジ、制作スタイルを指定できます。"
           },
           "creators": {
-            "title": "Built for creator use cases",
-            "description": "Make songs for YouTube, TikTok, podcasts, games, ads, and social media concepts."
+            "title": "クリエイター用途に対応",
+            "description": "YouTube、TikTok、ポッドキャスト、ゲーム、広告、SNS向けの曲を作成できます。"
           }
         }
       },
       "steps": {
-        "title": "How Text to Song Works",
-        "description": "Move from a plain-language prompt to a generated song without opening a music production tool.",
+        "title": "テキストから曲の流れ",
+        "description": "音楽制作ツールを開かずに、自然文のプロンプトから生成曲へ進めます。",
         "items": {
           "prompt": {
-            "title": "Write a clear prompt",
-            "description": "Describe the emotion, story, audience, genre, and vocal direction you want."
+            "title": "明確なプロンプトを書く",
+            "description": "欲しい感情、ストーリー、対象、ジャンル、ボーカル方向を説明します。"
           },
           "style": {
-            "title": "Add style guidance",
-            "description": "Pick a style so the generator understands the sound and arrangement you are aiming for."
+            "title": "スタイルを追加",
+            "description": "目指す音やアレンジをジェネレーターが理解できるようにスタイルを選びます。"
           },
           "create": {
-            "title": "Generate the song",
-            "description": "Continue to the workspace, review the setup, and generate lyrics plus audio."
+            "title": "曲を生成",
+            "description": "ワークスペースへ進み、設定を確認して歌詞と音声を生成します。"
           }
         }
       },
       "faq": {
-        "title": "AI Song Maker FAQ",
+        "title": "AIソングメーカーFAQ",
         "one": {
-          "question": "What is an AI song maker?",
-          "answer": "An AI song maker creates songs from prompts, lyrics, style direction, and creative ideas, including vocals and instruments."
+          "question": "AIソングメーカーとは何ですか？",
+          "answer": "AIソングメーカーは、プロンプト、歌詞、スタイル指定、創作アイデアから、ボーカルと楽器を含む曲を作成します。"
         },
         "two": {
-          "question": "Can I start with text or lyrics?",
-          "answer": "Yes. Start with a text prompt when you have an idea, or use lyrics mode when you already have words for the song."
+          "question": "テキストや歌詞から始められますか？",
+          "answer": "はい。アイデアがある場合はテキストプロンプトから、歌詞がある場合は歌詞モードから始められます。"
         },
         "three": {
-          "question": "Can I choose the music style?",
-          "answer": "Yes. Add genre, mood, vocal tone, tempo, and instrument details to guide the generated song."
+          "question": "音楽スタイルを選べますか？",
+          "answer": "はい。ジャンル、ムード、声のトーン、テンポ、楽器の詳細を追加して生成曲を導けます。"
         },
         "four": {
-          "question": "Can I use generated songs commercially?",
-          "answer": "Subscribers can download generated songs and use them commercially, subject to the latest terms."
+          "question": "生成した曲を商用利用できますか？",
+          "answer": "サブスクユーザーは生成曲をダウンロードし、最新の規約に従って商用利用できます。"
         }
       },
       "finalCta": {
-        "title": "Create Your Next AI Song",
-        "description": "Use the AI Song Maker to turn a prompt, lyric idea, or finished lyrics into a complete track."
+        "title": "次のAI楽曲を作成",
+        "description": "AIソングメーカーで、プロンプト、歌詞のアイデア、完成した歌詞をフル楽曲へ変えましょう。"
       }
     },
     "aiTextToSong": {
       "seo": {
-        "title": "AI Text to Song Generator - Create Songs from Prompts | Calyra AI",
-        "description": "Turn text prompts, moods, stories, and ideas into AI songs with vocals and instruments using Calyra AI."
+        "title": "AIテキストから曲ジェネレーター - プロンプトから曲を作成 | Calyra AI",
+        "description": "テキストプロンプト、ムード、ストーリー、アイデアを、ボーカルと楽器入りAI楽曲へ変換します。"
       },
       "hero": {
-        "eyebrow": "AI Text to Song",
-        "title": "AI Text to Song Generator",
-        "description": "Describe a mood, story, genre, vocal style, or use case, then generate a complete AI song from your text."
+        "eyebrow": "AIテキストから曲",
+        "title": "AIテキストから曲ジェネレーター",
+        "description": "ムード、ストーリー、ジャンル、ボーカルスタイル、用途を説明し、テキストからAI楽曲を生成します。"
       },
       "cta": {
-        "primary": "Start AI Text to Song",
-        "secondary": "View Pricing"
+        "primary": "テキストから曲を始める",
+        "secondary": "料金を見る"
       },
       "form": {
-        "prompt": "Song idea",
-        "placeholder": "Describe the song you want: mood, story, genre, vocal tone, audience, and where you will use it.",
-        "style": "Style",
-        "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-        "styleDefault": "Pop, emotional female vocal, cinematic drums",
-        "title": "Title",
-        "titlePlaceholder": "My AI Song",
-        "titleDefault": "My AI Song",
-        "submit": "Continue to Generator"
+        "prompt": "曲のアイデア",
+        "placeholder": "作りたい曲のムード、ストーリー、ジャンル、声のトーン、対象、用途を説明してください。",
+        "style": "スタイル",
+        "stylePlaceholder": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+        "styleDefault": "ポップ、感情的な女性ボーカル、シネマティックなドラム",
+        "title": "タイトル",
+        "titlePlaceholder": "私のAIソング",
+        "titleDefault": "私のAIソング",
+        "submit": "ジェネレーターへ進む"
       },
       "benefits": {
-        "title": "A Faster Way to Start a Song",
-        "description": "Text to song is best when you have a feeling, scene, or content idea but do not have finished lyrics yet.",
+        "title": "曲作りをより速く始める方法",
+        "description": "テキストから曲は、感情、シーン、コンテンツのアイデアはあるものの、完成した歌詞がまだない場合に最適です。",
         "items": {
           "ideas": {
-            "title": "Start from any idea",
-            "description": "Use a short prompt, story, mood, or content brief as the seed for a full song direction."
+            "title": "どんなアイデアからでも開始",
+            "description": "短いプロンプト、ストーリー、ムード、企画メモを曲全体の方向性の種にできます。"
           },
           "vocals": {
-            "title": "Shape vocals and instruments",
-            "description": "Guide genre, tempo, singer energy, arrangement, and production style before generation."
+            "title": "ボーカルと楽器を形にする",
+            "description": "生成前にジャンル、テンポ、歌い手のエネルギー、アレンジ、制作スタイルを指定できます。"
           },
           "creators": {
-            "title": "Built for creator use cases",
-            "description": "Make songs for YouTube, TikTok, podcasts, games, ads, and social media concepts."
+            "title": "クリエイター用途に対応",
+            "description": "YouTube、TikTok、ポッドキャスト、ゲーム、広告、SNS向けの曲を作成できます。"
           }
         }
       },
       "steps": {
-        "title": "How Text to Song Works",
-        "description": "Move from a plain-language prompt to a generated song without opening a music production tool.",
+        "title": "テキストから曲の流れ",
+        "description": "音楽制作ツールを開かずに、自然文のプロンプトから生成曲へ進めます。",
         "items": {
           "prompt": {
-            "title": "Write a clear prompt",
-            "description": "Describe the emotion, story, audience, genre, and vocal direction you want."
+            "title": "明確なプロンプトを書く",
+            "description": "欲しい感情、ストーリー、対象、ジャンル、ボーカル方向を説明します。"
           },
           "style": {
-            "title": "Add style guidance",
-            "description": "Pick a style so the generator understands the sound and arrangement you are aiming for."
+            "title": "スタイルを追加",
+            "description": "目指す音やアレンジをジェネレーターが理解できるようにスタイルを選びます。"
           },
           "create": {
-            "title": "Generate the song",
-            "description": "Continue to the workspace, review the setup, and generate lyrics plus audio."
+            "title": "曲を生成",
+            "description": "ワークスペースへ進み、設定を確認して歌詞と音声を生成します。"
           }
         }
       },
       "faq": {
-        "title": "Text to Song FAQ",
+        "title": "テキストから曲FAQ",
         "one": {
-          "question": "What is text to song AI?",
-          "answer": "Text to song AI turns a written prompt into a song direction, lyrics, and generated music with vocals and instruments."
+          "question": "テキストから曲AIとは？",
+          "answer": "テキストから曲AIは、書かれたプロンプトを曲の方向性、歌詞、ボーカルと楽器入りの生成音楽へ変えます。"
         },
         "two": {
-          "question": "Do I need finished lyrics?",
-          "answer": "No. Use this mode when you only have an idea, story, mood, or content brief."
+          "question": "完成した歌詞は必要ですか？",
+          "answer": "いいえ。アイデア、ストーリー、ムード、企画メモだけでも使えます。"
         },
         "three": {
-          "question": "Can I choose the music style?",
-          "answer": "Yes. Add genre, mood, vocal, tempo, and instrument details to guide the result."
+          "question": "音楽スタイルを選べますか？",
+          "answer": "はい。ジャンル、ムード、声のトーン、テンポ、楽器の詳細を追加して生成曲を導けます。"
         },
         "four": {
-          "question": "Can I use the song commercially?",
-          "answer": "Subscribers can download generated songs and use them commercially, subject to the latest terms."
+          "question": "曲を商用利用できますか？",
+          "answer": "サブスクユーザーは生成曲をダウンロードし、最新の規約に従って商用利用できます。"
         }
       },
       "finalCta": {
-        "title": "Ready to Turn Text Into Music?",
-        "description": "Start with a clear prompt and generate a complete AI song with vocals and instruments."
+        "title": "テキストを音楽に変えますか？",
+        "description": "明確なプロンプトから始め、ボーカルと楽器入りのAI楽曲を生成しましょう。"
       }
     },
     "aiLyricsToSong": {
       "seo": {
-        "title": "AI Lyrics to Song Generator - Turn Lyrics Into Music | Calyra AI",
-        "description": "Paste your lyrics and turn them into an AI song with vocals, instruments, arrangement, and style direction."
+        "title": "AI歌詞から曲ジェネレーター - 歌詞を音楽に変換 | Calyra AI",
+        "description": "歌詞を貼り付け、ボーカル、楽器、アレンジ、スタイル指定を含むAI楽曲へ変換します。"
       },
       "hero": {
-        "eyebrow": "AI Lyrics to Song",
-        "title": "AI Lyrics to Song Generator",
-        "description": "Bring existing lyrics, add arrangement and vocal direction, then generate a full AI song from your words."
+        "eyebrow": "AI歌詞から曲",
+        "title": "AI歌詞から曲ジェネレーター",
+        "description": "既存の歌詞にアレンジとボーカルの方向性を追加し、言葉からフルAI楽曲を生成します。"
       },
       "cta": {
-        "primary": "Start AI Lyrics to Song",
-        "secondary": "Try Text to Song"
+        "primary": "歌詞から曲を始める",
+        "secondary": "テキストから曲を試す"
       },
       "form": {
-        "prompt": "Lyrics",
-        "placeholder": "Paste your lyrics, then add any notes about emotion, chorus energy, vocal tone, or arrangement.",
-        "style": "Style",
-        "stylePlaceholder": "Piano ballad, soft male vocal, cinematic strings",
-        "styleDefault": "Piano ballad, emotional vocal, cinematic strings",
-        "title": "Title",
-        "titlePlaceholder": "My Lyrics Song",
-        "titleDefault": "My Lyrics Song",
-        "submit": "Continue to Generator"
+        "prompt": "歌詞",
+        "placeholder": "歌詞を貼り付け、感情、サビのエネルギー、声のトーン、アレンジのメモを追加してください。",
+        "style": "スタイル",
+        "stylePlaceholder": "ピアノバラード、柔らかい男性ボーカル、シネマティックなストリングス",
+        "styleDefault": "ピアノバラード、感情的なボーカル、シネマティックなストリングス",
+        "title": "タイトル",
+        "titlePlaceholder": "私の歌詞ソング",
+        "titleDefault": "私の歌詞ソング",
+        "submit": "ジェネレーターへ進む"
       },
       "benefits": {
-        "title": "Keep Your Words, Add the Music",
-        "description": "Lyrics to song is best when you already have the words and want AI to help with performance and production.",
+        "title": "言葉を活かし、音楽を加える",
+        "description": "歌詞から曲は、すでに言葉があり、AIに歌唱表現や制作を補助してほしい場合に最適です。",
         "items": {
           "lyrics": {
-            "title": "Use your own lyrics",
-            "description": "Paste verses, hooks, choruses, or rough drafts and keep the song centered on your writing."
+            "title": "自分の歌詞を使う",
+            "description": "ヴァース、フック、サビ、ラフ案を貼り付け、自分の言葉を中心に曲を作れます。"
           },
           "arrangement": {
-            "title": "Guide the arrangement",
-            "description": "Add direction for instruments, tempo, vocal style, mood, and chorus lift."
+            "title": "アレンジを指定",
+            "description": "楽器、テンポ、ボーカルスタイル、ムード、サビの盛り上がりを追加できます。"
           },
           "control": {
-            "title": "Stay in the workflow",
-            "description": "Move from lyrics to audio generation without switching tools or rebuilding the prompt."
+            "title": "同じ流れで作業",
+            "description": "ツールを切り替えたりプロンプトを作り直したりせず、歌詞から音声生成へ進めます。"
           }
         }
       },
       "steps": {
-        "title": "How Lyrics to Song Works",
-        "description": "Use your lyrics as the foundation, then let the generator create the musical setting around them.",
+        "title": "歌詞から曲の流れ",
+        "description": "歌詞を土台にして、その周りの音楽設定をジェネレーターに作らせます。",
         "items": {
           "paste": {
-            "title": "Paste your lyrics",
-            "description": "Add the words you want to turn into a song, including sections if you already have them."
+            "title": "歌詞を貼り付ける",
+            "description": "曲にしたい言葉を追加します。すでにセクションがある場合はそのまま含められます。"
           },
           "direct": {
-            "title": "Direct the sound",
-            "description": "Describe the genre, vocal tone, emotional arc, and instrumentation."
+            "title": "サウンドを指示",
+            "description": "ジャンル、声のトーン、感情の流れ、楽器編成を説明します。"
           },
           "create": {
-            "title": "Generate music",
-            "description": "Continue to the workspace and create the audio version of your lyrics."
+            "title": "音楽を生成",
+            "description": "ワークスペースへ進み、歌詞の音声バージョンを作成します。"
           }
         }
       },
       "faq": {
-        "title": "Lyrics to Song FAQ",
+        "title": "歌詞から曲FAQ",
         "one": {
-          "question": "Can AI turn my lyrics into a song?",
-          "answer": "Yes. Paste your lyrics and add style direction so Calyra AI can generate a song with vocals and instruments."
+          "question": "AIで自分の歌詞を曲にできますか？",
+          "answer": "はい。歌詞を貼り付けてスタイル指定を追加すると、Calyra AIがボーカルと楽器入りの曲を生成できます。"
         },
         "two": {
-          "question": "Do my lyrics need to be finished?",
-          "answer": "Finished lyrics help, but you can also paste a rough draft and include notes for the intended structure."
+          "question": "歌詞は完成している必要がありますか？",
+          "answer": "完成した歌詞の方が役立ちますが、ラフ案と構成メモでも利用できます。"
         },
         "three": {
-          "question": "Can I choose a vocal style?",
-          "answer": "Yes. Add vocal tone, gender direction, energy, language, and arrangement notes in the style field."
+          "question": "ボーカルスタイルを選べますか？",
+          "answer": "はい。スタイル欄に声のトーン、性別の方向性、エネルギー、言語、アレンジメモを追加できます。"
         },
         "four": {
-          "question": "What happens after I submit?",
-          "answer": "You continue to the song workspace with Lyrics to Song mode selected so you can generate the track."
+          "question": "送信後はどうなりますか？",
+          "answer": "歌詞から曲モードが選択されたワークスペースへ進み、トラックを生成できます。"
         }
       },
       "finalCta": {
-        "title": "Have Lyrics Ready?",
-        "description": "Paste them into the AI Lyrics to Song workflow and shape the music around your words."
+        "title": "歌詞は準備できていますか？",
+        "description": "AI歌詞から曲のワークフローに貼り付け、言葉を中心に音楽を形にしましょう。"
       }
     },
     "aiLyricsGenerator": {
       "seo": {
-        "title": "AI Lyrics Generator - Write Song Lyrics Online | Calyra AI",
-        "description": "Generate song lyrics from a theme, story, mood, or title. Use Calyra AI to draft lyrics, then turn them into a complete song."
+        "title": "AI歌詞ジェネレーター - オンライン作詞ツール | Calyra AI",
+        "description": "テーマ、ムード、キーワード、タイトルから完全な歌詞を生成します。ヴァースやサビのアイデアをすぐ得て、曲に変換できます。"
       },
       "hero": {
-        "eyebrow": "AI Lyrics Generator",
-        "title": "Generate Lyrics Before You Make the Song",
-        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit the lyrics, then convert them into a full song with vocals."
+        "eyebrow": "AI歌詞ジェネレーター",
+        "title": "数秒で歌詞を生成",
+        "description": "テーマ、ストーリー、ムードを入力すると、構成の明確な歌詞を生成できます。編集してから、ボーカル入りのフル楽曲へ変換できます。"
       },
       "cta": {
-        "primary": "Create a Full Song",
-        "secondary": "Lyrics to Song"
+        "primary": "今すぐ歌詞を生成",
+        "secondary": "歌詞を曲にする"
       },
       "form": {
-        "prompt": "Lyric brief",
-        "placeholder": "Describe the story, emotion, theme, perspective, hook idea, or audience for the lyrics.",
-        "style": "Style",
-        "stylePlaceholder": "Indie pop, bittersweet, conversational chorus",
-        "styleDefault": "Indie pop, emotional, memorable chorus",
-        "title": "Title seed",
-        "titlePlaceholder": "Midnight Letters",
-        "titleDefault": "My AI Lyrics",
-        "submit": "Generate Lyrics",
-        "submitting": "Writing Lyrics",
-        "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Sign in to generate lyrics and continue to song generation.",
-        "signInCta": "Sign in",
-        "errorFallback": "Failed to generate lyrics",
-        "resultEyebrow": "Generated Lyrics",
-        "lyricsLabel": "Generated lyrics",
-        "turnIntoSong": "Turn Into Song"
+        "prompt": "歌詞のアイデア",
+        "placeholder": "例: 深夜の別れの歌、柔らかい男性ボーカル、雨の街、記憶に残るサビ。",
+        "style": "スタイル",
+        "stylePlaceholder": "ポップバラード、感情的、モダン、ラジオ向き",
+        "styleDefault": "ポップバラード、感情的、記憶に残るサビ",
+        "title": "曲名",
+        "titlePlaceholder": "午前2時の最後のメッセージ",
+        "titleDefault": "私のAI歌詞",
+        "submit": "歌詞を生成",
+        "submitting": "歌詞を生成中",
+        "signInTitle": "歌詞生成にはログインが必要です",
+        "signInDescription": "ログインすると歌詞を生成し、曲作成へ進めます。",
+        "signInCta": "ログイン",
+        "errorFallback": "歌詞を生成できませんでした",
+        "resultEyebrow": "生成された歌詞",
+        "lyricsLabel": "生成された歌詞",
+        "turnIntoSong": "曲にする"
       },
       "benefits": {
-        "title": "Write Better Song Seeds",
-        "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
+        "title": "素早い作詞のために設計",
+        "description": "ひとつのアイデアから、制作に使える構成済みの歌詞をすばやく得られます。",
         "items": {
           "structure": {
-            "title": "Get song-ready sections",
-            "description": "Create lyrics with verses, chorus ideas, emotional progression, and a clear center."
+            "title": "明確な曲構成",
+            "description": "一貫した感情の流れを持つヴァースとサビを生成します。"
           },
           "nextStep": {
-            "title": "Continue into music",
-            "description": "Take generated lyrics directly into song generation and create audio immediately."
+            "title": "ワンクリックで音楽へ",
+            "description": "生成した歌詞をそのまま曲作成に送り、すぐに音声を生成できます。"
           },
           "lyrics": {
-            "title": "Lyrics from an idea",
-            "description": "Turn a topic, feeling, or keyword into complete lyrics in seconds."
+            "title": "アイデアから歌詞へ",
+            "description": "テーマ、感情、キーワードを数秒で完成した歌詞へ広げます。"
           }
         }
       },
       "steps": {
-        "title": "How the AI Lyrics Generator Works",
-        "description": "Three simple steps from lyrics idea to full song.",
+        "title": "使い方",
+        "description": "歌詞のアイデアからフル楽曲まで、シンプルな3ステップです。",
         "items": {
           "brief": {
-            "title": "Describe the lyric idea",
-            "description": "Give the generator a theme, story, mood, point of view, and style."
+            "title": "アイデアを説明",
+            "description": "テーマ、ムード、ストーリー、フックの一文を入力します。"
           },
           "review": {
-            "title": "Review the lyrics",
-            "description": "Read and edit generated lyrics before creating music."
+            "title": "歌詞を確認",
+            "description": "音楽を作成する前に、生成された歌詞を読み、編集します。"
           },
           "song": {
-            "title": "Turn it into a song",
-            "description": "Generate vocals and instrumental directly from your edited lyrics."
+            "title": "歌詞を曲に変換",
+            "description": "編集した歌詞からボーカルと伴奏を直接生成します。"
           }
         }
       },
       "faq": {
-        "title": "AI Lyrics Generator FAQ",
+        "title": "AI歌詞ジェネレーターFAQ",
         "one": {
-          "question": "What can I generate lyrics from?",
-          "answer": "You can start from a title, theme, story, emotion, genre, hook idea, or short creative brief."
+          "question": "入力には何を使えますか？",
+          "answer": "キーワード、テーマ、ストーリー、感情、タイトル、ジャンル、短いプロンプトを使えます。ジェネレーターが完全な歌詞へ広げます。"
         },
         "two": {
-          "question": "Can I turn the lyrics into music?",
-          "answer": "Yes. After generating lyrics, use the Turn Into Song action to continue into the song workspace."
+          "question": "生成した歌詞を曲にできますか？",
+          "answer": "はい。「曲にする」をクリックすると作成ワークスペースへ進み、歌詞から音楽を生成できます。"
         },
         "three": {
-          "question": "Do I need to sign in?",
-          "answer": "Yes. Sign in to generate lyrics and turn them into songs."
+          "question": "無料で試せますか？",
+          "answer": "はい。ログインすると歌詞を生成し、曲に変換できます。"
         },
         "four": {
-          "question": "Can I edit the lyrics?",
-          "answer": "Yes. You can edit the generated lyrics before creating the final song."
+          "question": "音声生成前に歌詞を編集できますか？",
+          "answer": "はい。最終曲を作成する前に、生成された歌詞を編集できます。"
         }
       },
       "finalCta": {
-        "title": "Want Music for These Lyrics?",
-        "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
+        "title": "歌詞を音楽に変えますか？",
+        "description": "今すぐ歌詞を生成し、編集して、準備ができたらフル楽曲を作成しましょう。"
       }
+    }
+  },
+  "about": {
+    "seo": {
+      "title": "Calyra AIについて - 個人のストーリーからAI音楽を制作",
+      "description": "Calyra AIが個人のストーリーをAI生成の歌詞、音声、プロデューサー風レポート、共有できる楽曲ページに変える仕組みを紹介します。"
+    },
+    "eyebrow": "Calyra AIについて",
+    "title": "個人のストーリーを中心にしたAI音楽制作プラットフォーム",
+    "subtitle": "Calyra AIは、感情、記憶、メッセージを歌詞、音声、共有できる楽曲ページへ変えるためのサービスです。空の制作セッションから始めなくても、ひとつの流れで曲作りを進めたいクリエイター向けに設計されています。",
+    "createCta": "曲を作成",
+    "pricingCta": "料金を見る",
+    "pillars": [
+      {
+        "title": "ストーリー起点の作詞",
+        "description": "Calyra AIは実際の記憶、気分、メッセージから始め、明確な感情の流れを持つ構成済みの歌詞へ整えます。"
+      },
+      {
+        "title": "音声生成ワークフロー",
+        "description": "歌詞案ができたら、再生可能なAI音声を生成し、結果を公開楽曲ページに保存します。"
+      },
+      {
+        "title": "プロデューサー風フィードバック",
+        "description": "レポートでは、感情価値、フックの強さ、市場での位置づけ、次に改善すべき点を把握できます。"
+      }
+    ],
+    "whyEyebrow": "私たちの目的",
+    "whyTitle": "創作ツールは次の一手をわかりやすくするべきです",
+    "whyBody": [
+      "多くのAI音楽ツールは生成で終わります。Calyra AIは、ストーリーの入力、歌詞の整理、音声生成、結果の評価、リスナーや検索エンジンに伝わるページの公開までをつなぎます。",
+      "このプラットフォームは実用性を重視しています。生成状況、クレジット消費、公開リンク、レポート、保存状態を表示し、クリエイターが迷わず次へ進めるようにします。",
+      "公開楽曲ページには、音声、歌詞、楽曲情報、関連曲をインデックス可能なHTMLで含め、完成した曲を隠れたファイルではなく共有しやすい資産にします。"
+    ],
+    "trustEyebrow": "信頼を前提に設計",
+    "trustTitle": "明確なクレジット、保護されたアカウントページ、公開はクリエイターが選んだ曲だけ",
+    "trustBody": "アカウントページはSupabase認証で保護されています。機密性の高いプロバイダーキーはサーバー側に保持し、決済はCreemのチェックアウトとカスタマーポータル経由で処理します。",
+    "trustCta": "作成を始める"
+  },
+  "auth": {
+    "emailLabel": "メールアドレス",
+    "passwordLabel": "パスワード",
+    "passwordPlaceholder": "パスワード",
+    "continueWith": "または次で続行",
+    "signIn": {
+      "title": "おかえりなさい",
+      "subtitle": "メールアドレスでアカウントにログインしてください",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "pending": "ログイン中...",
+      "submit": "ログイン",
+      "google": "Googleでログイン",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signUp": "登録"
+    },
+    "signUp": {
+      "title": "アカウントを作成",
+      "subtitle": "登録すると曲の保存、音声生成、クレジット管理ができます",
+      "pending": "アカウントを作成中...",
+      "submit": "アカウントを作成",
+      "google": "Googleで登録",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "signIn": "ログイン"
+    },
+    "forgot": {
+      "title": "パスワードをリセット",
+      "subtitle": "メールアドレスを入力すると、リセット用リンクを送信します",
+      "pending": "リセットリンクを送信中...",
+      "submit": "リセットリンクを送信",
+      "remember": "パスワードを思い出しましたか？",
+      "signIn": "ログイン"
+    },
+    "reset": {
+      "title": "パスワードをリセット",
+      "subtitle": "新しいパスワードを入力してください。",
+      "newPasswordLabel": "新しいパスワード",
+      "confirmPasswordLabel": "パスワードを確認",
+      "submit": "パスワードをリセット"
     }
   }
 }

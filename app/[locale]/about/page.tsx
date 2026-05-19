@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { AboutContent } from "@/components/about/about-content";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
@@ -25,27 +26,17 @@ export async function generateMetadata({
     };
   }
 
+  const t = await getTranslations({ locale, namespace: "about" });
   const url = absoluteLocaleUrl(locale, "/about");
 
   return buildMarketingMetadata({
-    title: "About Calyra AI - AI Music Creation From Personal Stories",
-    description:
-      "Learn how Calyra AI turns personal stories into AI-generated lyrics, audio, producer-style reports, and shareable song pages.",
+    title: t("seo.title"),
+    description: t("seo.description"),
     url,
     locale,
     alternates: {
       canonical: url,
       languages: localizedAlternates("/about"),
-    },
-    openGraph: {
-      title: "About Calyra AI",
-      description:
-        "Calyra AI is an AI music creation platform for turning stories into lyrics, audio, reports, and public song pages.",
-    },
-    twitter: {
-      title: "About Calyra AI",
-      description:
-        "Turn personal stories into AI-generated lyrics, audio, reports, and shareable song pages.",
     },
   });
 }
@@ -60,11 +51,27 @@ export default async function AboutPage({ params }: AboutPageProps) {
   if (!locales.includes(locale)) {
     notFound();
   }
+  const t = await getTranslations({ locale, namespace: "about" });
 
   return (
     <AboutContent
       createHref={localePath(locale, "/ai-song-maker")}
       pricingHref={localePath(locale, "/pricing")}
+      content={{
+        eyebrow: t("eyebrow"),
+        title: t("title"),
+        subtitle: t("subtitle"),
+        createCta: t("createCta"),
+        pricingCta: t("pricingCta"),
+        pillars: t.raw("pillars"),
+        whyEyebrow: t("whyEyebrow"),
+        whyTitle: t("whyTitle"),
+        whyBody: t.raw("whyBody"),
+        trustEyebrow: t("trustEyebrow"),
+        trustTitle: t("trustTitle"),
+        trustBody: t("trustBody"),
+        trustCta: t("trustCta"),
+      }}
     />
   );
 }

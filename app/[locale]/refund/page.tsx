@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LegalDocument } from "@/components/legal/legal-document";
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { locales, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
@@ -20,7 +20,7 @@ export async function generateMetadata({
 }: RefundPageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.refund",
   });
   const url = absoluteLocaleUrl(locale, "/refund");
@@ -42,13 +42,13 @@ export function generateStaticParams() {
 }
 
 export default async function RefundPage({ params }: RefundPageProps) {
-  await params;
+  const { locale } = await params;
   const t = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.refund",
   });
   const common = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.common",
   });
 

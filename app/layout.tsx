@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
+import { baseUrl } from "@/lib/i18n/urls";
 import "./globals.css";
-
-const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),

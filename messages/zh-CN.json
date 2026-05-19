@@ -1195,5 +1195,81 @@
         "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
       }
     }
+  },
+  "about": {
+    "seo": {
+      "title": "关于 Calyra AI - 从个人故事创作 AI 音乐",
+      "description": "了解 Calyra AI 如何把个人故事转化为 AI 生成歌词、音频、制作人风格报告和可分享的歌曲页面。"
+    },
+    "eyebrow": "关于 Calyra AI",
+    "title": "围绕个人故事打造的 AI 音乐创作平台",
+    "subtitle": "Calyra AI 帮助用户把情绪、记忆和信息转化为歌词、音频和可分享的歌曲页面。产品面向希望获得完整歌曲创作流程、又不想从空白工作室项目开始的创作者。",
+    "createCta": "创建歌曲",
+    "pricingCta": "查看价格",
+    "pillars": [
+      {
+        "title": "故事优先的写歌方式",
+        "description": "Calyra AI 从用户真实的记忆、情绪或信息出发，将其整理成具有清晰情感线的结构化歌词。"
+      },
+      {
+        "title": "音频生成流程",
+        "description": "歌词草稿完成后，平台会生成可播放的 AI 音频，并将结果保存到公开歌曲页面。"
+      },
+      {
+        "title": "制作人风格反馈",
+        "description": "报告帮助创作者理解情感价值、hook 强度、市场定位以及歌曲的下一步优化方向。"
+      }
+    ],
+    "whyEyebrow": "我们为什么存在",
+    "whyTitle": "创作工具应该让下一步变得清楚",
+    "whyBody": [
+      "许多 AI 音乐工具止步于生成。Calyra AI 连接完整路径：记录故事、整理歌词、生成音频、评估结果，并发布听众和搜索引擎都能理解的页面。",
+      "平台刻意保持实用。它展示生成状态、积分影响、公开链接、报告和存储行为，让创作者无需猜测发生了什么，可以继续推进。",
+      "公开歌曲页面包含音频、歌词、歌曲详情和相关音乐，并以可索引 HTML 呈现，让每首完成的歌曲都成为可分享的资产，而不是隐藏文件。"
+    ],
+    "trustEyebrow": "为信任而构建",
+    "trustTitle": "清晰的积分、私密账号页面，以及仅在创作者选择时公开的歌曲",
+    "trustBody": "账号页面受 Supabase 身份验证保护。敏感 Provider Key 仅保留在服务端，支付流程通过 Creem checkout 和客户门户路由处理。",
+    "trustCta": "开始创作"
+  },
+  "auth": {
+    "emailLabel": "邮箱",
+    "passwordLabel": "密码",
+    "passwordPlaceholder": "密码",
+    "continueWith": "或继续使用",
+    "signIn": {
+      "title": "欢迎回来",
+      "subtitle": "输入邮箱登录你的账号",
+      "forgotPassword": "忘记密码？",
+      "pending": "正在登录...",
+      "submit": "登录",
+      "google": "使用 Google 登录",
+      "noAccount": "还没有账号？",
+      "signUp": "注册"
+    },
+    "signUp": {
+      "title": "创建账号",
+      "subtitle": "注册后可保存歌曲、生成音频并管理积分",
+      "pending": "正在创建账号...",
+      "submit": "创建账号",
+      "google": "使用 Google 注册",
+      "hasAccount": "已有账号？",
+      "signIn": "登录"
+    },
+    "forgot": {
+      "title": "重置密码",
+      "subtitle": "输入邮箱，我们会发送密码重置链接",
+      "pending": "正在发送重置链接...",
+      "submit": "发送重置链接",
+      "remember": "想起密码了？",
+      "signIn": "登录"
+    },
+    "reset": {
+      "title": "重置密码",
+      "subtitle": "请在下方输入新密码。",
+      "newPasswordLabel": "新密码",
+      "confirmPasswordLabel": "确认密码",
+      "submit": "重置密码"
+    }
   }
 }

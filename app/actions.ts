@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import { mapAuthErrorToKey } from "@/lib/auth/error-map";
+import { baseUrl } from "@/lib/i18n/urls";
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
@@ -36,10 +37,7 @@ export const signUpAction = async (formData: FormData) => {
   const password = formData.get("password")?.toString();
   const locale = getLocale(formData);
   const supabase = await createClient();
-  const origin =
-    (await headers()).get("origin") ??
-    process.env.BASE_URL ??
-    "http://localhost:3000";
+  const origin = (await headers()).get("origin") ?? baseUrl;
   const signUpPath = localizedPath(locale, "/sign-up");
   const homePath = localizedPath(locale, "/");
 
@@ -101,10 +99,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const locale = getLocale(formData);
   const supabase = await createClient();
-  const origin =
-    (await headers()).get("origin") ??
-    process.env.BASE_URL ??
-    "http://localhost:3000";
+  const origin = (await headers()).get("origin") ?? baseUrl;
   const callbackUrl = formData.get("callbackUrl")?.toString();
   const forgotPasswordPath = localizedPath(locale, "/forgot-password");
   const resetPasswordPath = localizedPath(locale, "/dashboard/reset-password");

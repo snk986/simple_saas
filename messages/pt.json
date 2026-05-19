@@ -15,10 +15,10 @@
     "startFree": "Comece gratis",
     "create": "Criar",
     "about": "Sobre",
-    "textToSong": "Text to Song",
-    "lyricsToSong": "Lyrics to Song",
-    "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "textToSong": "Texto para música",
+    "lyricsToSong": "Letra para música",
+    "aiLyricsGenerator": "Gerador de letras com IA",
+    "aiSongMaker": "Criador de músicas com IA"
   },
   "footer": {
     "tagline": "Crie musicas com IA a partir de prompts, letras e ideias simples.",
@@ -30,232 +30,232 @@
     "legal": "Legal",
     "privacy": "Privacidade",
     "terms": "Termos",
-    "refund": "Refund",
-    "contact": "Contact",
+    "refund": "Reembolso",
+    "contact": "Contato",
     "gallery": "Galeria",
     "styles": "Estilos",
     "create": "Criar",
-    "textToSong": "Text to Song",
-    "lyricsToSong": "Lyrics to Song",
-    "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "textToSong": "Texto para música",
+    "lyricsToSong": "Letra para música",
+    "aiLyricsGenerator": "Gerador de letras com IA",
+    "aiSongMaker": "Criador de músicas com IA"
   },
   "home": {
     "seo": {
-      "title": "Gerador de musicas com IA - Crie musica a partir de texto | Calyra AI",
-      "description": "Crie musicas com IA a partir de prompts, letras ou ideias simples com Calyra AI, com vocais e instrumentos para YouTube, TikTok, podcasts, jogos e projetos criativos."
+      "title": "Gerador de músicas com IA - Crie música a partir de texto | Calyra AI",
+      "description": "Crie músicas com IA a partir de instruções, letras ou ideias, com vozes e instrumentos para YouTube, TikTok, podcasts, jogos e projetos criativos."
     },
-    "eyebrow": "AI Song Generator - Commercial use for subscribers",
+    "eyebrow": "Gerador de músicas com IA - Uso comercial para assinantes",
     "hero": {
-      "title": "Crie musicas com IA a partir de texto em segundos",
-      "subtitle": "Turn your story into lyrics, music, and a shareable song report in minutes.",
-      "promptLabel": "Song prompt",
-      "placeholder": "Try: A nostalgic J-pop song about summer memories, female vocal, huge chorus",
-      "primaryCta": "Gerar musica gratis",
-      "galleryCta": "Listen to Examples",
-      "templatesCta": "Prompt Templates",
-      "modeText": "Text to Song",
-      "modeLyrics": "Lyrics to Song",
-      "styleLabel": "Style",
-      "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-      "styleDefault": "Pop, emotional female vocal, cinematic drums",
-      "titleLabel": "Title",
-      "titlePlaceholder": "My AI Song",
-      "titleDefault": "My AI Song"
+      "title": "Gerador de músicas com IA",
+      "subtitle": "Transforme sua história em letra, música e um relatório de música compartilhável em minutos.",
+      "promptLabel": "Instrução da música",
+      "placeholder": "Descreva a música que você quer criar...",
+      "primaryCta": "Gerar música",
+      "galleryCta": "Ouvir exemplos",
+      "templatesCta": "Modelos de instrução",
+      "modeText": "Texto para música",
+      "modeLyrics": "Letra para música",
+      "styleLabel": "Estilo",
+      "stylePlaceholder": "Pop, voz feminina emotiva, bateria cinematográfica",
+      "styleDefault": "Pop, voz feminina emotiva, bateria cinematográfica",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Minha música com IA",
+      "titleDefault": "Minha música com IA"
     },
     "proof": {
-      "vocals": "Vocals + instruments",
-      "prompt": "Prompt to Song",
-      "lyrics": "Lyrics to Song",
-      "free": "Free users can try daily"
+      "vocals": "Vozes + instrumentos",
+      "prompt": "Instrução para música",
+      "lyrics": "Letra para música",
+      "free": "Usuários grátis podem testar diariamente"
     },
     "player": {
-      "badge": "Now Playing - AI Pop Anthem",
-      "title": "Chasing Neon Dreams",
-      "meta": "Pop - Female Vocal - Emotional - 2:34",
-      "play": "Play example song",
-      "madeWith": "Made with Calyra AI"
+      "badge": "Tocando agora - Hino pop com IA",
+      "title": "Perseguindo sonhos de neon",
+      "meta": "Pop - Voz feminina - Emotiva - 2:34",
+      "play": "Reproduzir música de exemplo",
+      "madeWith": "Feito com Calyra AI"
     },
     "gallery": {
-      "eyebrow": "Music Gallery",
-      "title": "Descubra musicas com IA feitas com Calyra",
-      "subtitle": "Browse AI-generated songs from creators. See cover art, plays, likes, song titles, and creator names, just like a lightweight music discovery feed."
+      "eyebrow": "Galeria musical",
+      "title": "Descubra músicas com IA feitas com Calyra",
+      "subtitle": "Explore músicas geradas por IA por criadores. Veja capas, reproduções, curtidas, títulos e nomes dos criadores como em um feed leve de descoberta musical."
     },
     "styles": {
       "eyebrow": "Estilos populares",
-      "title": "Create Songs in Popular AI Music Styles",
-      "subtitle": "Choose a genre, start with a ready-made direction, and make a song with AI faster. These style entries help users move from search intent to generation.",
+      "title": "Crie músicas em estilos populares de música com IA",
+      "subtitle": "Escolha um gênero, comece com uma direção pronta e crie uma música com IA mais rápido. Essas entradas de estilo ajudam a transformar intenção de busca em geração.",
       "rap": {
-        "title": "AI Rap Generator",
-        "description": "Create rap songs with flow, hooks, lyrics, and punchy beats."
+        "title": "Gerador de rap com IA",
+        "description": "Crie raps com flow, refrões, letras e batidas fortes."
       },
       "songMaker": {
-        "title": "AI Song Maker",
-        "description": "Start from a simple idea and turn it into a complete song direction."
+        "title": "Criador de músicas com IA",
+        "description": "Comece por uma ideia simples e transforme em uma direção completa de música."
       },
       "lyrics": {
-        "title": "Lyrics to Song AI",
-        "description": "Turn your lyrics into music with vocals, arrangement, and emotion."
+        "title": "IA para transformar letras em música",
+        "description": "Transforme suas letras em música com vozes, arranjo e emoção."
       },
       "text": {
-        "title": "Text to Song AI",
-        "description": "Describe a mood, genre, story, and vocal style to generate a song."
+        "title": "IA de texto para música",
+        "description": "Descreva clima, gênero, história e estilo vocal para gerar uma música."
       },
       "phonk": {
-        "title": "AI Phonk Generator",
-        "description": "Generate dark drift phonk with heavy drums, cowbell, and speed."
+        "title": "Gerador de phonk com IA",
+        "description": "Gere drift phonk sombrio com bateria pesada, cowbell e velocidade."
       },
       "lofi": {
-        "title": "AI Lo-fi Music",
-        "description": "Make chill lo-fi music for study videos, streams, and background use."
+        "title": "Música lo-fi com IA",
+        "description": "Crie música lo-fi tranquila para vídeos de estudo, lives e fundo."
       },
       "edm": {
-        "title": "AI EDM Generator",
-        "description": "Create dance music, festival drops, and electronic hooks."
+        "title": "Gerador de EDM com IA",
+        "description": "Crie música dance, drops de festival e ganchos eletrônicos."
       },
       "anime": {
-        "title": "AI Anime Song",
-        "description": "Generate anime openings, J-pop rock, and bright chorus ideas."
+        "title": "Música de anime com IA",
+        "description": "Gere openings de anime, rock J-pop e ideias de refrões brilhantes."
       }
     },
     "templates": {
-      "eyebrow": "Modelos de prompt",
-      "title": "Not Sure What to Type? Start with a Prompt Template",
-      "subtitle": "Use these templates to turn text to song ideas into clear prompts. Combine genre, mood, vocals, lyrics, and use case to guide the AI song generator.",
+      "eyebrow": "Modelos de instrução",
+      "title": "Não sabe o que escrever? Comece com um modelo",
+      "subtitle": "Use estes modelos para transformar ideias de texto para música em instruções claras. Combine gênero, clima, vozes, letras e caso de uso para guiar o gerador.",
       "items": {
         "genre": {
-          "type": "Genre + Mood + Vocal",
-          "title": "Best for a new song idea",
-          "description": "Describe the genre, emotion, vocal style, and chorus energy.",
-          "prompt": "A nostalgic J-pop song about summer memories, female vocal, upbeat rhythm, bright chorus, coming-of-age movie feeling."
+          "type": "Gênero + clima + voz",
+          "title": "Melhor para uma nova ideia de música",
+          "description": "Descreva o gênero, a emoção, o estilo vocal e a energia do refrão.",
+          "prompt": "Uma música J-pop nostálgica sobre memórias de verão, voz feminina, ritmo animado, refrão brilhante, sensação de filme de amadurecimento."
         },
         "lyrics": {
-          "type": "Lyrics + Arrangement",
-          "title": "Best for lyrics to song AI",
-          "description": "Paste lyrics, then add arrangement, tempo, vocal tone, and emotion.",
-          "prompt": "Turn these lyrics into an emotional piano ballad, soft male vocal, slow tempo, cinematic strings, restrained verse and powerful final chorus."
+          "type": "Letra + arranjo",
+          "title": "Melhor para transformar letra em música",
+          "description": "Cole a letra e adicione arranjo, andamento, tom vocal e emoção.",
+          "prompt": "Transforme esta letra em uma balada emotiva de piano, voz masculina suave, andamento lento, cordas cinematográficas, verso contido e refrão final poderoso."
         },
         "useCase": {
-          "type": "Use Case + Energy",
-          "title": "Best for content creators",
-          "description": "Tell the AI where the song will be used, such as YouTube, TikTok, podcast, game, or ad.",
-          "prompt": "Create a modern pop intro for a YouTube video, cinematic, inspiring, 15-second hook, suitable for a tech creator channel."
+          "type": "Uso + energia",
+          "title": "Melhor para criadores de conteúdo",
+          "description": "Diga à IA onde a música será usada, como YouTube, TikTok, podcast, jogo ou anúncio.",
+          "prompt": "Crie uma intro pop moderna para um vídeo do YouTube, cinematográfica, inspiradora, gancho de 15 segundos, adequada para um canal de tecnologia."
         }
       }
     },
     "commercial": {
       "eyebrow": "Uso comercial",
-      "title": "Crie musica para projetos reais",
-      "subtitle": "Generate AI music for YouTube videos, TikTok, Shorts, podcasts, games, ads, social media, and creative projects. Subscribers can download generated songs and use them commercially, subject to our terms.",
-      "pricingCta": "View Pricing",
-      "faqCta": "Read FAQ",
+      "title": "Crie música para projetos reais",
+      "subtitle": "Gere música com IA para vídeos do YouTube, TikTok, Shorts, podcasts, jogos, anúncios, redes sociais e projetos criativos. Assinantes podem baixar músicas geradas e usá-las comercialmente, conforme nossos termos.",
+      "pricingCta": "Ver preços",
+      "faqCta": "Ler perguntas frequentes",
       "uses": {
-        "youtube": "YouTube Videos",
+        "youtube": "Vídeos do YouTube",
         "tiktok": "TikTok / Shorts",
-        "podcast": "Podcast Intros",
-        "games": "Game Music",
-        "ads": "Ads",
-        "social": "Social Media"
+        "podcast": "Intros de podcast",
+        "games": "Música para jogos",
+        "ads": "Anúncios",
+        "social": "Redes sociais"
       }
     },
     "howItWorks": {
-      "eyebrow": "How It Works",
-      "title": "Crie uma musica com IA em 3 passos"
+      "eyebrow": "Como funciona",
+      "title": "Faça uma música com IA em 3 passos"
     },
     "steps": {
       "idea": {
-        "title": "Describe your song",
-        "description": "Share your idea, mood, story, or lyrics to start the song."
+        "title": "Descreva sua música",
+        "description": "Compartilhe sua ideia, clima, história ou letra para começar."
       },
       "generate": {
-        "title": "Choose a style",
-        "description": "Pick a genre and vocal direction that matches your idea."
+        "title": "Escolha um estilo",
+        "description": "Escolha um gênero e uma direção vocal que combinem com sua ideia."
       },
       "download": {
-        "title": "Generate and download",
-        "description": "Create your song, preview it, and download when ready."
+        "title": "Gere e baixe",
+        "description": "Crie sua música, ouça a prévia e baixe quando estiver pronta."
       }
     },
     "benefits": {
-      "eyebrow": "Benefits",
-      "title": "Por que criadores usam Calyra AI",
-      "subtitle": "Calyra AI helps creators move from idea to music without traditional production skills.",
+      "eyebrow": "Benefícios",
+      "title": "Por que criadores usam o Calyra AI",
+      "subtitle": "O Calyra AI ajuda criadores a sair da ideia e chegar à música sem habilidades tradicionais de produção.",
       "items": {
         "skills": {
-          "title": "Create without music skills",
-          "description": "No DAW, plugins, or music theory required. Start from a simple idea."
+          "title": "Crie sem saber música",
+          "description": "Não precisa de DAW, plugins nem teoria musical. Comece com uma ideia simples."
         },
         "vocals": {
-          "title": "Generate songs with vocals",
-          "description": "Go beyond background loops and create full song directions with vocal styles."
+          "title": "Gere músicas com voz",
+          "description": "Vá além de loops de fundo e crie direções completas com estilos vocais."
         },
         "prompts": {
-          "title": "Start from lyrics or prompts",
-          "description": "Use your own lyrics, or describe a mood, genre, story, and use case."
+          "title": "Comece por letras ou instruções",
+          "description": "Use suas próprias letras ou descreva clima, gênero, história e uso."
         },
         "creators": {
-          "title": "Built for content creators",
-          "description": "Create music for YouTube, TikTok, Shorts, podcasts, and social content."
+          "title": "Feito para criadores de conteúdo",
+          "description": "Crie música para YouTube, TikTok, Shorts, podcasts e conteúdo social."
         },
         "genres": {
-          "title": "Explore popular genres",
-          "description": "Rap, pop, J-pop, phonk, lo-fi, EDM, ballads, anime songs, and more."
+          "title": "Explore gêneros populares",
+          "description": "Rap, pop, J-pop, phonk, lo-fi, EDM, baladas, músicas de anime e mais."
         },
         "publish": {
-          "title": "Download and publish",
-          "description": "Save, download, and use generated songs. Subscribers get commercial use rights."
+          "title": "Baixe e publique",
+          "description": "Salve, baixe e use músicas geradas. Assinantes recebem direitos de uso comercial."
         }
       }
     },
     "pricingPreview": {
-      "eyebrow": "Precos",
-      "title": "Start Free, Upgrade When You Need More Songs",
-      "subtitle": "Try Calyra AI for free. Upgrade to Basic for 30 songs/month or Pro for 100 songs/month. One-time credit packs are also available.",
-      "primaryCta": "Start Creating Free",
-      "secondaryCta": "View Full Pricing",
+      "eyebrow": "Preços",
+      "title": "Comece grátis e faça upgrade quando precisar de mais músicas",
+      "subtitle": "Teste o Calyra AI grátis. Faça upgrade para Basic com 30 músicas/mês ou Pro com 100 músicas/mês. Pacotes de créditos avulsos também estão disponíveis.",
+      "primaryCta": "Começar grátis",
+      "secondaryCta": "Ver todos os preços",
       "plans": {
         "free": {
-          "title": "Free",
-          "description": "$0 - Start testing song ideas without a subscription."
+          "title": "Grátis",
+          "description": "$0 - Teste ideias de música sem assinatura."
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/month - 30 songs/month for steady creators."
+          "description": "$9/mês - 30 músicas/mês para criadores constantes."
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/month - 100 songs/month for higher-volume creation."
+          "description": "$19/mês - 100 músicas/mês para maior volume de criação."
         }
       }
     },
     "seoBlock": {
-      "eyebrow": "AI Music Generator",
-      "title": "AI Music Generator for Creators",
-      "p1": "Calyra AI is an AI song generator and AI music generator designed to help creators turn prompts, lyrics, and song ideas into complete tracks. Instead of starting from a blank music project, you can describe the sound you want, choose a style, and generate music with vocals and instruments. Use Calyra AI as an AI song maker when you have a simple idea, a text to song AI tool when you want to describe a mood, or a lyrics to song AI workflow when you already have words.",
-      "p2": "Popular use cases include AI rap songs, anime openings, phonk tracks, lo-fi background music, EDM drops, emotional piano ballads, and pop songs for social content. Creators can make AI songs for YouTube videos, TikTok, Shorts, podcasts, games, ads, and personal creative projects. Subscribers can download generated songs and use them commercially, subject to our terms."
+      "eyebrow": "Gerador de música com IA",
+      "title": "Gerador de música com IA para criadores",
+      "p1": "O Calyra AI é um gerador de músicas e de música com IA criado para ajudar criadores a transformar instruções, letras e ideias em faixas completas. Em vez de começar por um projeto musical vazio, você pode descrever o som que deseja, escolher um estilo e gerar música com vozes e instrumentos. Use o Calyra AI como criador de músicas quando tiver uma ideia simples, como ferramenta de texto para música quando quiser descrever um clima, ou como fluxo de letra para música quando já tiver palavras.",
+      "p2": "Usos populares incluem raps com IA, openings de anime, faixas phonk, música lo-fi de fundo, drops de EDM, baladas emotivas de piano e músicas pop para conteúdo social. Criadores podem fazer músicas com IA para YouTube, TikTok, Shorts, podcasts, jogos, anúncios e projetos pessoais. Assinantes podem baixar músicas geradas e usá-las comercialmente, conforme nossos termos."
     },
     "faq": {
-      "eyebrow": "FAQ",
-      "title": "Questions Before You Generate",
-      "q1": "What is an AI song generator?",
-      "a1": "An AI song generator creates songs from prompts, lyrics, moods, and style descriptions. Calyra AI helps you generate music with vocals and instruments without traditional production skills.",
-      "q2": "How do I make a song with AI?",
-      "a2": "Enter a prompt that describes the genre, mood, story, lyrics, vocal style, and use case. You can also start from a template or use a song example as inspiration.",
-      "q3": "Can I turn lyrics into a song with AI?",
-      "a3": "Yes. Paste your lyrics and describe the arrangement, tempo, mood, and vocal direction. Calyra AI can help turn lyrics into a song direction with vocals and instruments.",
-      "q4": "Is Calyra AI a free AI song maker?",
-      "a4": "You can start testing song ideas for free. More generations, monthly song credits, downloads, and commercial use rights are available through paid plans or one-time credit packs.",
-      "q5": "Can I use AI-generated songs commercially?",
-      "a5": "Subscribers can download generated songs and use them commercially for content, commercial projects, and music distribution, subject to the latest terms.",
-      "q6": "Can I generate songs with vocals?",
-      "a6": "Yes. Calyra AI is positioned for full song generation, including vocal-style songs and instrumental arrangements depending on the prompt and generation mode.",
-      "q7": "Can I create music for YouTube or TikTok?",
-      "a7": "Yes. You can generate hooks, background music, intros, theme songs, and full songs for YouTube, TikTok, Shorts, podcasts, and social media content."
+      "eyebrow": "Perguntas frequentes",
+      "title": "Perguntas antes de gerar",
+      "q1": "O que é um gerador de músicas com IA?",
+      "a1": "Um gerador de músicas com IA cria músicas a partir de instruções, letras, climas e descrições de estilo. O Calyra AI ajuda a gerar música com vozes e instrumentos sem habilidades tradicionais de produção.",
+      "q2": "Como faço uma música com IA?",
+      "a2": "Digite uma instrução que descreva gênero, clima, história, letra, estilo vocal e uso. Você também pode começar com um modelo ou se inspirar em um exemplo.",
+      "q3": "Posso transformar letras em música com IA?",
+      "a3": "Sim. Cole sua letra e descreva arranjo, andamento, clima e direção vocal. O Calyra AI pode ajudar a transformar letras em uma música com vozes e instrumentos.",
+      "q4": "O Calyra AI é um criador de músicas grátis?",
+      "a4": "Você pode testar ideias de música gratuitamente. Planos pagos e pacotes de créditos oferecem mais gerações, créditos mensais, downloads e direitos de uso comercial.",
+      "q5": "Posso usar comercialmente músicas geradas por IA?",
+      "a5": "Assinantes podem baixar músicas geradas e usá-las comercialmente em conteúdo, projetos comerciais e distribuição musical, conforme os termos vigentes.",
+      "q6": "Posso gerar músicas com voz?",
+      "a6": "Sim. O Calyra AI foi pensado para geração de músicas completas, incluindo músicas com estilo vocal e arranjos instrumentais conforme a instrução e o modo.",
+      "q7": "Posso criar música para YouTube ou TikTok?",
+      "a7": "Sim. Você pode gerar ganchos, música de fundo, intros, temas e músicas completas para YouTube, TikTok, Shorts, podcasts e redes sociais."
     }
   },
   "create": {
-    "title": "Create AI Songs from Text",
-    "subtitle": "Start with a moment, confession, memory, or feeling. We will shape it into structured lyrics.",
+    "title": "Crie músicas com IA a partir de texto",
+    "subtitle": "Comece com um momento, uma confissão, uma memória ou um sentimento. Vamos transformar isso em uma letra estruturada.",
     "inputPlaceholder": "Conte sua historia...",
     "inputHint": "Alguns detalhes vivos ajudam a musica a parecer pessoal.",
     "generateLyrics": "Gerar letra",
@@ -264,7 +264,7 @@
     "regenerate": "Regenerar",
     "regenerateLimit": "Limite maximo de 3 regeneracoes atingido",
     "inputTooShort": "Conte um pouco mais da historia primeiro.",
-    "emptyState": "Your lyrics will appear here after generation.",
+    "emptyState": "Sua letra aparecerá aqui depois da geração.",
     "paymentSuccessTitle": "Pagamento confirmado",
     "paymentSuccessDescription": "Seus creditos ou plano estao sendo sincronizados. Se o saldo ainda nao atualizou, atualize em instantes.",
     "recall": {
@@ -278,7 +278,7 @@
       "upgradeToDownload": "Faca upgrade para baixar",
       "openPublicPage": "Abrir pagina publica",
       "viewDashboard": "Ver painel",
-      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
+      "rightsNotice": "Você pode usar músicas geradas no YouTube, em redes sociais e em conteúdo comercial."
     }
   },
   "song": {
@@ -444,35 +444,35 @@
     "items": {
       "first_song": {
         "title": "First Draft",
-        "description": "Create your first song idea."
+        "description": "Crie sua primeira ideia de música."
       },
       "first_ready_song": {
         "title": "First Release",
-        "description": "Generate audio for your first ready song."
+        "description": "Gere áudio para sua primeira música pronta."
       },
       "first_report": {
         "title": "Producer Notes",
-        "description": "Generate your first judge report."
+        "description": "Gere seu primeiro relatório de avaliação."
       },
       "score_80": {
         "title": "Strong Signal",
-        "description": "Earn a report score of 80 or higher."
+        "description": "Alcance uma nota de relatório de 80 ou mais."
       },
       "score_90": {
         "title": "Hit Potential",
-        "description": "Earn a report score of 90 or higher."
+        "description": "Alcance uma nota de relatório de 90 ou mais."
       },
       "songs_3": {
         "title": "Three-Song Run",
-        "description": "Create at least three songs."
+        "description": "Crie pelo menos três músicas."
       },
       "plays_50": {
         "title": "First Audience",
-        "description": "Reach 50 total plays across your songs."
+        "description": "Alcance 50 reproduções totais nas suas músicas."
       },
       "shares_10": {
         "title": "Worth Sharing",
-        "description": "Reach 10 total shares across your songs."
+        "description": "Alcance 10 compartilhamentos totais nas suas músicas."
       }
     }
   },
@@ -547,7 +547,7 @@
     },
     "eyebrow": "Precos",
     "title": "Desbloqueie todo o seu potencial criativo",
-    "subtitle": "Say goodbye to credit limits and long waits, join now and turn every spark of inspiration into a masterpiece.",
+    "subtitle": "Diga adeus aos limites de créditos e às longas esperas. Comece agora e transforme cada faísca de inspiração em uma música pronta.",
     "creditPacksTitle": "Pacotes de creditos",
     "creditPacksSubtitle": "Compra unica para criadores que precisam de musicas extras agora.",
     "subscriptionsTitle": "Assinaturas",
@@ -557,26 +557,26 @@
     "planCta": "Comecar",
     "freeCard": {
       "description": "Para novos criadores que estao comecando com uma ideia de musica.",
-      "priceLabel": "Free",
-      "creditHint": "No subscription required",
-      "feature1": "Create with pay-as-you-go credit packs",
-      "feature2": "Lyrics + audio generation",
-      "feature3": "Upgrade anytime"
+      "priceLabel": "Grátis",
+      "creditHint": "Não exige assinatura",
+      "feature1": "Crie com pacotes de créditos pagos conforme o uso",
+      "feature2": "Geração de letra + áudio",
+      "feature3": "Faça upgrade a qualquer momento"
     },
     "creditPacks": {
       "standard": {
         "name": "Pacote inicial",
-        "description": "Best for quick creation bursts.",
-        "feature1": "1600 credits for complete songs",
-        "feature2": "Lyrics + audio generation",
-        "feature3": "Public shareable pages"
+        "description": "Ideal para momentos rápidos de criação.",
+        "feature1": "1600 créditos para músicas completas",
+        "feature2": "Geração de letra + áudio",
+        "feature3": "Páginas públicas compartilháveis"
       },
       "pro_pack": {
         "name": "Pacote Pro",
-        "description": "High-volume pack for frequent creation.",
-        "feature1": "5000 credits for complete songs",
-        "feature2": "Producer reports included",
-        "feature3": "Public shareable pages"
+        "description": "Pacote de alto volume para criação frequente.",
+        "feature1": "5000 créditos para músicas completas",
+        "feature2": "Relatórios de produtor incluídos",
+        "feature3": "Páginas públicas compartilháveis"
       }
     },
     "subscriptions": {
@@ -610,37 +610,37 @@
       "q6": "Por quanto tempo as musicas ficam salvas? Elas podem ser removidas?",
       "a6": "Regra atual: musicas de usuarios gratuitos ficam salvas por 30 dias. Musicas geradas durante uma assinatura Basic ou Pro ativa ficam salvas por longo prazo. Se voce precisa de acervo de longo prazo, um plano superior e recomendado."
     },
-    "save69": "Save 69%",
+    "save69": "Economize 69%",
     "subscribeNowCancelAnytime": "Assine agora - cancele a qualquer momento.",
     "songsUnit": "musicas",
     "popularPack": "Popular"
   },
   "email": {
     "recall": {
-      "fallbackSongTitle": "sua m煤sica",
+      "fallbackSongTitle": "sua música",
       "ready_no_report": {
-        "subject": "Sua m煤sica est谩 pronta para o relat贸rio de produtor",
-        "preheader": "Veja pontos fortes e pr贸ximos passos para {songTitle}.",
+        "subject": "Sua música está pronta para o relatório de produtor",
+        "preheader": "Veja pontos fortes e próximos passos para {songTitle}.",
         "title": "Veja o que funciona em {songTitle}",
-        "body": "O 谩udio est谩 pronto. Gere o relat贸rio estilo produtor para revisar pontua莽玫es, notas de gancho e texto pronto para compartilhar.",
-        "cta": "Ver relat贸rio",
-        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Calyra AI."
+        "body": "O áudio está pronto. Gere o relatório em estilo de produtor para revisar pontuações, notas de gancho e texto pronto para compartilhar.",
+        "cta": "Ver relatório",
+        "footer": "Você recebeu este email porque criou uma música no Calyra AI."
       },
       "report_no_share": {
-        "subject": "O relat贸rio da sua m煤sica est谩 pronto para compartilhar",
-        "preheader": "Coloque {songTitle} em destaque de novo.",
-        "title": "Compartilhe {songTitle} com algu茅m",
-        "body": "Seu relat贸rio est谩 pronto, mas a m煤sica ainda n茫o foi compartilhada. Abra a p谩gina p煤blica e deixe algu茅m ouvir a faixa.",
-        "cta": "Abrir p谩gina da m煤sica",
-        "footer": "Voc锚 recebeu este email porque criou uma m煤sica no Calyra AI."
+        "subject": "O relatório da sua música está pronto para compartilhar",
+        "preheader": "Traga {songTitle} de volta ao destaque.",
+        "title": "Compartilhe {songTitle} com alguém",
+        "body": "Seu relatório está pronto, mas a música ainda não foi compartilhada. Abra a página pública e deixe alguém ouvir a faixa.",
+        "cta": "Abrir página da música",
+        "footer": "Você recebeu este email porque criou uma música no Calyra AI."
       },
       "inactive_creator": {
-        "subject": "Tem outra hist贸ria para virar m煤sica?",
-        "preheader": "Comece um novo Calyra AI a partir de uma mem贸ria ou clima.",
-        "title": "Sua pr贸xima m煤sica pode come莽ar com um detalhe",
-        "body": "Faz algum tempo desde sua 煤ltima m煤sica finalizada. Volte com um sentimento, mem贸ria ou mensagem nova e transforme isso em algo para ouvir.",
-        "cta": "Criar nova m煤sica",
-        "footer": "Voc锚 recebeu este email porque criou m煤sica no Calyra AI."
+        "subject": "Tem outra história para virar música?",
+        "preheader": "Comece um novo Calyra AI a partir de uma memória ou clima.",
+        "title": "Sua próxima música pode começar com um detalhe",
+        "body": "Faz algum tempo desde sua última música finalizada. Volte com um sentimento, memória ou mensagem nova e transforme isso em algo para ouvir.",
+        "cta": "Criar nova música",
+        "footer": "Você recebeu este email porque criou música no Calyra AI."
       }
     }
   },
@@ -668,179 +668,179 @@
   },
   "legal": {
     "common": {
-      "backToHome": "Back to home",
-      "lastUpdatedLabel": "Last updated",
-      "lastUpdated": "May 13, 2026",
-      "relatedTitle": "Related legal pages",
-      "contactTitle": "Need help?",
-      "contactBody": "For questions about these policies or your account, contact support at support@calyraai.com or through your dashboard support channel.",
-      "contactCta": "Go to pricing",
-      "contactEmailLabel": "Email support",
+      "backToHome": "Voltar ao início",
+      "lastUpdatedLabel": "Última atualização",
+      "lastUpdated": "13 de maio de 2026",
+      "relatedTitle": "Páginas legais relacionadas",
+      "contactTitle": "Precisa de ajuda?",
+      "contactBody": "Para dúvidas sobre estas políticas ou sua conta, fale com o suporte em support@calyraai.com ou pelo canal de suporte no painel.",
+      "contactCta": "Ir para preços",
+      "contactEmailLabel": "Enviar email ao suporte",
       "links": {
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
-        "refund": "Refund Policy"
+        "privacy": "Política de privacidade",
+        "terms": "Termos de serviço",
+        "refund": "Política de reembolso"
       }
     },
     "privacy": {
       "seo": {
-        "title": "Privacy Policy | Calyra AI",
-        "description": "How Calyra AI collects, uses, and protects personal data for account, payment, and AI song creation workflows."
+        "title": "Política de privacidade | Calyra AI",
+        "description": "Como o Calyra AI coleta, usa e protege dados pessoais em contas, pagamentos e fluxos de criação de músicas com IA."
       },
-      "badge": "Privacy",
-      "title": "Privacy Policy",
-      "subtitle": "This policy explains what data Calyra AI handles, why we handle it, and the choices you have.",
+      "badge": "Privacidade",
+      "title": "Política de privacidade",
+      "subtitle": "Esta política explica quais dados o Calyra AI trata, por que tratamos esses dados e quais escolhas você tem.",
       "sections": [
         {
-          "title": "Data we collect",
+          "title": "Dados que coletamos",
           "body": [
-            "We collect account identifiers such as email and authentication data, song creation inputs such as stories and prompts, generation outputs such as lyrics and audio metadata, and billing records needed to process purchases."
+            "Coletamos identificadores de conta, como email e dados de autenticação, entradas de criação como histórias e instruções, resultados de geração como letras e metadados de áudio, além de registros de cobrança necessários para processar compras."
           ],
           "bullets": [
-            "Account data: email, auth provider identifiers, profile basics",
-            "Creation data: story text, style selections, generated lyrics/audio references",
-            "Usage data: logs, device/browser metadata, anti-abuse signals",
-            "Billing data: transaction references from payment processors"
+            "Dados da conta: email, identificadores do provedor de autenticação e informações básicas de perfil",
+            "Dados de criação: texto da história, escolhas de estilo e referências de letras ou áudio gerados",
+            "Dados de uso: logs, metadados de dispositivo e navegador, sinais contra abuso",
+            "Dados de cobrança: referências de transações de processadores de pagamento"
           ]
         },
         {
-          "title": "How we use data",
+          "title": "Como usamos os dados",
           "body": [
-            "We use data to operate core product flows, deliver purchased services, prevent abuse, improve reliability, and communicate important account or policy updates."
+            "Usamos dados para operar os fluxos principais do produto, entregar serviços comprados, prevenir abuso, melhorar a confiabilidade e comunicar atualizações importantes de conta ou política."
           ],
           "bullets": [
-            "Run lyric, audio, and report generation workflows",
-            "Store and serve your songs and public share pages",
-            "Process credits, subscriptions, and refunds",
-            "Investigate incidents and maintain security"
+            "Executar fluxos de geração de letras, áudio e relatórios",
+            "Armazenar e servir suas músicas e páginas públicas de compartilhamento",
+            "Processar créditos, assinaturas e reembolsos",
+            "Investigar incidentes e manter a segurança"
           ]
         },
         {
-          "title": "Third-party services",
+          "title": "Serviços de terceiros",
           "body": [
-            "Calyra AI relies on selected infrastructure and model providers to deliver the service. These providers process only the data required for their function under applicable agreements."
+            "O Calyra AI depende de provedores selecionados de infraestrutura e modelos para entregar o serviço. Esses provedores processam apenas os dados necessários para sua função, conforme os acordos aplicáveis."
           ],
           "bullets": [
-            "Hosting and database services",
-            "Payment processing services",
-            "Email and notification services",
-            "AI generation providers for lyrics, audio, and analysis"
+            "Serviços de hospedagem e banco de dados",
+            "Serviços de processamento de pagamento",
+            "Serviços de email e notificação",
+            "Provedores de IA para letras, áudio e análise"
           ]
         },
         {
-          "title": "Retention and your choices",
+          "title": "Retenção e suas escolhas",
           "body": [
-            "We retain data for as long as needed to provide the service, meet legal obligations, and resolve disputes. You can request deletion of your account data subject to operational and legal constraints."
+            "Mantemos dados pelo tempo necessário para fornecer o serviço, cumprir obrigações legais e resolver disputas. Você pode solicitar a exclusão dos dados da conta, sujeita a restrições operacionais e legais."
           ],
           "bullets": [
-            "You may delete songs and account data from product surfaces where available",
-            "Backups and legal records may persist for limited periods",
-            "Public song pages remain public until you change visibility or remove them"
+            "Você pode excluir músicas e dados de conta nas áreas do produto onde isso estiver disponível",
+            "Backups e registros legais podem permanecer por períodos limitados",
+            "Páginas públicas de música continuam públicas até você alterar a visibilidade ou removê-las"
           ]
         }
       ]
     },
     "terms": {
       "seo": {
-        "title": "Terms of Service | Calyra AI",
-        "description": "Terms governing use of Calyra AI, including account responsibilities, generated content, credits, subscriptions, and limitations."
+        "title": "Termos de serviço | Calyra AI",
+        "description": "Termos que regem o uso do Calyra AI, incluindo responsabilidades de conta, conteúdo gerado, créditos, assinaturas e limitações."
       },
-      "badge": "Terms",
-      "title": "Terms of Service",
-      "subtitle": "By using Calyra AI, you agree to these terms for account access, AI generation, and paid features.",
+      "badge": "Termos",
+      "title": "Termos de serviço",
+      "subtitle": "Ao usar o Calyra AI, você concorda com estes termos para acesso à conta, geração com IA e recursos pagos.",
       "sections": [
         {
-          "title": "Service scope",
+          "title": "Escopo do serviço",
           "body": [
-            "Calyra AI provides tools to transform user prompts into lyrics, audio, and creator-style reports. Features can change over time and may vary by plan or region."
+            "O Calyra AI fornece ferramentas para transformar instruções do usuário em letras, áudio e relatórios em estilo de criador. Os recursos podem mudar com o tempo e variar por plano ou região."
           ]
         },
         {
-          "title": "Accounts and acceptable use",
+          "title": "Contas e uso aceitável",
           "body": [
-            "You are responsible for activity under your account and for complying with law and platform policies."
+            "Você é responsável pela atividade da sua conta e por cumprir a lei e as políticas da plataforma."
           ],
           "bullets": [
-            "Do not misuse the service, attempt unauthorized access, or automate abuse",
-            "Do not upload unlawful, infringing, or harmful content",
-            "Keep account credentials secure and accurate"
+            "Não use o serviço de forma indevida, não tente acesso não autorizado nem automatize abuso",
+            "Não envie conteúdo ilegal, infrator ou prejudicial",
+            "Mantenha credenciais de conta seguras e corretas"
           ]
         },
         {
-          "title": "Content and intellectual property",
+          "title": "Conteúdo e propriedade intelectual",
           "body": [
-            "You retain rights to the inputs you submit. Subject to applicable law and these terms, you may use outputs generated for your account. Calyra AI and its licensors retain rights in the platform, models, and infrastructure."
+            "Você mantém os direitos sobre as entradas que envia. Sujeito à lei aplicável e a estes termos, você pode usar os resultados gerados para sua conta. O Calyra AI e seus licenciadores mantêm direitos sobre a plataforma, modelos e infraestrutura."
           ]
         },
         {
-          "title": "Payments, credits, and refunds",
+          "title": "Pagamentos, créditos e reembolsos",
           "body": [
-            "Paid features include credit packs and subscriptions. Charges are processed by our payment providers. Refund eligibility is governed by our Refund Policy."
+            "Recursos pagos incluem pacotes de créditos e assinaturas. Cobranças são processadas por nossos provedores de pagamento. A elegibilidade de reembolso segue nossa Política de reembolso."
           ],
           "bullets": [
-            "Credits are consumed by eligible generation actions",
-            "Subscription access and benefits follow the active billing period",
-            "Refund requests are reviewed under stated policy conditions"
+            "Créditos são consumidos por ações de geração elegíveis",
+            "O acesso e os benefícios da assinatura seguem o período de cobrança ativo",
+            "Solicitações de reembolso são avaliadas conforme as condições declaradas na política"
           ]
         },
         {
-          "title": "Disclaimers and limitation",
+          "title": "Isenções e limitação",
           "body": [
-            "The service is provided on an as-available basis. We do not guarantee uninterrupted operation or specific creative outcomes. To the maximum extent permitted by law, liability is limited to amounts paid for the relevant service period."
+            "O serviço é fornecido conforme disponibilidade. Não garantimos operação ininterrupta nem resultados criativos específicos. Na máxima medida permitida por lei, a responsabilidade é limitada aos valores pagos pelo período de serviço relevante."
           ]
         }
       ]
     },
     "refund": {
       "seo": {
-        "title": "Refund Policy | Calyra AI",
-        "description": "Refund eligibility, timelines, and process for Calyra AI credit purchases and subscriptions."
+        "title": "Política de reembolso | Calyra AI",
+        "description": "Elegibilidade, prazos e processo de reembolso para compras de créditos e assinaturas do Calyra AI."
       },
-      "badge": "Refund",
-      "title": "Refund Policy",
-      "subtitle": "This policy explains when refunds are available and how to request one.",
+      "badge": "Reembolso",
+      "title": "Política de reembolso",
+      "subtitle": "Esta política explica quando reembolsos estão disponíveis e como solicitar um.",
       "sections": [
         {
-          "title": "Eligibility",
+          "title": "Elegibilidade",
           "body": [
-            "Refunds are available for unused credits requested within 7 days of purchase."
+            "Reembolsos estão disponíveis para créditos não usados solicitados em até 7 dias após a compra."
           ],
           "bullets": [
-            "Request must be submitted within 7 calendar days",
-            "Credits tied to the request must be unused",
-            "The purchase must be made through an official Calyra AI checkout flow"
+            "A solicitação deve ser enviada dentro de 7 dias corridos",
+            "Os créditos ligados à solicitação devem estar sem uso",
+            "A compra deve ter sido feita por um checkout oficial do Calyra AI"
           ]
         },
         {
-          "title": "Non-refundable cases",
+          "title": "Casos não reembolsáveis",
           "body": [
-            "Refunds are generally not available for credits that have been used, expired windows, or abuse-related account restrictions."
+            "Em geral, reembolsos não estão disponíveis para créditos usados, janelas expiradas ou restrições de conta relacionadas a abuso."
           ],
           "bullets": [
-            "Partially or fully consumed credits",
-            "Requests beyond the 7-day window",
-            "Fraud, chargeback abuse, or policy violations"
+            "Créditos parcial ou totalmente consumidos",
+            "Solicitações após a janela de 7 dias",
+            "Fraude, abuso de contestação ou violações de política"
           ]
         },
         {
-          "title": "How to request a refund",
+          "title": "Como solicitar reembolso",
           "body": [
-            "Contact support with your account email, order identifier, and reason for the request. We may ask for additional verification to protect account security."
+            "Fale com o suporte informando o email da conta, identificador do pedido e motivo da solicitação. Podemos pedir verificação adicional para proteger a segurança da conta."
           ],
           "bullets": [
-            "Include order ID and purchase date",
-            "Use the same account email used for purchase",
-            "Allow support time to verify credit usage status"
+            "Inclua ID do pedido e data de compra",
+            "Use o mesmo email de conta usado na compra",
+            "Aguarde o suporte verificar o status de uso dos créditos"
           ]
         },
         {
-          "title": "Processing timeline",
+          "title": "Prazo de processamento",
           "body": [
-            "Approved refunds are issued to the original payment method. Processing time depends on your payment provider and card network."
+            "Reembolsos aprovados são emitidos para o método de pagamento original. O prazo depende do provedor de pagamento e da rede do cartão."
           ],
           "bullets": [
-            "Policy review: typically within 3 business days",
-            "Payment reversal: usually 5-10 business days after approval"
+            "Revisão da política: normalmente em até 3 dias úteis",
+            "Estorno do pagamento: geralmente 5-10 dias úteis após a aprovação"
           ]
         }
       ]
@@ -849,351 +849,427 @@
   "seoPages": {
     "aiSongMaker": {
       "seo": {
-        "title": "AI Song Maker - Create AI Songs Online | Calyra AI",
-        "description": "Use Calyra AI as an AI song maker to create songs from text prompts, lyrics, styles, and ideas with vocals and instruments."
+        "title": "Criador de músicas com IA - Crie músicas online | Calyra AI",
+        "description": "Use o Calyra AI como criador de músicas com IA para criar músicas a partir de texto, letras, estilos e ideias com vozes e instrumentos."
       },
       "hero": {
-        "eyebrow": "AI Song Maker",
-        "title": "AI Song Maker for Text, Lyrics, and Music",
-        "description": "Start from a prompt or lyrics, choose a style, and generate a complete AI song with vocals, instruments, and a shareable report."
+        "eyebrow": "Criador de músicas com IA",
+        "title": "Criador de músicas com IA para texto, letras e música",
+        "description": "Comece com uma instrução ou letra, escolha um estilo e gere uma música completa com vozes, instrumentos e relatório compartilhável."
       },
       "cta": {
-        "primary": "Start AI Song Maker",
-        "secondary": "View Pricing"
+        "primary": "Abrir criador de músicas",
+        "secondary": "Ver preços"
       },
       "form": {
-        "prompt": "Song idea",
-        "placeholder": "Describe the song you want: mood, story, genre, vocal tone, audience, and where you will use it.",
-        "style": "Style",
-        "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-        "styleDefault": "Pop, emotional female vocal, cinematic drums",
-        "title": "Title",
-        "titlePlaceholder": "My AI Song",
-        "titleDefault": "My AI Song",
-        "submit": "Continue to Generator"
+        "prompt": "Ideia de música",
+        "placeholder": "Descreva a música que você quer: clima, história, gênero, tom vocal, público e onde será usada.",
+        "style": "Estilo",
+        "stylePlaceholder": "Pop, voz feminina emotiva, bateria cinematográfica",
+        "styleDefault": "Pop, voz feminina emotiva, bateria cinematográfica",
+        "title": "Título",
+        "titlePlaceholder": "Minha música com IA",
+        "titleDefault": "Minha música com IA",
+        "submit": "Continuar para o gerador"
       },
       "benefits": {
-        "title": "A Faster Way to Start a Song",
-        "description": "Text to song is best when you have a feeling, scene, or content idea but do not have finished lyrics yet.",
+        "title": "Uma forma mais rápida de começar uma música",
+        "description": "Texto para música funciona melhor quando você tem um sentimento, cena ou ideia de conteúdo, mas ainda não tem uma letra finalizada.",
         "items": {
           "ideas": {
-            "title": "Start from any idea",
-            "description": "Use a short prompt, story, mood, or content brief as the seed for a full song direction."
+            "title": "Comece por qualquer ideia",
+            "description": "Use uma instrução curta, história, clima ou briefing de conteúdo como semente para a direção completa da música."
           },
           "vocals": {
-            "title": "Shape vocals and instruments",
-            "description": "Guide genre, tempo, singer energy, arrangement, and production style before generation."
+            "title": "Molde vozes e instrumentos",
+            "description": "Guie gênero, andamento, energia do vocal, arranjo e estilo de produção antes da geração."
           },
           "creators": {
-            "title": "Built for creator use cases",
-            "description": "Make songs for YouTube, TikTok, podcasts, games, ads, and social media concepts."
+            "title": "Feito para usos de criadores",
+            "description": "Crie músicas para YouTube, TikTok, podcasts, jogos, anúncios e conceitos de redes sociais."
           }
         }
       },
       "steps": {
-        "title": "How Text to Song Works",
-        "description": "Move from a plain-language prompt to a generated song without opening a music production tool.",
+        "title": "Como texto para música funciona",
+        "description": "Passe de uma instrução em linguagem natural para uma música gerada sem abrir uma ferramenta de produção musical.",
         "items": {
           "prompt": {
-            "title": "Write a clear prompt",
-            "description": "Describe the emotion, story, audience, genre, and vocal direction you want."
+            "title": "Escreva uma instrução clara",
+            "description": "Descreva a emoção, história, público, gênero e direção vocal que você deseja."
           },
           "style": {
-            "title": "Add style guidance",
-            "description": "Pick a style so the generator understands the sound and arrangement you are aiming for."
+            "title": "Adicione orientação de estilo",
+            "description": "Escolha um estilo para que o gerador entenda o som e o arranjo desejados."
           },
           "create": {
-            "title": "Generate the song",
-            "description": "Continue to the workspace, review the setup, and generate lyrics plus audio."
+            "title": "Gere a música",
+            "description": "Continue para o espaço de trabalho, revise a configuração e gere letra + áudio."
           }
         }
       },
       "faq": {
-        "title": "AI Song Maker FAQ",
+        "title": "Perguntas sobre o criador de músicas com IA",
         "one": {
-          "question": "What is an AI song maker?",
-          "answer": "An AI song maker creates songs from prompts, lyrics, style direction, and creative ideas, including vocals and instruments."
+          "question": "O que é um criador de músicas com IA?",
+          "answer": "Um criador de músicas com IA cria músicas a partir de instruções, letras, direção de estilo e ideias criativas, incluindo vozes e instrumentos."
         },
         "two": {
-          "question": "Can I start with text or lyrics?",
-          "answer": "Yes. Start with a text prompt when you have an idea, or use lyrics mode when you already have words for the song."
+          "question": "Posso começar com texto ou letras?",
+          "answer": "Sim. Comece com uma instrução de texto quando tiver uma ideia, ou use o modo de letras quando já tiver palavras para a música."
         },
         "three": {
-          "question": "Can I choose the music style?",
-          "answer": "Yes. Add genre, mood, vocal tone, tempo, and instrument details to guide the generated song."
+          "question": "Posso escolher o estilo musical?",
+          "answer": "Sim. Adicione gênero, clima, tom vocal, andamento e detalhes de instrumentos para orientar a música gerada."
         },
         "four": {
-          "question": "Can I use generated songs commercially?",
-          "answer": "Subscribers can download generated songs and use them commercially, subject to the latest terms."
+          "question": "Posso usar músicas geradas comercialmente?",
+          "answer": "Assinantes podem baixar músicas geradas e usá-las comercialmente, conforme os termos vigentes."
         }
       },
       "finalCta": {
-        "title": "Create Your Next AI Song",
-        "description": "Use the AI Song Maker to turn a prompt, lyric idea, or finished lyrics into a complete track."
+        "title": "Crie sua próxima música com IA",
+        "description": "Use o criador de músicas com IA para transformar uma instrução, ideia de letra ou letra finalizada em uma faixa completa."
       }
     },
     "aiTextToSong": {
       "seo": {
-        "title": "AI Text to Song Generator - Create Songs from Prompts | Calyra AI",
-        "description": "Turn text prompts, moods, stories, and ideas into AI songs with vocals and instruments using Calyra AI."
+        "title": "Gerador de texto para música com IA - Crie músicas a partir de instruções | Calyra AI",
+        "description": "Transforme instruções, climas, histórias e ideias em músicas com IA, vozes e instrumentos usando o Calyra AI."
       },
       "hero": {
-        "eyebrow": "AI Text to Song",
-        "title": "AI Text to Song Generator",
-        "description": "Describe a mood, story, genre, vocal style, or use case, then generate a complete AI song from your text."
+        "eyebrow": "Texto para música com IA",
+        "title": "Gerador de texto para música com IA",
+        "description": "Descreva um clima, história, gênero, estilo vocal ou caso de uso e gere uma música completa a partir do seu texto."
       },
       "cta": {
-        "primary": "Start AI Text to Song",
-        "secondary": "View Pricing"
+        "primary": "Começar texto para música",
+        "secondary": "Ver preços"
       },
       "form": {
-        "prompt": "Song idea",
-        "placeholder": "Describe the song you want: mood, story, genre, vocal tone, audience, and where you will use it.",
-        "style": "Style",
-        "stylePlaceholder": "Pop, emotional female vocal, cinematic drums",
-        "styleDefault": "Pop, emotional female vocal, cinematic drums",
-        "title": "Title",
-        "titlePlaceholder": "My AI Song",
-        "titleDefault": "My AI Song",
-        "submit": "Continue to Generator"
+        "prompt": "Ideia de música",
+        "placeholder": "Descreva a música que você quer: clima, história, gênero, tom vocal, público e onde será usada.",
+        "style": "Estilo",
+        "stylePlaceholder": "Pop, voz feminina emotiva, bateria cinematográfica",
+        "styleDefault": "Pop, voz feminina emotiva, bateria cinematográfica",
+        "title": "Título",
+        "titlePlaceholder": "Minha música com IA",
+        "titleDefault": "Minha música com IA",
+        "submit": "Continuar para o gerador"
       },
       "benefits": {
-        "title": "A Faster Way to Start a Song",
-        "description": "Text to song is best when you have a feeling, scene, or content idea but do not have finished lyrics yet.",
+        "title": "Uma forma mais rápida de começar uma música",
+        "description": "Texto para música funciona melhor quando você tem um sentimento, cena ou ideia de conteúdo, mas ainda não tem uma letra finalizada.",
         "items": {
           "ideas": {
-            "title": "Start from any idea",
-            "description": "Use a short prompt, story, mood, or content brief as the seed for a full song direction."
+            "title": "Comece por qualquer ideia",
+            "description": "Use uma instrução curta, história, clima ou briefing de conteúdo como semente para a direção completa da música."
           },
           "vocals": {
-            "title": "Shape vocals and instruments",
-            "description": "Guide genre, tempo, singer energy, arrangement, and production style before generation."
+            "title": "Molde vozes e instrumentos",
+            "description": "Guie gênero, andamento, energia do vocal, arranjo e estilo de produção antes da geração."
           },
           "creators": {
-            "title": "Built for creator use cases",
-            "description": "Make songs for YouTube, TikTok, podcasts, games, ads, and social media concepts."
+            "title": "Feito para usos de criadores",
+            "description": "Crie músicas para YouTube, TikTok, podcasts, jogos, anúncios e conceitos de redes sociais."
           }
         }
       },
       "steps": {
-        "title": "How Text to Song Works",
-        "description": "Move from a plain-language prompt to a generated song without opening a music production tool.",
+        "title": "Como texto para música funciona",
+        "description": "Passe de uma instrução em linguagem natural para uma música gerada sem abrir uma ferramenta de produção musical.",
         "items": {
           "prompt": {
-            "title": "Write a clear prompt",
-            "description": "Describe the emotion, story, audience, genre, and vocal direction you want."
+            "title": "Escreva uma instrução clara",
+            "description": "Descreva a emoção, história, público, gênero e direção vocal que você deseja."
           },
           "style": {
-            "title": "Add style guidance",
-            "description": "Pick a style so the generator understands the sound and arrangement you are aiming for."
+            "title": "Adicione orientação de estilo",
+            "description": "Escolha um estilo para que o gerador entenda o som e o arranjo desejados."
           },
           "create": {
-            "title": "Generate the song",
-            "description": "Continue to the workspace, review the setup, and generate lyrics plus audio."
+            "title": "Gere a música",
+            "description": "Continue para o espaço de trabalho, revise a configuração e gere letra + áudio."
           }
         }
       },
       "faq": {
-        "title": "Text to Song FAQ",
+        "title": "Perguntas sobre texto para música",
         "one": {
-          "question": "What is text to song AI?",
-          "answer": "Text to song AI turns a written prompt into a song direction, lyrics, and generated music with vocals and instruments."
+          "question": "O que é texto para música com IA?",
+          "answer": "Texto para música com IA transforma uma instrução escrita em direção de música, letra e música gerada com vozes e instrumentos."
         },
         "two": {
-          "question": "Do I need finished lyrics?",
-          "answer": "No. Use this mode when you only have an idea, story, mood, or content brief."
+          "question": "Preciso ter uma letra pronta?",
+          "answer": "Não. Use este modo quando você tiver apenas uma ideia, história, clima ou briefing de conteúdo."
         },
         "three": {
-          "question": "Can I choose the music style?",
-          "answer": "Yes. Add genre, mood, vocal, tempo, and instrument details to guide the result."
+          "question": "Posso escolher o estilo musical?",
+          "answer": "Sim. Adicione gênero, clima, vocal, andamento e instrumentos para orientar o resultado."
         },
         "four": {
-          "question": "Can I use the song commercially?",
-          "answer": "Subscribers can download generated songs and use them commercially, subject to the latest terms."
+          "question": "Posso usar a música comercialmente?",
+          "answer": "Assinantes podem baixar músicas geradas e usá-las comercialmente, conforme os termos vigentes."
         }
       },
       "finalCta": {
-        "title": "Ready to Turn Text Into Music?",
-        "description": "Start with a clear prompt and generate a complete AI song with vocals and instruments."
+        "title": "Pronto para transformar texto em música?",
+        "description": "Comece com uma instrução clara e gere uma música completa com vozes e instrumentos."
       }
     },
     "aiLyricsToSong": {
       "seo": {
-        "title": "AI Lyrics to Song Generator - Turn Lyrics Into Music | Calyra AI",
-        "description": "Paste your lyrics and turn them into an AI song with vocals, instruments, arrangement, and style direction."
+        "title": "Gerador de letra para música com IA - Transforme letras em música | Calyra AI",
+        "description": "Cole sua letra e transforme-a em uma música com IA, vozes, instrumentos, arranjo e direção de estilo."
       },
       "hero": {
-        "eyebrow": "AI Lyrics to Song",
-        "title": "AI Lyrics to Song Generator",
-        "description": "Bring existing lyrics, add arrangement and vocal direction, then generate a full AI song from your words."
+        "eyebrow": "Letra para música com IA",
+        "title": "Gerador de letra para música com IA",
+        "description": "Traga letras existentes, adicione direção de arranjo e vocal, e gere uma música completa a partir das suas palavras."
       },
       "cta": {
-        "primary": "Start AI Lyrics to Song",
-        "secondary": "Try Text to Song"
+        "primary": "Começar letra para música",
+        "secondary": "Testar texto para música"
       },
       "form": {
-        "prompt": "Lyrics",
-        "placeholder": "Paste your lyrics, then add any notes about emotion, chorus energy, vocal tone, or arrangement.",
-        "style": "Style",
-        "stylePlaceholder": "Piano ballad, soft male vocal, cinematic strings",
-        "styleDefault": "Piano ballad, emotional vocal, cinematic strings",
-        "title": "Title",
-        "titlePlaceholder": "My Lyrics Song",
-        "titleDefault": "My Lyrics Song",
-        "submit": "Continue to Generator"
+        "prompt": "Letra",
+        "placeholder": "Cole sua letra e adicione observações sobre emoção, energia do refrão, tom vocal ou arranjo.",
+        "style": "Estilo",
+        "stylePlaceholder": "Balada de piano, voz masculina suave, cordas cinematográficas",
+        "styleDefault": "Balada de piano, voz emotiva, cordas cinematográficas",
+        "title": "Título",
+        "titlePlaceholder": "Minha música com letra",
+        "titleDefault": "Minha música com letra",
+        "submit": "Continuar para o gerador"
       },
       "benefits": {
-        "title": "Keep Your Words, Add the Music",
-        "description": "Lyrics to song is best when you already have the words and want AI to help with performance and production.",
+        "title": "Mantenha suas palavras, adicione a música",
+        "description": "Letra para música é ideal quando você já tem as palavras e quer ajuda da IA com interpretação e produção.",
         "items": {
           "lyrics": {
-            "title": "Use your own lyrics",
-            "description": "Paste verses, hooks, choruses, or rough drafts and keep the song centered on your writing."
+            "title": "Use suas próprias letras",
+            "description": "Cole versos, ganchos, refrões ou rascunhos e mantenha a música centrada na sua escrita."
           },
           "arrangement": {
-            "title": "Guide the arrangement",
-            "description": "Add direction for instruments, tempo, vocal style, mood, and chorus lift."
+            "title": "Guie o arranjo",
+            "description": "Adicione instrumentos, andamento, estilo vocal, clima e crescimento do refrão."
           },
           "control": {
-            "title": "Stay in the workflow",
-            "description": "Move from lyrics to audio generation without switching tools or rebuilding the prompt."
+            "title": "Continue no fluxo",
+            "description": "Passe da letra para a geração de áudio sem trocar de ferramenta nem refazer a instrução."
           }
         }
       },
       "steps": {
-        "title": "How Lyrics to Song Works",
-        "description": "Use your lyrics as the foundation, then let the generator create the musical setting around them.",
+        "title": "Como letra para música funciona",
+        "description": "Use sua letra como base e deixe o gerador criar o ambiente musical ao redor dela.",
         "items": {
           "paste": {
-            "title": "Paste your lyrics",
-            "description": "Add the words you want to turn into a song, including sections if you already have them."
+            "title": "Cole sua letra",
+            "description": "Adicione as palavras que você quer transformar em música, incluindo seções se já existirem."
           },
           "direct": {
-            "title": "Direct the sound",
-            "description": "Describe the genre, vocal tone, emotional arc, and instrumentation."
+            "title": "Direcione o som",
+            "description": "Descreva o gênero, tom vocal, arco emocional e instrumentação."
           },
           "create": {
-            "title": "Generate music",
-            "description": "Continue to the workspace and create the audio version of your lyrics."
+            "title": "Gere música",
+            "description": "Continue para o espaço de trabalho e crie a versão em áudio da sua letra."
           }
         }
       },
       "faq": {
-        "title": "Lyrics to Song FAQ",
+        "title": "Perguntas sobre letra para música",
         "one": {
-          "question": "Can AI turn my lyrics into a song?",
-          "answer": "Yes. Paste your lyrics and add style direction so Calyra AI can generate a song with vocals and instruments."
+          "question": "A IA pode transformar minha letra em música?",
+          "answer": "Sim. Cole sua letra e adicione direção de estilo para que o Calyra AI gere uma música com vozes e instrumentos."
         },
         "two": {
-          "question": "Do my lyrics need to be finished?",
-          "answer": "Finished lyrics help, but you can also paste a rough draft and include notes for the intended structure."
+          "question": "Minha letra precisa estar finalizada?",
+          "answer": "Letras finalizadas ajudam, mas você também pode colar um rascunho e incluir observações sobre a estrutura desejada."
         },
         "three": {
-          "question": "Can I choose a vocal style?",
-          "answer": "Yes. Add vocal tone, gender direction, energy, language, and arrangement notes in the style field."
+          "question": "Posso escolher um estilo vocal?",
+          "answer": "Sim. Adicione tom vocal, direção de gênero, energia, idioma e notas de arranjo no campo de estilo."
         },
         "four": {
-          "question": "What happens after I submit?",
-          "answer": "You continue to the song workspace with Lyrics to Song mode selected so you can generate the track."
+          "question": "O que acontece depois de enviar?",
+          "answer": "Você continuará para o espaço de trabalho com o modo Letra para música selecionado para gerar a faixa."
         }
       },
       "finalCta": {
-        "title": "Have Lyrics Ready?",
-        "description": "Paste them into the AI Lyrics to Song workflow and shape the music around your words."
+        "title": "Já tem letras prontas?",
+        "description": "Cole-as no fluxo de letra para música com IA e molde a música ao redor das suas palavras."
       }
     },
     "aiLyricsGenerator": {
       "seo": {
-        "title": "AI Lyrics Generator - Write Song Lyrics Online | Calyra AI",
-        "description": "Generate song lyrics from a theme, story, mood, or title. Use Calyra AI to draft lyrics, then turn them into a complete song."
+        "title": "Gerador de letras com IA - Escritor de letras online | Calyra AI",
+        "description": "Gere letras completas a partir de um tema, clima, palavra-chave ou título. Receba ideias de verso e refrão instantaneamente e transforme-as em música."
       },
       "hero": {
-        "eyebrow": "AI Lyrics Generator",
-        "title": "Generate Lyrics Before You Make the Song",
-        "description": "Type a theme, story, or mood and get ready-to-use lyrics with clear structure. Edit the lyrics, then convert them into a full song with vocals."
+        "eyebrow": "Gerador de letras com IA",
+        "title": "Gere letras de música em segundos",
+        "description": "Digite um tema, história ou clima e receba letras prontas para usar com estrutura clara. Edite a letra e transforme-a em uma música completa com vozes."
       },
       "cta": {
-        "primary": "Create a Full Song",
-        "secondary": "Lyrics to Song"
+        "primary": "Gerar letras agora",
+        "secondary": "Transformar letra em música"
       },
       "form": {
-        "prompt": "Lyric brief",
-        "placeholder": "Describe the story, emotion, theme, perspective, hook idea, or audience for the lyrics.",
-        "style": "Style",
-        "stylePlaceholder": "Indie pop, bittersweet, conversational chorus",
-        "styleDefault": "Indie pop, emotional, memorable chorus",
-        "title": "Title seed",
-        "titlePlaceholder": "Midnight Letters",
-        "titleDefault": "My AI Lyrics",
-        "submit": "Generate Lyrics",
-        "submitting": "Writing Lyrics",
-        "signInTitle": "Sign in to generate lyrics",
-        "signInDescription": "Sign in to generate lyrics and continue to song generation.",
-        "signInCta": "Sign in",
-        "errorFallback": "Failed to generate lyrics",
-        "resultEyebrow": "Generated Lyrics",
-        "lyricsLabel": "Generated lyrics",
-        "turnIntoSong": "Turn Into Song"
+        "prompt": "Ideia de letra",
+        "placeholder": "Exemplo: uma música de término tarde da noite, voz masculina suave, clima de cidade chuvosa, refrão marcante.",
+        "style": "Estilo",
+        "stylePlaceholder": "Balada pop, emotiva, moderna, pronta para rádio",
+        "styleDefault": "Balada pop, emotiva, refrão marcante",
+        "title": "Título da música",
+        "titlePlaceholder": "Última mensagem às 2 da manhã",
+        "titleDefault": "Minha letra com IA",
+        "submit": "Gerar letra",
+        "submitting": "Gerando letra",
+        "signInTitle": "Entre para gerar letras",
+        "signInDescription": "Entre para gerar letras e continuar para a criação de músicas.",
+        "signInCta": "Entrar",
+        "errorFallback": "Não foi possível gerar a letra",
+        "resultEyebrow": "Letra gerada",
+        "lyricsLabel": "Letra gerada",
+        "turnIntoSong": "Transformar em música"
       },
       "benefits": {
-        "title": "Write Better Song Seeds",
-        "description": "Start from one idea and quickly get structured lyrics you can actually use in production.",
+        "title": "Feito para escrever músicas rapidamente",
+        "description": "Comece com uma ideia e receba rapidamente letras estruturadas que você pode usar em produção.",
         "items": {
           "structure": {
-            "title": "Get song-ready sections",
-            "description": "Create lyrics with verses, chorus ideas, emotional progression, and a clear center."
+            "title": "Estrutura clara de música",
+            "description": "Gere versos e refrões organizados com um fluxo emocional coerente."
           },
           "nextStep": {
-            "title": "Continue into music",
-            "description": "Take generated lyrics directly into song generation and create audio immediately."
+            "title": "Um clique até a música",
+            "description": "Leve a letra gerada diretamente para a criação de música e gere áudio imediatamente."
           },
           "lyrics": {
-            "title": "Lyrics from an idea",
-            "description": "Turn a topic, feeling, or keyword into complete lyrics in seconds."
+            "title": "Letras a partir de uma ideia",
+            "description": "Transforme um tema, sentimento ou palavra-chave em letras completas em segundos."
           }
         }
       },
       "steps": {
-        "title": "How the AI Lyrics Generator Works",
-        "description": "Three simple steps from lyrics idea to full song.",
+        "title": "Como funciona",
+        "description": "Três passos simples da ideia de letra até a música completa.",
         "items": {
           "brief": {
-            "title": "Describe the lyric idea",
-            "description": "Give the generator a theme, story, mood, point of view, and style."
+            "title": "Descreva sua ideia",
+            "description": "Insira seu tema, clima, história ou frase de gancho."
           },
           "review": {
-            "title": "Review the lyrics",
-            "description": "Read and edit generated lyrics before creating music."
+            "title": "Revise a letra",
+            "description": "Leia e edite a letra gerada antes de criar música."
           },
           "song": {
-            "title": "Turn it into a song",
-            "description": "Generate vocals and instrumental directly from your edited lyrics."
+            "title": "Transforme letra em música",
+            "description": "Gere vozes e instrumental diretamente a partir da sua letra editada."
           }
         }
       },
       "faq": {
-        "title": "AI Lyrics Generator FAQ",
+        "title": "Perguntas sobre o gerador de letras com IA",
         "one": {
-          "question": "What can I generate lyrics from?",
-          "answer": "You can start from a title, theme, story, emotion, genre, hook idea, or short creative brief."
+          "question": "O que posso usar como entrada?",
+          "answer": "Use uma palavra-chave, tema, história, emoção, título, gênero ou instrução curta. O gerador pode expandir isso em uma letra completa."
         },
         "two": {
-          "question": "Can I turn the lyrics into music?",
-          "answer": "Yes. After generating lyrics, use the Turn Into Song action to continue into the song workspace."
+          "question": "Posso transformar a letra gerada em música?",
+          "answer": "Sim. Clique em Transformar em música para continuar no espaço de criação e gerar música a partir da sua letra."
         },
         "three": {
-          "question": "Do I need to sign in?",
-          "answer": "Yes. Sign in to generate lyrics and turn them into songs."
+          "question": "É grátis para testar?",
+          "answer": "Sim. Entre para gerar letras e transformá-las em músicas."
         },
         "four": {
-          "question": "Can I edit the lyrics?",
-          "answer": "Yes. You can edit the generated lyrics before creating the final song."
+          "question": "Posso editar a letra antes de gerar áudio?",
+          "answer": "Sim. Você pode editar a letra gerada antes de criar a música final."
         }
       },
       "finalCta": {
-        "title": "Want Music for These Lyrics?",
-        "description": "Generate lyrics now, edit them, and produce a complete song when you are ready."
+        "title": "Pronto para transformar letras em música?",
+        "description": "Gere letras agora, edite-as e produza uma música completa quando estiver pronto."
       }
+    }
+  },
+  "about": {
+    "seo": {
+      "title": "Sobre o Calyra AI - Música com IA a partir de histórias pessoais",
+      "description": "Saiba como o Calyra AI transforma histórias pessoais em letras, áudio gerado por IA, relatórios de produtor e páginas de música compartilháveis."
+    },
+    "eyebrow": "Sobre o Calyra AI",
+    "title": "Uma plataforma de criação musical com IA construída em torno de histórias pessoais",
+    "subtitle": "O Calyra AI ajuda pessoas a transformar emoções, memórias e mensagens em letras, áudio e páginas de música compartilháveis. O produto foi criado para quem quer um fluxo completo de criação musical sem começar de uma sessão de estúdio em branco.",
+    "createCta": "Criar uma música",
+    "pricingCta": "Ver preços",
+    "pillars": [
+      {
+        "title": "Composição guiada pela história",
+        "description": "O Calyra AI começa com uma memória, clima ou mensagem real do usuário e transforma isso em letras estruturadas com um arco emocional claro."
+      },
+      {
+        "title": "Fluxo de geração de áudio",
+        "description": "Depois que o rascunho da letra fica pronto, a plataforma gera áudio com IA e salva o resultado em uma página pública da música."
+      },
+      {
+        "title": "Feedback em estilo de produtor",
+        "description": "Os relatórios ajudam criadores a entender valor emocional, força do refrão, posicionamento e próximos passos para a música."
+      }
+    ],
+    "whyEyebrow": "Por que existimos",
+    "whyTitle": "Ferramentas criativas devem deixar o próximo passo claro",
+    "whyBody": [
+      "Muitas ferramentas de música com IA param na geração. O Calyra AI conecta todo o caminho: capturar a história, moldar a letra, gerar áudio, avaliar o resultado e publicar uma página que ouvintes e mecanismos de busca conseguem entender.",
+      "A plataforma é intencionalmente prática. Ela mostra status da geração, impacto nos créditos, links públicos, relatórios e comportamento de armazenamento para que criadores continuem avançando sem tentar adivinhar o que aconteceu.",
+      "As páginas públicas de música incluem áudio, letra, detalhes da faixa e músicas relacionadas em HTML indexável, ajudando cada música finalizada a virar um recurso útil para compartilhar."
+    ],
+    "trustEyebrow": "Criado para confiança",
+    "trustTitle": "Créditos claros, páginas de conta privadas e músicas públicas somente quando o criador escolhe publicar",
+    "trustBody": "As páginas de conta são protegidas pela autenticação do Supabase. Chaves sensíveis de provedores ficam no servidor, e os pagamentos passam pelas rotas de checkout e portal do cliente da Creem.",
+    "trustCta": "Começar a criar"
+  },
+  "auth": {
+    "emailLabel": "Email",
+    "passwordLabel": "Senha",
+    "passwordPlaceholder": "Senha",
+    "continueWith": "Ou continue com",
+    "signIn": {
+      "title": "Boas-vindas de volta",
+      "subtitle": "Digite seu email para entrar na sua conta",
+      "forgotPassword": "Esqueceu a senha?",
+      "pending": "Entrando...",
+      "submit": "Entrar",
+      "google": "Entrar com Google",
+      "noAccount": "Ainda não tem conta?",
+      "signUp": "Criar conta"
+    },
+    "signUp": {
+      "title": "Crie sua conta",
+      "subtitle": "Crie uma conta para salvar músicas, gerar áudio e gerenciar créditos",
+      "pending": "Criando conta...",
+      "submit": "Criar conta",
+      "google": "Criar conta com Google",
+      "hasAccount": "Já tem uma conta?",
+      "signIn": "Entrar"
+    },
+    "forgot": {
+      "title": "Redefinir senha",
+      "subtitle": "Digite seu email e enviaremos um link para redefinir sua senha",
+      "pending": "Enviando link...",
+      "submit": "Enviar link",
+      "remember": "Lembrou sua senha?",
+      "signIn": "Entrar"
+    },
+    "reset": {
+      "title": "Redefinir senha",
+      "subtitle": "Digite sua nova senha abaixo.",
+      "newPasswordLabel": "Nova senha",
+      "confirmPasswordLabel": "Confirmar senha",
+      "submit": "Redefinir senha"
     }
   }
 }

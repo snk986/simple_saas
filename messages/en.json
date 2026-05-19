@@ -1195,5 +1195,81 @@
     "generationFailed": "Generation failed. Please try again.",
     "generationFailedWithRefund": "Generation failed, credits were refunded. Please try again later.",
     "contentFlagged": "This story can't be written. Try a different one?"
+  },
+  "about": {
+    "seo": {
+      "title": "About Calyra AI - AI Music Creation From Personal Stories",
+      "description": "Learn how Calyra AI turns personal stories into AI-generated lyrics, audio, producer-style reports, and shareable song pages."
+    },
+    "eyebrow": "About Calyra AI",
+    "title": "An AI music creation platform built around personal stories",
+    "subtitle": "Calyra AI helps people turn emotions, memories, and messages into lyrics, audio, and shareable song pages. The product is designed for creators who want a complete song workflow without starting from a blank studio session.",
+    "createCta": "Create a song",
+    "pricingCta": "View pricing",
+    "pillars": [
+      {
+        "title": "Story-first songwriting",
+        "description": "Calyra AI starts with the user's real memory, mood, or message, then turns it into structured lyrics with a clear emotional arc."
+      },
+      {
+        "title": "Audio generation workflow",
+        "description": "After the lyric draft is ready, the platform generates playable AI audio and saves the result to a public song page."
+      },
+      {
+        "title": "Producer-style feedback",
+        "description": "Reports help creators understand emotional value, hook strength, market positioning, and next steps for a song."
+      }
+    ],
+    "whyEyebrow": "Why we exist",
+    "whyTitle": "Creative tools should make the next step obvious",
+    "whyBody": [
+      "Many AI music tools stop at generation. Calyra AI connects the full path: capture the story, shape the lyric, generate audio, evaluate the result, and publish a page that listeners and search engines can understand.",
+      "The platform is intentionally practical. It shows generation status, credit impact, public links, reports, and storage behavior so creators can keep moving instead of guessing what happened.",
+      "Public song pages are built to include the audio, lyrics, song details, and related music in indexable HTML, helping each finished song become a useful share asset rather than a hidden file."
+    ],
+    "trustEyebrow": "Built for trust",
+    "trustTitle": "Clear credits, private account pages, and public songs only when a creator chooses to publish",
+    "trustBody": "Account pages are protected by Supabase authentication. Sensitive provider keys stay server-side, and payment flows are handled through Creem checkout and customer portal routes.",
+    "trustCta": "Start creating"
+  },
+  "auth": {
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "continueWith": "Or continue with",
+    "signIn": {
+      "title": "Welcome back",
+      "subtitle": "Enter your email to sign in to your account",
+      "forgotPassword": "Forgot password?",
+      "pending": "Signing in...",
+      "submit": "Sign in",
+      "google": "Sign in with Google",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signUp": {
+      "title": "Create your account",
+      "subtitle": "Sign up to save songs, generate audio, and manage credits",
+      "pending": "Creating account...",
+      "submit": "Create account",
+      "google": "Sign up with Google",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgot": {
+      "title": "Reset password",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password",
+      "pending": "Sending reset link...",
+      "submit": "Send reset link",
+      "remember": "Remember your password?",
+      "signIn": "Sign in"
+    },
+    "reset": {
+      "title": "Reset password",
+      "subtitle": "Please enter your new password below.",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm password",
+      "submit": "Reset password"
+    }
   }
 }

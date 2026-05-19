@@ -44,6 +44,7 @@ export default async function ForgotPassword(props: {
   const { locale } = await props.params;
   const searchParams = await props.searchParams;
   const tAuth = await getTranslations({ locale, namespace: "authErrors" });
+  const t = await getTranslations({ locale, namespace: "auth" });
   const signInPath = `${localePrefix(locale)}/sign-in`;
   const displayMessage = resolveAuthErrorMessage(searchParams, tAuth);
 
@@ -51,18 +52,17 @@ export default async function ForgotPassword(props: {
     <>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Reset password
+          {t("forgot.title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Enter your email address and we'll send you a link to reset your
-          password
+          {t("forgot.subtitle")}
         </p>
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
           <input type="hidden" name="locale" value={locale} />
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("emailLabel")}</Label>
             <Input
               id="email"
               name="email"
@@ -77,19 +77,19 @@ export default async function ForgotPassword(props: {
           <SubmitButton
             className="w-full"
             formAction={forgotPasswordAction}
-            pendingText="Sending reset link..."
+            pendingText={t("forgot.pending")}
           >
-            Send reset link
+            {t("forgot.submit")}
           </SubmitButton>
           <FormMessage message={displayMessage} />
         </form>
         <div className="text-center text-sm text-muted-foreground">
-          Remember your password?{" "}
+          {t("forgot.remember")}{" "}
           <Link
             href={signInPath}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
-            Sign in
+            {t("forgot.signIn")}
           </Link>
         </div>
       </div>

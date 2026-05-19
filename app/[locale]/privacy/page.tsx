@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LegalDocument } from "@/components/legal/legal-document";
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { locales, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
@@ -20,7 +20,7 @@ export async function generateMetadata({
 }: PrivacyPageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.privacy",
   });
   const url = absoluteLocaleUrl(locale, "/privacy");
@@ -42,13 +42,13 @@ export function generateStaticParams() {
 }
 
 export default async function PrivacyPage({ params }: PrivacyPageProps) {
-  await params;
+  const { locale } = await params;
   const t = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.privacy",
   });
   const common = await getTranslations({
-    locale: defaultLocale,
+    locale,
     namespace: "legal.common",
   });
 

@@ -11,6 +11,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import { mapOAuthErrorToKey } from "@/lib/auth/error-map";
+import { baseUrl } from "@/lib/i18n/urls";
 import Link from "next/link";
 
 function localePrefix(locale: Locale) {
@@ -54,6 +55,7 @@ export default async function SignUp(props: {
   const { locale } = await props.params;
   const searchParams = await props.searchParams;
   const tAuth = await getTranslations({ locale, namespace: "authErrors" });
+  const t = await getTranslations({ locale, namespace: "auth" });
   const signUpPath = localizedPath(locale, "/sign-up");
   const signInPath = localizedPath(locale, "/sign-in");
   const homePath = localizedPath(locale, "/");
@@ -62,10 +64,7 @@ export default async function SignUp(props: {
   const signUpWithGoogle = async () => {
     "use server";
     const supabase = await createClient();
-    const origin =
-      (await headers()).get("origin") ??
-      process.env.BASE_URL ??
-      "http://localhost:3000";
+    const origin = (await headers()).get("origin") ?? baseUrl;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -91,17 +90,17 @@ export default async function SignUp(props: {
     <>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Create your account
+          {t("signUp.title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Sign up to save songs, generate audio, and manage credits
+          {t("signUp.subtitle")}
         </p>
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
           <input type="hidden" name="locale" value={locale} />
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("emailLabel")}</Label>
             <Input
               id="email"
               name="email"
@@ -114,22 +113,22 @@ export default async function SignUp(props: {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("passwordLabel")}</Label>
             <Input
               id="password"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder={t("passwordPlaceholder")}
               autoComplete="current-password"
               required
             />
           </div>
           <SubmitButton
             className="w-full"
-            pendingText="Creating account..."
+            pendingText={t("signUp.pending")}
             formAction={signUpAction}
           >
-            Create account
+            {t("signUp.submit")}
           </SubmitButton>
           <FormMessage message={displayMessage} />
         </form>
@@ -139,7 +138,7 @@ export default async function SignUp(props: {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
+              {t("continueWith")}
             </span>
           </div>
         </div>
@@ -167,16 +166,16 @@ export default async function SignUp(props: {
                 fill="#EA4335"
               />
             </svg>
-            Sign up with Google
+            {t("signUp.google")}
           </Button>
         </form>
         <div className="text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {t("signUp.hasAccount")}{" "}
           <Link
             href={signInPath}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
-            Sign in
+            {t("signUp.signIn")}
           </Link>
         </div>
       </div>

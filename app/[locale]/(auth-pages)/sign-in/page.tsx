@@ -11,6 +11,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import { mapOAuthErrorToKey } from "@/lib/auth/error-map";
+import { baseUrl } from "@/lib/i18n/urls";
 import Link from "next/link";
 
 type SignInSearchParams = Message & {
@@ -66,6 +67,7 @@ export default async function Login(props: {
   const { locale } = await props.params;
   const searchParams = await props.searchParams;
   const tAuth = await getTranslations({ locale, namespace: "authErrors" });
+  const t = await getTranslations({ locale, namespace: "auth" });
   const redirectTo = safeRedirectPath(searchParams.redirectTo);
   const signInPath = localizedPath(locale, "/sign-in");
   const forgotPasswordPath = localizedPath(locale, "/forgot-password");
@@ -78,10 +80,7 @@ export default async function Login(props: {
   const signInWithGoogle = async () => {
     "use server";
     const supabase = await createClient();
-    const origin =
-      (await headers()).get("origin") ??
-      process.env.BASE_URL ??
-      "http://localhost:3000";
+    const origin = (await headers()).get("origin") ?? baseUrl;
     const redirectToParam = safeRedirectPath(searchParams.redirectTo);
     const callbackUrl = redirectToParam
       ? `${origin}/auth/callback?redirect_to=${encodeURIComponent(redirectToParam)}`
@@ -110,9 +109,11 @@ export default async function Login(props: {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {t("signIn.title")}
+        </h1>
         <p className="text-sm text-muted-foreground">
-          Enter your email to sign in to your account
+          {t("signIn.subtitle")}
         </p>
       </div>
       <div className="grid gap-6">
@@ -122,7 +123,7 @@ export default async function Login(props: {
             <input type="hidden" name="redirectTo" value={redirectTo} />
           ) : null}
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("emailLabel")}</Label>
             <Input
               id="email"
               name="email"
@@ -136,29 +137,29 @@ export default async function Login(props: {
           </div>
           <div className="grid gap-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t("passwordLabel")}</Label>
               <Link
                 href={forgotPasswordPath}
                 className="text-sm font-medium text-primary hover:underline"
               >
-                Forgot password?
+                {t("signIn.forgotPassword")}
               </Link>
             </div>
             <Input
               id="password"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder={t("passwordPlaceholder")}
               autoComplete="current-password"
               required
             />
           </div>
           <SubmitButton
             className="w-full"
-            pendingText="Signing in..."
+            pendingText={t("signIn.pending")}
             formAction={signInAction}
           >
-            Sign in
+            {t("signIn.submit")}
           </SubmitButton>
           <FormMessage message={displayMessage} />
         </form>
@@ -168,7 +169,7 @@ export default async function Login(props: {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
+              {t("continueWith")}
             </span>
           </div>
         </div>
@@ -196,16 +197,16 @@ export default async function Login(props: {
                 fill="#EA4335"
               />
             </svg>
-            Sign in with Google
+            {t("signIn.google")}
           </Button>
         </form>
         <div className="text-center text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          {t("signIn.noAccount")}{" "}
           <Link
             href={signUpHref}
             className="text-primary underline underline-offset-4 hover:text-primary/90"
           >
-            Sign up
+            {t("signIn.signUp")}
           </Link>
         </div>
       </div>

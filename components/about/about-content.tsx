@@ -11,56 +11,56 @@ import { Button } from "@/components/ui/button";
 type AboutContentProps = {
   createHref: string;
   pricingHref: string;
+  content: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    createCta: string;
+    pricingCta: string;
+    pillars: Array<{
+      title: string;
+      description: string;
+    }>;
+    whyEyebrow: string;
+    whyTitle: string;
+    whyBody: string[];
+    trustEyebrow: string;
+    trustTitle: string;
+    trustBody: string;
+    trustCta: string;
+  };
 };
 
-const pillars = [
-  {
-    title: "Story-first songwriting",
-    description:
-      "Calyra AI starts with the user's real memory, mood, or message, then turns it into structured lyrics with a clear emotional arc.",
-    icon: FileText,
-  },
-  {
-    title: "Audio generation workflow",
-    description:
-      "After the lyric draft is ready, the platform generates playable AI audio and saves the result to a public song page.",
-    icon: Music2,
-  },
-  {
-    title: "Producer-style feedback",
-    description:
-      "Reports help creators understand emotional value, hook strength, market positioning, and next steps for a song.",
-    icon: BarChart3,
-  },
-];
+const pillarIcons = [FileText, Music2, BarChart3];
 
-export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
+export function AboutContent({
+  createHref,
+  pricingHref,
+  content,
+}: AboutContentProps) {
   return (
     <div className="bg-background">
       <section className="border-b border-border py-16 md:py-20">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-              About Calyra AI
+              {content.eyebrow}
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-normal md:text-5xl">
-              An AI music creation platform built around personal stories
+              {content.title}
             </h1>
             <p className="mt-5 text-lg leading-8 text-muted-foreground">
-              Calyra AI helps people turn emotions, memories, and messages into
-              lyrics, audio, and shareable song pages. The product is designed
-              for creators who want a complete song workflow without starting
-              from a blank studio session.
+              {content.subtitle}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="gap-2">
                 <Link href={createHref}>
-                  Create a song
+                  {content.createCta}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href={pricingHref}>View pricing</Link>
+                <Link href={pricingHref}>{content.pricingCta}</Link>
               </Button>
             </div>
           </div>
@@ -71,8 +71,8 @@ export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-5xl">
             <div className="grid gap-5 md:grid-cols-3">
-              {pillars.map((pillar) => {
-                const Icon = pillar.icon;
+              {content.pillars.map((pillar, index) => {
+                const Icon = pillarIcons[index % pillarIcons.length];
 
                 return (
                   <article
@@ -99,31 +99,16 @@ export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
               <p className="text-sm font-semibold uppercase tracking-normal text-primary">
-                Why we exist
+                {content.whyEyebrow}
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-normal">
-                Creative tools should make the next step obvious
+                {content.whyTitle}
               </h2>
             </div>
             <div className="space-y-5 text-base leading-8 text-muted-foreground">
-              <p>
-                Many AI music tools stop at generation. Calyra AI connects the
-                full path: capture the story, shape the lyric, generate audio,
-                evaluate the result, and publish a page that listeners and
-                search engines can understand.
-              </p>
-              <p>
-                The platform is intentionally practical. It shows generation
-                status, credit impact, public links, reports, and storage
-                behavior so creators can keep moving instead of guessing what
-                happened.
-              </p>
-              <p>
-                Public song pages are built to include the audio, lyrics, song
-                details, and related music in indexable HTML, helping each
-                finished song become a useful share asset rather than a hidden
-                file.
-              </p>
+              {content.whyBody.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
           </div>
         </div>
@@ -136,20 +121,17 @@ export function AboutContent({ createHref, pricingHref }: AboutContentProps) {
               <div className="max-w-2xl">
                 <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-primary">
                   <ShieldCheck className="h-4 w-4" />
-                  Built for trust
+                  {content.trustEyebrow}
                 </div>
                 <h2 className="text-2xl font-bold tracking-normal">
-                  Clear credits, private account pages, and public songs only
-                  when a creator chooses to publish
+                  {content.trustTitle}
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Account pages are protected by Supabase authentication.
-                  Sensitive provider keys stay server-side, and payment flows
-                  are handled through Creem checkout and customer portal routes.
+                  {content.trustBody}
                 </p>
               </div>
               <Button asChild size="lg">
-                <Link href={createHref}>Start creating</Link>
+                <Link href={createHref}>{content.trustCta}</Link>
               </Button>
             </div>
           </div>

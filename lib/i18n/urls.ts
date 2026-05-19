@@ -1,6 +1,9 @@
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 
-export const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
+export const baseUrl = process.env.BASE_URL ?? "https://calyraai.com";
+export const seoLocales = locales.filter(
+  (locale): locale is Exclude<Locale, "zh-CN"> => locale !== "zh-CN",
+);
 
 export function localePath(locale: Locale, path = "") {
   const normalizedPath = path === "/" ? "" : path;
@@ -16,7 +19,7 @@ export function absoluteLocaleUrl(locale: Locale, path = "") {
 export function localizedAlternates(path = "") {
   return {
     ...Object.fromEntries(
-      locales.map((locale) => [locale, absoluteLocaleUrl(locale, path)]),
+      seoLocales.map((locale) => [locale, absoluteLocaleUrl(locale, path)]),
     ),
     "x-default": absoluteLocaleUrl(defaultLocale, path),
   };
