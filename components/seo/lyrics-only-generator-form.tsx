@@ -104,6 +104,7 @@ export function LyricsOnlyGeneratorForm({
       setResult(data);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : labels.errorFallback);
+      setErrorAction("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -157,6 +158,7 @@ export function LyricsOnlyGeneratorForm({
       );
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : labels.errorFallback);
+      setErrorAction("error");
     } finally {
       setIsGeneratingSong(false);
     }
@@ -167,7 +169,11 @@ export function LyricsOnlyGeneratorForm({
       <ActionNeededDialog
         action={errorAction}
         localePrefix={prefix}
-        onClose={() => setErrorAction(null)}
+        errorMessage={error}
+        onClose={() => {
+          setErrorAction(null);
+          setError(null);
+        }}
       />
 
       <form
@@ -211,12 +217,6 @@ export function LyricsOnlyGeneratorForm({
               <Link href={`${prefix}/sign-in`}>{labels.signInCta}</Link>
             </Button>
           </div>
-        ) : null}
-
-        {error ? (
-          <p className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            {error}
-          </p>
         ) : null}
 
         <Button
