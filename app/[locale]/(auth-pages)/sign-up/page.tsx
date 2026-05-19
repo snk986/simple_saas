@@ -56,7 +56,7 @@ export default async function SignUp(props: {
   const tAuth = await getTranslations({ locale, namespace: "authErrors" });
   const signUpPath = localizedPath(locale, "/sign-up");
   const signInPath = localizedPath(locale, "/sign-in");
-  const dashboardPath = localizedPath(locale, "/dashboard");
+  const homePath = localizedPath(locale, "/");
   const displayMessage = resolveAuthErrorMessage(searchParams, tAuth);
 
   const signUpWithGoogle = async () => {
@@ -70,7 +70,7 @@ export default async function SignUp(props: {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`,
+        redirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(homePath)}`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",

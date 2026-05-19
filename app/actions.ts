@@ -41,7 +41,7 @@ export const signUpAction = async (formData: FormData) => {
     process.env.BASE_URL ??
     "http://localhost:3000";
   const signUpPath = localizedPath(locale, "/sign-up");
-  const dashboardPath = localizedPath(locale, "/dashboard");
+  const homePath = localizedPath(locale, "/");
 
   if (!email || !password) {
     return encodedRedirect(
@@ -55,7 +55,7 @@ export const signUpAction = async (formData: FormData) => {
     email,
     password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`,
+      emailRedirectTo: `${origin}/auth/callback?redirect_to=${encodeURIComponent(homePath)}`,
     },
   });
 
@@ -63,7 +63,7 @@ export const signUpAction = async (formData: FormData) => {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", signUpPath, mapAuthErrorToKey(error));
   } else {
-    return encodedRedirect("success", dashboardPath, "Thanks for signing up!");
+    return encodedRedirect("success", homePath, "Thanks for signing up!");
   }
 };
 
@@ -94,7 +94,7 @@ export const signInAction = async (formData: FormData) => {
     }
   }
 
-  return redirect(redirectTo ?? localizedPath(locale, "/dashboard"));
+  return redirect(redirectTo ?? localizedPath(locale, "/"));
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

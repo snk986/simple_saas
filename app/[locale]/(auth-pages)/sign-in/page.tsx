@@ -69,7 +69,7 @@ export default async function Login(props: {
   const redirectTo = safeRedirectPath(searchParams.redirectTo);
   const signInPath = localizedPath(locale, "/sign-in");
   const forgotPasswordPath = localizedPath(locale, "/forgot-password");
-  const dashboardPath = localizedPath(locale, "/dashboard");
+  const homePath = localizedPath(locale, "/");
   const signUpHref = redirectTo
     ? `${localizedPath(locale, "/sign-up")}?redirectTo=${encodeURIComponent(redirectTo)}`
     : localizedPath(locale, "/sign-up");
@@ -85,7 +85,7 @@ export default async function Login(props: {
     const redirectToParam = safeRedirectPath(searchParams.redirectTo);
     const callbackUrl = redirectToParam
       ? `${origin}/auth/callback?redirect_to=${encodeURIComponent(redirectToParam)}`
-      : `${origin}/auth/callback?redirect_to=${encodeURIComponent(dashboardPath)}`;
+      : `${origin}/auth/callback?redirect_to=${encodeURIComponent(homePath)}`;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",

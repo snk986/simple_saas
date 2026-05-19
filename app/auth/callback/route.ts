@@ -32,6 +32,6 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}${redirectTo}`);
   }
 
-  // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${origin}/dashboard`);
+  // URL to redirect to after auth callback completes without explicit redirect target.
+  return NextResponse.redirect(`${origin}/`);
 }
