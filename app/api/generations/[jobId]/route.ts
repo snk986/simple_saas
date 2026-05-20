@@ -17,16 +17,23 @@ export async function GET(request: NextRequest, context: RouteContext) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const statusResponse = await fetch(
-    `${request.nextUrl.origin}/api/generate/audio/status?songId=${encodeURIComponent(jobId)}`,
-    {
-      method: "GET",
-      headers: {
-        cookie: request.headers.get("cookie") ?? "",
-      },
-      cache: "no-store",
-    },
+  const statusUrl = new URL(
+    "/api/generate/audio/status",
+    request.nextUrl.origin,
   );
+  statusUrl.searchParams.set("songId", jobId);
+  const attempt = request.nextUrl.searchParams.get("attempt");
+  if (attempt) {
+    statusUrl.searchParams.set("attempt", attempt);
+  }
+
+  const statusResponse = await fetch(statusUrl, {
+    method: "GET",
+    headers: {
+      cookie: request.headers.get("cookie") ?? "",
+    },
+    cache: "no-store",
+  });
 
   let statusPayload: Record<string, unknown> | null = null;
   if (statusResponse.ok) {
@@ -59,9 +66,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     jobId: song.id,
     songId: song.id,
     taskId: song.audio_provider_task_id,
-    status:
-      (statusPayload?.status as string | undefined) ??
-      normalizedStatus,
+    status: (statusPayload?.status as string | undefined) ?? normalizedStatus,
     title: song.title,
     lyrics: song.lyrics,
     userInput: song.user_input,
@@ -76,8 +81,6 @@ export async function GET(request: NextRequest, context: RouteContext) {
     alt_audio_url:
       (statusPayload?.alt_audio_url as string | undefined) ??
       song.audio_url_alt,
-    alt_cover_url:
-      (statusPayload?.alt_cover_url as string | undefined) ?? null,
+    alt_cover_url: (statusPayload?.alt_cover_url as string | undefined) ?? null,
   });
 }
-

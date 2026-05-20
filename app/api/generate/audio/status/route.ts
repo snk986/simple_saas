@@ -19,10 +19,12 @@ import {
 } from "@/lib/observability/log";
 
 const AUDIO_CREDIT_COST = 200;
+const MAX_AUDIO_POLL_ATTEMPTS = 60;
 
 const querySchema = z.object({
   taskId: z.string().min(1).optional(),
   songId: z.string().uuid().optional(),
+  attempt: z.coerce.number().int().positive().optional(),
 });
 
 async function refundCreditIfNeeded(
@@ -45,7 +47,11 @@ async function refundCreditIfNeeded(
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation_refund",
-    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
+    p_metadata: {
+      operation: "audio_generation",
+      request_id: requestId,
+      song_id: songId,
+    },
   });
 
   if (error) {
@@ -93,17 +99,24 @@ export async function GET(request: NextRequest) {
   );
   const startMs = Date.now();
   const client = getClientContext(request.headers.get("user-agent"));
+  const supabase = await createClient();
+  let currentUserId: string | null = null;
+  let currentSong: {
+    id: string;
+    audio_provider_task_id: string | null;
+  } | null = null;
+
   try {
     const query = querySchema.safeParse({
       taskId: request.nextUrl.searchParams.get("taskId") ?? undefined,
       songId: request.nextUrl.searchParams.get("songId") ?? undefined,
+      attempt: request.nextUrl.searchParams.get("attempt") ?? undefined,
     });
 
     if (!query.success || (!query.data.taskId && !query.data.songId)) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
-    const supabase = await createClient();
     const {
       data: { user },
       error: authError,
@@ -112,6 +125,8 @@ export async function GET(request: NextRequest) {
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    currentUserId = user.id;
 
     logInfo("audio_poll_start", {
       request_id: requestId,
@@ -142,6 +157,45 @@ export async function GET(request: NextRequest) {
       !song.audio_provider_task_id
     ) {
       return NextResponse.json({ error: "Song not found" }, { status: 404 });
+    }
+
+    currentSong = {
+      id: song.id,
+      audio_provider_task_id: song.audio_provider_task_id,
+    };
+
+    if (query.data.attempt && query.data.attempt > MAX_AUDIO_POLL_ATTEMPTS) {
+      await supabase
+        .from("songs")
+        .update({
+          status: "failed",
+          audio_provider_status: "poll_timeout",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", song.id)
+        .eq("user_id", user.id);
+      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
+
+      logError("song_generate_timeout", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "failed",
+        duration_ms: elapsedMs(startMs),
+        error_code: ERROR_CODES.TIMEOUT,
+        provider_task_id: song.audio_provider_task_id,
+        failure_reason: "max_audio_poll_attempts_exceeded",
+        poll_attempts: query.data.attempt,
+        ...client,
+      });
+
+      return NextResponse.json({
+        request_id: requestId,
+        status: "failed",
+        songId: song.id,
+        error: "Audio generation timed out",
+      });
     }
 
     if (song.status === "ready") {
@@ -390,16 +444,52 @@ export async function GET(request: NextRequest) {
       providerError.error_code === "TIMEOUT"
         ? "song_generate_timeout"
         : "song_generate_failed";
+
+    if (
+      currentUserId &&
+      currentSong &&
+      providerError.error_code === ERROR_CODES.PROVIDER_4XX
+    ) {
+      await supabase
+        .from("songs")
+        .update({
+          status: "failed",
+          audio_provider_status: providerError.provider_error_code ?? "failed",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", currentSong.id)
+        .eq("user_id", currentUserId);
+      await refundCreditIfNeeded(
+        supabase,
+        currentUserId,
+        requestId,
+        currentSong.id,
+      );
+    }
+
     logError(eventName, {
       request_id: requestId,
+      user_id: currentUserId,
+      song_id: currentSong?.id ?? null,
       stage: "audio_poll",
       status: "failed",
       duration_ms: elapsedMs(startMs),
       error_code: providerError.error_code,
       provider_error_code: providerError.provider_error_code,
       provider_message: providerError.provider_message,
+      provider_task_id: currentSong?.audio_provider_task_id,
       ...client,
     });
+
+    if (currentSong && providerError.error_code === ERROR_CODES.PROVIDER_4XX) {
+      return NextResponse.json({
+        request_id: requestId,
+        status: "failed",
+        songId: currentSong.id,
+        error: providerError.provider_message,
+      });
+    }
+
     return NextResponse.json(
       { error: "Failed to check audio status", request_id: requestId },
       { status: 500 },

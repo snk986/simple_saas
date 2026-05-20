@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Download,
@@ -161,6 +161,7 @@ export function StoryInput({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
   const [durations, setDurations] = useState<Record<string, number | null>>({});
+  const pollAttemptsRef = useRef<Record<string, number>>({});
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -193,31 +194,33 @@ export function StoryInput({
   }, [initialMode]);
 
   useEffect(() => {
-    const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.flatMap((song) => {
-      const status = normalizeStatus(song.status);
+    const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.flatMap(
+      (song) => {
+        const status = normalizeStatus(song.status);
 
-      if (!status) {
-        return [];
-      }
+        if (!status) {
+          return [];
+        }
 
-      return [
-        {
-          id: song.id,
-          title: song.title,
-          promptSummary: song.user_input,
-          styleSummary: (song.style_tags ?? []).join(", "),
-          status,
-          isPublic: Boolean(song.is_public),
-          coverUrl: song.cover_url,
-          audioUrl: song.audio_url,
-          modelTag: (song.audio_provider ?? "kie").toUpperCase(),
-          versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
-          liked: (song.like_count ?? 0) > 0,
-          createdAt: song.created_at,
-          taskId: song.audio_provider_task_id,
-        },
-      ];
-    });
+        return [
+          {
+            id: song.id,
+            title: song.title,
+            promptSummary: song.user_input,
+            styleSummary: (song.style_tags ?? []).join(", "),
+            status,
+            isPublic: Boolean(song.is_public),
+            coverUrl: song.cover_url,
+            audioUrl: song.audio_url,
+            modelTag: (song.audio_provider ?? "kie").toUpperCase(),
+            versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
+            liked: (song.like_count ?? 0) > 0,
+            createdAt: song.created_at,
+            taskId: song.audio_provider_task_id,
+          },
+        ];
+      },
+    );
     setWorkspaceSongs(mapped);
   }, [initialWorkspaceSongs]);
 
@@ -267,14 +270,19 @@ export function StoryInput({
     const timer = window.setInterval(() => {
       processingSongs.forEach((song) => {
         void (async () => {
+          const attempt = (pollAttemptsRef.current[song.id] ?? 0) + 1;
+          pollAttemptsRef.current[song.id] = attempt;
           const response = await fetch(
-            `/api/generations/${encodeURIComponent(song.id)}`,
+            `/api/generations/${encodeURIComponent(song.id)}?attempt=${attempt}`,
             {
               cache: "no-store",
             },
           );
           if (!response.ok) return;
           const data = (await response.json()) as GenerationJobPayload;
+          if (data.status === "failed" || data.status === "completed") {
+            delete pollAttemptsRef.current[song.id];
+          }
           setWorkspaceSongs((current) =>
             data.status === "failed"
               ? current.filter((item) => item.id !== song.id)
@@ -284,7 +292,9 @@ export function StoryInput({
                     : {
                         ...item,
                         status:
-                          data.status === "completed" ? "completed" : "processing",
+                          data.status === "completed"
+                            ? "completed"
+                            : "processing",
                         audioUrl: data.audio_url ?? item.audioUrl,
                         coverUrl: data.cover_url ?? item.coverUrl,
                       },

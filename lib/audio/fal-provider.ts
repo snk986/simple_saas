@@ -67,10 +67,7 @@ function mapFalStatusToTask(status?: string): TaskResult["status"] {
   return "failed";
 }
 
-function normalizeTrack(
-  taskId: string,
-  payload: unknown,
-): TaskResult["songs"] {
+function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
   const data = payload as
     | {
         data?: {
@@ -91,10 +88,21 @@ function normalizeTrack(
         };
         duration?: number;
         title?: string;
+        response?: {
+          audio?: {
+            url?: string;
+          };
+          image?: {
+            url?: string;
+          };
+          duration?: number;
+          title?: string;
+        };
       }
     | undefined;
 
-  const audioUrl = data?.data?.audio?.url ?? data?.audio?.url;
+  const audioUrl =
+    data?.data?.audio?.url ?? data?.response?.audio?.url ?? data?.audio?.url;
   if (!audioUrl) {
     return [];
   }
@@ -103,9 +111,13 @@ function normalizeTrack(
     {
       id: taskId,
       audio_url: audioUrl,
-      image_url: data?.data?.image?.url ?? data?.image?.url,
-      duration: data?.data?.duration ?? data?.duration ?? 0,
-      title: data?.data?.title ?? data?.title,
+      image_url:
+        data?.data?.image?.url ??
+        data?.response?.image?.url ??
+        data?.image?.url,
+      duration:
+        data?.data?.duration ?? data?.response?.duration ?? data?.duration ?? 0,
+      title: data?.data?.title ?? data?.response?.title ?? data?.title,
     },
   ];
 }
@@ -151,7 +163,7 @@ export const falProvider: AudioProvider = {
       status?: string;
       response_url?: string;
       error?: string;
-    }>(statusUrl, {
+    }>(`${statusUrl}?logs=1`, {
       method: "GET",
       headers: {
         Authorization: `Key ${apiKey}`,
@@ -178,11 +190,12 @@ export const falProvider: AudioProvider = {
 
     const resultUrl =
       statusJson.response_url ??
-      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}`;
+      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/response`;
     const resultJson = await requestWithRetry<{
       status?: string;
       payload?: unknown;
       data?: unknown;
+      response?: unknown;
       error?: string;
     }>(resultUrl, {
       method: "GET",
@@ -191,7 +204,13 @@ export const falProvider: AudioProvider = {
       },
     });
 
-    const songs = normalizeTrack(taskId, resultJson.payload ?? resultJson);
+    const songs = normalizeTrack(
+      taskId,
+      resultJson.payload ??
+        resultJson.data ??
+        resultJson.response ??
+        resultJson,
+    );
 
     return {
       status: songs.length > 0 ? "completed" : "failed",
@@ -199,7 +218,7 @@ export const falProvider: AudioProvider = {
       error:
         songs.length > 0
           ? undefined
-          : resultJson.error ?? "FAL result missing audio URL",
+          : (resultJson.error ?? "FAL result missing audio URL"),
       providerStatus: resultJson.status ?? statusJson.status,
     };
   },
