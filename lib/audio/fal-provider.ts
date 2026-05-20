@@ -146,18 +146,47 @@ export const falProvider: AudioProvider = {
   },
 
   async getTaskStatus(taskId: string) {
-    const { apiKey, modelId } = getFalConfig();
+    const { apiKey, modelId, queueBaseUrl } = getFalConfig();
     fal.config({ credentials: apiKey });
-    const basePollFields = { poll_function_name: "falProvider.getTaskStatus" as const, fal_endpoint_id: modelId, fal_request_id: taskId };
+    const basePollFields = {
+      poll_function_name: "falProvider.getTaskStatus" as const,
+      fal_endpoint_id: modelId,
+      fal_request_id: taskId,
+    };
 
-    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status" });
+    logInfo("fal_provider_poll", {
+      ...basePollFields,
+      poll_step: "status",
+      sdk_method: "fal.queue.status",
+    });
     let statusSdk: Awaited<ReturnType<typeof fal.queue.status>>;
     try {
-      statusSdk = await fal.queue.status(modelId, { requestId: taskId, logs: true });
-      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: 200, provider_status: statusSdk.status, provider_queue_position: (statusSdk as { queue_position?: number }).queue_position, provider_response_url_exists: Boolean((statusSdk as { response_url?: string }).response_url), provider_error: (statusSdk as { error?: string }).error });
+      statusSdk = await fal.queue.status(modelId, {
+        requestId: taskId,
+        logs: true,
+      });
+      logInfo("fal_provider_poll", {
+        ...basePollFields,
+        poll_step: "status",
+        sdk_method: "fal.queue.status",
+        response_status: 200,
+        provider_status: statusSdk.status,
+        provider_queue_position: (statusSdk as { queue_position?: number })
+          .queue_position,
+        provider_response_url_exists: Boolean(
+          (statusSdk as { response_url?: string }).response_url,
+        ),
+        provider_error: (statusSdk as { error?: string }).error,
+      });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      logError("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: "error", response_body: msg.slice(0, 500) });
+      logError("fal_provider_poll", {
+        ...basePollFields,
+        poll_step: "status",
+        sdk_method: "fal.queue.status",
+        response_status: "error",
+        response_body: msg.slice(0, 500),
+      });
       throw e;
     }
 
@@ -166,25 +195,70 @@ export const falProvider: AudioProvider = {
       return { status: "processing", songs: [], providerStatus };
     }
     if (providerStatus !== "COMPLETED" && providerStatus !== "OK") {
-      return { status: "failed", songs: [], error: (statusSdk as { error?: string }).error ?? `FAL task failed with status: ${providerStatus}`, providerStatus };
+      return {
+        status: "failed",
+        songs: [],
+        error:
+          (statusSdk as { error?: string }).error ??
+          `FAL task failed with status: ${providerStatus}`,
+        providerStatus,
+      };
     }
 
-    let resultSdk: Awaited<ReturnType<typeof fal.queue.result>>;
+    const resultUrl =
+      (statusSdk as { response_url?: string }).response_url ??
+      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/response`;
+    let resultJson: {
+      status?: string;
+      payload?: unknown;
+      data?: unknown;
+      response?: unknown;
+      error?: string;
+    };
     try {
-      resultSdk = await fal.queue.result(modelId, { requestId: taskId });
-      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result", response_status: 200 });
+      resultJson = await requestWithRetry(resultUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Key ${apiKey}`,
+        },
+      });
+      logInfo("fal_provider_poll", {
+        ...basePollFields,
+        poll_step: "result",
+        sdk_method: "manual_fetch",
+        poll_url: resultUrl,
+        http_method: "GET",
+        response_status: 200,
+      });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      logError("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result", response_status: "error", response_body: msg.slice(0, 500) });
+      logError("fal_provider_poll", {
+        ...basePollFields,
+        poll_step: "result",
+        sdk_method: "manual_fetch",
+        poll_url: resultUrl,
+        http_method: "GET",
+        response_status: "error",
+        response_body: msg.slice(0, 500),
+      });
       throw e;
     }
 
-    const songs = normalizeTrack(taskId, (resultSdk as { data?: unknown }).data ?? resultSdk);
+    const songs = normalizeTrack(
+      taskId,
+      resultJson.payload ??
+        resultJson.data ??
+        resultJson.response ??
+        resultJson,
+    );
     return {
       status: songs.length > 0 ? "completed" : "failed",
       songs,
-      error: songs.length > 0 ? undefined : ((resultSdk as { error?: string }).error ?? "FAL result missing audio URL"),
-      providerStatus: (resultSdk as { status?: string }).status ?? providerStatus,
+      error:
+        songs.length > 0
+          ? undefined
+          : (resultJson.error ?? "FAL result missing audio URL"),
+      providerStatus: resultJson.status ?? providerStatus,
     };
   },
 };
