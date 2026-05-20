@@ -30,6 +30,7 @@ interface SongMakerRoutePageProps {
   routeKey: SongMakerRouteKey;
   initialMode: SongMakerMode;
   searchParams: SongMakerSearchParams;
+  cleanUrl?: boolean;
 }
 
 interface InitialWorkspaceSong {
@@ -82,6 +83,7 @@ export async function SongMakerRoutePage({
   routeKey,
   initialMode,
   searchParams,
+  cleanUrl = false,
 }: SongMakerRoutePageProps) {
   if (!locales.includes(locale)) {
     notFound();
@@ -176,14 +178,15 @@ export async function SongMakerRoutePage({
         )}
 
         <StoryInput
-          recallCampaign={searchParams.utm_campaign ?? null}
+          recallCampaign={cleanUrl ? null : (searchParams.utm_campaign ?? null)}
           canDownload={canDownload}
           creditsBalance={entitlements?.creditsBalance ?? 0}
-          initialPrompt={searchParams.prompt ?? null}
-          initialStyle={searchParams.style ?? null}
-          initialTitle={searchParams.title ?? null}
+          initialPrompt={cleanUrl ? null : (searchParams.prompt ?? null)}
+          initialStyle={cleanUrl ? null : (searchParams.style ?? null)}
+          initialTitle={cleanUrl ? null : (searchParams.title ?? null)}
           initialMode={initialMode}
-          initialJobId={searchParams.jobId ?? null}
+          initialJobId={cleanUrl ? null : (searchParams.jobId ?? null)}
+          cleanUrl={cleanUrl}
           paymentSuccessTitle={tCreate("paymentSuccessTitle")}
           paymentSuccessDescription={tCreate("paymentSuccessDescription")}
           initialWorkspaceSongs={initialWorkspaceSongs}

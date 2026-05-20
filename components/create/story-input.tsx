@@ -29,6 +29,7 @@ interface StoryInputProps {
   initialTitle?: string | null;
   initialMode?: "text" | "lyrics";
   initialJobId?: string | null;
+  cleanUrl?: boolean;
   paymentSuccessTitle?: string;
   paymentSuccessDescription?: string;
   modeRoutes?: {
@@ -112,6 +113,7 @@ const CREEM_CHECKOUT_QUERY_KEYS = [
   "subscription_id",
   "signature",
 ];
+const PENDING_JOB_STORAGE_PREFIX = "calyra:pendingJob:";
 
 function normalizeStatus(
   status: "generating" | "ready" | "failed" | "expired",
@@ -139,6 +141,7 @@ export function StoryInput({
   initialTitle,
   initialMode = "text",
   initialJobId,
+  cleanUrl = false,
   paymentSuccessTitle,
   paymentSuccessDescription,
   modeRoutes,
@@ -154,8 +157,12 @@ export function StoryInput({
   const [prompt, setPrompt] = useState(initialPrompt ?? "");
   const [style, setStyle] = useState(initialStyle ?? "");
   const [title, setTitle] = useState(initialTitle ?? "My AI Song");
+  const [pendingInitialJobId, setPendingInitialJobId] = useState<string | null>(
+    initialJobId ?? null,
+  );
   const [instrumental, setInstrumental] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [errorAction, setErrorAction] = useState<ActionNeededType | null>(null);
   const [workspaceSongs, setWorkspaceSongs] = useState<WorkspaceSongItem[]>([]);
   const [search, setSearch] = useState("");
@@ -164,6 +171,21 @@ export function StoryInput({
   const pollAttemptsRef = useRef<Record<string, number>>({});
 
   useEffect(() => {
+    if (cleanUrl) {
+      const cleanPath = `${window.location.pathname}${window.location.hash}`;
+      if (window.location.search) {
+        window.history.replaceState({}, "", cleanPath);
+      }
+
+      const pendingJobKey = `${PENDING_JOB_STORAGE_PREFIX}${window.location.pathname}`;
+      const pendingJobId = window.sessionStorage.getItem(pendingJobKey);
+      if (pendingJobId) {
+        window.sessionStorage.removeItem(pendingJobKey);
+        setPendingInitialJobId(pendingJobId);
+      }
+      return;
+    }
+
     const url = new URL(window.location.href);
     const hasCheckoutParams = CREEM_CHECKOUT_QUERY_KEYS.some((key) =>
       url.searchParams.has(key),
@@ -187,7 +209,7 @@ export function StoryInput({
       "",
       `${url.pathname}${url.search}${url.hash}`,
     );
-  }, [paymentSuccessDescription, paymentSuccessTitle, toast]);
+  }, [cleanUrl, paymentSuccessDescription, paymentSuccessTitle, toast]);
 
   useEffect(() => {
     setMode(initialMode);
@@ -225,13 +247,15 @@ export function StoryInput({
   }, [initialWorkspaceSongs]);
 
   useEffect(() => {
-    if (!initialJobId) return;
-    const exists = workspaceSongs.some((song) => song.id === initialJobId);
+    if (!pendingInitialJobId) return;
+    const exists = workspaceSongs.some(
+      (song) => song.id === pendingInitialJobId,
+    );
     if (exists) return;
 
     void (async () => {
       const response = await fetch(
-        `/api/generations/${encodeURIComponent(initialJobId)}`,
+        `/api/generations/${encodeURIComponent(pendingInitialJobId)}`,
       );
       if (!response.ok) return;
       const data = (await response.json()) as GenerationJobPayload;
@@ -257,7 +281,7 @@ export function StoryInput({
         ...current,
       ]);
     })();
-  }, [initialJobId, workspaceSongs]);
+  }, [pendingInitialJobId, workspaceSongs]);
 
   useEffect(() => {
     const processingSongs = workspaceSongs.filter(
@@ -282,6 +306,11 @@ export function StoryInput({
           const data = (await response.json()) as GenerationJobPayload;
           if (data.status === "failed" || data.status === "completed") {
             delete pollAttemptsRef.current[song.id];
+          }
+          if (data.status === "failed") {
+            setGenerationError(
+              "Audio generation failed and any held credits were returned. Please try again.",
+            );
           }
           setWorkspaceSongs((current) =>
             data.status === "failed"
@@ -354,6 +383,7 @@ export function StoryInput({
     }
 
     setIsSubmitting(true);
+    setGenerationError(null);
     try {
       const response = await fetch("/api/generations", {
         method: "POST",
@@ -407,13 +437,10 @@ export function StoryInput({
         optimistic,
         ...current.filter((song) => song.id !== optimistic.id),
       ]);
-
-      if (typeof window !== "undefined") {
-        const url = new URL(window.location.href);
-        url.searchParams.set("jobId", data.jobId);
-        window.history.replaceState({}, "", `${url.pathname}${url.search}`);
-      }
     } catch (caught) {
+      setGenerationError(
+        caught instanceof Error ? caught.message : "Generation failed",
+      );
       toast({
         variant: "destructive",
         description:
@@ -450,19 +477,7 @@ export function StoryInput({
       return;
     }
 
-    const params = new URLSearchParams();
-    if (prompt.trim()) {
-      params.set("prompt", prompt.trim());
-    }
-    if (style.trim()) {
-      params.set("style", style.trim());
-    }
-    if (title.trim()) {
-      params.set("title", title.trim());
-    }
-
-    const query = params.toString();
-    router.push(`${modeRoutes[nextMode]}${query ? `?${query}` : ""}`);
+    router.push(modeRoutes[nextMode]);
   };
 
   return (
@@ -560,6 +575,12 @@ export function StoryInput({
             />
             {isSubmitting ? "Generating..." : "Generate Song"}
           </Button>
+
+          {generationError ? (
+            <div className="mt-3 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {generationError}
+            </div>
+          ) : null}
         </aside>
 
         <section className="rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">

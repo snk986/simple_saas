@@ -40,14 +40,7 @@ export function SeoSongStartForm({ mode, labels }: SeoSongStartFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const params = new URLSearchParams({
-      prompt: prompt.trim(),
-      style: style.trim(),
-      title: title.trim(),
-    });
-
-    router.push(`${localizedSongMakerPath(locale, mode)}?${params.toString()}`);
+    router.push(localizedSongMakerPath(locale, mode));
   };
 
   return (

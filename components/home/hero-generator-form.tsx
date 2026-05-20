@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type Mode = "text" | "lyrics";
+const PENDING_JOB_STORAGE_PREFIX = "calyra:pendingJob:";
 
 interface HeroGeneratorFormProps {
   textToSongPath: string;
@@ -116,6 +117,17 @@ export function HeroGeneratorForm({
       }
 
       const nextPath = mode === "lyrics" ? lyricsToSongPath : textToSongPath;
+      if (mode === "lyrics") {
+        const pendingJobPath = new URL(nextPath, window.location.origin)
+          .pathname;
+        window.sessionStorage.setItem(
+          `${PENDING_JOB_STORAGE_PREFIX}${pendingJobPath}`,
+          data.jobId,
+        );
+        router.push(nextPath);
+        return;
+      }
+
       router.push(`${nextPath}?jobId=${encodeURIComponent(data.jobId)}`);
     } finally {
       setIsSubmitting(false);

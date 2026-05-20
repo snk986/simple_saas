@@ -7,16 +7,7 @@ import { locales, type Locale } from "@/i18n/routing";
 
 interface AiLyricsToSongPageProps {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{
-    id?: string;
-    ref?: string;
-    utm_campaign?: string;
-    upgraded?: string;
-    prompt?: string;
-    style?: string;
-    title?: string;
-    jobId?: string;
-  }>;
+  searchParams?: Promise<Record<string, string | undefined>>;
 }
 
 const routeKey = "aiLyricsToSong";
@@ -34,17 +25,16 @@ export function generateStaticParams() {
 
 export default async function AiLyricsToSongPage({
   params,
-  searchParams,
 }: AiLyricsToSongPageProps) {
   const { locale } = await params;
-  const query = await searchParams;
 
   return (
     <SongMakerRoutePage
       locale={locale}
       routeKey={routeKey}
       initialMode="lyrics"
-      searchParams={query}
+      searchParams={{}}
+      cleanUrl
     />
   );
 }
