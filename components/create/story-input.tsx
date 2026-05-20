@@ -543,7 +543,7 @@ export function StoryInput({
         }}
       />
 
-      <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
+      <div className="grid gap-6 lg:grid-cols-2">
         <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-xl font-semibold">{t("generatorTitle")}</h1>
