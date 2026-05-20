@@ -549,7 +549,7 @@ function GalleryCard({ song }: { song: GallerySong }) {
 
   return (
     <article
-      className="w-[48%] shrink-0 snap-start sm:w-44 md:w-56"
+      className="w-[clamp(150px,46vw,220px)] shrink-0 snap-start sm:w-44 md:w-56"
       style={coverStyle}
     >
       <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-[image:var(--cover-bg)] shadow-2xl shadow-black/25">
