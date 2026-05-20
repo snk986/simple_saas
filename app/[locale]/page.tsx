@@ -96,45 +96,7 @@ const gallerySongs: GallerySong[] = [
     cover: "linear-gradient(135deg, #1e1b4b 0%, #7c3aed 52%, #ec4899 100%)",
     avatar: "linear-gradient(135deg, #7c3aed, #ec4899)",
   },
-  {
-    key: "ton-pere",
-    title: "Ton PERE",
-    author: "Pierre Dubois",
-    plays: "198.4K",
-    rating: "4.3",
-    cover: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 52%, #111827 100%)",
-    avatar: "linear-gradient(135deg, #1d4ed8, #111827)",
-  },
-  {
-    key: "dust-horizon",
-    title: "Dust on Horizon",
-    author: "Will Harper",
-    plays: "129.6K",
-    rating: "4.4",
-    cover: "linear-gradient(135deg, #052e16 0%, #0e7490 52%, #fde68a 100%)",
-    avatar: "linear-gradient(135deg, #0e7490, #fde68a)",
-  },
-  {
-    key: "silver-rain",
-    title: "Silver Rain",
-    author: "Nora Vale",
-    plays: "248.9K",
-    rating: "4.8",
-    cover: "linear-gradient(135deg, #111827 0%, #64748b 52%, #e0f2fe 100%)",
-    avatar: "linear-gradient(135deg, #64748b, #e0f2fe)",
-  },
-  {
-    key: "velvet-sunrise",
-    title: "Velvet Sunrise",
-    author: "Mika Ray",
-    plays: "301.5K",
-    rating: "4.7",
-    cover: "linear-gradient(135deg, #3b0764 0%, #db2777 52%, #fb923c 100%)",
-    avatar: "linear-gradient(135deg, #db2777, #fb923c)",
-  },
 ];
-
-const galleryLoopSongs = [...gallerySongs, ...gallerySongs];
 
 export async function generateMetadata({
   params,
@@ -370,12 +332,10 @@ export default async function Home({ params }: HomePageProps) {
             {t("gallery.subtitle")}
           </p>
         </div>
-        <div className="relative mt-10 overflow-hidden">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#050509] to-transparent md:w-24" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#050509] to-transparent md:w-24" />
-          <div className="flex w-max gap-4 pb-2 [animation:music-scroll_52s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
-            {galleryLoopSongs.map((song, index) => (
-              <GalleryCard key={`${song.key}-${index}`} song={song} />
+        <div className="mt-10 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex w-max touch-pan-x flex-nowrap gap-4 snap-x snap-mandatory">
+            {gallerySongs.map((song) => (
+              <GalleryCard key={song.key} song={song} />
             ))}
           </div>
         </div>
@@ -588,7 +548,10 @@ function GalleryCard({ song }: { song: GallerySong }) {
   } as CSSProperties;
 
   return (
-    <article className="w-44 shrink-0 md:w-56" style={coverStyle}>
+    <article
+      className="w-[48%] shrink-0 snap-start sm:w-44 md:w-56"
+      style={coverStyle}
+    >
       <div className="relative h-60 overflow-hidden rounded-xl bg-[image:var(--cover-bg)] shadow-2xl shadow-black/25 md:h-80">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.38),transparent_15%),radial-gradient(circle_at_76%_48%,rgba(255,255,255,0.18),transparent_20%),linear-gradient(to_bottom,rgba(0,0,0,0.08),transparent_48%,rgba(0,0,0,0.32))]" />
         <button
