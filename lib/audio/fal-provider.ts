@@ -1,4 +1,5 @@
 import type { AudioProvider, GenerateParams, TaskResult } from "./types";
+import { logError, logInfo } from "@/lib/observability/log";
 
 const DEFAULT_MODEL_ID = "fal-ai/minimax-music/v2";
 const DEFAULT_QUEUE_BASE_URL = "https://queue.fal.run";
@@ -158,17 +159,18 @@ export const falProvider: AudioProvider = {
   async getTaskStatus(taskId: string) {
     const { apiKey, modelId, queueBaseUrl } = getFalConfig();
     const statusUrl = `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/status`;
-
-    const statusJson = await requestWithRetry<{
-      status?: string;
-      response_url?: string;
-      error?: string;
-    }>(`${statusUrl}?logs=1`, {
-      method: "GET",
-      headers: {
-        Authorization: `Key ${apiKey}`,
-      },
-    });
+    const statusUrlWithLogs = `${statusUrl}?logs=1`;
+    const basePollFields = { poll_function_name: "falProvider.getTaskStatus" as const, fal_endpoint_id: modelId, fal_request_id: taskId };
+    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET" });
+    let statusJson: { status?: string; response_url?: string; error?: string };
+    try {
+      statusJson = await requestWithRetry<{ status?: string; response_url?: string; error?: string }>(statusUrlWithLogs, { method: "GET", headers: { Authorization: `Key ${apiKey}` } });
+      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET", response_status: 200 });
+    } catch (e) {
+      const fe = e as { status?: number; message?: string };
+      logError("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET", response_status: fe.status ?? "unknown", response_body: (fe.message ?? "").slice(0, 500) });
+      throw e;
+    }
 
     const mapped = mapFalStatusToTask(statusJson.status);
     if (mapped === "processing") {
@@ -191,18 +193,16 @@ export const falProvider: AudioProvider = {
     const resultUrl =
       statusJson.response_url ??
       `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/response`;
-    const resultJson = await requestWithRetry<{
-      status?: string;
-      payload?: unknown;
-      data?: unknown;
-      response?: unknown;
-      error?: string;
-    }>(resultUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Key ${apiKey}`,
-      },
-    });
+    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET" });
+    let resultJson: { status?: string; payload?: unknown; data?: unknown; response?: unknown; error?: string };
+    try {
+      resultJson = await requestWithRetry<{ status?: string; payload?: unknown; data?: unknown; response?: unknown; error?: string }>(resultUrl, { method: "GET", headers: { Authorization: `Key ${apiKey}` } });
+      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET", response_status: 200 });
+    } catch (e) {
+      const fe = e as { status?: number; message?: string };
+      logError("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET", response_status: fe.status ?? "unknown", response_body: (fe.message ?? "").slice(0, 500) });
+      throw e;
+    }
 
     const songs = normalizeTrack(
       taskId,
