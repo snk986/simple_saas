@@ -333,7 +333,7 @@ export default async function Home({ params }: HomePageProps) {
           </p>
         </div>
         <div className="mt-10 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex w-max touch-pan-x flex-nowrap gap-4 snap-x snap-mandatory">
+          <div className="mx-auto flex w-max touch-pan-x flex-nowrap gap-4 snap-x snap-mandatory">
             {gallerySongs.map((song) => (
               <GalleryCard key={song.key} song={song} />
             ))}
@@ -552,7 +552,7 @@ function GalleryCard({ song }: { song: GallerySong }) {
       className="w-[48%] shrink-0 snap-start sm:w-44 md:w-56"
       style={coverStyle}
     >
-      <div className="relative h-60 overflow-hidden rounded-xl bg-[image:var(--cover-bg)] shadow-2xl shadow-black/25 md:h-80">
+      <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-[image:var(--cover-bg)] shadow-2xl shadow-black/25">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.38),transparent_15%),radial-gradient(circle_at_76%_48%,rgba(255,255,255,0.18),transparent_20%),linear-gradient(to_bottom,rgba(0,0,0,0.08),transparent_48%,rgba(0,0,0,0.32))]" />
         <button
           aria-label={`Play ${song.title}`}
