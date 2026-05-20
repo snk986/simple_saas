@@ -296,6 +296,7 @@ export function StoryInput({
           if (attempt > 60) {
             delete pollAttemptsRef.current[song.id];
             setGenerationError(t("stillProcessingMessage"));
+            setErrorAction("error");
             setWorkspaceSongs((current) =>
               current.filter((item) => item.id !== song.id),
             );
@@ -317,6 +318,7 @@ export function StoryInput({
             setGenerationError(
               data.errorMessage ?? t("generationFailedWithRefundMessage"),
             );
+            setErrorAction("error");
           }
           setWorkspaceSongs((current) =>
             data.status === "failed"
@@ -446,11 +448,7 @@ export function StoryInput({
       setGenerationError(
         caught instanceof Error ? caught.message : t("generationFailed"),
       );
-      toast({
-        variant: "destructive",
-        description:
-          caught instanceof Error ? caught.message : t("generationFailed"),
-      });
+      setErrorAction("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -490,7 +488,11 @@ export function StoryInput({
       <ActionNeededDialog
         action={errorAction}
         localePrefix={localePrefix}
-        onClose={() => setErrorAction(null)}
+        errorMessage={generationError}
+        onClose={() => {
+          setErrorAction(null);
+          setGenerationError(null);
+        }}
       />
 
       <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
@@ -579,12 +581,6 @@ export function StoryInput({
             />
             {isSubmitting ? t("generating") : t("generateSong")}
           </Button>
-
-          {generationError ? (
-            <div className="mt-3 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {generationError}
-            </div>
-          ) : null}
         </aside>
 
         <section className="rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">

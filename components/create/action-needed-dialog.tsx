@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,13 +25,15 @@ export function ActionNeededDialog({
   onClose: () => void;
   errorMessage?: string | null;
 }) {
-  const title = action === "error" ? "Generation failed" : "Action needed";
+  const t = useTranslations("create.songMaker");
+  const title =
+    action === "error" ? t("generationFailed") : t("actionNeededTitle");
   const description =
     action === "sign-in"
-      ? "Please sign in before generating music."
+      ? t("signInRequiredMessage")
       : action === "pricing"
-        ? "Your credits are too low for this generation."
-        : errorMessage ?? "Please try again in a moment.";
+        ? t("creditsTooLowMessage")
+        : (errorMessage ?? t("tryAgainMessage"));
 
   return (
     <Dialog
@@ -49,7 +52,7 @@ export function ActionNeededDialog({
         {action === "error" ? (
           <DialogFooter>
             <Button className="w-full sm:w-auto" onClick={onClose}>
-              Close
+              {t("close")}
             </Button>
           </DialogFooter>
         ) : (
@@ -62,7 +65,7 @@ export function ActionNeededDialog({
                     : `${localePrefix}/pricing`
                 }
               >
-                {action === "sign-in" ? "Sign in" : "Top up credits"}
+                {action === "sign-in" ? t("signInCta") : t("topUpCreditsCta")}
               </Link>
             </Button>
           </DialogFooter>
