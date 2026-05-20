@@ -15,7 +15,6 @@ interface AiSongMakerPageProps {
     prompt?: string;
     style?: string;
     title?: string;
-    jobId?: string;
   }>;
 }
 

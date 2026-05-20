@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type Mode = "text" | "lyrics";
-const PENDING_JOB_STORAGE_PREFIX = "calyra:pendingJob:";
+const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
 
 interface HeroGeneratorFormProps {
   textToSongPath: string;
@@ -88,7 +88,7 @@ export function HeroGeneratorForm({
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/generations", {
+      const response = await fetch("/api/songs/generate", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -112,23 +112,18 @@ export function HeroGeneratorForm({
         return;
       }
 
-      if (!response.ok || !data.jobId) {
+      if (!response.ok || !data.songId) {
         throw new Error(data.error ?? "Generation failed");
       }
 
       const nextPath = mode === "lyrics" ? lyricsToSongPath : textToSongPath;
-      if (mode === "lyrics") {
-        const pendingJobPath = new URL(nextPath, window.location.origin)
-          .pathname;
-        window.sessionStorage.setItem(
-          `${PENDING_JOB_STORAGE_PREFIX}${pendingJobPath}`,
-          data.jobId,
-        );
-        router.push(nextPath);
-        return;
-      }
-
-      router.push(`${nextPath}?jobId=${encodeURIComponent(data.jobId)}`);
+      const pendingSongPath = new URL(nextPath, window.location.origin)
+        .pathname;
+      window.sessionStorage.setItem(
+        `${PENDING_SONG_STORAGE_PREFIX}${pendingSongPath}`,
+        data.songId,
+      );
+      router.push(nextPath);
     } finally {
       setIsSubmitting(false);
     }

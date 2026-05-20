@@ -19,12 +19,9 @@ import {
 } from "@/lib/observability/log";
 
 const AUDIO_CREDIT_COST = 200;
-const MAX_AUDIO_POLL_ATTEMPTS = 60;
 
 const querySchema = z.object({
-  taskId: z.string().min(1).optional(),
-  songId: z.string().uuid().optional(),
-  attempt: z.coerce.number().int().positive().optional(),
+  songId: z.string().uuid(),
 });
 
 async function refundCreditIfNeeded(
@@ -108,12 +105,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const query = querySchema.safeParse({
-      taskId: request.nextUrl.searchParams.get("taskId") ?? undefined,
       songId: request.nextUrl.searchParams.get("songId") ?? undefined,
-      attempt: request.nextUrl.searchParams.get("attempt") ?? undefined,
     });
 
-    if (!query.success || (!query.data.taskId && !query.data.songId)) {
+    if (!query.success) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
@@ -137,25 +132,17 @@ export async function GET(request: NextRequest) {
       ...client,
     });
 
-    let songQuery = supabase
+    const songQuery = supabase
       .from("songs")
       .select(
         "id,title,lyrics,user_input,status,audio_provider,audio_provider_task_id,audio_provider_status,audio_url,audio_url_alt,cover_url,lyrics_regen_count,style_key,style_params,style_tags,locale,user_id,is_public,expires_at,created_at",
       )
-      .eq("user_id", user.id);
-
-    songQuery = query.data.songId
-      ? songQuery.eq("id", query.data.songId)
-      : songQuery.eq("audio_provider_task_id", query.data.taskId);
+      .eq("user_id", user.id)
+      .eq("id", query.data.songId);
 
     const { data: song, error: songError } = await songQuery.maybeSingle();
 
-    if (
-      songError ||
-      !song ||
-      !song.audio_provider ||
-      !song.audio_provider_task_id
-    ) {
+    if (songError || !song || !song.audio_provider) {
       return NextResponse.json({ error: "Song not found" }, { status: 404 });
     }
 
@@ -163,40 +150,6 @@ export async function GET(request: NextRequest) {
       id: song.id,
       audio_provider_task_id: song.audio_provider_task_id,
     };
-
-    if (query.data.attempt && query.data.attempt > MAX_AUDIO_POLL_ATTEMPTS) {
-      await supabase
-        .from("songs")
-        .update({
-          status: "failed",
-          audio_provider_status: "poll_timeout",
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", song.id)
-        .eq("user_id", user.id);
-      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
-
-      logError("song_generate_timeout", {
-        request_id: requestId,
-        user_id: user.id,
-        song_id: song.id,
-        stage: "audio_poll",
-        status: "failed",
-        duration_ms: elapsedMs(startMs),
-        error_code: ERROR_CODES.TIMEOUT,
-        provider_task_id: song.audio_provider_task_id,
-        failure_reason: "max_audio_poll_attempts_exceeded",
-        poll_attempts: query.data.attempt,
-        ...client,
-      });
-
-      return NextResponse.json({
-        request_id: requestId,
-        status: "failed",
-        songId: song.id,
-        error: "Audio generation timed out",
-      });
-    }
 
     if (song.status === "ready") {
       logInfo("song_generate_success", {
@@ -209,11 +162,11 @@ export async function GET(request: NextRequest) {
         ...client,
       });
       return NextResponse.json({
-        request_id: requestId,
         status: "completed",
         songId: song.id,
-        audio_url: song.audio_url,
-        cover_url: song.cover_url,
+        audioUrl: song.audio_url,
+        coverUrl: song.cover_url,
+        errorMessage: null,
       });
     }
 
@@ -229,7 +182,42 @@ export async function GET(request: NextRequest) {
         failure_reason: "song_already_failed",
         ...client,
       });
-      return NextResponse.json({ status: "failed", songId: song.id });
+      return NextResponse.json({
+        status: "failed",
+        songId: song.id,
+        errorMessage: "Song generation failed. Please try again.",
+      });
+    }
+
+    if (!song.audio_provider_task_id) {
+      await supabase
+        .from("songs")
+        .update({
+          status: "failed",
+          audio_provider_status: "missing_provider_request_id",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", song.id)
+        .eq("user_id", user.id);
+      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
+
+      logError("song_generate_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: song.id,
+        stage: "audio_poll",
+        status: "failed",
+        duration_ms: elapsedMs(startMs),
+        error_code: ERROR_CODES.BAD_RESPONSE,
+        failure_reason: "missing_provider_request_id",
+        ...client,
+      });
+
+      return NextResponse.json({
+        status: "failed",
+        songId: song.id,
+        errorMessage: "Song generation failed. Please try again.",
+      });
     }
 
     const entitlements = await getUserEntitlements(user.id);
@@ -247,7 +235,11 @@ export async function GET(request: NextRequest) {
           .eq("id", song.id)
           .eq("user_id", user.id);
       }
-      return NextResponse.json({ status: "processing", songId: song.id });
+      return NextResponse.json({
+        status: "generating",
+        songId: song.id,
+        errorMessage: null,
+      });
     }
 
     if (result.status === "failed" || result.songs.length === 0) {
@@ -276,10 +268,10 @@ export async function GET(request: NextRequest) {
       });
 
       return NextResponse.json({
-        request_id: requestId,
         status: "failed",
         songId: song.id,
-        error: result.error,
+        errorMessage:
+          result.error ?? "Song generation failed. Please try again.",
       });
     }
 
@@ -429,14 +421,14 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({
-      request_id: requestId,
       status: "completed",
       songId: song.id,
-      audio_url: audioUrl,
-      cover_url: coverUrl,
+      audioUrl,
+      coverUrl,
       altSongId: altSong?.id,
-      alt_audio_url: altSong?.audio_url,
-      alt_cover_url: altSong?.cover_url,
+      altAudioUrl: altSong?.audio_url,
+      altCoverUrl: altSong?.cover_url,
+      errorMessage: null,
     });
   } catch (error) {
     const providerError = classifyProviderError(error);
@@ -483,10 +475,9 @@ export async function GET(request: NextRequest) {
 
     if (currentSong && providerError.error_code === ERROR_CODES.PROVIDER_4XX) {
       return NextResponse.json({
-        request_id: requestId,
         status: "failed",
         songId: currentSong.id,
-        error: providerError.provider_message,
+        errorMessage: "Song generation failed. Please try again.",
       });
     }
 

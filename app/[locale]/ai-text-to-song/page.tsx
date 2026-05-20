@@ -15,7 +15,6 @@ interface AiTextToSongPageProps {
     prompt?: string;
     style?: string;
     title?: string;
-    jobId?: string;
   }>;
 }
 

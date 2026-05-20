@@ -28,7 +28,7 @@ interface StoryInputProps {
   initialStyle?: string | null;
   initialTitle?: string | null;
   initialMode?: "text" | "lyrics";
-  initialJobId?: string | null;
+  initialSongId?: string | null;
   cleanUrl?: boolean;
   paymentSuccessTitle?: string;
   paymentSuccessDescription?: string;
@@ -47,7 +47,6 @@ interface StoryInputProps {
     audio_url: string | null;
     created_at: string;
     audio_provider: string;
-    audio_provider_task_id: string;
     like_count: number | null;
   }>;
 }
@@ -68,26 +67,23 @@ interface WorkspaceSongItem {
   versionTag: string;
   liked: boolean;
   createdAt: string;
-  taskId?: string | null;
 }
 
 interface GenerationCreateResponse {
-  jobId: string;
   songId: string;
-  taskId: string;
-  status: "processing";
+  status: "generating";
+  title: string;
 }
 
-interface GenerationJobPayload {
-  jobId: string;
+interface SongStatusPayload {
   songId: string;
-  taskId?: string | null;
-  status: "idle" | "processing" | "completed" | "failed";
+  status: "generating" | "completed" | "failed";
   title: string;
   userInput: string;
-  style_tags: string[];
-  audio_url?: string | null;
-  cover_url?: string | null;
+  styleTags: string[];
+  audioUrl?: string | null;
+  coverUrl?: string | null;
+  errorMessage?: string | null;
 }
 
 const STYLE_TAGS = [
@@ -113,7 +109,7 @@ const CREEM_CHECKOUT_QUERY_KEYS = [
   "subscription_id",
   "signature",
 ];
-const PENDING_JOB_STORAGE_PREFIX = "calyra:pendingJob:";
+const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
 
 function normalizeStatus(
   status: "generating" | "ready" | "failed" | "expired",
@@ -140,7 +136,7 @@ export function StoryInput({
   initialStyle,
   initialTitle,
   initialMode = "text",
-  initialJobId,
+  initialSongId,
   cleanUrl = false,
   paymentSuccessTitle,
   paymentSuccessDescription,
@@ -157,9 +153,9 @@ export function StoryInput({
   const [prompt, setPrompt] = useState(initialPrompt ?? "");
   const [style, setStyle] = useState(initialStyle ?? "");
   const [title, setTitle] = useState(initialTitle ?? "My AI Song");
-  const [pendingInitialJobId, setPendingInitialJobId] = useState<string | null>(
-    initialJobId ?? null,
-  );
+  const [pendingInitialSongId, setPendingInitialSongId] = useState<
+    string | null
+  >(initialSongId ?? null);
   const [instrumental, setInstrumental] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
@@ -171,17 +167,17 @@ export function StoryInput({
   const pollAttemptsRef = useRef<Record<string, number>>({});
 
   useEffect(() => {
+    const pendingSongKey = `${PENDING_SONG_STORAGE_PREFIX}${window.location.pathname}`;
+    const pendingSongId = window.sessionStorage.getItem(pendingSongKey);
+    if (pendingSongId) {
+      window.sessionStorage.removeItem(pendingSongKey);
+      setPendingInitialSongId(pendingSongId);
+    }
+
     if (cleanUrl) {
       const cleanPath = `${window.location.pathname}${window.location.hash}`;
       if (window.location.search) {
         window.history.replaceState({}, "", cleanPath);
-      }
-
-      const pendingJobKey = `${PENDING_JOB_STORAGE_PREFIX}${window.location.pathname}`;
-      const pendingJobId = window.sessionStorage.getItem(pendingJobKey);
-      if (pendingJobId) {
-        window.sessionStorage.removeItem(pendingJobKey);
-        setPendingInitialJobId(pendingJobId);
       }
       return;
     }
@@ -238,7 +234,6 @@ export function StoryInput({
             versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
             liked: (song.like_count ?? 0) > 0,
             createdAt: song.created_at,
-            taskId: song.audio_provider_task_id,
           },
         ];
       },
@@ -247,18 +242,18 @@ export function StoryInput({
   }, [initialWorkspaceSongs]);
 
   useEffect(() => {
-    if (!pendingInitialJobId) return;
+    if (!pendingInitialSongId) return;
     const exists = workspaceSongs.some(
-      (song) => song.id === pendingInitialJobId,
+      (song) => song.id === pendingInitialSongId,
     );
     if (exists) return;
 
     void (async () => {
       const response = await fetch(
-        `/api/generations/${encodeURIComponent(pendingInitialJobId)}`,
+        `/api/songs/${encodeURIComponent(pendingInitialSongId)}`,
       );
       if (!response.ok) return;
-      const data = (await response.json()) as GenerationJobPayload;
+      const data = (await response.json()) as SongStatusPayload;
       if (data.status === "failed") {
         return;
       }
@@ -267,21 +262,20 @@ export function StoryInput({
           id: data.songId,
           title: data.title,
           promptSummary: data.userInput,
-          styleSummary: (data.style_tags ?? []).join(", "),
+          styleSummary: (data.styleTags ?? []).join(", "),
           status: data.status === "completed" ? "completed" : "processing",
           isPublic: true,
-          coverUrl: data.cover_url ?? null,
-          audioUrl: data.audio_url ?? null,
+          coverUrl: data.coverUrl ?? null,
+          audioUrl: data.audioUrl ?? null,
           modelTag: "KIE",
           versionTag: "V1",
           liked: false,
           createdAt: new Date().toISOString(),
-          taskId: data.taskId ?? null,
         },
         ...current,
       ]);
     })();
-  }, [pendingInitialJobId, workspaceSongs]);
+  }, [pendingInitialSongId, workspaceSongs]);
 
   useEffect(() => {
     const processingSongs = workspaceSongs.filter(
@@ -296,20 +290,33 @@ export function StoryInput({
         void (async () => {
           const attempt = (pollAttemptsRef.current[song.id] ?? 0) + 1;
           pollAttemptsRef.current[song.id] = attempt;
+
+          if (attempt > 60) {
+            delete pollAttemptsRef.current[song.id];
+            setGenerationError(
+              "Song generation is still processing. Please check your history later.",
+            );
+            setWorkspaceSongs((current) =>
+              current.filter((item) => item.id !== song.id),
+            );
+            return;
+          }
+
           const response = await fetch(
-            `/api/generations/${encodeURIComponent(song.id)}?attempt=${attempt}`,
+            `/api/songs/${encodeURIComponent(song.id)}`,
             {
               cache: "no-store",
             },
           );
           if (!response.ok) return;
-          const data = (await response.json()) as GenerationJobPayload;
+          const data = (await response.json()) as SongStatusPayload;
           if (data.status === "failed" || data.status === "completed") {
             delete pollAttemptsRef.current[song.id];
           }
           if (data.status === "failed") {
             setGenerationError(
-              "Audio generation failed and any held credits were returned. Please try again.",
+              data.errorMessage ??
+                "Audio generation failed and any held credits were returned. Please try again.",
             );
           }
           setWorkspaceSongs((current) =>
@@ -324,8 +331,8 @@ export function StoryInput({
                           data.status === "completed"
                             ? "completed"
                             : "processing",
-                        audioUrl: data.audio_url ?? item.audioUrl,
-                        coverUrl: data.cover_url ?? item.coverUrl,
+                        audioUrl: data.audioUrl ?? item.audioUrl,
+                        coverUrl: data.coverUrl ?? item.coverUrl,
                       },
                 ),
           );
@@ -385,7 +392,7 @@ export function StoryInput({
     setIsSubmitting(true);
     setGenerationError(null);
     try {
-      const response = await fetch("/api/generations", {
+      const response = await fetch("/api/songs/generate", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -418,8 +425,8 @@ export function StoryInput({
       }
 
       const optimistic: WorkspaceSongItem = {
-        id: data.jobId,
-        title: title.trim() || "Untitled Song",
+        id: data.songId,
+        title: data.title || title.trim() || "Untitled Song",
         promptSummary: prompt,
         styleSummary: style,
         status: "processing",
@@ -430,7 +437,6 @@ export function StoryInput({
         versionTag: "V1",
         liked: false,
         createdAt: new Date().toISOString(),
-        taskId: data.taskId,
       };
 
       setWorkspaceSongs((current) => [

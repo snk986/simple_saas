@@ -13,6 +13,8 @@ import {
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import type { StyleParams } from "@/types/song";
 
+const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
+
 interface LyricsOnlyGeneratorFormProps {
   labels: {
     prompt: string;
@@ -121,7 +123,7 @@ export function LyricsOnlyGeneratorForm({
     setError(null);
 
     try {
-      const response = await fetch("/api/generations", {
+      const response = await fetch("/api/songs/generate", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -135,7 +137,6 @@ export function LyricsOnlyGeneratorForm({
       });
       const data = (await response.json()) as {
         songId?: string;
-        jobId?: string;
         error?: string;
       };
 
@@ -153,9 +154,14 @@ export function LyricsOnlyGeneratorForm({
         throw new Error(data.error ?? labels.errorFallback);
       }
 
-      router.push(
-        `${prefix}/ai-song-maker?jobId=${encodeURIComponent(data.songId)}`,
+      const nextPath = `${prefix}/ai-lyrics-to-song`;
+      const pendingSongPath = new URL(nextPath, window.location.origin)
+        .pathname;
+      window.sessionStorage.setItem(
+        `${PENDING_SONG_STORAGE_PREFIX}${pendingSongPath}`,
+        data.songId,
       );
+      router.push(nextPath);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : labels.errorFallback);
       setErrorAction("error");
@@ -299,7 +305,9 @@ export function LyricsOnlyGeneratorForm({
               value={result?.lyrics ?? ""}
               onChange={(event) =>
                 setResult((current) =>
-                  current ? { ...current, lyrics: event.target.value } : current,
+                  current
+                    ? { ...current, lyrics: event.target.value }
+                    : current,
                 )
               }
               disabled={!result}

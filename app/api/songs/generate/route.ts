@@ -252,17 +252,18 @@ export async function POST(request: NextRequest) {
     }
 
     songId = song.id;
-    const { taskId, providerStatus } = await audioProvider.generateSong({
-      title,
-      lyrics: prepared.lyrics,
-      prompt: prepared.style.prompt,
-      make_instrumental: Boolean(parsed.data.instrumental),
-    });
+    const { taskId: providerRequestId, providerStatus } =
+      await audioProvider.generateSong({
+        title,
+        lyrics: prepared.lyrics,
+        prompt: prepared.style.prompt,
+        make_instrumental: Boolean(parsed.data.instrumental),
+      });
 
     const { error: updateError } = await supabase
       .from("songs")
       .update({
-        audio_provider_task_id: taskId,
+        audio_provider_task_id: providerRequestId,
         audio_provider_status: providerStatus ?? "submitted",
         updated_at: new Date().toISOString(),
       })
@@ -281,16 +282,14 @@ export async function POST(request: NextRequest) {
       stage: "generation_submit",
       status: "succeeded",
       duration_ms: elapsedMs(requestStart),
-      provider_task_id: taskId,
+      provider_task_id: providerRequestId,
       ...client,
     });
 
     return NextResponse.json({
-      request_id: requestId,
-      jobId: song.id,
       songId: song.id,
-      taskId,
-      status: "processing",
+      status: "generating",
+      title,
     });
   } catch (error) {
     if (userId) {

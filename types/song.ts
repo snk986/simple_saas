@@ -56,16 +56,18 @@ export interface GenerateLyricsResponse {
 }
 
 export interface GenerateAudioResponse {
-  taskId: string;
   songId: string;
+  status: "generating";
+  title: string;
 }
 
 export interface AudioStatusResponse {
-  status: "processing" | "completed" | "failed";
+  status: "generating" | "completed" | "failed";
   songId?: string;
-  audio_url?: string;
-  cover_url?: string;
+  audioUrl?: string;
+  coverUrl?: string;
   altSongId?: string;
-  alt_audio_url?: string;
-  alt_cover_url?: string;
+  altAudioUrl?: string;
+  altCoverUrl?: string;
+  errorMessage?: string | null;
 }

@@ -50,7 +50,11 @@ async function freezeCreditIfNeeded(
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation",
-    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
+    p_metadata: {
+      operation: "audio_generation",
+      request_id: requestId,
+      song_id: songId,
+    },
   });
 
   if (error) {
@@ -104,7 +108,11 @@ async function refundCreditIfNeeded(
     p_user_id: userId,
     p_amount: AUDIO_CREDIT_COST,
     p_description: "audio_generation_refund",
-    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
+    p_metadata: {
+      operation: "audio_generation",
+      request_id: requestId,
+      song_id: songId,
+    },
   });
 
   if (error) {
@@ -195,11 +203,19 @@ export async function POST(request: NextRequest) {
       ...client,
     });
 
-    const credit = await freezeCreditIfNeeded(supabase, user.id, requestId, song.id);
+    const credit = await freezeCreditIfNeeded(
+      supabase,
+      user.id,
+      requestId,
+      song.id,
+    );
     charged = credit.charged;
 
     if (!credit.enough) {
-      return NextResponse.json({ error: "Insufficient credits" }, { status: 402 });
+      return NextResponse.json(
+        { error: "Insufficient credits" },
+        { status: 402 },
+      );
     }
 
     const lyrics = body.data.lyrics ?? song.lyrics;
@@ -221,7 +237,7 @@ export async function POST(request: NextRequest) {
         audio_provider_status: providerStatus ?? "submitted",
         expires_at: entitlements.canKeepSongsForever
           ? null
-          : song.expires_at ?? getSongExpiryForEntitlements(entitlements),
+          : (song.expires_at ?? getSongExpiryForEntitlements(entitlements)),
         updated_at: new Date().toISOString(),
       })
       .eq("id", song.id)
@@ -242,7 +258,11 @@ export async function POST(request: NextRequest) {
       provider_task_id: taskId,
       ...client,
     });
-    return NextResponse.json({ request_id: requestId, taskId, songId: song.id });
+    return NextResponse.json({
+      songId: song.id,
+      status: "generating",
+      title: song.title,
+    });
   } catch (error) {
     if (userId) {
       await refundCreditIfNeeded(supabase, userId, charged, requestId, songId);

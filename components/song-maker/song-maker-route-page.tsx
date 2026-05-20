@@ -22,7 +22,6 @@ type SongMakerSearchParams = {
   prompt?: string;
   style?: string;
   title?: string;
-  jobId?: string;
 };
 
 interface SongMakerRoutePageProps {
@@ -44,7 +43,6 @@ interface InitialWorkspaceSong {
   audio_url: string | null;
   created_at: string;
   audio_provider: string;
-  audio_provider_task_id: string;
   like_count: number | null;
 }
 
@@ -104,7 +102,7 @@ export async function SongMakerRoutePage({
     const { data: songs } = await supabase
       .from("songs")
       .select(
-        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,audio_provider,audio_provider_task_id,like_count",
+        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,audio_provider,like_count",
       )
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
@@ -185,7 +183,6 @@ export async function SongMakerRoutePage({
           initialStyle={cleanUrl ? null : (searchParams.style ?? null)}
           initialTitle={cleanUrl ? null : (searchParams.title ?? null)}
           initialMode={initialMode}
-          initialJobId={cleanUrl ? null : (searchParams.jobId ?? null)}
           cleanUrl={cleanUrl}
           paymentSuccessTitle={tCreate("paymentSuccessTitle")}
           paymentSuccessDescription={tCreate("paymentSuccessDescription")}
