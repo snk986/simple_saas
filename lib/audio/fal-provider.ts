@@ -1,5 +1,6 @@
 import type { AudioProvider, GenerateParams, TaskResult } from "./types";
 import { logError, logInfo } from "@/lib/observability/log";
+import { fal } from "@fal-ai/client";
 
 const DEFAULT_MODEL_ID = "fal-ai/minimax-music/v2";
 const DEFAULT_QUEUE_BASE_URL = "https://queue.fal.run";
@@ -123,6 +124,20 @@ function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
   ];
 }
 
+type FalQueueStatusResult = {
+  status?: string;
+  response_url?: string;
+  error?: string;
+};
+
+type FalQueueResponseResult = {
+  status?: string;
+  payload?: unknown;
+  data?: unknown;
+  response?: unknown;
+  error?: string;
+};
+
 export const falProvider: AudioProvider = {
   name: "fal",
 
@@ -157,69 +172,48 @@ export const falProvider: AudioProvider = {
   },
 
   async getTaskStatus(taskId: string) {
-    const { apiKey, modelId, queueBaseUrl } = getFalConfig();
-    const statusUrl = `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/status`;
-    const statusUrlWithLogs = `${statusUrl}?logs=1`;
+    const { apiKey, modelId } = getFalConfig();
+    fal.config({ credentials: apiKey });
     const basePollFields = { poll_function_name: "falProvider.getTaskStatus" as const, fal_endpoint_id: modelId, fal_request_id: taskId };
-    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET" });
-    let statusJson: { status?: string; response_url?: string; error?: string };
+
+    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status" });
+    let statusData: FalQueueStatusResult;
     try {
-      statusJson = await requestWithRetry<{ status?: string; response_url?: string; error?: string }>(statusUrlWithLogs, { method: "GET", headers: { Authorization: `Key ${apiKey}` } });
-      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET", response_status: 200 });
-    } catch (e) {
-      const fe = e as { status?: number; message?: string };
-      logError("fal_provider_poll", { ...basePollFields, poll_step: "status", poll_url: statusUrlWithLogs, http_method: "GET", response_status: fe.status ?? "unknown", response_body: (fe.message ?? "").slice(0, 500) });
+      const s = await fal.queue.status(modelId, { requestId: taskId, logs: true });
+      statusData = { status: s.status, response_url: (s as { response_url?: string }).response_url, error: (s as { error?: string }).error };
+      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: 200 });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      logError("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: "error", response_body: msg.slice(0, 500) });
       throw e;
     }
 
-    const mapped = mapFalStatusToTask(statusJson.status);
+    const mapped = mapFalStatusToTask(statusData.status);
     if (mapped === "processing") {
-      return {
-        status: "processing",
-        songs: [],
-        providerStatus: statusJson.status,
-      };
+      return { status: "processing", songs: [], providerStatus: statusData.status };
     }
-
     if (mapped === "failed") {
-      return {
-        status: "failed",
-        songs: [],
-        error: statusJson.error ?? "FAL task failed",
-        providerStatus: statusJson.status,
-      };
+      return { status: "failed", songs: [], error: statusData.error ?? "FAL task failed", providerStatus: statusData.status };
     }
 
-    const resultUrl =
-      statusJson.response_url ??
-      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/response`;
-    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET" });
-    let resultJson: { status?: string; payload?: unknown; data?: unknown; response?: unknown; error?: string };
+    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result" });
+    let resultData: FalQueueResponseResult;
     try {
-      resultJson = await requestWithRetry<{ status?: string; payload?: unknown; data?: unknown; response?: unknown; error?: string }>(resultUrl, { method: "GET", headers: { Authorization: `Key ${apiKey}` } });
-      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET", response_status: 200 });
-    } catch (e) {
-      const fe = e as { status?: number; message?: string };
-      logError("fal_provider_poll", { ...basePollFields, poll_step: "result", poll_url: resultUrl, http_method: "GET", response_status: fe.status ?? "unknown", response_body: (fe.message ?? "").slice(0, 500) });
+      const r = await fal.queue.result(modelId, { requestId: taskId });
+      resultData = { status: (r as { status?: string }).status, payload: (r as { data?: unknown }).data ?? r, data: (r as { data?: unknown }).data, response: r, error: (r as { error?: string }).error };
+      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result", response_status: 200 });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      logError("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result", response_status: "error", response_body: msg.slice(0, 500) });
       throw e;
     }
 
-    const songs = normalizeTrack(
-      taskId,
-      resultJson.payload ??
-        resultJson.data ??
-        resultJson.response ??
-        resultJson,
-    );
-
+    const songs = normalizeTrack(taskId, resultData.payload ?? resultData.data ?? resultData.response ?? resultData);
     return {
       status: songs.length > 0 ? "completed" : "failed",
       songs,
-      error:
-        songs.length > 0
-          ? undefined
-          : (resultJson.error ?? "FAL result missing audio URL"),
-      providerStatus: resultJson.status ?? statusJson.status,
+      error: songs.length > 0 ? undefined : (resultData.error ?? "FAL result missing audio URL"),
+      providerStatus: resultData.status ?? statusData.status,
     };
   },
 };
