@@ -279,6 +279,56 @@
       "openPublicPage": "公開ページを開く",
       "viewDashboard": "ダッシュボードを見る",
       "rightsNotice": "生成した曲はYouTube、SNS、商用コンテンツに利用できます。"
+    },
+    "songMaker": {
+      "generatorTitle": "楽曲ジェネレーター",
+      "credits": "クレジット {count}",
+      "textToSong": "テキストから楽曲",
+      "lyricsToSong": "歌詞から楽曲",
+      "lyricsLabel": "歌詞",
+      "songIdea": "楽曲アイデア",
+      "songIdeaHint": "アイデアから始めましょう。Calyraが歌詞を書き、完全な楽曲を生成します。",
+      "songIdeaPlaceholder": "楽曲のアイデア、雰囲気、ストーリー、ジャンルを説明してください...",
+      "lyricsPlaceholder": "ここに歌詞を貼り付けてください...",
+      "style": "スタイル",
+      "title": "タイトル",
+      "titleDefault": "私のAI楽曲",
+      "generateSong": "楽曲を生成",
+      "generating": "生成中...",
+      "searchSongs": "楽曲を検索",
+      "sortByNewest": "並び順: 新しい順",
+      "noSongsFound": "楽曲が見つかりません。",
+      "report": "レポート",
+      "inputTooShort": "生成する前により詳細を入力してください。",
+      "generationFailed": "生成に失敗しました",
+      "generationFailedWithRefundMessage": "音声生成に失敗し、保留中のクレジットは返却されました。もう一度お試しください。",
+      "stillProcessingMessage": "楽曲生成はまだ処理中です。後ほど履歴をご確認ください。",
+      "untitledSong": "無題の楽曲",
+      "modelVersionMeta": "{model} ? {version} ? {duration}",
+      "filters": {
+        "all": "すべて",
+        "liked": "お気に入り",
+        "public": "公開",
+        "uploads": "アップロード"
+      },
+      "status": {
+        "generating": "生成中",
+        "completed": "完了"
+      },
+      "styleTags": {
+        "pop": "ポップ",
+        "rap": "ラップ",
+        "rock": "ロック",
+        "edm": "EDM",
+        "anime": "アニメ",
+        "lofi": "Lo-fi",
+        "country": "カントリー",
+        "cinematic": "シネマティック",
+        "sad": "哀愁",
+        "happy": "ハッピー",
+        "femaleVocal": "女性ボーカル",
+        "maleVocal": "男性ボーカル"
+      }
     }
   },
   "song": {

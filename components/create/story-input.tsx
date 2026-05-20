@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Download,
   Heart,
@@ -87,19 +88,19 @@ interface SongStatusPayload {
 }
 
 const STYLE_TAGS = [
-  "Pop",
-  "Rap",
-  "Rock",
-  "EDM",
-  "Anime",
-  "Lo-fi",
-  "Country",
-  "Cinematic",
-  "Sad",
-  "Happy",
-  "Female Vocal",
-  "Male Vocal",
-];
+  { value: "Pop", key: "styleTags.pop" },
+  { value: "Rap", key: "styleTags.rap" },
+  { value: "Rock", key: "styleTags.rock" },
+  { value: "EDM", key: "styleTags.edm" },
+  { value: "Anime", key: "styleTags.anime" },
+  { value: "Lo-fi", key: "styleTags.lofi" },
+  { value: "Country", key: "styleTags.country" },
+  { value: "Cinematic", key: "styleTags.cinematic" },
+  { value: "Sad", key: "styleTags.sad" },
+  { value: "Happy", key: "styleTags.happy" },
+  { value: "Female Vocal", key: "styleTags.femaleVocal" },
+  { value: "Male Vocal", key: "styleTags.maleVocal" },
+] as const;
 
 const CREEM_CHECKOUT_QUERY_KEYS = [
   "checkout_id",
@@ -143,6 +144,7 @@ export function StoryInput({
   modeRoutes,
   initialWorkspaceSongs,
 }: StoryInputProps) {
+  const t = useTranslations("create.songMaker");
   const { toast } = useToast();
   const router = useRouter();
   const params = useParams<{ locale?: string }>();
@@ -152,7 +154,7 @@ export function StoryInput({
   const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
   const [prompt, setPrompt] = useState(initialPrompt ?? "");
   const [style, setStyle] = useState(initialStyle ?? "");
-  const [title, setTitle] = useState(initialTitle ?? "My AI Song");
+  const [title, setTitle] = useState(initialTitle ?? t("titleDefault"));
   const [pendingInitialSongId, setPendingInitialSongId] = useState<
     string | null
   >(initialSongId ?? null);
@@ -293,9 +295,7 @@ export function StoryInput({
 
           if (attempt > 60) {
             delete pollAttemptsRef.current[song.id];
-            setGenerationError(
-              "Song generation is still processing. Please check your history later.",
-            );
+            setGenerationError(t("stillProcessingMessage"));
             setWorkspaceSongs((current) =>
               current.filter((item) => item.id !== song.id),
             );
@@ -315,8 +315,7 @@ export function StoryInput({
           }
           if (data.status === "failed") {
             setGenerationError(
-              data.errorMessage ??
-                "Audio generation failed and any held credits were returned. Please try again.",
+              data.errorMessage ?? t("generationFailedWithRefundMessage"),
             );
           }
           setWorkspaceSongs((current) =>
@@ -384,7 +383,7 @@ export function StoryInput({
     if (!prompt.trim() || prompt.trim().length < 10) {
       toast({
         variant: "destructive",
-        description: "Please provide more details before generating.",
+        description: t("inputTooShort"),
       });
       return;
     }
@@ -426,7 +425,7 @@ export function StoryInput({
 
       const optimistic: WorkspaceSongItem = {
         id: data.songId,
-        title: data.title || title.trim() || "Untitled Song",
+        title: data.title || title.trim() || t("untitledSong"),
         promptSummary: prompt,
         styleSummary: style,
         status: "processing",
@@ -445,12 +444,12 @@ export function StoryInput({
       ]);
     } catch (caught) {
       setGenerationError(
-        caught instanceof Error ? caught.message : "Generation failed",
+        caught instanceof Error ? caught.message : t("generationFailed"),
       );
       toast({
         variant: "destructive",
         description:
-          caught instanceof Error ? caught.message : "Generation failed",
+          caught instanceof Error ? caught.message : t("generationFailed"),
       });
     } finally {
       setIsSubmitting(false);
@@ -497,9 +496,9 @@ export function StoryInput({
       <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
         <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-xl font-semibold">Song Generator</h1>
+            <h1 className="text-xl font-semibold">{t("generatorTitle")}</h1>
             <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              Credits {creditsBalance}
+              {t("credits", { count: creditsBalance })}
             </span>
           </div>
 
@@ -509,25 +508,24 @@ export function StoryInput({
               onClick={() => switchModeRoute("text")}
               className={`rounded-md px-3 py-1.5 text-sm ${mode === "text" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
             >
-              Text to Song
+              {t("textToSong")}
             </button>
             <button
               type="button"
               onClick={() => switchModeRoute("lyrics")}
               className={`rounded-md px-3 py-1.5 text-sm ${mode === "lyrics" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}
             >
-              Lyrics to Song
+              {t("lyricsToSong")}
             </button>
           </div>
 
           <div className="mb-2">
             <p className="text-sm font-medium">
-              {mode === "lyrics" ? "Lyrics" : "Song idea"}
+              {mode === "lyrics" ? t("lyricsLabel") : t("songIdea")}
             </p>
             {mode === "text" ? (
               <p className="mt-1 text-xs text-muted-foreground">
-                Start from an idea. Calyra will write lyrics and generate a full
-                song.
+                {t("songIdeaHint")}
               </p>
             ) : null}
           </div>
@@ -537,8 +535,8 @@ export function StoryInput({
             onChange={(event) => setPrompt(event.target.value)}
             placeholder={
               mode === "lyrics"
-                ? "Paste your lyrics here..."
-                : "Describe your song idea, mood, story, or genre..."
+                ? t("lyricsPlaceholder")
+                : t("songIdeaPlaceholder")
             }
             className="min-h-[180px] w-full resize-y text-sm"
           />
@@ -546,18 +544,18 @@ export function StoryInput({
           <input
             value={style}
             onChange={(event) => setStyle(event.target.value)}
-            placeholder="Style"
+            placeholder={t("style")}
             className="mt-3 h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none"
           />
           <div className="mt-2 flex flex-wrap gap-2">
             {STYLE_TAGS.map((tag) => (
               <button
-                key={tag}
+                key={tag.value}
                 type="button"
-                onClick={() => appendStyleTag(tag)}
+                onClick={() => appendStyleTag(tag.value)}
                 className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs"
               >
-                {tag}
+                {t(tag.key)}
               </button>
             ))}
           </div>
@@ -565,7 +563,7 @@ export function StoryInput({
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            placeholder="Title"
+            placeholder={t("title")}
             className="mt-3 h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none"
           />
 
@@ -579,7 +577,7 @@ export function StoryInput({
             <Wand2
               className={`h-4 w-4 ${isSubmitting ? "animate-pulse" : ""}`}
             />
-            {isSubmitting ? "Generating..." : "Generate Song"}
+            {isSubmitting ? t("generating") : t("generateSong")}
           </Button>
 
           {generationError ? (
@@ -596,14 +594,14 @@ export function StoryInput({
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                placeholder="Search songs"
+                placeholder={t("searchSongs")}
                 className="h-10 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none"
               />
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-xs text-muted-foreground">
                 <SlidersHorizontal className="h-3.5 w-3.5" />
-                Sort: Newest
+                {t("sortByNewest")}
               </span>
               {(["all", "liked", "public", "uploads"] as WorkspaceFilter[]).map(
                 (item) => (
@@ -618,12 +616,12 @@ export function StoryInput({
                     }`}
                   >
                     {item === "all"
-                      ? "All"
+                      ? t("filters.all")
                       : item === "liked"
-                        ? "Liked"
+                        ? t("filters.liked")
                         : item === "public"
-                          ? "Public"
-                          : "Uploads"}
+                          ? t("filters.public")
+                          : t("filters.uploads")}
                   </button>
                 ),
               )}
@@ -658,12 +656,17 @@ export function StoryInput({
                             : "bg-amber-500/15 text-amber-300"
                         }`}
                       >
-                        {song.status}
+                        {song.status === "completed"
+                          ? t("status.completed")
+                          : t("status.generating")}
                       </span>
                     </div>
                     <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {song.modelTag} · {song.versionTag} ·{" "}
-                      {formatDuration(durations[song.id] ?? null)}
+                      {t("modelVersionMeta", {
+                        model: song.modelTag,
+                        version: song.versionTag,
+                        duration: formatDuration(durations[song.id] ?? null),
+                      })}
                     </p>
                     <p className="mt-1 truncate text-xs text-muted-foreground">
                       {song.styleSummary || song.promptSummary}
@@ -714,7 +717,7 @@ export function StoryInput({
                     </Button>
                   )}
                   <Button asChild type="button" size="sm" variant="outline">
-                    <Link href={`/report/${song.id}`}>Report</Link>
+                    <Link href={`/report/${song.id}`}>{t("report")}</Link>
                   </Button>
                   <Button type="button" size="sm" variant="outline">
                     <MoreHorizontal className="h-3.5 w-3.5" />
@@ -725,7 +728,7 @@ export function StoryInput({
 
             {filteredSongs.length === 0 ? (
               <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-                No songs found.
+                {t("noSongsFound")}
               </div>
             ) : null}
           </div>

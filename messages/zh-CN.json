@@ -271,14 +271,64 @@
       "inactiveCreator": "欢迎回来。用一个新细节开始你的下一首歌吧。"
     },
     "audioPlayer": {
-      "readyForPreview": "???",
-      "savedAsSeparate": "????????????????????????????",
-      "openPage": "????",
-      "download": "??",
-      "upgradeToDownload": "??????",
-      "openPublicPage": "?????",
-      "viewDashboard": "?????",
-      "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
+      "readyForPreview": "准备预览",
+      "savedAsSeparate": "每个版本保存为独立歌曲，拥有独立的公开页面和播放数据。",
+      "openPage": "打开页面",
+      "download": "下载",
+      "upgradeToDownload": "升级以解锁下载",
+      "openPublicPage": "打开公开页面",
+      "viewDashboard": "查看仪表盘",
+      "rightsNotice": "您可以将生成的歌曲用于 YouTube、社交媒体和商业内容。"
+    },
+    "songMaker": {
+      "generatorTitle": "歌曲生成器",
+      "credits": "积分 {count}",
+      "textToSong": "文本转歌曲",
+      "lyricsToSong": "歌词转歌曲",
+      "lyricsLabel": "歌词",
+      "songIdea": "歌曲创意",
+      "songIdeaHint": "从一个创意开始。Calyra 将为您撰写歌词并生成完整歌曲。",
+      "songIdeaPlaceholder": "描述您的歌曲创意、情绪、故事或风格...",
+      "lyricsPlaceholder": "在此粘贴您的歌词...",
+      "style": "风格",
+      "title": "标题",
+      "titleDefault": "我的 AI 歌曲",
+      "generateSong": "生成歌曲",
+      "generating": "生成中...",
+      "searchSongs": "搜索歌曲",
+      "sortByNewest": "排序：最新",
+      "noSongsFound": "未找到歌曲。",
+      "report": "报告",
+      "inputTooShort": "请在生成前提供更多详细信息。",
+      "generationFailed": "生成失败",
+      "generationFailedWithRefundMessage": "音频生成失败，已返还冻结的积分。请重试。",
+      "stillProcessingMessage": "歌曲生成仍在处理中。请稍后查看历史记录。",
+      "untitledSong": "未命名歌曲",
+      "modelVersionMeta": "{model} ? {version} ? {duration}",
+      "filters": {
+        "all": "全部",
+        "liked": "已点赞",
+        "public": "公开",
+        "uploads": "上传"
+      },
+      "status": {
+        "generating": "生成中",
+        "completed": "已完成"
+      },
+      "styleTags": {
+        "pop": "流行",
+        "rap": "说唱",
+        "rock": "摇滚",
+        "edm": "EDM",
+        "anime": "动漫",
+        "lofi": "Lo-fi",
+        "country": "乡村",
+        "cinematic": "电影感",
+        "sad": "伤感",
+        "happy": "欢快",
+        "femaleVocal": "女声",
+        "maleVocal": "男声"
+      }
     }
   },
   "song": {
@@ -389,8 +439,8 @@
       "report": "报告",
       "versionA": "版本 A",
       "versionB": "版本 B",
-      "download": "??",
-      "upgradeToDownload": "??????"
+      "download": "下载",
+      "upgradeToDownload": "升级以解锁下载"
     },
     "creditsCard": {
       "availableCredits": "可用积分",

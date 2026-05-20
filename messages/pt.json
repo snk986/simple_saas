@@ -279,6 +279,56 @@
       "openPublicPage": "Abrir pagina publica",
       "viewDashboard": "Ver painel",
       "rightsNotice": "Você pode usar músicas geradas no YouTube, em redes sociais e em conteúdo comercial."
+    },
+    "songMaker": {
+      "generatorTitle": "Gerador de músicas",
+      "credits": "Créditos {count}",
+      "textToSong": "Texto para música",
+      "lyricsToSong": "Letra para música",
+      "lyricsLabel": "Letra",
+      "songIdea": "Ideia da música",
+      "songIdeaHint": "Comece com uma ideia. A Calyra escreve a letra e gera uma música completa.",
+      "songIdeaPlaceholder": "Descreva sua ideia de música, clima, história ou gênero...",
+      "lyricsPlaceholder": "Cole sua letra aqui...",
+      "style": "Estilo",
+      "title": "Título",
+      "titleDefault": "Minha música IA",
+      "generateSong": "Gerar música",
+      "generating": "Gerando...",
+      "searchSongs": "Buscar músicas",
+      "sortByNewest": "Ordenar: Mais recentes",
+      "noSongsFound": "Nenhuma música encontrada.",
+      "report": "Relatório",
+      "inputTooShort": "Adicione mais detalhes antes de gerar.",
+      "generationFailed": "Falha na geração",
+      "generationFailedWithRefundMessage": "A geração de áudio falhou e os créditos reservados foram devolvidos. Tente novamente.",
+      "stillProcessingMessage": "A geração da música ainda está em processamento. Verifique seu histórico mais tarde.",
+      "untitledSong": "Música sem título",
+      "modelVersionMeta": "{model} ? {version} ? {duration}",
+      "filters": {
+        "all": "Todas",
+        "liked": "Curtidas",
+        "public": "Públicas",
+        "uploads": "Envios"
+      },
+      "status": {
+        "generating": "Gerando",
+        "completed": "Concluída"
+      },
+      "styleTags": {
+        "pop": "Pop",
+        "rap": "Rap",
+        "rock": "Rock",
+        "edm": "EDM",
+        "anime": "Anime",
+        "lofi": "Lo-fi",
+        "country": "Country",
+        "cinematic": "Cinematográfico",
+        "sad": "Triste",
+        "happy": "Feliz",
+        "femaleVocal": "Voz feminina",
+        "maleVocal": "Voz masculina"
+      }
     }
   },
   "song": {

@@ -629,6 +629,56 @@
       "openPublicPage": "Open public page",
       "viewDashboard": "View dashboard",
       "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
+    },
+    "songMaker": {
+      "generatorTitle": "Song Generator",
+      "credits": "Credits {count}",
+      "textToSong": "Text to Song",
+      "lyricsToSong": "Lyrics to Song",
+      "lyricsLabel": "Lyrics",
+      "songIdea": "Song idea",
+      "songIdeaHint": "Start from an idea. Calyra will write lyrics and generate a full song.",
+      "songIdeaPlaceholder": "Describe your song idea, mood, story, or genre...",
+      "lyricsPlaceholder": "Paste your lyrics here...",
+      "style": "Style",
+      "title": "Title",
+      "titleDefault": "My AI Song",
+      "generateSong": "Generate Song",
+      "generating": "Generating...",
+      "searchSongs": "Search songs",
+      "sortByNewest": "Sort: Newest",
+      "noSongsFound": "No songs found.",
+      "report": "Report",
+      "inputTooShort": "Please provide more details before generating.",
+      "generationFailed": "Generation failed",
+      "generationFailedWithRefundMessage": "Audio generation failed and any held credits were returned. Please try again.",
+      "stillProcessingMessage": "Song generation is still processing. Please check your history later.",
+      "untitledSong": "Untitled Song",
+      "modelVersionMeta": "{model} ? {version} ? {duration}",
+      "filters": {
+        "all": "All",
+        "liked": "Liked",
+        "public": "Public",
+        "uploads": "Uploads"
+      },
+      "status": {
+        "generating": "Generating",
+        "completed": "Completed"
+      },
+      "styleTags": {
+        "pop": "Pop",
+        "rap": "Rap",
+        "rock": "Rock",
+        "edm": "EDM",
+        "anime": "Anime",
+        "lofi": "Lo-fi",
+        "country": "Country",
+        "cinematic": "Cinematic",
+        "sad": "Sad",
+        "happy": "Happy",
+        "femaleVocal": "Female Vocal",
+        "maleVocal": "Male Vocal"
+      }
     }
   },
   "song": {

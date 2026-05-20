@@ -279,6 +279,56 @@
       "openPublicPage": "공개 페이지 열기",
       "viewDashboard": "대시보드 보기",
       "rightsNotice": "생성된 노래는 YouTube, 소셜 미디어, 상업 콘텐츠에 사용할 수 있습니다."
+    },
+    "songMaker": {
+      "generatorTitle": "곡 생성기",
+      "credits": "크레딧 {count}",
+      "textToSong": "텍스트로 곡 만들기",
+      "lyricsToSong": "가사로 곡 만들기",
+      "lyricsLabel": "가사",
+      "songIdea": "곡 아이디어",
+      "songIdeaHint": "아이디어로 시작하세요. Calyra가 가사를 쓰고 완전한 곡을 생성합니다.",
+      "songIdeaPlaceholder": "곡 아이디어, 분위기, 스토리, 장르를 설명하세요...",
+      "lyricsPlaceholder": "여기에 가사를 붙여넣으세요...",
+      "style": "스타일",
+      "title": "제목",
+      "titleDefault": "내 AI 곡",
+      "generateSong": "곡 생성하기",
+      "generating": "생성 중...",
+      "searchSongs": "곡 검색",
+      "sortByNewest": "정렬: 최신순",
+      "noSongsFound": "곡을 찾을 수 없습니다.",
+      "report": "리포트",
+      "inputTooShort": "생성하기 전에 더 자세한 내용을 입력하세요.",
+      "generationFailed": "생성 실패",
+      "generationFailedWithRefundMessage": "오디오 생성에 실패하여 보류된 크레딧이 반환되었습니다. 다시 시도해 주세요.",
+      "stillProcessingMessage": "곡 생성이 아직 처리 중입니다. 나중에 기록을 확인해 주세요.",
+      "untitledSong": "제목 없는 곡",
+      "modelVersionMeta": "{model} ? {version} ? {duration}",
+      "filters": {
+        "all": "전체",
+        "liked": "좋아요",
+        "public": "공개",
+        "uploads": "업로드"
+      },
+      "status": {
+        "generating": "생성 중",
+        "completed": "완료됨"
+      },
+      "styleTags": {
+        "pop": "팝",
+        "rap": "랩",
+        "rock": "록",
+        "edm": "EDM",
+        "anime": "애니메이션",
+        "lofi": "Lo-fi",
+        "country": "컨트리",
+        "cinematic": "시네마틱",
+        "sad": "슬픔",
+        "happy": "행복",
+        "femaleVocal": "여성 보컬",
+        "maleVocal": "남성 보컬"
+      }
     }
   },
   "song": {
