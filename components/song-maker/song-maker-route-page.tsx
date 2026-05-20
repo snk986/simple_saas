@@ -42,7 +42,6 @@ interface InitialWorkspaceSong {
   cover_url: string | null;
   audio_url: string | null;
   created_at: string;
-  audio_provider: string;
   like_count: number | null;
 }
 
@@ -102,7 +101,7 @@ export async function SongMakerRoutePage({
     const { data: songs } = await supabase
       .from("songs")
       .select(
-        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,audio_provider,like_count",
+        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,like_count",
       )
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })

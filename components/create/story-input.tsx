@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import {
   Download,
   Heart,
-  MoreHorizontal,
+  Pause,
   Play,
   Search,
   SlidersHorizontal,
@@ -47,7 +47,6 @@ interface StoryInputProps {
     cover_url: string | null;
     audio_url: string | null;
     created_at: string;
-    audio_provider: string;
     like_count: number | null;
   }>;
 }
@@ -64,8 +63,7 @@ interface WorkspaceSongItem {
   isPublic: boolean;
   coverUrl: string | null;
   audioUrl: string | null;
-  modelTag: string;
-  versionTag: string;
+  versionTag: string | null;
   liked: boolean;
   createdAt: string;
 }
@@ -166,7 +164,9 @@ export function StoryInput({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
   const [durations, setDurations] = useState<Record<string, number | null>>({});
+  const [playingSongId, setPlayingSongId] = useState<string | null>(null);
   const pollAttemptsRef = useRef<Record<string, number>>({});
+  const playbackAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const pendingSongKey = `${PENDING_SONG_STORAGE_PREFIX}${window.location.pathname}`;
@@ -232,8 +232,7 @@ export function StoryInput({
             isPublic: Boolean(song.is_public),
             coverUrl: song.cover_url,
             audioUrl: song.audio_url,
-            modelTag: (song.audio_provider ?? "kie").toUpperCase(),
-            versionTag: /\(Version B\)$/.test(song.title) ? "V2" : "V1",
+            versionTag: /\(Version B\)$/.test(song.title) ? t("versionB") : null,
             liked: (song.like_count ?? 0) > 0,
             createdAt: song.created_at,
           },
@@ -241,7 +240,7 @@ export function StoryInput({
       },
     );
     setWorkspaceSongs(mapped);
-  }, [initialWorkspaceSongs]);
+  }, [initialWorkspaceSongs, t]);
 
   useEffect(() => {
     if (!pendingInitialSongId) return;
@@ -269,8 +268,7 @@ export function StoryInput({
           isPublic: true,
           coverUrl: data.coverUrl ?? null,
           audioUrl: data.audioUrl ?? null,
-          modelTag: "KIE",
-          versionTag: "V1",
+          versionTag: null,
           liked: false,
           createdAt: new Date().toISOString(),
         },
@@ -361,6 +359,13 @@ export function StoryInput({
     });
   }, [workspaceSongs, durations]);
 
+  useEffect(() => {
+    return () => {
+      playbackAudioRef.current?.pause();
+      playbackAudioRef.current = null;
+    };
+  }, []);
+
   const filteredSongs = useMemo(() => {
     const searchLower = search.trim().toLowerCase();
     return workspaceSongs
@@ -434,8 +439,7 @@ export function StoryInput({
         isPublic: true,
         coverUrl: null,
         audioUrl: null,
-        modelTag: "KIE",
-        versionTag: "V1",
+        versionTag: null,
         liked: false,
         createdAt: new Date().toISOString(),
       };
@@ -481,6 +485,50 @@ export function StoryInput({
     }
 
     router.push(modeRoutes[nextMode]);
+  };
+
+  const toggleWorkspacePlayback = (song: WorkspaceSongItem) => {
+    if (!song.audioUrl) {
+      return;
+    }
+
+    const currentAudio = playbackAudioRef.current;
+    if (playingSongId === song.id && currentAudio && !currentAudio.paused) {
+      currentAudio.pause();
+      setPlayingSongId(null);
+      return;
+    }
+
+    currentAudio?.pause();
+
+    const nextAudio = new Audio(song.audioUrl);
+    playbackAudioRef.current = nextAudio;
+    setPlayingSongId(song.id);
+
+    nextAudio.addEventListener(
+      "ended",
+      () => {
+        if (playbackAudioRef.current === nextAudio) {
+          setPlayingSongId(null);
+        }
+      },
+      { once: true },
+    );
+    nextAudio.addEventListener(
+      "error",
+      () => {
+        if (playbackAudioRef.current === nextAudio) {
+          setPlayingSongId(null);
+        }
+      },
+      { once: true },
+    );
+
+    void nextAudio.play().catch(() => {
+      if (playbackAudioRef.current === nextAudio) {
+        setPlayingSongId(null);
+      }
+    });
   };
 
   return (
@@ -658,11 +706,14 @@ export function StoryInput({
                       </span>
                     </div>
                     <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {t("modelVersionMeta", {
-                        model: song.modelTag,
-                        version: song.versionTag,
-                        duration: formatDuration(durations[song.id] ?? null),
-                      })}
+                      {song.versionTag
+                        ? t("versionDurationMeta", {
+                            version: song.versionTag,
+                            duration: formatDuration(durations[song.id] ?? null),
+                          })
+                        : t("durationMeta", {
+                            duration: formatDuration(durations[song.id] ?? null),
+                          })}
                     </p>
                     <p className="mt-1 truncate text-xs text-muted-foreground">
                       {song.styleSummary || song.promptSummary}
@@ -675,15 +726,31 @@ export function StoryInput({
                     size="sm"
                     variant="outline"
                     disabled={!song.audioUrl}
+                    onClick={() => toggleWorkspacePlayback(song)}
+                    aria-label={
+                      playingSongId === song.id ? t("pauseSong") : t("playSong")
+                    }
                   >
-                    <Play className="h-3.5 w-3.5" />
+                    {playingSongId === song.id ? (
+                      <Pause className="h-3.5 w-3.5" />
+                    ) : (
+                      <Play className="h-3.5 w-3.5" />
+                    )}
                   </Button>
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
+                    disabled={song.liked}
+                    aria-label={song.liked ? t("likedSong") : t("likeSong")}
                     onClick={() => {
-                      if (!song.isPublic || song.status !== "completed") return;
+                      if (
+                        song.liked ||
+                        !song.isPublic ||
+                        song.status !== "completed"
+                      ) {
+                        return;
+                      }
                       void fetch(`/api/song/${song.id}/count`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -703,7 +770,7 @@ export function StoryInput({
                   </Button>
                   {song.audioUrl && canDownload ? (
                     <Button asChild type="button" size="sm" variant="outline">
-                      <a href={song.audioUrl} download>
+                      <a href={`/api/song/${song.id}/download`}>
                         <Download className="h-3.5 w-3.5" />
                       </a>
                     </Button>
@@ -714,9 +781,6 @@ export function StoryInput({
                   )}
                   <Button asChild type="button" size="sm" variant="outline">
                     <Link href={`/report/${song.id}`}>{t("report")}</Link>
-                  </Button>
-                  <Button type="button" size="sm" variant="outline">
-                    <MoreHorizontal className="h-3.5 w-3.5" />
                   </Button>
                 </div>
               </article>
