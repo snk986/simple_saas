@@ -3,7 +3,6 @@ import { logError, logInfo } from "@/lib/observability/log";
 import { fal } from "@fal-ai/client";
 
 const DEFAULT_MODEL_ID = "fal-ai/minimax-music/v2";
-const DEFAULT_QUEUE_BASE_URL = "https://queue.fal.run";
 
 class FalError extends Error {
   status?: number;
@@ -24,37 +23,11 @@ function getFalConfig() {
   }
 
   const modelId = process.env.FAL_MUSIC_MODEL_ID ?? DEFAULT_MODEL_ID;
-  const queueBaseUrl = (
-    process.env.FAL_QUEUE_BASE_URL ?? DEFAULT_QUEUE_BASE_URL
-  ).replace(/\/$/, "");
-
   const webhookUrl =
     process.env.FAL_WEBHOOK_URL ??
     `${(process.env.BASE_URL ?? "").replace(/\/$/, "")}/api/webhooks/fal`;
 
-  return { apiKey, modelId, queueBaseUrl, webhookUrl };
-}
-
-async function requestWithRetry<T>(
-  url: string,
-  init: RequestInit,
-  attempt = 0,
-): Promise<T> {
-  const response = await fetch(url, init);
-
-  if (!response.ok) {
-    if (attempt === 0 && response.status >= 500) {
-      return requestWithRetry<T>(url, init, attempt + 1);
-    }
-
-    const body = await response.text().catch(() => "");
-    throw new FalError(
-      body || `FAL request failed with ${response.status}`,
-      response.status,
-    );
-  }
-
-  return (await response.json()) as T;
+  return { apiKey, modelId, webhookUrl };
 }
 
 function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
@@ -116,37 +89,56 @@ export const falProvider: AudioProvider = {
   name: "fal",
 
   async generateSong(params: GenerateParams) {
-    const { apiKey, modelId, queueBaseUrl, webhookUrl } = getFalConfig();
-    const url = `${queueBaseUrl}/${modelId}`;
+    const { apiKey, modelId, webhookUrl } = getFalConfig();
+    fal.config({ credentials: apiKey });
 
-    const json = await requestWithRetry<{
-      request_id?: string;
-      status?: string;
-    }>(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Key ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    logInfo("fal_provider_submit", {
+      submit_function_name: "falProvider.generateSong",
+      fal_endpoint_id: modelId,
+      sdk_method: "fal.queue.submit",
+      status: "started",
+    });
+
+    let json: Awaited<ReturnType<typeof fal.queue.submit>>;
+    try {
+      json = await fal.queue.submit(modelId, {
         input: {
           prompt: params.prompt.slice(0, 500),
           lyrics_prompt: params.lyrics,
         },
-        webhook_url: webhookUrl,
-      }),
-    });
+        webhookUrl,
+      });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      logError("fal_provider_submit", {
+        submit_function_name: "falProvider.generateSong",
+        fal_endpoint_id: modelId,
+        sdk_method: "fal.queue.submit",
+        status: "failed",
+        response_body: msg.slice(0, 500),
+      });
+      throw e;
+    }
 
     const taskId = json.request_id;
     if (!taskId) {
       throw new FalError("FAL did not return request_id");
     }
 
+    logInfo("fal_provider_submit", {
+      submit_function_name: "falProvider.generateSong",
+      fal_endpoint_id: modelId,
+      fal_request_id: taskId,
+      sdk_method: "fal.queue.submit",
+      status: "succeeded",
+      provider_status: json.status,
+    });
+
     return { taskId, providerStatus: json.status };
   },
 
   async getTaskStatus(taskId: string) {
-    const { apiKey, modelId, queueBaseUrl } = getFalConfig();
+    const { apiKey, modelId } = getFalConfig();
     fal.config({ credentials: apiKey });
     const basePollFields = {
       poll_function_name: "falProvider.getTaskStatus" as const,
@@ -205,29 +197,15 @@ export const falProvider: AudioProvider = {
       };
     }
 
-    const resultUrl =
-      (statusSdk as { response_url?: string }).response_url ??
-      `${queueBaseUrl}/${modelId}/requests/${encodeURIComponent(taskId)}/response`;
-    let resultJson: {
-      status?: string;
-      payload?: unknown;
-      data?: unknown;
-      response?: unknown;
-      error?: string;
-    };
+    let resultSdk: Awaited<ReturnType<typeof fal.queue.result>>;
     try {
-      resultJson = await requestWithRetry(resultUrl, {
-        method: "GET",
-        headers: {
-          Authorization: `Key ${apiKey}`,
-        },
+      resultSdk = await fal.queue.result(modelId, {
+        requestId: taskId,
       });
       logInfo("fal_provider_poll", {
         ...basePollFields,
         poll_step: "result",
-        sdk_method: "manual_fetch",
-        poll_url: resultUrl,
-        http_method: "GET",
+        sdk_method: "fal.queue.result",
         response_status: 200,
       });
     } catch (e: unknown) {
@@ -235,9 +213,7 @@ export const falProvider: AudioProvider = {
       logError("fal_provider_poll", {
         ...basePollFields,
         poll_step: "result",
-        sdk_method: "manual_fetch",
-        poll_url: resultUrl,
-        http_method: "GET",
+        sdk_method: "fal.queue.result",
         response_status: "error",
         response_body: msg.slice(0, 500),
       });
@@ -246,10 +222,7 @@ export const falProvider: AudioProvider = {
 
     const songs = normalizeTrack(
       taskId,
-      resultJson.payload ??
-        resultJson.data ??
-        resultJson.response ??
-        resultJson,
+      (resultSdk as { data?: unknown }).data ?? resultSdk,
     );
     return {
       status: songs.length > 0 ? "completed" : "failed",
@@ -257,8 +230,10 @@ export const falProvider: AudioProvider = {
       error:
         songs.length > 0
           ? undefined
-          : (resultJson.error ?? "FAL result missing audio URL"),
-      providerStatus: resultJson.status ?? providerStatus,
+          : ((resultSdk as { error?: string }).error ??
+            "FAL result missing audio URL"),
+      providerStatus:
+        (resultSdk as { status?: string }).status ?? providerStatus,
     };
   },
 };
