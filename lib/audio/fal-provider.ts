@@ -57,18 +57,6 @@ async function requestWithRetry<T>(
   return (await response.json()) as T;
 }
 
-function mapFalStatusToTask(status?: string): TaskResult["status"] {
-  if (status === "COMPLETED" || status === "OK") {
-    return "completed";
-  }
-
-  if (status === "IN_QUEUE" || status === "IN_PROGRESS") {
-    return "processing";
-  }
-
-  return "failed";
-}
-
 function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
   const data = payload as
     | {
@@ -124,20 +112,6 @@ function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
   ];
 }
 
-type FalQueueStatusResult = {
-  status?: string;
-  response_url?: string;
-  error?: string;
-};
-
-type FalQueueResponseResult = {
-  status?: string;
-  payload?: unknown;
-  data?: unknown;
-  response?: unknown;
-  error?: string;
-};
-
 export const falProvider: AudioProvider = {
   name: "fal",
 
@@ -177,30 +151,27 @@ export const falProvider: AudioProvider = {
     const basePollFields = { poll_function_name: "falProvider.getTaskStatus" as const, fal_endpoint_id: modelId, fal_request_id: taskId };
 
     logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status" });
-    let statusData: FalQueueStatusResult;
+    let statusSdk: Awaited<ReturnType<typeof fal.queue.status>>;
     try {
-      const s = await fal.queue.status(modelId, { requestId: taskId, logs: true });
-      statusData = { status: s.status, response_url: (s as { response_url?: string }).response_url, error: (s as { error?: string }).error };
-      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: 200 });
+      statusSdk = await fal.queue.status(modelId, { requestId: taskId, logs: true });
+      logInfo("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: 200, provider_status: statusSdk.status, provider_queue_position: (statusSdk as { queue_position?: number }).queue_position, provider_response_url_exists: Boolean((statusSdk as { response_url?: string }).response_url), provider_error: (statusSdk as { error?: string }).error });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       logError("fal_provider_poll", { ...basePollFields, poll_step: "status", sdk_method: "fal.queue.status", response_status: "error", response_body: msg.slice(0, 500) });
       throw e;
     }
 
-    const mapped = mapFalStatusToTask(statusData.status);
-    if (mapped === "processing") {
-      return { status: "processing", songs: [], providerStatus: statusData.status };
+    const providerStatus = statusSdk.status;
+    if (providerStatus === "IN_QUEUE" || providerStatus === "IN_PROGRESS") {
+      return { status: "processing", songs: [], providerStatus };
     }
-    if (mapped === "failed") {
-      return { status: "failed", songs: [], error: statusData.error ?? "FAL task failed", providerStatus: statusData.status };
+    if (providerStatus !== "COMPLETED" && providerStatus !== "OK") {
+      return { status: "failed", songs: [], error: (statusSdk as { error?: string }).error ?? `FAL task failed with status: ${providerStatus}`, providerStatus };
     }
 
-    logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result" });
-    let resultData: FalQueueResponseResult;
+    let resultSdk: Awaited<ReturnType<typeof fal.queue.result>>;
     try {
-      const r = await fal.queue.result(modelId, { requestId: taskId });
-      resultData = { status: (r as { status?: string }).status, payload: (r as { data?: unknown }).data ?? r, data: (r as { data?: unknown }).data, response: r, error: (r as { error?: string }).error };
+      resultSdk = await fal.queue.result(modelId, { requestId: taskId });
       logInfo("fal_provider_poll", { ...basePollFields, poll_step: "result", sdk_method: "fal.queue.result", response_status: 200 });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -208,12 +179,12 @@ export const falProvider: AudioProvider = {
       throw e;
     }
 
-    const songs = normalizeTrack(taskId, resultData.payload ?? resultData.data ?? resultData.response ?? resultData);
+    const songs = normalizeTrack(taskId, (resultSdk as { data?: unknown }).data ?? resultSdk);
     return {
       status: songs.length > 0 ? "completed" : "failed",
       songs,
-      error: songs.length > 0 ? undefined : (resultData.error ?? "FAL result missing audio URL"),
-      providerStatus: resultData.status ?? statusData.status,
+      error: songs.length > 0 ? undefined : ((resultSdk as { error?: string }).error ?? "FAL result missing audio URL"),
+      providerStatus: (resultSdk as { status?: string }).status ?? providerStatus,
     };
   },
 };
