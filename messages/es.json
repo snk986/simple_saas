@@ -661,7 +661,7 @@
     "faq": {
       "title": "Preguntas frecuentes",
       "q1": "Cuantos creditos cuesta generar canciones? Vale la pena?",
-      "a1": "Cada generacion consume 200 creditos y devuelve 2 canciones. Es decir, un promedio de 100 creditos por cancion para comparar versiones y elegir la mejor mas rapido.",
+      "a1": "Cada cancion cuesta 100 creditos. Algunos modelos devuelven 2 versiones en una generacion, lo que cuesta 200 creditos y ayuda a comparar versiones y elegir la mejor mas rapido.",
       "q2": "Es seguro pagar? Me preocupa el riesgo de pago.",
       "a2": "Totalmente. Usamos canales de pago principales con cifrado de nivel bancario y controles de riesgo. Tus datos de pago se procesan directamente en la plataforma de pago y no podemos ver ni guardar tu informacion completa de pago.",
       "q3": "Como funciona la suscripcion? Se renueva automaticamente?",

@@ -73,6 +73,8 @@ function normalizeStatus(status?: string): TaskResult["status"] {
 
 export const kieProvider: AudioProvider = {
   name: "kie",
+  creditCost: 200,
+  expectedTrackCount: 2,
 
   async generateSong(params: GenerateParams) {
     const { apiKey, baseUrl, callBackUrl, model } = getKieConfig();

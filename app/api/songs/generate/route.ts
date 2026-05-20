@@ -12,7 +12,10 @@ import {
   generateLyricsPreview,
   normalizeSongLocale,
 } from "@/lib/song/lyrics-generation";
-import { ERROR_CODES } from "@/lib/observability/error-codes";
+import {
+  freezeAudioGenerationCredit,
+  refundAudioGenerationCredit,
+} from "@/lib/credits/audio-generation";
 import {
   classifyProviderError,
   elapsedMs,
@@ -21,8 +24,6 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
-
-const AUDIO_CREDIT_COST = 200;
 
 const requestSchema = z.object({
   mode: z.enum(["text", "lyrics"]).default("text"),
@@ -34,109 +35,6 @@ const requestSchema = z.object({
   instrumental: z.boolean().optional(),
 });
 
-type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
-
-async function getCreditBalance(supabase: SupabaseClient, userId: string) {
-  const { data } = await supabase
-    .from("customers")
-    .select("credits_balance")
-    .eq("user_id", userId)
-    .maybeSingle();
-  return data?.credits_balance ?? null;
-}
-
-async function freezeCreditIfNeeded(
-  supabase: SupabaseClient,
-  userId: string,
-  requestId: string,
-) {
-  if (process.env.SKIP_CREDIT_CHECK === "true") {
-    return { enough: true, charged: false };
-  }
-
-  const before = await getCreditBalance(supabase, userId);
-  const { data, error } = await supabase.rpc("freeze_credit", {
-    p_user_id: userId,
-    p_amount: AUDIO_CREDIT_COST,
-    p_description: "song_generation",
-    p_metadata: { operation: "song_generation", request_id: requestId },
-  });
-
-  if (error) {
-    logError("credit_freeze", {
-      request_id: requestId,
-      user_id: userId,
-      op: "freeze",
-      stage: "credit_finalize",
-      status: "failed",
-      error_code: ERROR_CODES.CREDIT_OP_FAILED,
-      failure_reason: error.message,
-      balance_before: before,
-      amount: AUDIO_CREDIT_COST,
-      balance_after: null,
-      success: false,
-    });
-    throw error;
-  }
-
-  const enough = Boolean((data as { enough?: boolean } | null)?.enough);
-  const after = await getCreditBalance(supabase, userId);
-  logInfo("credit_freeze", {
-    request_id: requestId,
-    user_id: userId,
-    op: "freeze",
-    stage: "credit_finalize",
-    status: enough ? "succeeded" : "insufficient",
-    balance_before: before,
-    amount: AUDIO_CREDIT_COST,
-    balance_after: after,
-    success: enough,
-  });
-
-  return { enough, charged: enough };
-}
-
-async function refundCreditIfNeeded(
-  supabase: SupabaseClient,
-  userId: string,
-  charged: boolean,
-  requestId: string,
-  songId: string | null,
-) {
-  if (!charged || process.env.SKIP_CREDIT_CHECK === "true") {
-    return;
-  }
-
-  const before = await getCreditBalance(supabase, userId);
-  const { error } = await supabase.rpc("unfreeze_credit", {
-    p_user_id: userId,
-    p_amount: AUDIO_CREDIT_COST,
-    p_description: "song_generation_refund",
-    p_metadata: {
-      operation: "song_generation",
-      request_id: requestId,
-      song_id: songId,
-    },
-  });
-
-  if (error) {
-    logError("credit_refund", {
-      request_id: requestId,
-      user_id: userId,
-      song_id: songId,
-      op: "refund",
-      stage: "credit_finalize",
-      status: "failed",
-      error_code: ERROR_CODES.CREDIT_OP_FAILED,
-      failure_reason: error.message,
-      balance_before: before,
-      amount: AUDIO_CREDIT_COST,
-      balance_after: null,
-      success: false,
-    });
-  }
-}
-
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request.headers.get("x-request-id"));
   const requestStart = Date.now();
@@ -145,8 +43,10 @@ export async function POST(request: NextRequest) {
   let charged = false;
   let userId: string | null = null;
   let songId: string | null = null;
+  let creditCost = 0;
 
   try {
+    creditCost = audioProvider.creditCost;
     const parsed = requestSchema.safeParse(await request.json());
 
     if (!parsed.success) {
@@ -215,7 +115,14 @@ export async function POST(request: NextRequest) {
     }
 
     const entitlements = await getUserEntitlements(user.id);
-    const credit = await freezeCreditIfNeeded(supabase, user.id, requestId);
+    const credit = await freezeAudioGenerationCredit({
+      supabase,
+      userId: user.id,
+      requestId,
+      creditCost,
+      description: "song_generation",
+      metadata: { operation: "song_generation" },
+    });
     charged = credit.charged;
 
     if (!credit.enough) {
@@ -304,7 +211,17 @@ export async function POST(request: NextRequest) {
           .eq("id", songId)
           .eq("user_id", userId);
       }
-      await refundCreditIfNeeded(supabase, userId, charged, requestId, songId);
+      if (charged) {
+        await refundAudioGenerationCredit({
+          supabase,
+          userId,
+          requestId,
+          songId,
+          creditCost,
+          description: "song_generation_refund",
+          metadata: { operation: "song_generation" },
+        });
+      }
     }
 
     const providerError = classifyProviderError(error);

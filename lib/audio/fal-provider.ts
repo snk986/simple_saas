@@ -87,6 +87,8 @@ function normalizeTrack(taskId: string, payload: unknown): TaskResult["songs"] {
 
 export const falProvider: AudioProvider = {
   name: "fal",
+  creditCost: 100,
+  expectedTrackCount: 1,
 
   async generateSong(params: GenerateParams) {
     const { apiKey, modelId, webhookUrl } = getFalConfig();

@@ -6,6 +6,7 @@ import {
   uploadRemoteMedia,
 } from "@/lib/audio/storage";
 import { checkAchievements } from "@/lib/achievements/check-achievements";
+import { refundAudioGenerationCredit } from "@/lib/credits/audio-generation";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { createClient } from "@/utils/supabase/server";
 import { ERROR_CODES } from "@/lib/observability/error-codes";
@@ -18,76 +19,9 @@ import {
   logInfo,
 } from "@/lib/observability/log";
 
-const AUDIO_CREDIT_COST = 200;
-
 const querySchema = z.object({
   songId: z.string().uuid(),
 });
-
-async function refundCreditIfNeeded(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  userId: string,
-  requestId: string,
-  songId: string,
-) {
-  if (process.env.SKIP_CREDIT_CHECK === "true") {
-    return;
-  }
-
-  const { data: beforeData } = await supabase
-    .from("customers")
-    .select("credits_balance")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  const { error } = await supabase.rpc("unfreeze_credit", {
-    p_user_id: userId,
-    p_amount: AUDIO_CREDIT_COST,
-    p_description: "audio_generation_refund",
-    p_metadata: {
-      operation: "audio_generation",
-      request_id: requestId,
-      song_id: songId,
-    },
-  });
-
-  if (error) {
-    logError("credit_refund", {
-      request_id: requestId,
-      user_id: userId,
-      song_id: songId,
-      op: "refund",
-      stage: "credit_finalize",
-      status: "failed",
-      error_code: ERROR_CODES.CREDIT_OP_FAILED,
-      failure_reason: error.message,
-      balance_before: beforeData?.credits_balance ?? null,
-      amount: AUDIO_CREDIT_COST,
-      balance_after: null,
-      success: false,
-    });
-    return;
-  }
-
-  const { data: afterData } = await supabase
-    .from("customers")
-    .select("credits_balance")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  logInfo("credit_refund", {
-    request_id: requestId,
-    user_id: userId,
-    song_id: songId,
-    op: "refund",
-    stage: "credit_finalize",
-    status: "succeeded",
-    balance_before: beforeData?.credits_balance ?? null,
-    amount: AUDIO_CREDIT_COST,
-    balance_after: afterData?.credits_balance ?? null,
-    success: true,
-  });
-}
 
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(
@@ -100,6 +34,7 @@ export async function GET(request: NextRequest) {
   let currentUserId: string | null = null;
   let currentSong: {
     id: string;
+    audio_provider: string;
     audio_provider_task_id: string | null;
   } | null = null;
 
@@ -148,6 +83,7 @@ export async function GET(request: NextRequest) {
 
     currentSong = {
       id: song.id,
+      audio_provider: song.audio_provider,
       audio_provider_task_id: song.audio_provider_task_id,
     };
 
@@ -189,6 +125,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    const provider = getAudioProviderByName(song.audio_provider);
+
     if (!song.audio_provider_task_id) {
       await supabase
         .from("songs")
@@ -199,7 +137,15 @@ export async function GET(request: NextRequest) {
         })
         .eq("id", song.id)
         .eq("user_id", user.id);
-      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
+      await refundAudioGenerationCredit({
+        supabase,
+        userId: user.id,
+        requestId,
+        songId: song.id,
+        creditCost: provider.creditCost,
+        description: "audio_generation_refund",
+        metadata: { operation: "audio_generation" },
+      });
 
       logError("song_generate_failed", {
         request_id: requestId,
@@ -221,7 +167,6 @@ export async function GET(request: NextRequest) {
     }
 
     const entitlements = await getUserEntitlements(user.id);
-    const provider = getAudioProviderByName(song.audio_provider);
     const result = await provider.getTaskStatus(song.audio_provider_task_id);
 
     if (result.status === "processing") {
@@ -252,7 +197,15 @@ export async function GET(request: NextRequest) {
         })
         .eq("id", song.id)
         .eq("user_id", user.id);
-      await refundCreditIfNeeded(supabase, user.id, requestId, song.id);
+      await refundAudioGenerationCredit({
+        supabase,
+        userId: user.id,
+        requestId,
+        songId: song.id,
+        creditCost: provider.creditCost,
+        description: "audio_generation_refund",
+        metadata: { operation: "audio_generation" },
+      });
 
       logError("song_generate_timeout", {
         request_id: requestId,
@@ -451,12 +404,16 @@ export async function GET(request: NextRequest) {
         })
         .eq("id", currentSong.id)
         .eq("user_id", currentUserId);
-      await refundCreditIfNeeded(
+      await refundAudioGenerationCredit({
         supabase,
-        currentUserId,
+        userId: currentUserId,
         requestId,
-        currentSong.id,
-      );
+        songId: currentSong.id,
+        creditCost: getAudioProviderByName(currentSong.audio_provider)
+          .creditCost,
+        description: "audio_generation_refund",
+        metadata: { operation: "audio_generation" },
+      });
     }
 
     logError(eventName, {

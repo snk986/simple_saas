@@ -24,6 +24,8 @@ export interface TaskResult {
 
 export interface AudioProvider {
   readonly name: AudioProviderName;
+  readonly creditCost: number;
+  readonly expectedTrackCount: number;
   generateSong(params: GenerateParams): Promise<{ taskId: string; providerStatus?: string }>;
   getTaskStatus(taskId: string): Promise<TaskResult>;
 }

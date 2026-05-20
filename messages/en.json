@@ -1011,7 +1011,7 @@
     "faq": {
       "title": "Frequently Asked Questions",
       "q1": "How many credits does song generation cost? Is it worth it?",
-      "a1": "Each generation costs 200 credits and returns 2 songs. That averages to 100 credits per song, making it easier to compare versions and pick the best result faster.",
+      "a1": "Each song costs 100 credits. Some models return 2 versions in one generation, which costs 200 credits and makes it easier to compare versions and pick the best result faster.",
       "q2": "Is payment secure? I'm worried about payment risk.",
       "a2": "Yes, absolutely. We use mainstream payment channels with bank-level encryption and risk controls. Your payment details are processed directly by the payment platform, and we cannot view or store your full payment information.",
       "q3": "How does subscription billing work? Will I forget renewals?",

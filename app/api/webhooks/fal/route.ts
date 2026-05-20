@@ -1,10 +1,11 @@
 import { createHash, createPublicKey, verify } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { ERROR_CODES } from "@/lib/observability/error-codes";
+import { falProvider } from "@/lib/audio/fal-provider";
+import { refundAudioGenerationCredit } from "@/lib/credits/audio-generation";
 import { getRequestId, logError, logInfo } from "@/lib/observability/log";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
-const AUDIO_CREDIT_COST = 200;
 const FAL_JWKS_URL =
   process.env.FAL_WEBHOOK_JWKS_URL ?? "https://rest.fal.ai/.well-known/jwks.json";
 const MAX_TIMESTAMP_DRIFT_SECONDS = 300;
@@ -90,33 +91,6 @@ async function verifyFalWebhookSignature(
   }
 
   return false;
-}
-
-async function refundCreditIfNeeded(userId: string, requestId: string, songId: string) {
-  if (process.env.SKIP_CREDIT_CHECK === "true") {
-    return;
-  }
-
-  const supabase = createServiceRoleClient();
-  const { error } = await supabase.rpc("unfreeze_credit", {
-    p_user_id: userId,
-    p_amount: AUDIO_CREDIT_COST,
-    p_description: "audio_generation_refund",
-    p_metadata: { operation: "audio_generation", request_id: requestId, song_id: songId },
-  });
-
-  if (error) {
-    logError("credit_refund", {
-      request_id: requestId,
-      user_id: userId,
-      song_id: songId,
-      op: "refund",
-      stage: "webhook_processed",
-      status: "failed",
-      error_code: ERROR_CODES.CREDIT_OP_FAILED,
-      failure_reason: error.message,
-    });
-  }
 }
 
 export async function POST(request: NextRequest) {
@@ -218,7 +192,16 @@ export async function POST(request: NextRequest) {
         .maybeSingle();
 
       if (updatedSong) {
-        await refundCreditIfNeeded(updatedSong.user_id, requestId, updatedSong.id);
+        await refundAudioGenerationCredit({
+          supabase,
+          userId: updatedSong.user_id,
+          requestId,
+          songId: updatedSong.id,
+          creditCost: falProvider.creditCost,
+          description: "audio_generation_refund",
+          metadata: { operation: "audio_generation" },
+          stage: "webhook_processed",
+        });
       }
 
       logError("webhook_failed", {

@@ -661,7 +661,7 @@
     "faq": {
       "title": "Perguntas frequentes",
       "q1": "Quantos creditos custa gerar musicas? Vale a pena?",
-      "a1": "Cada geracao consome 200 creditos e retorna 2 musicas. Isso da uma media de 100 creditos por musica, facilitando comparar versoes e escolher o melhor resultado mais rapido.",
+      "a1": "Cada musica custa 100 creditos. Alguns modelos retornam 2 versoes em uma geracao, o que custa 200 creditos e facilita comparar versoes e escolher o melhor resultado mais rapido.",
       "q2": "O pagamento e seguro? Tenho receio de risco no pagamento.",
       "a2": "Sim, totalmente. Usamos canais de pagamento consolidados com criptografia de nivel bancario e controles de risco. Seus dados de pagamento sao processados diretamente pela plataforma de pagamento, e nao podemos ver nem armazenar seus dados completos.",
       "q3": "Como funciona a cobranca da assinatura? Posso esquecer da renovacao?",

@@ -155,6 +155,8 @@ function extractAudioUrl(payload: unknown) {
 
 export const wavespeedProvider: AudioProvider = {
   name: "wavespeed",
+  creditCost: 100,
+  expectedTrackCount: 1,
 
   async generateSong(params: GenerateParams) {
     const { apiKey, baseUrl, model } = getWavespeedConfig();

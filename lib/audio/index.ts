@@ -39,6 +39,12 @@ export const audioProvider: AudioProvider = {
   get name() {
     return getAudioProvider().name;
   },
+  get creditCost() {
+    return getAudioProvider().creditCost;
+  },
+  get expectedTrackCount() {
+    return getAudioProvider().expectedTrackCount;
+  },
   async generateSong(params) {
     return getAudioProvider().generateSong(params);
   },
