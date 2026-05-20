@@ -52,3 +52,6 @@ next-env.d.ts
 # local tool/cache dirs
 .rtk-home
 .pnpm-store
+
+# local upload manifests
+scripts/featured-gallery.local.json

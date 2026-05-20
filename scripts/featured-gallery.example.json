@@ -1,0 +1,14 @@
+{
+  "ownerUserId": "00000000-0000-0000-0000-000000000000",
+  "songs": [
+    {
+      "rank": 1,
+      "title": "West Lake Moonlight",
+      "artist": "Elite Library",
+      "badge": "Pop",
+      "audioPath": "D:/update-song/West Lake Moonlight.mp3",
+      "coverPath": "D:/update-song/West Lake Moonlight.jpeg",
+      "styleTags": ["cinematic pop","pop ballad","film score-influenced" ,"orchestration"]
+    }
+  ]
+}

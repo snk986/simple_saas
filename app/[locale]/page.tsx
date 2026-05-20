@@ -1,13 +1,15 @@
-import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { HeroGeneratorForm } from "@/components/home/hero-generator-form";
 import {
+  MusicGallery,
+  type FeaturedGallerySong,
+} from "@/components/home/music-gallery";
+import {
   ArrowRight,
   Car,
-  CirclePlay,
   Coffee,
   FileText,
   Gamepad2,
@@ -26,77 +28,59 @@ import {
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
+import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;
 }
 
-type GallerySong = {
-  key: string;
+type FeaturedSongRow = {
+  id: string;
   title: string;
-  author: string;
-  plays: string;
-  rating: string;
-  cover: string;
-  avatar: string;
+  audio_url: string | null;
+  cover_url: string | null;
+  play_count: number | null;
+  like_count: number | null;
+  style_tags: string[] | null;
+  featured_artist: string | null;
+  featured_badge: string | null;
 };
 
-const gallerySongs: GallerySong[] = [
-  {
-    key: "holy-spirit",
-    title: "The Holy Spirit",
-    author: "DJ Soul",
-    plays: "334.8K",
-    rating: "4.8",
-    cover: "linear-gradient(135deg, #20162f 0%, #ef4444 52%, #38bdf8 100%)",
-    avatar: "linear-gradient(135deg, #ef4444, #38bdf8)",
-  },
-  {
-    key: "midnight-palm",
-    title: "Midnight Palm",
-    author: "Linda Skratch",
-    plays: "345.2K",
-    rating: "4.6",
-    cover: "linear-gradient(135deg, #061628 0%, #0ea5e9 52%, #facc15 100%)",
-    avatar: "linear-gradient(135deg, #0ea5e9, #facc15)",
-  },
-  {
-    key: "cerros",
-    title: "Cerros",
-    author: "Luna Jazz",
-    plays: "156.2K",
-    rating: "4.5",
-    cover: "linear-gradient(135deg, #e5e7eb 0%, #60a5fa 52%, #0f172a 100%)",
-    avatar: "linear-gradient(135deg, #60a5fa, #0f172a)",
-  },
-  {
-    key: "christmas-gift",
-    title: "Christmas Gift",
-    author: "Miss Delight",
-    plays: "210.3K",
-    rating: "4.9",
-    cover: "linear-gradient(135deg, #431407 0%, #dc2626 52%, #f59e0b 100%)",
-    avatar: "linear-gradient(135deg, #dc2626, #f59e0b)",
-  },
-  {
-    key: "lost-now",
-    title: "Lost in the Now",
-    author: "Beat Master",
-    plays: "328.1K",
-    rating: "4.7",
-    cover: "linear-gradient(135deg, #050505 0%, #737373 52%, #f8fafc 100%)",
-    avatar: "linear-gradient(135deg, #737373, #f8fafc)",
-  },
-  {
-    key: "neon-heartbreak",
-    title: "Neon Heartbreak",
-    author: "Sophia Grace",
-    plays: "275.7K",
-    rating: "4.6",
-    cover: "linear-gradient(135deg, #1e1b4b 0%, #7c3aed 52%, #ec4899 100%)",
-    avatar: "linear-gradient(135deg, #7c3aed, #ec4899)",
-  },
-];
+async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase
+    .from("songs")
+    .select(
+      "id,title,audio_url,cover_url,play_count,like_count,style_tags,featured_artist,featured_badge",
+    )
+    .eq("is_public", true)
+    .eq("status", "ready")
+    .eq("is_featured", true)
+    .eq("featured_active", true)
+    .not("audio_url", "is", null)
+    .not("cover_url", "is", null)
+    .order("featured_rank", { ascending: true })
+    .order("featured_at", { ascending: false })
+    .limit(6);
+
+  if (error) {
+    console.error("Featured gallery query error:", error);
+    return [];
+  }
+
+  return ((data ?? []) as FeaturedSongRow[])
+    .filter((song) => song.audio_url && song.cover_url)
+    .map((song) => ({
+      id: song.id,
+      title: song.title,
+      artist: song.featured_artist ?? "Calyra AI",
+      badge: song.featured_badge ?? song.style_tags?.[0] ?? null,
+      audioUrl: song.audio_url!,
+      coverUrl: song.cover_url!,
+      playCount: song.play_count ?? 0,
+      likeCount: song.like_count ?? 0,
+    }));
+}
 
 export async function generateMetadata({
   params,
@@ -124,6 +108,7 @@ export function generateStaticParams() {
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations("home");
+  const gallerySongs = await getFeaturedGallerySongs();
   const textToSongPath =
     locale === defaultLocale
       ? "/ai-text-to-song"
@@ -332,13 +317,7 @@ export default async function Home({ params }: HomePageProps) {
             {t("gallery.subtitle")}
           </p>
         </div>
-        <div className="mt-10 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          <div className="mx-auto flex w-max touch-pan-x flex-nowrap gap-4 snap-x snap-mandatory">
-            {gallerySongs.map((song) => (
-              <GalleryCard key={song.key} song={song} />
-            ))}
-          </div>
-        </div>
+        <MusicGallery songs={gallerySongs} />
       </section>
 
       <MarketingSection
@@ -538,49 +517,6 @@ export default async function Home({ params }: HomePageProps) {
         </div>
       </section>
     </div>
-  );
-}
-
-function GalleryCard({ song }: { song: GallerySong }) {
-  const coverStyle = {
-    "--cover-bg": song.cover,
-    "--avatar-bg": song.avatar,
-  } as CSSProperties;
-
-  return (
-    <article
-      className="w-[clamp(150px,46vw,220px)] shrink-0 snap-start sm:w-44 md:w-56"
-      style={coverStyle}
-    >
-      <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-[image:var(--cover-bg)] shadow-2xl shadow-black/25">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.38),transparent_15%),radial-gradient(circle_at_76%_48%,rgba(255,255,255,0.18),transparent_20%),linear-gradient(to_bottom,rgba(0,0,0,0.08),transparent_48%,rgba(0,0,0,0.32))]" />
-        <button
-          aria-label={`Play ${song.title}`}
-          className="absolute left-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/60 text-white backdrop-blur"
-        >
-          <CirclePlay className="h-5 w-5" />
-        </button>
-        <div className="absolute bottom-3 left-3 z-10 flex gap-1.5">
-          <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-            <Play className="h-3 w-3 fill-current" />
-            {song.plays}
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-            <Star className="h-3 w-3 fill-current" />
-            {song.rating}
-          </span>
-        </div>
-      </div>
-      <h3 className="mt-4 truncate text-lg font-black tracking-normal text-white">
-        {song.title}
-      </h3>
-      <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
-        <span className="grid h-6 w-6 place-items-center rounded-full bg-[image:var(--avatar-bg)] text-xs font-black text-white">
-          {song.author.charAt(0)}
-        </span>
-        <span className="truncate">{song.author}</span>
-      </div>
-    </article>
   );
 }
 
