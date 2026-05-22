@@ -42,13 +42,13 @@
   },
   "home": {
     "seo": {
-      "title": "AI 歌曲生成器 - 用文字创作 AI 音乐 | Calyra AI",
+      "title": "AI Song Maker 与免费 AI 音乐生成器 | Calyra AI",
       "description": "使用 Calyra AI 从提示词、歌词或简单想法生成带人声和乐器的 AI 歌曲，适合 YouTube、TikTok、播客、游戏和创意项目。"
     },
     "eyebrow": "AI Song Generator - 订阅用户可商用",
     "hero": {
-      "title": "几秒钟内用文字创作 AI 歌曲",
-      "subtitle": "Turn your story into lyrics, music, and a shareable song report in minutes.",
+      "title": "AI Song Maker 与 AI Music Generator",
+      "subtitle": "用文字、歌词和简单想法创作 AI 歌曲。使用我们的 AI song maker，在几分钟内生成带有人声和乐器的音乐。",
       "promptLabel": "歌曲提示词",
       "placeholder": "试试：一首关于夏日回忆的怀旧 J-pop，女声，大合唱",
       "primaryCta": "免费生成歌曲",
