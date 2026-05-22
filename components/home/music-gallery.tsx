@@ -187,11 +187,17 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                 key={song.id}
                 className="w-[clamp(150px,46vw,220px)] shrink-0 snap-start sm:w-44 md:w-56"
               >
-                <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-white/[0.06] shadow-2xl shadow-black/25">
+                <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-slate-800/40 shadow-2xl shadow-black/25">
+                  <img
+                    src={song.coverUrl}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
+                  />
                   <img
                     src={song.coverUrl}
                     alt={song.title}
-                    className="h-full w-full object-cover"
+                    className="relative z-[1] h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.04),transparent_48%,rgba(0,0,0,0.42))]" />
                   <button
