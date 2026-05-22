@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   CirclePlay,
+  Heart,
   Pause,
   Play,
-  Star,
   Volume2,
   X,
 } from "lucide-react";
@@ -16,6 +16,7 @@ export type FeaturedGallerySong = {
   title: string;
   artist: string;
   badge: string | null;
+  avatarUrl: string;
   audioUrl: string;
   coverUrl: string;
   playCount: number;
@@ -210,23 +211,25 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                       <Play className="h-3 w-3 fill-current" />
                       {formatCount(song.playCount)}
                     </span>
-                    {song.badge ? (
-                      <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-                        <Star className="h-3 w-3 fill-current" />
-                        {song.badge}
-                      </span>
-                    ) : null}
-                  </div>
+                  <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
+                    <Heart className="h-3 w-3 fill-current" />
+                    {formatCount(song.likeCount)}
+                  </span>
                 </div>
+              </div>
                 <h3 className="mt-4 truncate text-lg font-black tracking-normal text-white">
                   {song.title}
                 </h3>
-                <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-white/15 text-xs font-black text-white">
-                    {song.artist.charAt(0)}
-                  </span>
-                  <span className="truncate">{song.artist}</span>
-                </div>
+              <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
+                <img
+                  src={song.avatarUrl}
+                  alt=""
+                  className="h-7 w-7 shrink-0 rounded-full bg-white/15 object-cover"
+                />
+                <span className="min-w-0 truncate">
+                  {song.badge ? `${song.artist} · ${song.badge}` : song.artist}
+                </span>
+              </div>
               </article>
             );
           })}

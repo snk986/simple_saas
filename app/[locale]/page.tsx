@@ -46,6 +46,12 @@ type FeaturedSongRow = {
   featured_badge: string | null;
 };
 
+function artistAvatarUrl(artist: string) {
+  return `https://api.dicebear.com/9.x/avataaars/svg?seed=${encodeURIComponent(
+    artist,
+  )}`;
+}
+
 async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
   const supabase = createServiceRoleClient();
   const { data, error } = await supabase
@@ -75,6 +81,7 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
       title: song.title,
       artist: song.featured_artist ?? "Calyra AI",
       badge: song.featured_badge ?? song.style_tags?.[0] ?? null,
+      avatarUrl: artistAvatarUrl(song.featured_artist ?? "Calyra AI"),
       audioUrl: song.audio_url!,
       coverUrl: song.cover_url!,
       playCount: song.play_count ?? 0,
