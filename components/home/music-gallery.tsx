@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   CirclePlay,
-  Heart,
   Pause,
   Play,
   Volume2,
@@ -21,13 +20,6 @@ export type FeaturedGallerySong = {
   playCount: number;
   likeCount: number;
 };
-
-function formatCount(value: number) {
-  return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds <= 0) {
@@ -207,16 +199,6 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                       <CirclePlay className="h-5 w-5" />
                     )}
                   </button>
-                  <div className="absolute bottom-3 left-3 z-10 flex gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-                      <Play className="h-3 w-3 fill-current" />
-                      {formatCount(song.playCount)}
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-                      <Heart className="h-3 w-3 fill-current" />
-                      {formatCount(song.likeCount)}
-                    </span>
-                  </div>
                 </div>
                 <h3 className="mt-4 truncate text-lg font-black tracking-normal text-white">
                   {song.title}
