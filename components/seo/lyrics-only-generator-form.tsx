@@ -14,6 +14,14 @@ import { defaultLocale, type Locale } from "@/i18n/routing";
 import type { StyleParams } from "@/types/song";
 
 const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
+const STYLE_PRESETS = [
+  "Pop ballad, emotional, memorable chorus",
+  "Rap, confident, punchy hook",
+  "Rock, anthemic, live band energy",
+  "Lo-fi, warm, mellow vocal",
+  "EDM, bright, festival chorus",
+  "Cinematic, dramatic, powerful build",
+];
 
 interface LyricsOnlyGeneratorFormProps {
   labels: {
@@ -201,30 +209,6 @@ export function LyricsOnlyGeneratorForm({
             />
           </div>
 
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <label className="text-sm font-medium text-foreground">
-              {labels.title}
-              <input
-                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-                placeholder={labels.titlePlaceholder}
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
-                maxLength={120}
-              />
-            </label>
-
-            <label className="text-sm font-medium text-foreground">
-              {labels.style}
-              <input
-                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-                placeholder={labels.stylePlaceholder}
-                value={style}
-                onChange={(event) => setStyle(event.target.value)}
-                maxLength={300}
-              />
-            </label>
-          </div>
-
           {needsSignIn ? (
             <div className="mt-4 rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm">
               <p className="font-medium">{labels.signInTitle}</p>
@@ -259,32 +243,57 @@ export function LyricsOnlyGeneratorForm({
         </div>
 
         <section className="flex min-h-[460px] flex-col rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
-          <div className="flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p className="flex items-center gap-2 text-sm font-medium text-primary">
-                <FileText className="h-4 w-4" />
-                {labels.resultEyebrow}
-              </p>
-              <label className="mt-3 block text-sm font-medium">
-                {labels.title}
-                <input
-                  value={result?.title ?? title}
-                  onChange={(event) =>
-                    setResult((current) =>
-                      current
-                        ? { ...current, title: event.target.value }
-                        : current,
-                    )
-                  }
-                  disabled={!result}
-                  className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition disabled:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
-                />
-              </label>
+          <div className="border-b pb-4">
+            <label className="block text-sm font-medium text-foreground">
+              {labels.style}
+              <input
+                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+                placeholder={labels.stylePlaceholder}
+                value={style}
+                onChange={(event) => setStyle(event.target.value)}
+                maxLength={300}
+              />
+            </label>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {STYLE_PRESETS.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setStyle(preset)}
+                  className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:border-primary/40 hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {preset.split(",")[0]}
+                </button>
+              ))}
             </div>
 
+            <label className="mt-4 block text-sm font-medium">
+              {labels.title}
+              <input
+                value={result?.title ?? title}
+                onChange={(event) => {
+                  const nextTitle = event.target.value;
+                  setTitle(nextTitle);
+                  setResult((current) =>
+                    current ? { ...current, title: nextTitle } : current,
+                  );
+                }}
+                placeholder={labels.titlePlaceholder}
+                maxLength={120}
+                className="mt-2 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-normal outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
+              />
+            </label>
+          </div>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="flex items-center gap-2 text-sm font-medium text-primary">
+              <FileText className="h-4 w-4" />
+              {labels.resultEyebrow}
+            </p>
             <Button
               type="button"
-              className="gap-2 sm:mt-8"
+              className="gap-2"
               disabled={
                 !result || isGeneratingSong || result.lyrics.trim().length < 20
               }
