@@ -61,7 +61,7 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
     .not("cover_url", "is", null)
     .order("featured_rank", { ascending: true })
     .order("featured_at", { ascending: false })
-    .limit(6);
+    .limit(10);
 
   if (error) {
     console.error("Featured gallery query error:", error);

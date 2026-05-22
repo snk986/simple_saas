@@ -119,6 +119,26 @@ async function uploadLocalFile(supabase, bucket, localPath, storagePath) {
   return publicUrl;
 }
 
+async function findExistingOfficialSong(supabase, song) {
+  if (song.songId) {
+    return song.songId;
+  }
+
+  const { data, error } = await supabase
+    .from("songs")
+    .select("id")
+    .eq("source_type", "official_upload")
+    .eq("title", song.title)
+    .eq("featured_artist", song.artist)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data?.id ?? null;
+}
+
 function validateSong(song, index) {
   for (const key of ["rank", "title", "artist", "audioPath", "coverPath"]) {
     if (song[key] === undefined || song[key] === null || song[key] === "") {
@@ -155,7 +175,8 @@ async function main() {
   for (const [index, song] of songs.entries()) {
     validateSong(song, index);
 
-    const songId = song.songId || randomUUID();
+    const existingSongId = await findExistingOfficialSong(supabase, song);
+    const songId = existingSongId || randomUUID();
     const baseName = slugify(song.title) || slugify(basename(song.audioPath));
     const audioPath = `songs/${songId}/audio/primary.${extensionForPath(
       song.audioPath,
@@ -224,7 +245,7 @@ async function main() {
     }
 
     console.log(
-      `Uploaded #${song.rank}: ${song.title} (${baseName}) -> ${songId}`,
+      `${existingSongId ? "Updated" : "Uploaded"} #${song.rank}: ${song.title} (${baseName}) -> ${songId}`,
     );
   }
 }

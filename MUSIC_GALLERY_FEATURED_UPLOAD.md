@@ -7,7 +7,7 @@
 - 把本地音频和封面上传到项目生成歌曲同一个 Supabase Storage bucket。
 - 每首上传歌曲都写入 `public.songs` 表。
 - 通过精选字段控制哪些歌曲展示在首页。
-- 先用 1 首歌试跑，确认效果后再扩展到 6 首。
+- 先用 1 首歌试跑，确认效果后再逐步扩展。首页当前最多展示 10 首精选歌曲。
 
 ## Codex 已实现的内容
 
@@ -17,14 +17,14 @@
 4. 首页 `Music Gallery` 改为从数据库读取精选歌曲。
 5. 首页播放按钮播放数据库里的 `audio_url`。
 
-## 手动步骤 1：准备 1 首测试歌曲
+## 手动步骤 1：准备测试歌曲
 
-在你的电脑上准备 1 个音频文件和 1 张封面图片。
+在你的电脑上准备音频文件和封面图片。
 
 推荐格式：
 
 - 音频：`.mp3`、`.wav` 或 `.ogg`
-- 封面：`.jpg`、`.png` 或 `.webp`
+- 封面：`.jpg`、`.jpeg`、`.png` 或 `.webp`
 
 不要把这些媒体文件放进项目仓库。
 
@@ -64,7 +64,7 @@ scripts/featured-gallery.local.json
 - `coverPath`：本地封面图片的绝对路径
 - `styleTags`：写入 `songs.style_tags` 的风格标签
 
-如果只是试跑 1 首歌，`songs` 数组里保留 1 条即可。
+建议把 `scripts/featured-gallery.local.json` 当作“本次增量上传清单”。每次只放这次要新增或更新的歌曲。
 
 ## 手动步骤 4：运行上传脚本
 
@@ -79,7 +79,11 @@ node scripts/upload-featured-gallery.mjs scripts/featured-gallery.local.json
 - 如果 bucket 不存在，则创建媒体 bucket。
 - 上传音频到 `songs/{songId}/audio/primary.*`。
 - 上传封面到 `songs/{songId}/cover/cover.*`。
-- 向 `songs` 表写入或更新一条记录，并设置 `status = ready`、`is_public = true`、`is_featured = true`。
+- 向 `songs` 表写入或更新记录，并设置 `status = ready`、`is_public = true`、`is_featured = true`。
+
+脚本会先按 `source_type = official_upload`、`title`、`featured_artist` 查找已有歌曲。  
+如果存在同名同作者的官方上传歌曲，会更新原记录，不会重复创建。  
+如果是全新的歌曲，才会创建新的 `songId`。
 
 ## 手动步骤 5：检查 Supabase
 
@@ -90,7 +94,7 @@ calyra-ai-media/songs/{songId}/audio/primary.*
 calyra-ai-media/songs/{songId}/cover/cover.*
 ```
 
-在 `public.songs` 表中确认这条记录有：
+在 `public.songs` 表中确认记录有：
 
 ```txt
 source_type = official_upload
@@ -98,7 +102,7 @@ status = ready
 is_public = true
 is_featured = true
 featured_active = true
-featured_rank = 1
+featured_rank 有值
 audio_url 不为空
 cover_url 不为空
 ```
@@ -109,17 +113,18 @@ cover_url 不为空
 
 - `Music Gallery` 展示了上传的歌曲。
 - 封面图片正常显示。
-- 点击播放按钮可以播放上传的音频。
+- 点击播放按钮会在页面底部出现播放器。
+- 底部播放器可以播放、暂停、拖动进度、调节音量和关闭。
 - 移动端仍然是横向滑动列表。
 
-## 扩展到 6 首歌曲
+## 扩展更多歌曲
 
-1 首歌试跑成功后：
-
-1. 在 `scripts/featured-gallery.local.json` 中添加 6 条歌曲。
-2. `rank` 分别设置为 `1` 到 `6`。
+1. 在 `scripts/featured-gallery.local.json` 中只放本次新增或需要更新的歌曲。
+2. 用 `rank` 控制首页排序，例如 `1`、`2`、`3`。
 3. 再次运行上传脚本。
-4. 确认首页最多展示 6 首启用状态的精选歌曲，并按 `featured_rank` 排序。
+4. 首页最多展示 10 首启用状态的精选歌曲，并按 `featured_rank` 排序。
+
+数据库中可以保存超过 10 首精选歌曲。首页展示数量由代码中的查询限制控制，目前是 10 首。
 
 ## 后续替换首页歌曲
 
