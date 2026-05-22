@@ -42,14 +42,11 @@ type FeaturedSongRow = {
   play_count: number | null;
   like_count: number | null;
   style_tags: string[] | null;
-  featured_artist: string | null;
   featured_badge: string | null;
 };
 
-function artistAvatarUrl(artist: string) {
-  return `https://api.dicebear.com/9.x/avataaars/svg?seed=${encodeURIComponent(
-    artist,
-  )}`;
+function portraitAvatarUrl(songId: string) {
+  return `https://i.pravatar.cc/96?u=${encodeURIComponent(songId)}`;
 }
 
 async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
@@ -57,7 +54,7 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
   const { data, error } = await supabase
     .from("songs")
     .select(
-      "id,title,audio_url,cover_url,play_count,like_count,style_tags,featured_artist,featured_badge",
+      "id,title,audio_url,cover_url,play_count,like_count,style_tags,featured_badge",
     )
     .eq("is_public", true)
     .eq("status", "ready")
@@ -79,9 +76,8 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
     .map((song) => ({
       id: song.id,
       title: song.title,
-      artist: song.featured_artist ?? "Calyra AI",
       badge: song.featured_badge ?? song.style_tags?.[0] ?? null,
-      avatarUrl: artistAvatarUrl(song.featured_artist ?? "Calyra AI"),
+      avatarUrl: portraitAvatarUrl(song.id),
       audioUrl: song.audio_url!,
       coverUrl: song.cover_url!,
       playCount: song.play_count ?? 0,

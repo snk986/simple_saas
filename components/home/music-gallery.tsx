@@ -14,7 +14,6 @@ import {
 export type FeaturedGallerySong = {
   id: string;
   title: string;
-  artist: string;
   badge: string | null;
   avatarUrl: string;
   audioUrl: string;
@@ -54,7 +53,9 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const countedRef = useRef<Set<string>>(new Set());
   const [playingSongId, setPlayingSongId] = useState<string | null>(null);
-  const [activeSong, setActiveSong] = useState<FeaturedGallerySong | null>(null);
+  const [activeSong, setActiveSong] = useState<FeaturedGallerySong | null>(
+    null,
+  );
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.75);
@@ -187,17 +188,11 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                 key={song.id}
                 className="w-[clamp(150px,46vw,220px)] shrink-0 snap-start sm:w-44 md:w-56"
               >
-                <div className="relative aspect-[7/10] overflow-hidden rounded-xl bg-slate-800/40 shadow-2xl shadow-black/25">
-                  <img
-                    src={song.coverUrl}
-                    alt=""
-                    aria-hidden="true"
-                    className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
-                  />
+                <div className="relative aspect-[7/10] overflow-hidden rounded-xl shadow-2xl shadow-black/25">
                   <img
                     src={song.coverUrl}
                     alt={song.title}
-                    className="relative z-[1] h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full scale-[1.08] object-cover"
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.04),transparent_48%,rgba(0,0,0,0.42))]" />
                   <button
@@ -217,25 +212,25 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                       <Play className="h-3 w-3 fill-current" />
                       {formatCount(song.playCount)}
                     </span>
-                  <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
-                    <Heart className="h-3 w-3 fill-current" />
-                    {formatCount(song.likeCount)}
-                  </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/30 px-2 py-1.5 text-xs font-black text-white backdrop-blur">
+                      <Heart className="h-3 w-3 fill-current" />
+                      {formatCount(song.likeCount)}
+                    </span>
+                  </div>
                 </div>
-              </div>
                 <h3 className="mt-4 truncate text-lg font-black tracking-normal text-white">
                   {song.title}
                 </h3>
-              <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
-                <img
-                  src={song.avatarUrl}
-                  alt=""
-                  className="h-7 w-7 shrink-0 rounded-full bg-white/15 object-cover"
-                />
-                <span className="min-w-0 truncate">
-                  {song.badge ? `${song.artist} · ${song.badge}` : song.artist}
-                </span>
-              </div>
+                <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
+                  <img
+                    src={song.avatarUrl}
+                    alt=""
+                    className="h-7 w-7 shrink-0 rounded-full bg-white/15 object-cover"
+                  />
+                  {song.badge ? (
+                    <span className="min-w-0 truncate">{song.badge}</span>
+                  ) : null}
+                </div>
               </article>
             );
           })}
@@ -255,11 +250,11 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                 <p className="truncate text-sm font-black md:text-base">
                   {activeSong.title}
                 </p>
-                <p className="truncate text-xs font-semibold text-slate-400">
-                  {activeSong.badge
-                    ? `${activeSong.artist}, ${activeSong.badge}`
-                    : activeSong.artist}
-                </p>
+                {activeSong.badge ? (
+                  <p className="truncate text-xs font-semibold text-slate-400">
+                    {activeSong.badge}
+                  </p>
+                ) : null}
               </div>
             </div>
 
