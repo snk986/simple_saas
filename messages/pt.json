@@ -78,8 +78,8 @@
     },
     "gallery": {
       "eyebrow": "Galeria musical",
-      "title": "Descubra músicas com IA feitas com Calyra",
-      "subtitle": "Explore músicas geradas por IA por criadores. Veja capas, reproduções, curtidas, títulos e nomes dos criadores como em um feed leve de descoberta musical."
+      "title": "Descubra músicas feitas com nosso criador de músicas com IA",
+      "subtitle": "Navegue por músicas geradas por IA criadas com o Calyra AI. Explore capas, reproduções, curtidas, títulos das músicas e nomes dos criadores em um feed leve de descoberta musical."
     },
     "styles": {
       "eyebrow": "Estilos populares",
@@ -145,8 +145,8 @@
     },
     "commercial": {
       "eyebrow": "Uso comercial",
-      "title": "Crie música para projetos reais",
-      "subtitle": "Gere música com IA para vídeos do YouTube, TikTok, Shorts, podcasts, jogos, anúncios, redes sociais e projetos criativos. Assinantes podem baixar músicas geradas e usá-las comercialmente, conforme nossos termos.",
+      "title": "Criador de músicas com IA livre de royalties",
+      "subtitle": "Crie músicas com IA para YouTube, TikTok, podcasts, jogos, anúncios e redes sociais. Usuários pagos podem baixar músicas e usá-las comercialmente, conforme nossos termos.",
       "pricingCta": "Ver preços",
       "faqCta": "Ler perguntas frequentes",
       "uses": {
@@ -160,20 +160,20 @@
     },
     "howItWorks": {
       "eyebrow": "Como funciona",
-      "title": "Faça uma música com IA em 3 passos"
+      "title": "Faça uma música em 3 passos simples com nosso criador de músicas com IA"
     },
     "steps": {
       "idea": {
-        "title": "Descreva sua música",
-        "description": "Compartilhe sua ideia, clima, história ou letra para começar."
+        "title": "Escolha Texto para música ou Letra para música",
+        "description": ""
       },
       "generate": {
-        "title": "Escolha um estilo",
-        "description": "Escolha um gênero e uma direção vocal que combinem com sua ideia."
+        "title": "Escolha um estilo musical",
+        "description": ""
       },
       "download": {
-        "title": "Gere e baixe",
-        "description": "Crie sua música, ouça a prévia e baixe quando estiver pronta."
+        "title": "Gere e baixe sua música com IA",
+        "description": ""
       }
     },
     "benefits": {
@@ -237,20 +237,20 @@
     "faq": {
       "eyebrow": "Perguntas frequentes",
       "title": "Perguntas antes de gerar",
-      "q1": "O que é um gerador de músicas com IA?",
-      "a1": "Um gerador de músicas com IA cria músicas a partir de instruções, letras, climas e descrições de estilo. O Calyra AI ajuda a gerar música com vozes e instrumentos sem habilidades tradicionais de produção.",
-      "q2": "Como faço uma música com IA?",
-      "a2": "Digite uma instrução que descreva gênero, clima, história, letra, estilo vocal e uso. Você também pode começar com um modelo ou se inspirar em um exemplo.",
-      "q3": "Posso transformar letras em música com IA?",
-      "a3": "Sim. Cole sua letra e descreva arranjo, andamento, clima e direção vocal. O Calyra AI pode ajudar a transformar letras em uma música com vozes e instrumentos.",
-      "q4": "O Calyra AI é um criador de músicas grátis?",
-      "a4": "Você pode testar ideias de música gratuitamente. Planos pagos e pacotes de créditos oferecem mais gerações, créditos mensais, downloads e direitos de uso comercial.",
-      "q5": "Posso usar comercialmente músicas geradas por IA?",
-      "a5": "Assinantes podem baixar músicas geradas e usá-las comercialmente em conteúdo, projetos comerciais e distribuição musical, conforme os termos vigentes.",
-      "q6": "Posso gerar músicas com voz?",
-      "a6": "Sim. O Calyra AI foi pensado para geração de músicas completas, incluindo músicas com estilo vocal e arranjos instrumentais conforme a instrução e o modo.",
-      "q7": "Posso criar música para YouTube ou TikTok?",
-      "a7": "Sim. Você pode gerar ganchos, música de fundo, intros, temas e músicas completas para YouTube, TikTok, Shorts, podcasts e redes sociais."
+      "q1": "O que é um criador de músicas com IA?",
+      "a1": "Um criador de músicas com IA ajuda você a criar músicas a partir de ideias, letras, prompts e estilos musicais. O Calyra AI transforma sua entrada em letras estruturadas e direção musical para passar de uma ideia simples a uma música gerada por IA.",
+      "q2": "O Calyra AI é um gerador de música com IA grátis?",
+      "a2": "O Calyra AI pode oferecer acesso gratuito ou de teste quando disponível, para você testar ideias de música antes de fazer upgrade. Planos pagos liberam mais geração, downloads e opções de uso comercial.",
+      "q3": "Posso usar músicas geradas por IA comercialmente?",
+      "a3": "Usuários pagos podem baixar músicas geradas por IA e usá-las comercialmente em projetos de criadores, conteúdo de negócios e distribuição, conforme nossos termos.",
+      "q4": "Qual é a diferença entre Texto para música e Letra para música?",
+      "a4": "Texto para música começa com uma ideia, prompt, clima ou história. Letra para música começa com letras que você já tem e ajuda a transformá-las em uma música com direção de estilo e arranjo.",
+      "q5": "Posso criar músicas com vozes?",
+      "a5": "Sim. Você pode gerar músicas com vozes e instrumentos dependendo do modo, do prompt e do estilo musical selecionados.",
+      "q6": "Posso criar música com IA para YouTube e TikTok?",
+      "a6": "Sim. Você pode criar música com IA para YouTube, música com IA para TikTok, podcasts, vídeos curtos, redes sociais e outros projetos de criadores.",
+      "q7": "O Calyra AI é um criador de músicas com IA ou um gerador de música com IA?",
+      "a7": "O Calyra AI pode ser descrito como os dois: um criador de músicas com IA e um gerador de música com IA, porque ajuda você a criar músicas completas a partir de texto, letras e estilos."
     }
   },
   "create": {

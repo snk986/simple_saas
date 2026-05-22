@@ -78,8 +78,8 @@
     },
     "gallery": {
       "eyebrow": "Music Gallery",
-      "title": "发现用 Calyra 创作的 AI 歌曲",
-      "subtitle": "浏览创作者生成的 AI 歌曲，查看封面、播放量、评分、歌名和创作者名称，就像一个轻量音乐发现流。"
+      "title": "发现用我们的 AI Song Maker 创作的歌曲",
+      "subtitle": "浏览使用 Calyra AI 创作的 AI 生成歌曲。你可以在轻量音乐发现流中查看封面、播放量、点赞数、歌名和创作者名称。"
     },
     "styles": {
       "eyebrow": "热门风格",
@@ -145,8 +145,8 @@
     },
     "commercial": {
       "eyebrow": "商用",
-      "title": "为真实项目创作音乐",
-      "subtitle": "为 YouTube 视频、TikTok、Shorts、播客、游戏、广告、社交媒体和创意项目生成 AI 音乐。订阅用户可下载并按条款商用生成歌曲。",
+      "title": "免版税 AI Song Maker",
+      "subtitle": "为 YouTube、TikTok、播客、游戏、广告和社交媒体创作 AI 歌曲。付费用户可以下载歌曲，并在我们的条款约束下进行商业使用。",
       "pricingCta": "查看价格",
       "faqCta": "阅读 FAQ",
       "uses": {
@@ -160,20 +160,20 @@
     },
     "howItWorks": {
       "eyebrow": "工作方式",
-      "title": "3 步用 AI 制作歌曲"
+      "title": "使用我们的 AI Song Maker，3 步轻松做歌"
     },
     "steps": {
       "idea": {
-        "title": "Describe your song",
-        "description": "Share your idea, mood, story, or lyrics to start the song."
+        "title": "选择 Text to Song 或 Lyrics to Song",
+        "description": ""
       },
       "generate": {
-        "title": "Choose a style",
-        "description": "Pick a genre and vocal direction that matches your idea."
+        "title": "选择一种音乐风格",
+        "description": ""
       },
       "download": {
-        "title": "Generate and download",
-        "description": "Create your song, preview it, and download when ready."
+        "title": "生成并下载你的 AI 歌曲",
+        "description": ""
       }
     },
     "benefits": {
@@ -237,20 +237,20 @@
     "faq": {
       "eyebrow": "FAQ",
       "title": "生成前的常见问题",
-      "q1": "什么是 AI song generator？",
-      "a1": "AI song generator 可以根据提示词、歌词、情绪和风格描述创建歌曲。Calyra AI 帮你无需传统制作技能也能生成带人声和乐器的音乐。",
-      "q2": "如何用 AI 做一首歌？",
-      "a2": "输入描述类型、情绪、故事、歌词、人声风格和用途的提示词，也可以从模板或示例歌曲开始。",
-      "q3": "可以把歌词变成歌曲吗？",
-      "a3": "可以。粘贴歌词并描述编曲、速度、情绪和人声方向，Calyra AI 可以帮助把歌词变成带人声和乐器的歌曲方向。",
-      "q4": "Calyra AI 是免费的 AI song maker 吗？",
-      "a4": "你可以免费开始测试歌曲想法。更多生成次数、月度歌曲额度、下载和商用权可通过付费计划或一次性点数包获得。",
-      "q5": "AI 生成歌曲可以商用吗？",
-      "a5": "订阅用户可以下载生成歌曲，并在最新条款约束下用于内容、商业项目和音乐发行。",
-      "q6": "可以生成带人声的歌曲吗？",
-      "a6": "可以。Calyra AI 面向完整歌曲生成，具体结果取决于提示词和生成模式。",
-      "q7": "可以为 YouTube 或 TikTok 创作音乐吗？",
-      "a7": "可以。你可以为 YouTube、TikTok、Shorts、播客和社交媒体生成 hook、背景音乐、片头、主题曲和完整歌曲。"
+      "q1": "什么是 AI song maker？",
+      "a1": "AI Song Maker 可以帮助用户从想法、歌词、提示词和音乐风格创建歌曲。Calyra AI 会把你的输入整理成结构化歌词和歌曲方向，让简单想法变成 AI 生成歌曲。",
+      "q2": "Calyra AI 是免费的 AI music generator 吗？",
+      "a2": "如果当前提供免费或试用入口，你可以先测试歌曲想法。付费计划会解锁更多生成、下载和商用选项。",
+      "q3": "AI 生成歌曲可以商用吗？",
+      "a3": "付费用户可以下载 AI 生成歌曲，并在我们的条款约束下，将其用于创作者项目、商业内容和发行。",
+      "q4": "Text to Song 和 Lyrics to Song 有什么区别？",
+      "a4": "Text to Song 从想法、提示词、情绪或故事开始。Lyrics to Song 从你已有的歌词开始，再加入风格和编曲方向，把歌词发展成歌曲。",
+      "q5": "可以制作带人声的歌曲吗？",
+      "a5": "可以。根据所选模式、提示词和音乐风格，你可以生成带有人声和乐器的歌曲。",
+      "q6": "可以为 YouTube 和 TikTok 创作 AI 音乐吗？",
+      "a6": "可以。你可以为 YouTube、TikTok、播客、短视频、社交媒体和其他创作者项目创作 AI 音乐。",
+      "q7": "Calyra AI 是 AI song maker 还是 AI music generator？",
+      "a7": "Calyra AI 可以同时被称为 AI Song Maker 和 AI music generator，因为它能帮助你从文字、歌词和风格创建完整歌曲。"
     }
   },
   "create": {

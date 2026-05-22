@@ -78,8 +78,8 @@
     },
     "gallery": {
       "eyebrow": "Galería musical",
-      "title": "Descubre canciones con IA hechas con Calyra",
-      "subtitle": "Explora canciones generadas con IA por creadores. Mira portadas, reproducciones, me gusta, títulos y nombres de creadores como en un feed ligero de descubrimiento musical."
+      "title": "Descubre canciones hechas con nuestro creador de canciones con IA",
+      "subtitle": "Explora canciones generadas con IA creadas con Calyra AI. Mira portadas, reproducciones, me gusta, títulos de canciones y nombres de creadores en un feed ligero de descubrimiento musical."
     },
     "styles": {
       "eyebrow": "Estilos populares",
@@ -145,8 +145,8 @@
     },
     "commercial": {
       "eyebrow": "Uso comercial",
-      "title": "Crea música para proyectos reales",
-      "subtitle": "Genera música con IA para videos de YouTube, TikTok, Shorts, podcasts, juegos, anuncios, redes sociales y proyectos creativos. Los suscriptores pueden descargar canciones generadas y usarlas comercialmente, sujeto a nuestros términos.",
+      "title": "Creador de canciones con IA libre de regalías",
+      "subtitle": "Crea canciones con IA para YouTube, TikTok, podcasts, juegos, anuncios y redes sociales. Los usuarios de pago pueden descargar canciones y usarlas comercialmente, con sujeción a nuestros términos.",
       "pricingCta": "Ver precios",
       "faqCta": "Leer preguntas frecuentes",
       "uses": {
@@ -160,20 +160,20 @@
     },
     "howItWorks": {
       "eyebrow": "Cómo funciona",
-      "title": "Haz una canción con IA en 3 pasos"
+      "title": "Crea una canción en 3 pasos simples con nuestro creador de canciones con IA"
     },
     "steps": {
       "idea": {
-        "title": "Describe tu canción",
-        "description": "Comparte tu idea, emoción, historia o letra para empezar."
+        "title": "Elige Texto a canción o Letra a canción",
+        "description": ""
       },
       "generate": {
-        "title": "Elige un estilo",
-        "description": "Selecciona un género y dirección vocal que encajen con tu idea."
+        "title": "Elige un estilo musical",
+        "description": ""
       },
       "download": {
-        "title": "Genera y descarga",
-        "description": "Crea tu canción, escúchala y descárgala cuando esté lista."
+        "title": "Genera y descarga tu canción con IA",
+        "description": ""
       }
     },
     "benefits": {
@@ -237,20 +237,20 @@
     "faq": {
       "eyebrow": "Preguntas frecuentes",
       "title": "Preguntas antes de generar",
-      "q1": "¿Qué es un generador de canciones con IA?",
-      "a1": "Un generador de canciones con IA crea canciones desde indicaciones, letras, emociones y descripciones de estilo. Calyra AI te ayuda a generar música con voces e instrumentos sin habilidades tradicionales de producción.",
-      "q2": "¿Cómo hago una canción con IA?",
-      "a2": "Escribe una indicación que describa género, emoción, historia, letra, estilo vocal y uso. También puedes empezar con una plantilla o inspirarte en un ejemplo.",
-      "q3": "¿Puedo convertir letras en una canción con IA?",
-      "a3": "Sí. Pega tu letra y describe arreglo, tempo, emoción y dirección vocal. Calyra AI puede ayudarte a convertir letras en una canción con voces e instrumentos.",
-      "q4": "¿Calyra AI es un creador de canciones gratis?",
-      "a4": "Puedes probar ideas de canciones gratis. Los planes de pago y paquetes de créditos ofrecen más generaciones, créditos mensuales, descargas y derechos de uso comercial.",
-      "q5": "¿Puedo usar comercialmente las canciones generadas con IA?",
-      "a5": "Los suscriptores pueden descargar canciones generadas y usarlas comercialmente para contenido, proyectos comerciales y distribución musical, sujeto a los términos vigentes.",
-      "q6": "¿Puedo generar canciones con voces?",
-      "a6": "Sí. Calyra AI está pensado para generar canciones completas, incluidas canciones con estilo vocal y arreglos instrumentales según la indicación y el modo de generación.",
-      "q7": "¿Puedo crear música para YouTube o TikTok?",
-      "a7": "Sí. Puedes generar ganchos, música de fondo, intros, temas y canciones completas para YouTube, TikTok, Shorts, podcasts y redes sociales."
+      "q1": "¿Qué es un creador de canciones con IA?",
+      "a1": "Un creador de canciones con IA ayuda a crear canciones desde ideas, letras, prompts y estilos musicales. Calyra AI convierte tu entrada en letras estructuradas y dirección musical para pasar de una idea simple a una canción generada con IA.",
+      "q2": "¿Calyra AI es un generador de música con IA gratis?",
+      "a2": "Calyra AI puede ofrecer acceso gratuito o de prueba cuando esté disponible, para que pruebes ideas de canciones antes de mejorar el plan. Los planes de pago desbloquean más generación, descargas y opciones de uso comercial.",
+      "q3": "¿Puedo usar comercialmente canciones generadas con IA?",
+      "a3": "Los usuarios de pago pueden descargar canciones generadas con IA y usarlas comercialmente en proyectos de creadores, contenido de negocio y distribución, con sujeción a nuestros términos.",
+      "q4": "¿Cuál es la diferencia entre Texto a canción y Letra a canción?",
+      "a4": "Texto a canción empieza desde una idea, prompt, emoción o historia. Letra a canción empieza desde letras que ya tienes y ayuda a convertirlas en una canción con dirección de estilo y arreglo.",
+      "q5": "¿Puedo crear canciones con voces?",
+      "a5": "Sí. Puedes generar canciones con voces e instrumentos según el modo, el prompt y el estilo musical seleccionados.",
+      "q6": "¿Puedo crear música con IA para YouTube y TikTok?",
+      "a6": "Sí. Puedes crear música con IA para YouTube, música con IA para TikTok, podcasts, videos cortos, redes sociales y otros proyectos de creadores.",
+      "q7": "¿Calyra AI es un creador de canciones con IA o un generador de música con IA?",
+      "a7": "Calyra AI puede describirse como ambas cosas: un creador de canciones con IA y un generador de música con IA, porque ayuda a crear canciones completas desde texto, letras y estilos."
     }
   },
   "create": {
