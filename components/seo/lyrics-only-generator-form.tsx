@@ -209,41 +209,7 @@ export function LyricsOnlyGeneratorForm({
             />
           </div>
 
-          {needsSignIn ? (
-            <div className="mt-4 rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm">
-              <p className="font-medium">{labels.signInTitle}</p>
-              <p className="mt-1 text-muted-foreground">
-                {labels.signInDescription}
-              </p>
-              <Button asChild size="sm" className="mt-3">
-                <Link href={`${prefix}/sign-in`}>{labels.signInCta}</Link>
-              </Button>
-            </div>
-          ) : null}
-
-          <Button
-            type="submit"
-            size="lg"
-            disabled={isSubmitting || prompt.trim().length < 10}
-            className="mt-5 w-full gap-2"
-          >
-            {isSubmitting ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <FileText className="h-4 w-4" />
-            )}
-            {isSubmitting ? labels.submitting : labels.submit}
-          </Button>
-        </form>
-
-        <div className="hidden items-center justify-center lg:flex">
-          <span className="grid h-10 w-10 place-items-center rounded-full border bg-background text-muted-foreground shadow-sm">
-            <ArrowRight className="h-4 w-4" />
-          </span>
-        </div>
-
-        <section className="flex min-h-[460px] flex-col rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
-          <div className="border-b pb-4">
+          <div className="mt-4 border-t pt-4">
             <label className="block text-sm font-medium text-foreground">
               {labels.style}
               <input
@@ -286,7 +252,41 @@ export function LyricsOnlyGeneratorForm({
             </label>
           </div>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          {needsSignIn ? (
+            <div className="mt-4 rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm">
+              <p className="font-medium">{labels.signInTitle}</p>
+              <p className="mt-1 text-muted-foreground">
+                {labels.signInDescription}
+              </p>
+              <Button asChild size="sm" className="mt-3">
+                <Link href={`${prefix}/sign-in`}>{labels.signInCta}</Link>
+              </Button>
+            </div>
+          ) : null}
+
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting || prompt.trim().length < 10}
+            className="mt-5 w-full gap-2"
+          >
+            {isSubmitting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <FileText className="h-4 w-4" />
+            )}
+            {isSubmitting ? labels.submitting : labels.submit}
+          </Button>
+        </form>
+
+        <div className="hidden items-center justify-center lg:flex">
+          <span className="grid h-10 w-10 place-items-center rounded-full border bg-background text-muted-foreground shadow-sm">
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </div>
+
+        <section className="flex min-h-[460px] flex-col rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
+          <div className="flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="flex items-center gap-2 text-sm font-medium text-primary">
               <FileText className="h-4 w-4" />
               {labels.resultEyebrow}
