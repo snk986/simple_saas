@@ -15,6 +15,9 @@ export interface PublicSong {
   styleKey: string;
   styleLabel: string;
   styleTags: string[];
+  isPublic: boolean;
+  isFeatured: boolean;
+  featuredActive: boolean;
   genre: string;
   mood: string;
   bpm: number | null;
@@ -57,6 +60,9 @@ type RawSong = {
     mood?: string;
   } | null;
   style_tags: string[] | null;
+  is_public: boolean;
+  is_featured: boolean | null;
+  featured_active: boolean | null;
   locale: string;
   total_score: number | null;
   report_data: Record<string, unknown> | null;
@@ -82,6 +88,9 @@ const publicProjection = `
   style_key,
   style_params,
   style_tags,
+  is_public,
+  is_featured,
+  featured_active,
   locale,
   total_score,
   report_data,
@@ -144,6 +153,9 @@ function mapPublicSong(
     styleKey: song.style_key,
     styleLabel: style.label,
     styleTags: song.style_tags ?? style.tags,
+    isPublic: song.is_public,
+    isFeatured: Boolean(song.is_featured),
+    featuredActive: song.featured_active ?? true,
     genre: styleParams.genre ?? style.params.genre,
     mood: styleParams.mood ?? style.params.mood,
     bpm:
@@ -169,7 +181,6 @@ export const getPublicSong = cache(
       .from("songs")
       .select(publicProjection)
       .eq("id", id)
-      .eq("is_public", true)
       .eq("status", "ready")
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
       .single();
@@ -191,6 +202,8 @@ export async function getRelatedPublicSongs(song: PublicSong, limit = 3) {
     )
     .eq("is_public", true)
     .eq("status", "ready")
+    .eq("is_featured", true)
+    .eq("featured_active", true)
     .neq("id", song.id)
     .contains("style_tags", song.styleTags.slice(0, 1))
     .order("play_count", { ascending: false })
@@ -227,7 +240,7 @@ export async function getPublicSongsForSitemap() {
   const supabase = createServiceRoleClient();
   const { data, error } = await supabase
     .from("songs")
-    .select("id,locale,updated_at")
+    .select("id,locale,updated_at,is_featured,featured_active,total_score")
     .eq("is_public", true)
     .eq("status", "ready")
     .not("audio_url", "is", null)
@@ -239,5 +252,9 @@ export async function getPublicSongsForSitemap() {
     return [];
   }
 
-  return data;
+  return data.filter(
+    (song) =>
+      (song.is_featured && song.featured_active !== false) ||
+      (song.total_score ?? 0) >= 80,
+  );
 }

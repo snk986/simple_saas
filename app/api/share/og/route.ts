@@ -42,9 +42,7 @@ function isJudgeReport(value: unknown): value is JudgeReport {
 }
 
 function getTopDimensions(report: JudgeReport) {
-  return [...report.dimensions]
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 2);
+  return [...report.dimensions].sort((a, b) => b.score - a.score).slice(0, 2);
 }
 
 function formatDimensionName(value: string) {
@@ -56,7 +54,10 @@ function formatDimensionName(value: string) {
 
 function buildHtml(song: OgSong, report: JudgeReport) {
   const style = getSongStyle(song.style_key);
-  const tags = (song.style_tags?.length ? song.style_tags : style.tags).slice(0, 3);
+  const tags = (song.style_tags?.length ? song.style_tags : style.tags).slice(
+    0,
+    3,
+  );
   const topDimensions = getTopDimensions(report);
   const cover = song.cover_url
     ? `<img src="${escapeHtml(song.cover_url)}" alt="" />`
@@ -256,7 +257,6 @@ export async function GET(request: NextRequest) {
     .from("songs")
     .select("id,title,cover_url,style_key,style_tags,total_score,report_data")
     .eq("id", query.data.songId)
-    .eq("is_public", true)
     .eq("status", "ready")
     .single();
 

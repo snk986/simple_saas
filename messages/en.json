@@ -626,7 +626,7 @@
       "openPage": "Open page",
       "download": "Download",
       "upgradeToDownload": "Upgrade to download",
-      "openPublicPage": "Open public page",
+      "openPublicPage": "Open share page",
       "viewDashboard": "View dashboard",
       "rightsNotice": "You may use generated songs for YouTube, social media, and commercial content."
     },
@@ -788,7 +788,7 @@
       "emptySubtitle": "Create your first song to publish a searchable music page.",
       "coverAlt": "{title} cover art",
       "statusPublic": "Public",
-      "statusPrivate": "Private",
+      "statusPrivate": "Unlisted",
       "createdOn": "Created {date}",
       "expiresOn": "Expires {date}",
       "metrics": {
@@ -922,8 +922,8 @@
       "generating": "Generating Report",
       "generated": "Report generated",
       "generateFailed": "Report generation failed",
-      "publicPage": "Public Page",
-      "copyPublicLink": "Copy Public Link",
+      "publicPage": "Share Page",
+      "copyPublicLink": "Copy Share Link",
       "copied": "Public link copied",
       "downloadShareCard": "Download Share Card",
       "shareSong": "Share Song"

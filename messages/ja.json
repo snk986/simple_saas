@@ -276,7 +276,7 @@
       "openPage": "ページを開く",
       "download": "ダウンロード",
       "upgradeToDownload": "ダウンロードするにはアップグレード",
-      "openPublicPage": "公開ページを開く",
+      "openPublicPage": "共有ページを開く",
       "viewDashboard": "ダッシュボードを見る",
       "rightsNotice": "生成した曲はYouTube、SNS、商用コンテンツに利用できます。"
     },
@@ -438,7 +438,7 @@
       "emptySubtitle": "最初の曲を作成して、検索可能な公開ページを作りましょう。",
       "coverAlt": "{title} のカバー画像",
       "statusPublic": "公開",
-      "statusPrivate": "非公開",
+      "statusPrivate": "限定公開",
       "createdOn": "作成日 {date}",
       "expiresOn": "有効期限 {date}",
       "metrics": {
@@ -572,8 +572,8 @@
       "generating": "レポート生成中",
       "generated": "レポートを生成しました",
       "generateFailed": "レポート生成に失敗しました",
-      "publicPage": "公開ページ",
-      "copyPublicLink": "公開リンクをコピー",
+      "publicPage": "共有ページ",
+      "copyPublicLink": "共有リンクをコピー",
       "copied": "公開リンクをコピーしました",
       "downloadShareCard": "共有カードをダウンロード",
       "shareSong": "曲を共有"

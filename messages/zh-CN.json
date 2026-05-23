@@ -276,7 +276,7 @@
       "openPage": "打开页面",
       "download": "下载",
       "upgradeToDownload": "升级以解锁下载",
-      "openPublicPage": "打开公开页面",
+      "openPublicPage": "打开分享页面",
       "viewDashboard": "查看仪表盘",
       "rightsNotice": "您可以将生成的歌曲用于 YouTube、社交媒体和商业内容。"
     },
@@ -438,7 +438,7 @@
       "emptySubtitle": "创建第一首歌曲并发布可被搜索的公开页面。",
       "coverAlt": "{title} 封面图",
       "statusPublic": "公开",
-      "statusPrivate": "私密",
+      "statusPrivate": "未列出",
       "createdOn": "创建于 {date}",
       "expiresOn": "到期于 {date}",
       "metrics": {
@@ -572,8 +572,8 @@
       "generating": "报告生成中",
       "generated": "报告已生成",
       "generateFailed": "报告生成失败",
-      "publicPage": "公开页面",
-      "copyPublicLink": "复制公开链接",
+      "publicPage": "分享页面",
+      "copyPublicLink": "复制分享链接",
       "copied": "公开链接已复制",
       "downloadShareCard": "下载分享卡片",
       "shareSong": "分享歌曲"

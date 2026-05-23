@@ -276,7 +276,7 @@
       "openPage": "Abrir pagina",
       "download": "Descargar",
       "upgradeToDownload": "Mejora para descargar",
-      "openPublicPage": "Abrir pagina publica",
+      "openPublicPage": "Abrir pagina para compartir",
       "viewDashboard": "Ver panel",
       "rightsNotice": "Puedes usar las canciones generadas para YouTube, redes sociales y contenido comercial."
     },
@@ -438,7 +438,7 @@
       "emptySubtitle": "Crea tu primera cancion para publicar una pagina musical indexable.",
       "coverAlt": "Portada de {title}",
       "statusPublic": "Publica",
-      "statusPrivate": "Privada",
+      "statusPrivate": "No listada",
       "createdOn": "Creada el {date}",
       "expiresOn": "Expira el {date}",
       "metrics": {
@@ -572,8 +572,8 @@
       "generating": "Generando informe",
       "generated": "Informe generado",
       "generateFailed": "No se pudo generar el informe",
-      "publicPage": "Pagina publica",
-      "copyPublicLink": "Copiar enlace publico",
+      "publicPage": "Pagina para compartir",
+      "copyPublicLink": "Copiar enlace para compartir",
       "copied": "Enlace publico copiado",
       "downloadShareCard": "Descargar tarjeta",
       "shareSong": "Compartir cancion"

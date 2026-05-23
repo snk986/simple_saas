@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
         style_tags: prepared.style.tags,
         locale: prepared.locale,
         status: "generating",
-        is_public: true,
+        is_public: false,
         audio_provider: audioProvider.name,
         audio_provider_task_id: "",
         audio_provider_status: "submitting",

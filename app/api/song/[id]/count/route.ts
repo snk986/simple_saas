@@ -40,7 +40,6 @@ export async function POST(
       .from("songs")
       .select("id,user_id")
       .eq("id", id)
-      .eq("is_public", true)
       .eq("status", "ready")
       .single();
 

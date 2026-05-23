@@ -42,7 +42,10 @@ type FeaturedSongRow = {
   play_count: number | null;
   like_count: number | null;
   style_tags: string[] | null;
+  is_featured: boolean | null;
+  featured_active: boolean | null;
   featured_badge: string | null;
+  total_score: number | null;
 };
 
 function portraitAvatarUrl(songId: string) {
@@ -54,17 +57,17 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
   const { data, error } = await supabase
     .from("songs")
     .select(
-      "id,title,audio_url,cover_url,play_count,like_count,style_tags,featured_badge",
+      "id,title,audio_url,cover_url,play_count,like_count,style_tags,is_featured,featured_active,featured_badge,total_score",
     )
     .eq("is_public", true)
     .eq("status", "ready")
-    .eq("is_featured", true)
-    .eq("featured_active", true)
     .not("audio_url", "is", null)
     .not("cover_url", "is", null)
+    .or("is_featured.eq.true,total_score.gte.80")
     .order("featured_rank", { ascending: true })
     .order("featured_at", { ascending: false })
-    .limit(10);
+    .order("total_score", { ascending: false })
+    .limit(20);
 
   if (error) {
     console.error("Featured gallery query error:", error);
@@ -72,7 +75,14 @@ async function getFeaturedGallerySongs(): Promise<FeaturedGallerySong[]> {
   }
 
   return ((data ?? []) as FeaturedSongRow[])
-    .filter((song) => song.audio_url && song.cover_url)
+    .filter(
+      (song) =>
+        song.audio_url &&
+        song.cover_url &&
+        ((song.is_featured && song.featured_active !== false) ||
+          (song.total_score ?? 0) >= 80),
+    )
+    .slice(0, 10)
     .map((song) => ({
       id: song.id,
       title: song.title,

@@ -276,7 +276,7 @@
       "openPage": "페이지 열기",
       "download": "다운로드",
       "upgradeToDownload": "다운로드하려면 업그레이드",
-      "openPublicPage": "공개 페이지 열기",
+      "openPublicPage": "공유 페이지 열기",
       "viewDashboard": "대시보드 보기",
       "rightsNotice": "생성된 노래는 YouTube, 소셜 미디어, 상업 콘텐츠에 사용할 수 있습니다."
     },
@@ -438,7 +438,7 @@
       "emptySubtitle": "첫 노래를 만들어 검색 가능한 공개 페이지를 발행하세요.",
       "coverAlt": "{title} 커버 아트",
       "statusPublic": "공개",
-      "statusPrivate": "비공개",
+      "statusPrivate": "일부 공개",
       "createdOn": "생성일 {date}",
       "expiresOn": "만료일 {date}",
       "metrics": {
@@ -572,8 +572,8 @@
       "generating": "리포트 생성 중",
       "generated": "리포트가 생성되었습니다",
       "generateFailed": "리포트 생성 실패",
-      "publicPage": "공개 페이지",
-      "copyPublicLink": "공개 링크 복사",
+      "publicPage": "공유 페이지",
+      "copyPublicLink": "공유 링크 복사",
       "copied": "공개 링크가 복사되었습니다",
       "downloadShareCard": "공유 카드 다운로드",
       "shareSong": "노래 공유"

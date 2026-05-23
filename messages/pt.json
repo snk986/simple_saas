@@ -276,7 +276,7 @@
       "openPage": "Abrir pagina",
       "download": "Baixar",
       "upgradeToDownload": "Faca upgrade para baixar",
-      "openPublicPage": "Abrir pagina publica",
+      "openPublicPage": "Abrir pagina de compartilhamento",
       "viewDashboard": "Ver painel",
       "rightsNotice": "Você pode usar músicas geradas no YouTube, em redes sociais e em conteúdo comercial."
     },
@@ -438,7 +438,7 @@
       "emptySubtitle": "Crie sua primeira musica para publicar uma pagina indexavel.",
       "coverAlt": "Capa de {title}",
       "statusPublic": "Publica",
-      "statusPrivate": "Privada",
+      "statusPrivate": "Nao listada",
       "createdOn": "Criada em {date}",
       "expiresOn": "Expira em {date}",
       "metrics": {
@@ -572,8 +572,8 @@
       "generating": "Gerando relatorio",
       "generated": "Relatorio gerado",
       "generateFailed": "Falha ao gerar relatorio",
-      "publicPage": "Pagina publica",
-      "copyPublicLink": "Copiar link publico",
+      "publicPage": "Pagina de compartilhamento",
+      "copyPublicLink": "Copiar link de compartilhamento",
       "copied": "Link publico copiado",
       "downloadShareCard": "Baixar cartao",
       "shareSong": "Compartilhar musica"

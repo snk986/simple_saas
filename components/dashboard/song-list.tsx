@@ -107,7 +107,10 @@ export function SongList({
                   {song.coverUrl ? (
                     <img
                       src={song.coverUrl}
-                      alt={labels.coverAlt.replace("{title}", song.displayTitle)}
+                      alt={labels.coverAlt.replace(
+                        "{title}",
+                        song.displayTitle,
+                      )}
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -119,7 +122,9 @@ export function SongList({
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
                     <Badge variant={song.isPublic ? "default" : "secondary"}>
-                      {song.isPublic ? labels.statusPublic : labels.statusPrivate}
+                      {song.isPublic
+                        ? labels.statusPublic
+                        : labels.statusPrivate}
                     </Badge>
                     <Badge variant="outline">{song.status}</Badge>
                   </div>
@@ -166,13 +171,23 @@ export function SongList({
                 </div>
                 <div className="flex min-w-0 flex-wrap gap-2">
                   {song.audioUrl && canDownload ? (
-                    <Button asChild size="sm" variant="outline" className="min-w-[120px] gap-2">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="min-w-[120px] gap-2"
+                    >
                       <a href={song.audioUrl} download>
                         {labels.download}
                       </a>
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" className="min-w-[120px] gap-2" disabled>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="min-w-[120px] gap-2"
+                      disabled
+                    >
                       {labels.upgradeToDownload}
                     </Button>
                   )}
@@ -181,7 +196,7 @@ export function SongList({
                     size="sm"
                     variant="outline"
                     className="min-w-[120px] gap-2"
-                    disabled={!song.isPublic || song.status !== "ready"}
+                    disabled={song.status !== "ready"}
                     onClick={() => {
                       const url = new URL(
                         song.publicHref,
@@ -193,7 +208,7 @@ export function SongList({
                     <Copy className="h-4 w-4" />
                     {labels.copyLink}
                   </Button>
-                  {song.isPublic && song.status === "ready" ? (
+                  {song.status === "ready" ? (
                     <Button
                       asChild
                       size="sm"
@@ -216,7 +231,12 @@ export function SongList({
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button asChild size="sm" variant="outline" className="min-w-[120px] gap-2">
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="outline"
+                    className="min-w-[120px] gap-2"
+                  >
                     <Link href={song.reportHref}>
                       {labels.report}
                       <ExternalLink className="h-4 w-4" />
