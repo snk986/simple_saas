@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 type Mode = "text" | "lyrics";
 const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
+const PENDING_DRAFT_STORAGE_PREFIX = "calyra:pendingDraft:";
 
 interface HeroGeneratorFormProps {
   textToSongPath: string;
@@ -87,46 +88,22 @@ export function HeroGeneratorForm({
     }
 
     setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/songs/generate", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          mode,
-          prompt: mode === "text" ? promptValue : undefined,
-          lyrics: mode === "lyrics" ? promptValue : undefined,
-          style: styleValue,
-          title: titleValue,
-          locale,
-        }),
-      });
-      const data = await response.json();
+    const nextPath = mode === "lyrics" ? lyricsToSongPath : textToSongPath;
+    const pendingDraftPath = new URL(nextPath, window.location.origin).pathname;
 
-      if (response.status === 401) {
-        router.push(signInPath);
-        return;
-      }
-
-      if (response.status === 402) {
-        router.push(pricingPath);
-        return;
-      }
-
-      if (!response.ok || !data.songId) {
-        throw new Error(data.error ?? "Generation failed");
-      }
-
-      const nextPath = mode === "lyrics" ? lyricsToSongPath : textToSongPath;
-      const pendingSongPath = new URL(nextPath, window.location.origin)
-        .pathname;
-      window.sessionStorage.setItem(
-        `${PENDING_SONG_STORAGE_PREFIX}${pendingSongPath}`,
-        data.songId,
-      );
-      router.push(nextPath);
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.sessionStorage.removeItem(
+      `${PENDING_SONG_STORAGE_PREFIX}${pendingDraftPath}`,
+    );
+    window.sessionStorage.setItem(
+      `${PENDING_DRAFT_STORAGE_PREFIX}${pendingDraftPath}`,
+      JSON.stringify({
+        prompt: promptValue,
+        style: styleValue,
+        title: titleValue,
+        autoSubmit: true,
+      }),
+    );
+    router.push(nextPath);
   };
 
   return (

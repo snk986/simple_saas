@@ -109,6 +109,14 @@ const CREEM_CHECKOUT_QUERY_KEYS = [
   "signature",
 ];
 const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
+const PENDING_DRAFT_STORAGE_PREFIX = "calyra:pendingDraft:";
+
+type PendingDraftPayload = {
+  prompt?: string;
+  style?: string;
+  title?: string;
+  autoSubmit?: boolean;
+};
 
 function normalizeStatus(
   status: "generating" | "ready" | "failed" | "expired",
@@ -160,6 +168,9 @@ export function StoryInput({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [errorAction, setErrorAction] = useState<ActionNeededType | null>(null);
+  const [queuedDraft, setQueuedDraft] = useState<PendingDraftPayload | null>(
+    null,
+  );
   const [workspaceSongs, setWorkspaceSongs] = useState<WorkspaceSongItem[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
@@ -174,6 +185,30 @@ export function StoryInput({
     if (pendingSongId) {
       window.sessionStorage.removeItem(pendingSongKey);
       setPendingInitialSongId(pendingSongId);
+    }
+
+    const pendingDraftKey = `${PENDING_DRAFT_STORAGE_PREFIX}${window.location.pathname}`;
+    const pendingDraftRaw = window.sessionStorage.getItem(pendingDraftKey);
+    if (pendingDraftRaw) {
+      window.sessionStorage.removeItem(pendingDraftKey);
+
+      try {
+        const pendingDraft = JSON.parse(pendingDraftRaw) as PendingDraftPayload;
+        if (typeof pendingDraft.prompt === "string") {
+          setPrompt(pendingDraft.prompt);
+        }
+        if (typeof pendingDraft.style === "string") {
+          setStyle(pendingDraft.style);
+        }
+        if (typeof pendingDraft.title === "string") {
+          setTitle(pendingDraft.title);
+        }
+        if (pendingDraft.autoSubmit) {
+          setQueuedDraft(pendingDraft);
+        }
+      } catch {
+        window.sessionStorage.removeItem(pendingDraftKey);
+      }
     }
 
     if (cleanUrl) {
@@ -232,7 +267,9 @@ export function StoryInput({
             isPublic: Boolean(song.is_public),
             coverUrl: song.cover_url,
             audioUrl: song.audio_url,
-            versionTag: /\(Version B\)$/.test(song.title) ? t("versionB") : null,
+            versionTag: /\(Version B\)$/.test(song.title)
+              ? t("versionB")
+              : null,
             liked: (song.like_count ?? 0) > 0,
             createdAt: song.created_at,
           },
@@ -387,7 +424,9 @@ export function StoryInput({
   }, [filter, search, workspaceSongs]);
 
   const submitGeneration = async () => {
-    if (!prompt.trim() || prompt.trim().length < 10) {
+    const trimmedPrompt = prompt.trim();
+
+    if (!trimmedPrompt || trimmedPrompt.length < 10) {
       toast({
         variant: "destructive",
         description: t("inputTooShort"),
@@ -403,8 +442,8 @@ export function StoryInput({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           mode,
-          prompt: mode === "text" ? prompt : undefined,
-          lyrics: mode === "lyrics" ? prompt : undefined,
+          prompt: mode === "text" ? trimmedPrompt : undefined,
+          lyrics: mode === "lyrics" ? trimmedPrompt : undefined,
           style,
           title,
           locale: params.locale ?? "en",
@@ -433,7 +472,7 @@ export function StoryInput({
       const optimistic: WorkspaceSongItem = {
         id: data.songId,
         title: data.title || title.trim() || t("untitledSong"),
-        promptSummary: prompt,
+        promptSummary: trimmedPrompt,
         styleSummary: style,
         status: "processing",
         isPublic: true,
@@ -457,6 +496,21 @@ export function StoryInput({
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!queuedDraft || isSubmitting) {
+      return;
+    }
+
+    if (!queuedDraft.prompt?.trim()) {
+      setQueuedDraft(null);
+      return;
+    }
+
+    void submitGeneration().finally(() => {
+      setQueuedDraft(null);
+    });
+  }, [isSubmitting, queuedDraft]);
 
   const appendStyleTag = (tag: string) => {
     const next = style.trim();
@@ -709,10 +763,14 @@ export function StoryInput({
                       {song.versionTag
                         ? t("versionDurationMeta", {
                             version: song.versionTag,
-                            duration: formatDuration(durations[song.id] ?? null),
+                            duration: formatDuration(
+                              durations[song.id] ?? null,
+                            ),
                           })
                         : t("durationMeta", {
-                            duration: formatDuration(durations[song.id] ?? null),
+                            duration: formatDuration(
+                              durations[song.id] ?? null,
+                            ),
                           })}
                     </p>
                     <p className="mt-1 truncate text-xs text-muted-foreground">
