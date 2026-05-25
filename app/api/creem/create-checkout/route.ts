@@ -4,12 +4,20 @@ import { creem } from "@/lib/creem";
 import { getTierById } from "@/config/subscriptions";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import crypto from "crypto";
+import { z } from "zod";
 import {
   getClientContext,
   getRequestId,
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import { invalidJsonRequest, validationError } from "@/lib/api/errors";
+
+const requestSchema = z
+  .object({
+    tierId: z.string().trim().min(1),
+  })
+  .strict();
 
 function inferLocaleFromRequest(request: Request): Locale {
   const referer = request.headers.get("referer");
@@ -47,14 +55,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json().catch(() => ({}));
-    const allowedKeys = ["tierId"];
+    const payload = await request.json().catch(() => null);
 
-    if (
-      !body ||
-      typeof body !== "object" ||
-      Object.keys(body).some((key) => !allowedKeys.includes(key))
-    ) {
+    if (!payload) {
+      logError("checkout_failed", {
+        request_id: requestId,
+        user_id: user.id,
+        stage: "checkout",
+        status: "failed",
+        failure_reason: "invalid_json",
+        ...client,
+      });
+      return invalidJsonRequest();
+    }
+
+    const body = requestSchema.safeParse(payload);
+
+    if (!body.success) {
       logError("checkout_failed", {
         request_id: requestId,
         user_id: user.id,
@@ -63,10 +80,10 @@ export async function POST(request: Request) {
         failure_reason: "invalid_request",
         ...client,
       });
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(body.error);
     }
 
-    const tierId = typeof body?.tierId === "string" ? body.tierId : "";
+    const tierId = body.data.tierId;
     const locale = inferLocaleFromRequest(request);
     const tier = getTierById(tierId);
 
@@ -145,7 +162,7 @@ export async function POST(request: Request) {
       ...client,
     });
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Checkout creation failed", request_id: requestId },
       { status: 500 },
     );
   }

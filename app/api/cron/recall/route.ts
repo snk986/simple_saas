@@ -9,6 +9,7 @@ import type {
   RecallRunStats,
   RecallScenario,
 } from "@/lib/recall/types";
+import { invalidRequest } from "@/lib/api/errors";
 
 export const dynamic = "force-dynamic";
 
@@ -76,11 +77,13 @@ export async function GET(request: NextRequest) {
   const scenarioParam = request.nextUrl.searchParams.get("scenario");
 
   if (scenarioParam && !isRecallScenario(scenarioParam)) {
-    return NextResponse.json({ error: "Invalid scenario" }, { status: 400 });
+    return invalidRequest("scenario: Must be a valid recall scenario");
   }
 
   const scenario: RecallScenario | undefined =
-    scenarioParam && isRecallScenario(scenarioParam) ? scenarioParam : undefined;
+    scenarioParam && isRecallScenario(scenarioParam)
+      ? scenarioParam
+      : undefined;
 
   try {
     const { candidates, skipped } = await getRecallCandidates(scenario);
@@ -103,9 +106,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(stats);
   } catch (error) {
     console.error("Recall cron failed:", error);
-    return NextResponse.json(
-      { error: "Recall cron failed" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Recall cron failed" }, { status: 500 });
   }
 }

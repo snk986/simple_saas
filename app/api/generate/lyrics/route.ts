@@ -10,6 +10,7 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import { invalidJsonRequest, validationError } from "@/lib/api/errors";
 
 const requestSchema = z.object({
   userInput: z.string().trim().min(10).max(2000),
@@ -35,10 +36,16 @@ export async function POST(request: NextRequest) {
   const client = getClientContext(request.headers.get("user-agent"));
 
   try {
-    const body = requestSchema.safeParse(await request.json());
+    const payload = await request.json().catch(() => null);
+
+    if (!payload) {
+      return invalidJsonRequest();
+    }
+
+    const body = requestSchema.safeParse(payload);
 
     if (!body.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(body.error);
     }
 
     const supabase = await createClient();

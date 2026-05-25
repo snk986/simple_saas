@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
+import { invalidJsonRequest, validationError } from "@/lib/api/errors";
 
 const requestSchema = z.object({
   event: z.enum(["play_start", "play_complete", "share", "cta_click", "like"]),
@@ -26,13 +27,13 @@ export async function POST(
     try {
       payload = await request.json();
     } catch {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidJsonRequest();
     }
 
     const body = requestSchema.safeParse(payload);
 
     if (!body.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(body.error);
     }
 
     const supabase = createServiceRoleClient();

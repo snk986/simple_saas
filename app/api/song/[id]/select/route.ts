@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
+import { invalidJsonRequest, validationError } from "@/lib/api/errors";
 
 const requestSchema = z.object({
   selectedAudio: z.enum(["primary", "alt"]),
@@ -12,10 +13,16 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-    const body = requestSchema.safeParse(await request.json());
+    const payload = await request.json().catch(() => null);
+
+    if (!payload) {
+      return invalidJsonRequest();
+    }
+
+    const body = requestSchema.safeParse(payload);
 
     if (!body.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(body.error);
     }
 
     const supabase = await createClient();
@@ -40,7 +47,10 @@ export async function POST(
     }
 
     if (body.data.selectedAudio === "alt" && !song.audio_url_alt) {
-      return NextResponse.json({ error: "Alternate audio not found" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Alternate audio not found" },
+        { status: 400 },
+      );
     }
 
     const { error: updateError } = await supabase

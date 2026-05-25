@@ -24,6 +24,11 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import {
+  invalidJsonRequest,
+  invalidRequest,
+  validationError,
+} from "@/lib/api/errors";
 
 const requestSchema = z.object({
   mode: z.enum(["text", "lyrics"]).default("text"),
@@ -34,20 +39,6 @@ const requestSchema = z.object({
   locale: z.string().trim().optional(),
   instrumental: z.boolean().optional(),
 });
-
-function invalidRequest(details: string[]) {
-  return NextResponse.json(
-    { error: "Invalid request", details },
-    { status: 400 },
-  );
-}
-
-function formatZodIssues(error: z.ZodError) {
-  return error.issues.map((issue) => {
-    const field = issue.path.join(".") || "request";
-    return `${field}: ${issue.message}`;
-  });
-}
 
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request.headers.get("x-request-id"));
@@ -61,18 +52,16 @@ export async function POST(request: NextRequest) {
 
   try {
     creditCost = audioProvider.creditCost;
-    const body = await request
-      .json()
-      .catch(() => null);
+    const body = await request.json().catch(() => null);
 
     if (!body) {
-      return invalidRequest(["request: Body must be valid JSON"]);
+      return invalidJsonRequest();
     }
 
     const parsed = requestSchema.safeParse(body);
 
     if (!parsed.success) {
-      return invalidRequest(formatZodIssues(parsed.error));
+      return validationError(parsed.error);
     }
 
     const {

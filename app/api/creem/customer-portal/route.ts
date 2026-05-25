@@ -27,13 +27,22 @@ export async function GET(_request: Request) {
       .single();
 
     if (customerError || !customer) {
-      return NextResponse.json({ error: "No subscription found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "No subscription found" },
+        { status: 404 },
+      );
     }
 
     // Check if the customer ID is a valid Creem ID (should start with 'cust_')
     // The 'auto_' IDs are local placeholders for new users and don't exist in Creem
-    if (!customer.creem_customer_id || !customer.creem_customer_id.startsWith('cust_')) {
-      return NextResponse.json({ error: "Not a paid customer yet" }, { status: 404 });
+    if (
+      !customer.creem_customer_id ||
+      !customer.creem_customer_id.startsWith("cust_")
+    ) {
+      return NextResponse.json(
+        { error: "Not a paid customer yet" },
+        { status: 404 },
+      );
     }
 
     const data = await creem.customers.generateBillingLinks({
@@ -59,14 +68,16 @@ export async function GET(_request: Request) {
     if (error instanceof CreemApiError && error.status === 404) {
       return NextResponse.json(
         {
-          error:
-            "Customer was not found in the configured Creem environment",
+          error: "Customer was not found in the configured Creem environment",
         },
         { status: 404 },
       );
     }
 
     console.error("Error getting customer portal link:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create customer portal link" },
+      { status: 500 },
+    );
   }
 }

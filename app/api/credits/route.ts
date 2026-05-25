@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { invalidJsonRequest, invalidRequest } from "@/lib/api/errors";
 
 type CustomerCredits = {
   id: string;
@@ -53,7 +54,7 @@ export async function GET() {
   } catch (error) {
     console.error("Credits API error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Failed to fetch credits" },
       { status: 500 },
     );
   }
@@ -66,7 +67,7 @@ export async function POST(request: NextRequest) {
     try {
       payload = await request.json();
     } catch {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidJsonRequest();
     }
 
     const { amount, operation } = payload as {
@@ -76,10 +77,7 @@ export async function POST(request: NextRequest) {
     const creditAmount = Number(amount);
 
     if (!Number.isInteger(creditAmount) || creditAmount <= 0) {
-      return NextResponse.json(
-        { error: "Invalid credit amount" },
-        { status: 400 },
-      );
+      return invalidRequest("amount: Must be a positive integer");
     }
 
     const supabase = await createClient();
@@ -142,7 +140,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Credits spend API error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Failed to spend credits" },
       { status: 500 },
     );
   }

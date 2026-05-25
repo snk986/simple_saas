@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
+import { validationError } from "@/lib/api/errors";
 
 interface RouteContext {
   params: Promise<{ songId: string }>;
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   const parsedSongId = songIdSchema.safeParse(songId);
 
   if (!parsedSongId.success) {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    return validationError(parsedSongId.error);
   }
 
   const supabase = await createClient();

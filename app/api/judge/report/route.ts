@@ -13,6 +13,7 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import { invalidJsonRequest, validationError } from "@/lib/api/errors";
 
 const REPORT_CREDIT_COST = 100;
 
@@ -46,7 +47,11 @@ async function freezeCreditIfNeeded(
     p_user_id: userId,
     p_amount: REPORT_CREDIT_COST,
     p_description: "judge_report",
-    p_metadata: { operation: "judge_report", request_id: requestId, song_id: songId },
+    p_metadata: {
+      operation: "judge_report",
+      request_id: requestId,
+      song_id: songId,
+    },
   });
 
   if (error) {
@@ -101,7 +106,11 @@ async function refundCreditIfNeeded(
     p_user_id: userId,
     p_amount: REPORT_CREDIT_COST,
     p_description: "judge_report_refund",
-    p_metadata: { operation: "judge_report", request_id: requestId, song_id: songId },
+    p_metadata: {
+      operation: "judge_report",
+      request_id: requestId,
+      song_id: songId,
+    },
   });
 
   if (error) {
@@ -151,13 +160,13 @@ export async function POST(request: NextRequest) {
     try {
       payload = await request.json();
     } catch {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidJsonRequest();
     }
 
     const body = requestSchema.safeParse(payload);
 
     if (!body.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(body.error);
     }
 
     const {
@@ -204,7 +213,12 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const credit = await freezeCreditIfNeeded(supabase, user.id, requestId, song.id);
+    const credit = await freezeCreditIfNeeded(
+      supabase,
+      user.id,
+      requestId,
+      song.id,
+    );
     charged = credit.charged;
 
     if (!credit.enough) {

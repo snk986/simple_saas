@@ -4,6 +4,7 @@ import { z } from "zod";
 import { getSongStyle } from "@/config/styles";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 import type { JudgeReport } from "@/types/judge";
+import { validationError } from "@/lib/api/errors";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -249,7 +250,7 @@ export async function GET(request: NextRequest) {
   });
 
   if (!query.success) {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    return validationError(query.error);
   }
 
   const supabase = createServiceRoleClient();

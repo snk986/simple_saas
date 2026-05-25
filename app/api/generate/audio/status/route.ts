@@ -18,6 +18,7 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import { validationError } from "@/lib/api/errors";
 
 const querySchema = z.object({
   songId: z.string().uuid(),
@@ -44,7 +45,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (!query.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return validationError(query.error);
     }
 
     const {
