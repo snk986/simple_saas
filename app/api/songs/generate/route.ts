@@ -29,11 +29,25 @@ const requestSchema = z.object({
   mode: z.enum(["text", "lyrics"]).default("text"),
   prompt: z.string().trim().max(2000).optional(),
   lyrics: z.string().trim().max(10000).optional(),
-  style: z.string().trim().max(300).optional(),
+  style: z.string().trim().max(1000).optional(),
   title: z.string().trim().max(120).optional(),
   locale: z.string().trim().optional(),
   instrumental: z.boolean().optional(),
 });
+
+function invalidRequest(details: string[]) {
+  return NextResponse.json(
+    { error: "Invalid request", details },
+    { status: 400 },
+  );
+}
+
+function formatZodIssues(error: z.ZodError) {
+  return error.issues.map((issue) => {
+    const field = issue.path.join(".") || "request";
+    return `${field}: ${issue.message}`;
+  });
+}
 
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request.headers.get("x-request-id"));
@@ -47,10 +61,18 @@ export async function POST(request: NextRequest) {
 
   try {
     creditCost = audioProvider.creditCost;
-    const parsed = requestSchema.safeParse(await request.json());
+    const body = await request
+      .json()
+      .catch(() => null);
+
+    if (!body) {
+      return invalidRequest(["request: Body must be valid JSON"]);
+    }
+
+    const parsed = requestSchema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidRequest(formatZodIssues(parsed.error));
     }
 
     const {
@@ -70,11 +92,11 @@ export async function POST(request: NextRequest) {
     const requestedStyle = parsed.data.style?.trim() ?? "";
 
     if (mode === "text" && prompt.length < 10) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidRequest(["prompt: Must be at least 10 characters"]);
     }
 
     if (mode === "lyrics" && (parsed.data.lyrics?.trim().length ?? 0) < 20) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return invalidRequest(["lyrics: Must be at least 20 characters"]);
     }
 
     logInfo("song_generate_start", {
