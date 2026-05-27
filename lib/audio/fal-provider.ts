@@ -105,7 +105,7 @@ export const falProvider: AudioProvider = {
     try {
       json = await fal.queue.submit(modelId, {
         input: {
-          prompt: params.prompt.slice(0, 500),
+          prompt: params.prompt,
           lyrics_prompt: params.lyrics,
         },
         webhookUrl,

@@ -367,7 +367,10 @@ export default async function SongPage({
                   commercial_appeal: tReport("dimensions.commercial_appeal"),
                   originality: tReport("dimensions.originality"),
                 },
-                fallbackIntro: t("creatorReport.fallbackIntro"),
+                fallbackIntro: t("creatorReport.fallbackIntro", {
+                  title: song.title,
+                  story: song.storySummary,
+                }),
               }}
             />
           </section>

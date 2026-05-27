@@ -90,6 +90,11 @@ export const claudeProvider: AiProvider = {
     return {
       title: draft.title.trim(),
       lyrics: draft.lyrics.trim(),
+      suno_style_prompt: draft.suno_style_prompt?.trim(),
+      style_params: draft.style_params,
+      style_tags: draft.style_tags,
+      vocal_casting: draft.vocal_casting?.trim(),
+      generation_notes: draft.generation_notes?.trim(),
     };
   },
 };

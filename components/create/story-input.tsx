@@ -177,6 +177,7 @@ export function StoryInput({
   const [durations, setDurations] = useState<Record<string, number | null>>({});
   const [playingSongId, setPlayingSongId] = useState<string | null>(null);
   const pollAttemptsRef = useRef<Record<string, number>>({});
+  const pollInFlightRef = useRef<Record<string, boolean>>({});
   const playbackAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -325,11 +326,16 @@ export function StoryInput({
     const timer = window.setInterval(() => {
       processingSongs.forEach((song) => {
         void (async () => {
+          if (pollInFlightRef.current[song.id]) {
+            return;
+          }
+
           const attempt = (pollAttemptsRef.current[song.id] ?? 0) + 1;
           pollAttemptsRef.current[song.id] = attempt;
 
           if (attempt > 60) {
             delete pollAttemptsRef.current[song.id];
+            delete pollInFlightRef.current[song.id];
             setGenerationError(t("stillProcessingMessage"));
             setErrorAction("error");
             setWorkspaceSongs((current) =>
@@ -338,40 +344,45 @@ export function StoryInput({
             return;
           }
 
-          const response = await fetch(
-            `/api/songs/${encodeURIComponent(song.id)}`,
-            {
-              cache: "no-store",
-            },
-          );
-          if (!response.ok) return;
-          const data = (await response.json()) as SongStatusPayload;
-          if (data.status === "failed" || data.status === "completed") {
-            delete pollAttemptsRef.current[song.id];
-          }
-          if (data.status === "failed") {
-            setGenerationError(
-              data.errorMessage ?? t("generationFailedWithRefundMessage"),
+          pollInFlightRef.current[song.id] = true;
+          try {
+            const response = await fetch(
+              `/api/songs/${encodeURIComponent(song.id)}`,
+              {
+                cache: "no-store",
+              },
             );
-            setErrorAction("error");
+            if (!response.ok) return;
+            const data = (await response.json()) as SongStatusPayload;
+            if (data.status === "failed" || data.status === "completed") {
+              delete pollAttemptsRef.current[song.id];
+            }
+            if (data.status === "failed") {
+              setGenerationError(
+                data.errorMessage ?? t("generationFailedWithRefundMessage"),
+              );
+              setErrorAction("error");
+            }
+            setWorkspaceSongs((current) =>
+              data.status === "failed"
+                ? current.filter((item) => item.id !== song.id)
+                : current.map((item) =>
+                    item.id !== song.id
+                      ? item
+                      : {
+                          ...item,
+                          status:
+                            data.status === "completed"
+                              ? "completed"
+                              : "processing",
+                          audioUrl: data.audioUrl ?? item.audioUrl,
+                          coverUrl: data.coverUrl ?? item.coverUrl,
+                        },
+                  ),
+            );
+          } finally {
+            delete pollInFlightRef.current[song.id];
           }
-          setWorkspaceSongs((current) =>
-            data.status === "failed"
-              ? current.filter((item) => item.id !== song.id)
-              : current.map((item) =>
-                  item.id !== song.id
-                    ? item
-                    : {
-                        ...item,
-                        status:
-                          data.status === "completed"
-                            ? "completed"
-                            : "processing",
-                        audioUrl: data.audioUrl ?? item.audioUrl,
-                        coverUrl: data.coverUrl ?? item.coverUrl,
-                      },
-                ),
-          );
         })();
       });
     }, 3000);

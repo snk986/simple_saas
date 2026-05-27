@@ -52,6 +52,9 @@ export interface GenerateLyricsResponse {
   style_key: string;
   style_params: StyleParams;
   style_tags: string[];
+  style_prompt?: string;
+  vocal_casting?: string;
+  generation_notes?: string;
   lyrics_regen_count: number;
 }
 

@@ -95,6 +95,9 @@ export async function POST(request: NextRequest) {
       style_key: preview.style.key,
       style_params: preview.style.params,
       style_tags: preview.style.tags,
+      style_prompt: preview.style.prompt,
+      vocal_casting: preview.vocalCasting,
+      generation_notes: preview.generationNotes,
       lyrics_regen_count: 1,
     });
   } catch (error) {

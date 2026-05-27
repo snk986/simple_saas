@@ -102,6 +102,9 @@ export async function POST(request: NextRequest) {
       style: requestedStyle,
       title: requestedTitle,
     });
+    const matchedStyle = matchSongStyle({
+      story: `${requestedStyle} ${prompt} ${parsed.data.lyrics ?? ""}`,
+    });
     const prepared =
       mode === "text"
         ? await generateLyricsPreview({
@@ -113,9 +116,10 @@ export async function POST(request: NextRequest) {
             locale,
             title: requestedTitle || "My AI Song",
             lyrics: parsed.data.lyrics!.trim(),
-            style: matchSongStyle({
-              story: `${requestedStyle} ${prompt} ${parsed.data.lyrics}`,
-            }),
+            style: {
+              ...matchedStyle,
+              prompt: requestedStyle || matchedStyle.prompt,
+            },
           };
 
     if (prepared.flagged) {
