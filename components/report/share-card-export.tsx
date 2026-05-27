@@ -20,6 +20,54 @@ export function ShareCardExport({
   const { toast } = useToast();
   const imageHref = `/api/share/og?songId=${encodeURIComponent(songId)}`;
 
+  function countShare() {
+    void fetch(`/api/song/${songId}/count`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: "share" }),
+      keepalive: true,
+    }).catch(() => undefined);
+  }
+
+  function downloadBlob(blob: Blob) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `calyra-ai-${songId}.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function shareCard() {
+    const response = await fetch(imageHref, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Failed to load share card");
+    }
+
+    const blob = await response.blob();
+    const file = new File([blob], `calyra-ai-${songId}.png`, {
+      type: blob.type || "image/png",
+    });
+
+    if (
+      navigator.share &&
+      navigator.canShare?.({
+        files: [file],
+      })
+    ) {
+      await navigator.share({
+        title,
+        files: [file],
+      });
+      countShare();
+      return;
+    }
+
+    downloadBlob(blob);
+  }
+
   async function shareSong() {
     const url = new URL(publicHref, window.location.origin).toString();
 
@@ -33,24 +81,31 @@ export function ShareCardExport({
       toast({ title: t("copied") });
     }
 
-    await fetch(`/api/song/${songId}/count`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ event: "share" }),
-      keepalive: true,
-    }).catch(() => undefined);
+    countShare();
   }
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-      <Button asChild type="button" variant="outline" className="gap-2">
-        <a href={imageHref} download={`calyra-ai-${songId}.png`}>
-          <Download className="h-4 w-4" />
-          {t("downloadShareCard")}
-        </a>
+      <Button
+        type="button"
+        variant="outline"
+        className="gap-2"
+        onClick={() => {
+          void shareCard().catch(() => {
+            toast({ title: "Share card failed" });
+          });
+        }}
+      >
+        <Download className="h-4 w-4" />
+        {t("downloadShareCard")}
       </Button>
 
-      <Button type="button" variant="secondary" className="gap-2" onClick={shareSong}>
+      <Button
+        type="button"
+        variant="secondary"
+        className="gap-2"
+        onClick={shareSong}
+      >
         <Share2 className="h-4 w-4" />
         {t("shareSong")}
       </Button>
