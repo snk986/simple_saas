@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   Download,
-  Heart,
   Pause,
   Play,
   Search,
@@ -24,7 +23,6 @@ import {
 interface StoryInputProps {
   recallCampaign?: string | null;
   canDownload: boolean;
-  creditsBalance: number;
   initialPrompt?: string | null;
   initialStyle?: string | null;
   initialTitle?: string | null;
@@ -47,12 +45,11 @@ interface StoryInputProps {
     cover_url: string | null;
     audio_url: string | null;
     created_at: string;
-    like_count: number | null;
   }>;
 }
 
 type WorkspaceSongStatus = "processing" | "completed";
-type WorkspaceFilter = "all" | "liked" | "public" | "uploads";
+type WorkspaceFilter = "all" | "public" | "uploads";
 
 interface WorkspaceSongItem {
   id: string;
@@ -64,7 +61,6 @@ interface WorkspaceSongItem {
   coverUrl: string | null;
   audioUrl: string | null;
   versionTag: string | null;
-  liked: boolean;
   createdAt: string;
 }
 
@@ -138,7 +134,6 @@ function formatDuration(seconds: number | null) {
 
 export function StoryInput({
   canDownload,
-  creditsBalance,
   initialPrompt,
   initialStyle,
   initialTitle,
@@ -271,7 +266,6 @@ export function StoryInput({
             versionTag: /\(Version B\)$/.test(song.title)
               ? t("versionB")
               : null,
-            liked: (song.like_count ?? 0) > 0,
             createdAt: song.created_at,
           },
         ];
@@ -307,7 +301,6 @@ export function StoryInput({
           coverUrl: data.coverUrl ?? null,
           audioUrl: data.audioUrl ?? null,
           versionTag: null,
-          liked: false,
           createdAt: new Date().toISOString(),
         },
         ...current,
@@ -418,7 +411,6 @@ export function StoryInput({
     const searchLower = search.trim().toLowerCase();
     return workspaceSongs
       .filter((song) => {
-        if (filter === "liked" && !song.liked) return false;
         if (filter === "public" && !song.isPublic) return false;
         if (filter === "uploads") return true;
         return true;
@@ -490,7 +482,6 @@ export function StoryInput({
         coverUrl: null,
         audioUrl: null,
         versionTag: null,
-        liked: false,
         createdAt: new Date().toISOString(),
       };
 
@@ -612,9 +603,6 @@ export function StoryInput({
         <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-xl font-semibold">{t("generatorTitle")}</h1>
-            <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              {t("credits", { count: creditsBalance })}
-            </span>
           </div>
 
           <div className="mb-4 inline-flex rounded-lg border border-border p-1">
@@ -712,7 +700,7 @@ export function StoryInput({
                 <SlidersHorizontal className="h-3.5 w-3.5" />
                 {t("sortByNewest")}
               </span>
-              {(["all", "liked", "public", "uploads"] as WorkspaceFilter[]).map(
+              {(["all", "public", "uploads"] as WorkspaceFilter[]).map(
                 (item) => (
                   <button
                     key={item}
@@ -726,11 +714,9 @@ export function StoryInput({
                   >
                     {item === "all"
                       ? t("filters.all")
-                      : item === "liked"
-                        ? t("filters.liked")
-                        : item === "public"
-                          ? t("filters.public")
-                          : t("filters.uploads")}
+                      : item === "public"
+                        ? t("filters.public")
+                        : t("filters.uploads")}
                   </button>
                 ),
               )}
@@ -806,36 +792,8 @@ export function StoryInput({
                       <Play className="h-3.5 w-3.5" />
                     )}
                   </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    disabled={song.liked}
-                    aria-label={song.liked ? t("likedSong") : t("likeSong")}
-                    onClick={() => {
-                      if (
-                        song.liked ||
-                        !song.isPublic ||
-                        song.status !== "completed"
-                      ) {
-                        return;
-                      }
-                      void fetch(`/api/song/${song.id}/count`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ event: "like" }),
-                        keepalive: true,
-                      });
-                      setWorkspaceSongs((current) =>
-                        current.map((item) =>
-                          item.id === song.id ? { ...item, liked: true } : item,
-                        ),
-                      );
-                    }}
-                  >
-                    <Heart
-                      className={`h-3.5 w-3.5 ${song.liked ? "fill-current" : ""}`}
-                    />
+                  <Button asChild type="button" size="sm" variant="outline">
+                    <Link href={`/report/${song.id}`}>{t("report")}</Link>
                   </Button>
                   {song.audioUrl && canDownload ? (
                     <Button asChild type="button" size="sm" variant="outline">
@@ -848,9 +806,6 @@ export function StoryInput({
                       <Download className="h-3.5 w-3.5" />
                     </Button>
                   )}
-                  <Button asChild type="button" size="sm" variant="outline">
-                    <Link href={`/report/${song.id}`}>{t("report")}</Link>
-                  </Button>
                 </div>
               </article>
             ))}

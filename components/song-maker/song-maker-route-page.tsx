@@ -42,7 +42,6 @@ interface InitialWorkspaceSong {
   cover_url: string | null;
   audio_url: string | null;
   created_at: string;
-  like_count: number | null;
 }
 
 function localePrefix(locale: Locale) {
@@ -101,7 +100,7 @@ export async function SongMakerRoutePage({
     const { data: songs } = await supabase
       .from("songs")
       .select(
-        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at,like_count",
+        "id,title,user_input,style_tags,status,is_public,cover_url,audio_url,created_at",
       )
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
@@ -177,7 +176,6 @@ export async function SongMakerRoutePage({
         <StoryInput
           recallCampaign={cleanUrl ? null : (searchParams.utm_campaign ?? null)}
           canDownload={canDownload}
-          creditsBalance={entitlements?.creditsBalance ?? 0}
           initialPrompt={cleanUrl ? null : (searchParams.prompt ?? null)}
           initialStyle={cleanUrl ? null : (searchParams.style ?? null)}
           initialTitle={cleanUrl ? null : (searchParams.title ?? null)}
