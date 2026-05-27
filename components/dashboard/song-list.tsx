@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Copy, ExternalLink, Music2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Copy, ExternalLink, Music2, Pause, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export interface DashboardSong {
   listId: string;
@@ -60,6 +62,14 @@ function formatLabel(template: string, value: string) {
   return template.replace("{date}", value);
 }
 
+async function countSongEvent(songId: string, event: string) {
+  await fetch(`/api/song/${songId}/count`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ event }),
+  }).catch(() => undefined);
+}
+
 export function SongList({
   songs,
   locale,
@@ -67,11 +77,58 @@ export function SongList({
   canDownload,
   labels,
 }: SongListProps) {
+  const { toast } = useToast();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playingSongId, setPlayingSongId] = useState<string | null>(null);
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
+
+  useEffect(() => {
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
+  const togglePlayback = (song: DashboardSong) => {
+    if (!song.audioUrl) {
+      return;
+    }
+
+    const currentAudio = audioRef.current;
+    if (playingSongId === song.listId && currentAudio && !currentAudio.paused) {
+      currentAudio.pause();
+      setPlayingSongId(null);
+      return;
+    }
+
+    currentAudio?.pause();
+    const nextAudio = new Audio(song.audioUrl);
+    audioRef.current = nextAudio;
+    setPlayingSongId(song.listId);
+
+    const clearIfCurrent = () => {
+      if (audioRef.current === nextAudio) {
+        setPlayingSongId(null);
+      }
+    };
+
+    nextAudio.addEventListener("ended", () => {
+      void countSongEvent(song.listId, "play_complete");
+      clearIfCurrent();
+    });
+    nextAudio.addEventListener("error", clearIfCurrent);
+
+    void nextAudio
+      .play()
+      .then(() => {
+        void countSongEvent(song.listId, "play_start");
+      })
+      .catch(clearIfCurrent);
+  };
 
   return (
     <section className="rounded-lg border border-border bg-card p-5 shadow-sm shadow-black/20 sm:p-6">
@@ -103,7 +160,15 @@ export function SongList({
               className="grid gap-4 py-4 first:pt-0 last:pb-0 xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)]"
             >
               <div className="flex min-w-0 gap-4">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
+                <button
+                  type="button"
+                  className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted disabled:cursor-default"
+                  disabled={!song.audioUrl}
+                  aria-label={
+                    playingSongId === song.listId ? "Pause song" : "Play song"
+                  }
+                  onClick={() => togglePlayback(song)}
+                >
                   {song.coverUrl ? (
                     <img
                       src={song.coverUrl}
@@ -111,14 +176,25 @@ export function SongList({
                         "{title}",
                         song.displayTitle,
                       )}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-200 group-enabled:group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center">
                       <Music2 className="h-6 w-6 text-muted-foreground" />
                     </div>
                   )}
-                </div>
+                  {song.audioUrl ? (
+                    <span className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 transition-opacity group-enabled:group-hover:bg-black/30">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm">
+                        {playingSongId === song.listId ? (
+                          <Pause className="h-4 w-4" />
+                        ) : (
+                          <Play className="ml-0.5 h-4 w-4" />
+                        )}
+                      </span>
+                    </span>
+                  ) : null}
+                </button>
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
                     <Badge variant={song.isPublic ? "default" : "secondary"}>
@@ -197,12 +273,20 @@ export function SongList({
                     variant="outline"
                     className="min-w-[120px] gap-2"
                     disabled={song.status !== "ready"}
-                    onClick={() => {
+                    onClick={async () => {
                       const url = new URL(
                         song.publicHref,
                         window.location.origin,
                       );
-                      void navigator.clipboard?.writeText(url.toString());
+                      try {
+                        if (!navigator.clipboard) {
+                          throw new Error("Clipboard unavailable");
+                        }
+                        await navigator.clipboard?.writeText(url.toString());
+                        toast({ title: "Link copied", duration: 1000 });
+                      } catch {
+                        toast({ title: "Copy failed", duration: 1000 });
+                      }
                     }}
                   >
                     <Copy className="h-4 w-4" />
