@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Copy,
-  Download,
   Heart,
   MoreHorizontal,
   Pause,
@@ -15,6 +14,7 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { SongDownloadButton } from "@/components/song/song-download-button";
 
 interface SongActionBandProps {
   songId: string;
@@ -50,7 +50,9 @@ function emitMetric(type: "play" | "share" | "like") {
   if (typeof window === "undefined") {
     return;
   }
-  window.dispatchEvent(new CustomEvent("calyra-ai:metric", { detail: { type } }));
+  window.dispatchEvent(
+    new CustomEvent("calyra-ai:metric", { detail: { type } }),
+  );
 }
 
 export function SongActionBand({
@@ -239,17 +241,14 @@ export function SongActionBand({
           </Link>
         </Button>
         {canDownload ? (
-          <Button
-            asChild
-            type="button"
+          <SongDownloadButton
+            songId={songId}
             variant="ghost"
             className="h-10 rounded-full border border-white/20 px-4 text-zinc-100 hover:bg-white/10 hover:text-white"
+            iconClassName="mr-2 h-4 w-4"
           >
-            <a href={audioUrl} download>
-              <Download className="mr-2 h-4 w-4" />
-              {labels.download}
-            </a>
-          </Button>
+            {labels.download}
+          </SongDownloadButton>
         ) : null}
       </div>
       <div

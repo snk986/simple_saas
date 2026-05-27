@@ -3,14 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import {
-  Download,
-  Pause,
-  Play,
-  Search,
-  SlidersHorizontal,
-  Wand2,
-} from "lucide-react";
+import { Pause, Play, Search, SlidersHorizontal, Wand2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -19,6 +12,7 @@ import {
   ActionNeededDialog,
   type ActionNeededType,
 } from "@/components/create/action-needed-dialog";
+import { SongDownloadButton } from "@/components/song/song-download-button";
 
 interface StoryInputProps {
   recallCampaign?: string | null;
@@ -796,15 +790,18 @@ export function StoryInput({
                     <Link href={`/report/${song.id}`}>{t("report")}</Link>
                   </Button>
                   {song.audioUrl && canDownload ? (
-                    <Button asChild type="button" size="sm" variant="outline">
-                      <a href={`/api/song/${song.id}/download`}>
-                        <Download className="h-3.5 w-3.5" />
-                      </a>
-                    </Button>
+                    <SongDownloadButton
+                      songId={song.id}
+                      size="sm"
+                      iconClassName="h-3.5 w-3.5"
+                    />
                   ) : (
-                    <Button type="button" size="sm" variant="outline" disabled>
-                      <Download className="h-3.5 w-3.5" />
-                    </Button>
+                    <SongDownloadButton
+                      songId={song.id}
+                      size="sm"
+                      iconClassName="h-3.5 w-3.5"
+                      disabled
+                    />
                   )}
                 </div>
               </article>

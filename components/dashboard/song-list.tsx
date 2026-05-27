@@ -6,6 +6,7 @@ import { Copy, ExternalLink, Music2, Pause, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { SongDownloadButton } from "@/components/song/song-download-button";
 
 export interface DashboardSong {
   listId: string;
@@ -247,16 +248,14 @@ export function SongList({
                 </div>
                 <div className="flex min-w-0 flex-wrap gap-2">
                   {song.audioUrl && canDownload ? (
-                    <Button
-                      asChild
+                    <SongDownloadButton
+                      songId={song.listId}
                       size="sm"
                       variant="outline"
                       className="min-w-[120px] gap-2"
                     >
-                      <a href={song.audioUrl} download>
-                        {labels.download}
-                      </a>
-                    </Button>
+                      {labels.download}
+                    </SongDownloadButton>
                   ) : (
                     <Button
                       size="sm"
