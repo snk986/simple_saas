@@ -8,6 +8,7 @@ import { ReportSection } from "@/components/report/report-section";
 import { ScoreDisplay } from "@/components/report/score-display";
 import { ShareCard } from "@/components/report/share-card";
 import { ShareCardExport } from "@/components/report/share-card-export";
+import { EmotionalInsight } from "@/components/report/emotional-insight";
 import { defaultLocale, locales, type Locale } from "@/config/i18n";
 import { createClient } from "@/utils/supabase/server";
 import type { JudgeReport, ScoreDimension } from "@/types/judge";
@@ -41,7 +42,11 @@ function publicSongHref(locale: Locale, id: string) {
   return `${localePrefix(locale)}/song/${id}`;
 }
 
-function reportPath(locale: Locale, id: string, query: Awaited<ReportPageProps["searchParams"]>) {
+function reportPath(
+  locale: Locale,
+  id: string,
+  query: Awaited<ReportPageProps["searchParams"]>,
+) {
   const params = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {
@@ -71,7 +76,10 @@ function formatDate(value: string, locale: Locale) {
   }).format(new Date(value));
 }
 
-export default async function ReportPage({ params, searchParams }: ReportPageProps) {
+export default async function ReportPage({
+  params,
+  searchParams,
+}: ReportPageProps) {
   const { locale, id } = await params;
   const query = await searchParams;
 
@@ -189,6 +197,14 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
             </section>
           ) : (
             <>
+              <EmotionalInsight
+                report={report}
+                labels={{
+                  title: t("emotionalInsight.title"),
+                  subtitle: t("emotionalInsight.subtitle"),
+                }}
+              />
+
               <ScoreDisplay
                 report={report}
                 labels={{

@@ -549,6 +549,14 @@
     "emptyBody": "리포트를 생성하면 점수, 프로듀서 노트, 감정 가치, 훅 분석, 공유용 요약을 확인할 수 있습니다.",
     "totalScore": "총점",
     "shareSummary": "공유 요약",
+    "emotionalInsight": {
+      "title": "이 노래가 이해한 것",
+      "subtitle": "감정의 거울",
+      "whatYouCaptured": "담아낸 감정",
+      "mostTouchingMoment": "가장 와닿는 순간",
+      "listenerFeeling": "듣는 사람이 느낄 수 있는 것",
+      "gentlePolish": "부드러운 다듬기"
+    },
     "dimensions": {
       "melody_potential": "멜로디 잠재력",
       "lyric_quality": "가사 품질",

@@ -899,6 +899,14 @@
     "emptyBody": "Generate the report to unlock score dimensions, producer notes, emotional value, hook analysis, and share-ready summary copy.",
     "totalScore": "Total Score",
     "shareSummary": "Share Summary",
+    "emotionalInsight": {
+      "title": "What I heard in this song",
+      "subtitle": "Emotional mirror",
+      "whatYouCaptured": "What you captured",
+      "mostTouchingMoment": "Most touching moment",
+      "listenerFeeling": "What listeners may feel",
+      "gentlePolish": "Gentle polish"
+    },
     "dimensions": {
       "melody_potential": "Melody Potential",
       "lyric_quality": "Lyric Quality",

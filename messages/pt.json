@@ -549,6 +549,14 @@
     "emptyBody": "Gere o relatorio para desbloquear pontuacoes, notas de produtor, valor emocional, analise do hook e um resumo pronto para compartilhar.",
     "totalScore": "Pontuacao total",
     "shareSummary": "Resumo para compartilhar",
+    "emotionalInsight": {
+      "title": "O que esta musica entende",
+      "subtitle": "Espelho emocional",
+      "whatYouCaptured": "O que voce capturou",
+      "mostTouchingMoment": "Momento mais tocante",
+      "listenerFeeling": "O que os ouvintes podem sentir",
+      "gentlePolish": "Polimento gentil"
+    },
     "dimensions": {
       "melody_potential": "Potencial melodico",
       "lyric_quality": "Qualidade da letra",

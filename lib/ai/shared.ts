@@ -89,6 +89,26 @@ export function normalizeJudgeReport(report: JudgeReport): JudgeReport {
   return {
     total_score: clampScore(report.total_score || averageScore),
     dimensions,
+    emotional_mirror:
+      typeof report.emotional_mirror === "string"
+        ? report.emotional_mirror.trim()
+        : undefined,
+    what_you_captured:
+      typeof report.what_you_captured === "string"
+        ? report.what_you_captured.trim()
+        : undefined,
+    most_touching_moment:
+      typeof report.most_touching_moment === "string"
+        ? report.most_touching_moment.trim()
+        : undefined,
+    listener_feeling:
+      typeof report.listener_feeling === "string"
+        ? report.listener_feeling.trim()
+        : undefined,
+    gentle_polish:
+      typeof report.gentle_polish === "string"
+        ? report.gentle_polish.trim()
+        : undefined,
     producer_comment:
       typeof report.producer_comment === "string"
         ? report.producer_comment.trim()

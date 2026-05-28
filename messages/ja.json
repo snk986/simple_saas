@@ -549,6 +549,14 @@
     "emptyBody": "レポートを生成すると、スコア、プロデューサーノート、感情価値、フック分析、共有用サマリーが表示されます。",
     "totalScore": "総合スコア",
     "shareSummary": "共有用サマリー",
+    "emotionalInsight": {
+      "title": "この曲が受け止めているもの",
+      "subtitle": "感情の鏡",
+      "whatYouCaptured": "捉えられている感情",
+      "mostTouchingMoment": "いちばん響く瞬間",
+      "listenerFeeling": "聴き手が感じること",
+      "gentlePolish": "やさしい磨き方"
+    },
     "dimensions": {
       "melody_potential": "メロディの可能性",
       "lyric_quality": "歌詞の品質",

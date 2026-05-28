@@ -549,6 +549,14 @@
     "emptyBody": "生成报告后可解锁评分维度、制作人建议、情感价值、Hook 分析与分享文案。",
     "totalScore": "总分",
     "shareSummary": "分享摘要",
+    "emotionalInsight": {
+      "title": "这首歌真正懂你的地方",
+      "subtitle": "情绪回声",
+      "whatYouCaptured": "你抓住的情绪",
+      "mostTouchingMoment": "最打动人的瞬间",
+      "listenerFeeling": "听众可能感受到什么",
+      "gentlePolish": "温和打磨建议"
+    },
     "dimensions": {
       "melody_potential": "旋律潜力",
       "lyric_quality": "歌词质量",

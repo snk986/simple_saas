@@ -14,6 +14,11 @@ export interface DimensionScore {
 export interface JudgeReport {
   total_score: number;
   dimensions: DimensionScore[];
+  emotional_mirror?: string;
+  what_you_captured?: string;
+  most_touching_moment?: string;
+  listener_feeling?: string;
+  gentle_polish?: string;
   producer_comment: string;
   emotional_value: string;
   market_positioning: string;

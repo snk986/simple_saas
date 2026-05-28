@@ -138,7 +138,9 @@ Return valid JSON only.`;
 }
 
 export function buildJudgeReportPrompt(input: JudgeReportPromptInput) {
-  return `Evaluate this song for an AI music creation report.
+  return `Create an AI music report that first feels like a real friend understood the songwriter.
+
+The user's deeper motivation is often not only to get a song, but to feel seen and understood. Before giving professional feedback, speak to the songwriter like a close friend who has been through a similar feeling and is standing on their side.
 
 Return only valid JSON with this exact shape:
 {
@@ -150,6 +152,11 @@ Return only valid JSON with this exact shape:
       "comment": string
     }
   ],
+  "emotional_mirror": string,
+  "what_you_captured": string,
+  "most_touching_moment": string,
+  "listener_feeling": string,
+  "gentle_polish": string,
   "producer_comment": string,
   "emotional_value": string,
   "market_positioning": string,
@@ -166,8 +173,16 @@ Rules:
 - Include exactly these five dimensions: melody_potential, lyric_quality, emotional_resonance, commercial_appeal, originality.
 - Every score must be an integer from 0 to 100.
 - total_score must be an integer from 0 to 100 and should reflect the dimension scores.
-- Be specific to the user's story and lyrics.
-- Keep comments useful for a songwriter or producer.
+- "emotional_mirror" is the emotional heart of the report. Write it as one natural paragraph, 120-220 words.
+- The voice of "emotional_mirror" should feel like the songwriter's good friend, not a judge, therapist, marketer, or report writer.
+- Do not structure "emotional_mirror" like analysis, advice, or bullet points. It should read like something a real person would say directly to the songwriter.
+- Start from the songwriter's side. First interpret what the lyrics are really saying, then show you understand the feeling behind them, then gently encourage or praise them.
+- It can sound conversational, e.g. "I get it", "you say you're fine, but...", "honestly, this feels like...", "that part is real because...". Keep it warm and grounded, not cheesy.
+- Use second person where natural. Make the user feel: "someone gets me."
+- Praise must be specific to details in the story, lyrics, title, emotional arc, or style. Do not use empty praise.
+- Name the underlying feeling, not only the surface topic. For example: pride disguised as chill, grief made danceable, loneliness turned into motion, longing kept dignified, joy used as self-protection.
+- "what_you_captured", "most_touching_moment", "listener_feeling", and "gentle_polish" should still be filled, but keep them short and supportive because the page may mainly show emotional_mirror.
+- Keep the professional sections useful for a songwriter or producer.
 - Do not make medical, legal, financial, or guaranteed commercial success claims.
 - Do not mention prompts, API calls, hidden scoring logic, or that this is generated.
 - Do not include markdown fences.
