@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { signUpAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
@@ -92,9 +91,7 @@ export default async function SignUp(props: {
         <h1 className="text-2xl font-semibold tracking-tight">
           {t("signUp.title")}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          {t("signUp.subtitle")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("signUp.subtitle")}</p>
       </div>
       <div className="grid gap-6">
         <form className="grid gap-4">
@@ -127,6 +124,8 @@ export default async function SignUp(props: {
             className="w-full"
             pendingText={t("signUp.pending")}
             formAction={signUpAction}
+            analyticsEventName="signup_submit"
+            analyticsProperties={{ locale, method: "email" }}
           >
             {t("signUp.submit")}
           </SubmitButton>
@@ -143,10 +142,12 @@ export default async function SignUp(props: {
           </div>
         </div>
         <form action={signUpWithGoogle}>
-          <Button
-            type="submit"
+          <SubmitButton
             variant="outline"
             className="flex w-full items-center justify-center gap-2"
+            pendingText={t("signUp.pending")}
+            analyticsEventName="signup_submit"
+            analyticsProperties={{ locale, method: "google" }}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5">
               <path
@@ -167,7 +168,7 @@ export default async function SignUp(props: {
               />
             </svg>
             {t("signUp.google")}
-          </Button>
+          </SubmitButton>
         </form>
         <div className="text-center text-sm text-muted-foreground">
           {t("signUp.hasAccount")}{" "}

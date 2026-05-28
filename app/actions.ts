@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import { mapAuthErrorToKey } from "@/lib/auth/error-map";
 import { baseUrl } from "@/lib/i18n/urls";
+import { trackServerFunnelEvent } from "@/lib/analytics/funnel-server";
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
@@ -37,7 +38,8 @@ export const signUpAction = async (formData: FormData) => {
   const password = formData.get("password")?.toString();
   const locale = getLocale(formData);
   const supabase = await createClient();
-  const origin = (await headers()).get("origin") ?? baseUrl;
+  const requestHeaders = await headers();
+  const origin = requestHeaders.get("origin") ?? baseUrl;
   const signUpPath = localizedPath(locale, "/sign-up");
   const homePath = localizedPath(locale, "/");
 
@@ -61,6 +63,11 @@ export const signUpAction = async (formData: FormData) => {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", signUpPath, mapAuthErrorToKey(error));
   } else {
+    await trackServerFunnelEvent(
+      "signup_success",
+      { locale, method: "email" },
+      { headers: requestHeaders },
+    );
     return encodedRedirect("success", homePath, "Thanks for signing up!");
   }
 };
@@ -88,7 +95,10 @@ export const signInAction = async (formData: FormData) => {
     try {
       await ensureCustomerInitialized(data.user.id, data.user.email, "sign_in");
     } catch (ensureError) {
-      console.error("Failed to ensure customer initialization on sign in:", ensureError);
+      console.error(
+        "Failed to ensure customer initialization on sign in:",
+        ensureError,
+      );
     }
   }
 

@@ -13,6 +13,7 @@ import {
   type ActionNeededType,
 } from "@/components/create/action-needed-dialog";
 import { SongDownloadButton } from "@/components/song/song-download-button";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 
 interface StoryInputProps {
   recallCampaign?: string | null;
@@ -168,6 +169,7 @@ export function StoryInput({
   const pollAttemptsRef = useRef<Record<string, number>>({});
   const pollInFlightRef = useRef<Record<string, boolean>>({});
   const playbackAudioRef = useRef<HTMLAudioElement | null>(null);
+  const paymentReturnTrackedRef = useRef(false);
 
   useEffect(() => {
     const pendingSongKey = `${PENDING_SONG_STORAGE_PREFIX}${window.location.pathname}`;
@@ -213,6 +215,18 @@ export function StoryInput({
     const hasCheckoutParams = CREEM_CHECKOUT_QUERY_KEYS.some((key) =>
       url.searchParams.has(key),
     );
+    const hasPaymentSuccess = url.searchParams.get("upgraded") === "true";
+
+    if (
+      (hasCheckoutParams || hasPaymentSuccess) &&
+      !paymentReturnTrackedRef.current
+    ) {
+      paymentReturnTrackedRef.current = true;
+      trackFunnelEvent("payment_return", {
+        locale: params.locale ?? "en",
+        route: window.location.pathname,
+      });
+    }
 
     if (!hasCheckoutParams) {
       return;
@@ -422,8 +436,16 @@ export function StoryInput({
 
   const submitGeneration = async () => {
     const trimmedPrompt = prompt.trim();
+    const analyticsContext = {
+      locale: params.locale ?? "en",
+      mode,
+      route: typeof window !== "undefined" ? window.location.pathname : "",
+      has_style: Boolean(style.trim()),
+      instrumental,
+    };
 
     if (!trimmedPrompt || trimmedPrompt.length < 10) {
+      trackFunnelEvent("generate_invalid_input", analyticsContext);
       toast({
         variant: "destructive",
         description: t("inputTooShort"),
@@ -433,6 +455,7 @@ export function StoryInput({
 
     setIsSubmitting(true);
     setGenerationError(null);
+    trackFunnelEvent("generate_submit", analyticsContext);
     try {
       const response = await fetch("/api/songs/generate", {
         method: "POST",
@@ -449,11 +472,13 @@ export function StoryInput({
       });
 
       if (response.status === 401) {
+        trackFunnelEvent("generate_auth_required", analyticsContext);
         setErrorAction("sign-in");
         return;
       }
 
       if (response.status === 402) {
+        trackFunnelEvent("generate_credit_required", analyticsContext);
         setErrorAction("pricing");
         return;
       }
@@ -465,6 +490,8 @@ export function StoryInput({
       if (!response.ok) {
         throw new Error(data.error ?? "Generation failed");
       }
+
+      trackFunnelEvent("generate_success", analyticsContext);
 
       const optimistic: WorkspaceSongItem = {
         id: data.songId,
@@ -484,6 +511,10 @@ export function StoryInput({
         ...current.filter((song) => song.id !== optimistic.id),
       ]);
     } catch (caught) {
+      trackFunnelEvent("generate_failed", {
+        ...analyticsContext,
+        status_code: 0,
+      });
       setGenerationError(
         caught instanceof Error ? caught.message : t("generationFailed"),
       );

@@ -7,6 +7,7 @@ import { useUser } from "@/hooks/use-user";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 
 interface PricingBuyButtonProps {
   tierId: string;
@@ -29,12 +30,25 @@ export function PricingBuyButton({
 
   const handlePurchase = async () => {
     if (!user) {
+      trackFunnelEvent("checkout_auth_required", {
+        tier_id: tierId,
+        locale,
+        route: window.location.pathname,
+      });
       router.push(locale === "en" ? "/sign-in" : `/${locale}/sign-in`);
       return;
     }
 
     setIsProcessing(true);
     try {
+      if (!managePlan) {
+        trackFunnelEvent("checkout_start", {
+          tier_id: tierId,
+          locale,
+          route: window.location.pathname,
+        });
+      }
+
       const response = managePlan
         ? await fetch("/api/creem/customer-portal")
         : await fetch("/api/creem/create-checkout", {
@@ -49,11 +63,27 @@ export function PricingBuyButton({
       }
 
       const data = await response.json();
-      const redirectUrl = managePlan ? data.customer_portal_link : data.checkoutUrl;
+      const redirectUrl = managePlan
+        ? data.customer_portal_link
+        : data.checkoutUrl;
       if (redirectUrl) {
+        if (!managePlan) {
+          trackFunnelEvent("checkout_redirect", {
+            tier_id: tierId,
+            locale,
+            route: window.location.pathname,
+          });
+        }
         window.location.href = redirectUrl;
       }
     } catch (error) {
+      if (!managePlan) {
+        trackFunnelEvent("checkout_failed", {
+          tier_id: tierId,
+          locale,
+          route: window.location.pathname,
+        });
+      }
       toast({
         title: t("errorTitle"),
         description:

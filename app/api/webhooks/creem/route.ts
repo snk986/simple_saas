@@ -1,7 +1,11 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { CreemCheckout, CreemSubscription, CreemWebhookEvent } from "@/types/creem";
+import {
+  CreemCheckout,
+  CreemSubscription,
+  CreemWebhookEvent,
+} from "@/types/creem";
 import {
   addCreditsToCustomer,
   checkoutCreditGrantKey,
@@ -18,6 +22,7 @@ import {
   logError,
   logInfo,
 } from "@/lib/observability/log";
+import { trackServerFunnelEvent } from "@/lib/analytics/funnel-server";
 
 const CREEM_WEBHOOK_SECRET = process.env.CREEM_WEBHOOK_SECRET;
 
@@ -47,17 +52,19 @@ function isValidSignature(body: string, signature: string) {
 
   return crypto.timingSafeEqual(
     Buffer.from(provided, "utf8"),
-    Buffer.from(expected, "utf8")
+    Buffer.from(expected, "utf8"),
   );
 }
 
-function getProductId(product: CreemCheckout["product"] | CreemSubscription["product"]) {
+function getProductId(
+  product: CreemCheckout["product"] | CreemSubscription["product"],
+) {
   return typeof product === "string" ? product : product?.id;
 }
 
 function subscriptionWithCheckoutMetadata(
   subscription: CreemSubscription,
-  checkoutMetadata: Record<string, any> | undefined
+  checkoutMetadata: Record<string, any> | undefined,
 ) {
   return {
     ...subscription,
@@ -71,19 +78,24 @@ function subscriptionWithCheckoutMetadata(
 async function grantSubscriptionCredits(
   customerId: string,
   subscription: CreemSubscription,
-  sourceEventId: string
+  sourceEventId: string,
 ) {
   const productId = getProductId(subscription.product);
   const tier =
-    getTierFromMetadata(subscription.metadata) ?? getTierFromProductId(productId);
-  const creditAmount = getTierCreditAmount(tier, subscription.metadata?.credit_amount);
+    getTierFromMetadata(subscription.metadata) ??
+    getTierFromProductId(productId);
+  const creditAmount = getTierCreditAmount(
+    tier,
+    subscription.metadata?.credit_amount,
+  );
 
   if (creditAmount <= 0) {
     return;
   }
 
   const creditGrantKey =
-    subscription.current_period_start_date && subscription.current_period_end_date
+    subscription.current_period_start_date &&
+    subscription.current_period_end_date
       ? subscriptionCreditGrantKey(subscription)
       : `subscription:${subscription.id}:${sourceEventId}`;
 
@@ -96,9 +108,10 @@ async function grantSubscriptionCredits(
       event_id: sourceEventId,
       tier_id: tier?.id ?? subscription.metadata?.tier_id,
       product_id: productId,
-      billing_period: tier?.billingPeriod ?? subscription.metadata?.billing_period,
+      billing_period:
+        tier?.billingPeriod ?? subscription.metadata?.billing_period,
       product_type: "subscription",
-    }
+    },
   );
 }
 
@@ -110,12 +123,19 @@ async function handleCheckoutCompleted(event: CreemWebhookEvent) {
     throw new Error("Missing user_id in checkout metadata");
   }
 
-  const customerId = await createOrUpdateCustomer(checkout.customer, metadata.user_id);
+  const customerId = await createOrUpdateCustomer(
+    checkout.customer,
+    metadata.user_id,
+  );
   const tier =
-    getTierFromMetadata(metadata) ?? getTierFromProductId(getProductId(checkout.product));
+    getTierFromMetadata(metadata) ??
+    getTierFromProductId(getProductId(checkout.product));
 
   if (metadata.product_type === "credits") {
-    const creditAmount = getTierCreditAmount(tier, metadata.credit_amount ?? metadata.credits);
+    const creditAmount = getTierCreditAmount(
+      tier,
+      metadata.credit_amount ?? metadata.credits,
+    );
 
     if (creditAmount <= 0) {
       throw new Error("Credit amount is missing from checkout metadata");
@@ -132,14 +152,14 @@ async function handleCheckoutCompleted(event: CreemWebhookEvent) {
         tier_id: tier?.id ?? metadata.tier_id,
         product_id: getProductId(checkout.product),
         product_type: "credits",
-      }
+      },
     );
   }
 
   if (checkout.subscription) {
     const subscription = subscriptionWithCheckoutMetadata(
       checkout.subscription,
-      metadata
+      metadata,
     );
 
     await createOrUpdateSubscription(subscription, customerId);
@@ -147,11 +167,14 @@ async function handleCheckoutCompleted(event: CreemWebhookEvent) {
   }
 }
 
-async function handleSubscriptionUpdate(event: CreemWebhookEvent, grantCredits: boolean) {
+async function handleSubscriptionUpdate(
+  event: CreemWebhookEvent,
+  grantCredits: boolean,
+) {
   const subscription = event.object as CreemSubscription;
   const customerId = await createOrUpdateCustomer(
     subscription.customer,
-    subscription.metadata?.user_id
+    subscription.metadata?.user_id,
   );
 
   await createOrUpdateSubscription(subscription, customerId);
@@ -194,6 +217,28 @@ export async function POST(request: Request) {
     switch (event.eventType) {
       case "checkout.completed":
         await handleCheckoutCompleted(event);
+        const checkout = event.object as CreemCheckout;
+        const metadata = checkout.metadata ?? checkout.order?.metadata ?? {};
+        await trackServerFunnelEvent(
+          "payment_success",
+          {
+            event_type: event.eventType,
+            tier_id:
+              typeof metadata.tier_id === "string" ? metadata.tier_id : null,
+            plan: typeof metadata.plan === "string" ? metadata.plan : null,
+            billing_period:
+              typeof metadata.billing_period === "string"
+                ? metadata.billing_period
+                : null,
+            product_type:
+              typeof metadata.product_type === "string"
+                ? metadata.product_type
+                : null,
+            locale:
+              typeof metadata.locale === "string" ? metadata.locale : null,
+          },
+          { request: { headers: request.headers } },
+        );
         logInfo("payment_success", {
           request_id: eventRequestId,
           stage: "payment_webhook",
@@ -238,6 +283,9 @@ export async function POST(request: Request) {
       failure_reason: error instanceof Error ? error.message : "Unknown error",
       ...client,
     });
-    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Webhook processing failed" },
+      { status: 500 },
+    );
   }
 }

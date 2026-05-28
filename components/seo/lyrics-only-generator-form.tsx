@@ -11,6 +11,7 @@ import {
   type ActionNeededType,
 } from "@/components/create/action-needed-dialog";
 import { defaultLocale, type Locale } from "@/i18n/routing";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 import type { StyleParams } from "@/types/song";
 
 const PENDING_SONG_STORAGE_PREFIX = "calyra:pendingSong:";
@@ -129,8 +130,16 @@ export function LyricsOnlyGeneratorForm({
     setNeedsSignIn(false);
     setErrorAction(null);
     setError(null);
+    const analyticsContext = {
+      locale,
+      mode: "lyrics",
+      route: window.location.pathname,
+      has_style: Boolean(style.trim()),
+      instrumental: false,
+    };
 
     try {
+      trackFunnelEvent("generate_submit", analyticsContext);
       const response = await fetch("/api/songs/generate", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -149,11 +158,13 @@ export function LyricsOnlyGeneratorForm({
       };
 
       if (response.status === 401) {
+        trackFunnelEvent("generate_auth_required", analyticsContext);
         setErrorAction("sign-in");
         return;
       }
 
       if (response.status === 402) {
+        trackFunnelEvent("generate_credit_required", analyticsContext);
         setErrorAction("pricing");
         return;
       }
@@ -162,6 +173,7 @@ export function LyricsOnlyGeneratorForm({
         throw new Error(data.error ?? labels.errorFallback);
       }
 
+      trackFunnelEvent("generate_success", analyticsContext);
       const nextPath = `${prefix}/ai-lyrics-to-song`;
       const pendingSongPath = new URL(nextPath, window.location.origin)
         .pathname;
@@ -171,6 +183,10 @@ export function LyricsOnlyGeneratorForm({
       );
       router.push(nextPath);
     } catch (caught) {
+      trackFunnelEvent("generate_failed", {
+        ...analyticsContext,
+        status_code: 0,
+      });
       setError(caught instanceof Error ? caught.message : labels.errorFallback);
       setErrorAction("error");
     } finally {
