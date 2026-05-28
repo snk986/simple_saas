@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/toaster";
 import { baseUrl } from "@/lib/i18n/urls";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground" suppressHydrationWarning>
         <div className="relative min-h-screen flex flex-col">{children}</div>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
