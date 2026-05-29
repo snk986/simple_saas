@@ -2,8 +2,6 @@ import type { JudgeReport, ScoreDimension } from "@/types/judge";
 import { cn } from "@/lib/utils";
 
 interface SongCreatorReportProps {
-  title: string;
-  storySummary: string;
   reportData: Record<string, unknown> | null;
   labels: {
     title: string;
@@ -13,7 +11,6 @@ interface SongCreatorReportProps {
     hookAnalysis: string;
     marketPositioning: string;
     dimensions: Record<ScoreDimension, string>;
-    fallbackIntro: string;
   };
 }
 
@@ -56,13 +53,16 @@ function scoreTone(score: number) {
 }
 
 export function SongCreatorReport({
-  title,
-  storySummary,
   reportData,
   labels,
 }: SongCreatorReportProps) {
   const report = isJudgeReport(reportData) ? reportData : null;
-  const topDimensions = report ? report.dimensions.slice(0, 4) : [];
+
+  if (!report) {
+    return null;
+  }
+
+  const topDimensions = report.dimensions.slice(0, 4);
 
   return (
     <article className="mt-12 max-w-5xl border-t border-white/10 pt-8">
@@ -72,74 +72,69 @@ export function SongCreatorReport({
             {labels.title}
           </h2>
           <p className="mt-4 text-base font-medium leading-8 text-zinc-400">
-            {report?.share_summary ??
-              labels.fallbackIntro
-                .replace("{title}", title)
-                .replace("{story}", storySummary)}
+            {report.share_summary}
           </p>
 
           <div className="mt-8 grid gap-7">
             <TextBlock
               title={labels.producerComment}
-              body={report?.producer_comment}
+              body={report.producer_comment}
             />
             <TextBlock
               title={labels.emotionalValue}
-              body={report?.emotional_value}
+              body={report.emotional_value}
             />
             <TextBlock
               title={labels.hookAnalysis}
-              body={report?.hook_analysis}
+              body={report.hook_analysis}
             />
             <TextBlock
               title={labels.marketPositioning}
-              body={report?.market_positioning}
+              body={report.market_positioning}
             />
           </div>
         </div>
 
-        {report ? (
-          <aside className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-normal text-[#1ed760]">
-                {labels.score}
-              </p>
-              <p className="mt-2 text-5xl font-black leading-none text-white">
-                {report.total_score}
-                <span className="ml-1 text-lg font-bold text-zinc-500">/100</span>
-              </p>
-            </div>
+        <aside className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-normal text-[#1ed760]">
+              {labels.score}
+            </p>
+            <p className="mt-2 text-5xl font-black leading-none text-white">
+              {report.total_score}
+              <span className="ml-1 text-lg font-bold text-zinc-500">/100</span>
+            </p>
+          </div>
 
-            <div className="mt-6 grid gap-4">
-              {topDimensions.map((dimension) => (
-                <div key={dimension.dimension}>
-                  <div className="mb-2 flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-white">
-                        {labels.dimensions[dimension.dimension]}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-zinc-400">
-                        {dimension.comment}
-                      </p>
-                    </div>
-                    <span className="shrink-0 text-sm font-semibold text-white">
-                      {dimension.score}
-                    </span>
+          <div className="mt-6 grid gap-4">
+            {topDimensions.map((dimension) => (
+              <div key={dimension.dimension}>
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-white">
+                      {labels.dimensions[dimension.dimension]}
+                    </p>
+                    <p className="mt-1 text-xs leading-5 text-zinc-400">
+                      {dimension.comment}
+                    </p>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-                    <div
-                      className={cn(
-                        "h-full rounded-full transition-[width]",
-                        scoreTone(dimension.score),
-                      )}
-                      style={{ width: `${dimension.score}%` }}
-                    />
-                  </div>
+                  <span className="shrink-0 text-sm font-semibold text-white">
+                    {dimension.score}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </aside>
-        ) : null}
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className={cn(
+                      "h-full rounded-full transition-[width]",
+                      scoreTone(dimension.score),
+                    )}
+                    style={{ width: `${dimension.score}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </aside>
       </div>
     </article>
   );
