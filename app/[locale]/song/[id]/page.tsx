@@ -350,12 +350,7 @@ export default async function SongPage({
             <SongCreatorReport
               reportData={song.reportData}
               labels={{
-                title: t("creatorReport.title"),
                 score: t("creatorReport.score"),
-                producerComment: t("creatorReport.producerComment"),
-                emotionalValue: t("creatorReport.emotionalValue"),
-                hookAnalysis: t("creatorReport.hookAnalysis"),
-                marketPositioning: t("creatorReport.marketPositioning"),
                 dimensions: {
                   melody_potential: tReport("dimensions.melody_potential"),
                   lyric_quality: tReport("dimensions.lyric_quality"),
