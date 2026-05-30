@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Check, Copy } from "lucide-react";
 import type { SongTemplate } from "@/config/song-templates";
 import { TemplateGenerateButton } from "@/components/song-templates/template-generate-button";
 
@@ -36,6 +37,7 @@ export function SongTemplateLibrary({
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const visibleTemplates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -58,6 +60,14 @@ export function SongTemplateLibrary({
       return matchesCategory && matchesQuery;
     });
   }, [activeCategory, query, templates]);
+
+  const copyText = async (key: string, text: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    window.setTimeout(() => {
+      setCopiedKey((current) => (current === key ? null : current));
+    }, 1200);
+  };
 
   return (
     <div>
@@ -131,9 +141,30 @@ export function SongTemplateLibrary({
 
                 <div className="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
                   <section className="p-5">
-                    <h3 className="mb-4 text-sm font-black uppercase tracking-normal text-white">
-                      Lyrics
-                    </h3>
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <h3 className="text-sm font-black uppercase tracking-normal text-white">
+                        Lyrics
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copyText(`${template.id}:lyrics`, template.lyrics)
+                        }
+                        className="inline-flex h-9 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs font-black text-slate-300 transition hover:bg-white/[0.1] hover:text-white"
+                        aria-label={`Copy lyrics for ${template.title}`}
+                      >
+                        {copiedKey === `${template.id}:lyrics` ? (
+                          <Check className="h-4 w-4 text-emerald-300" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                        <span>
+                          {copiedKey === `${template.id}:lyrics`
+                            ? "Copied"
+                            : "Copy"}
+                        </span>
+                      </button>
+                    </div>
                     <div className="relative">
                       <p
                         className={`whitespace-pre-wrap text-sm leading-7 text-slate-300 ${
@@ -161,9 +192,30 @@ export function SongTemplateLibrary({
                   </section>
 
                   <section className="border-t border-white/10 bg-white/[0.025] p-5 lg:border-l lg:border-t-0">
-                    <h3 className="mb-4 text-sm font-black uppercase tracking-normal text-white">
-                      Matched style
-                    </h3>
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <h3 className="text-sm font-black uppercase tracking-normal text-white">
+                        Matched style
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copyText(`${template.id}:style`, template.style)
+                        }
+                        className="inline-flex h-9 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs font-black text-slate-300 transition hover:bg-white/[0.1] hover:text-white"
+                        aria-label={`Copy matched style for ${template.title}`}
+                      >
+                        {copiedKey === `${template.id}:style` ? (
+                          <Check className="h-4 w-4 text-emerald-300" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                        <span>
+                          {copiedKey === `${template.id}:style`
+                            ? "Copied"
+                            : "Copy"}
+                        </span>
+                      </button>
+                    </div>
                     <p className="text-sm leading-7 text-slate-300">
                       {template.style}
                     </p>
