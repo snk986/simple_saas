@@ -3,10 +3,12 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { HeroGeneratorForm } from "@/components/home/hero-generator-form";
+import { OneClickSongTemplates } from "@/components/home/one-click-song-templates";
 import {
   MusicGallery,
   type FeaturedGallerySong,
 } from "@/components/home/music-gallery";
+import { songTemplates } from "@/config/song-templates";
 import {
   ArrowRight,
   Car,
@@ -134,6 +136,10 @@ export default async function Home({ params }: HomePageProps) {
     locale === defaultLocale ? "/sign-in" : `/${locale}/sign-in`;
   const pricingPath =
     locale === defaultLocale ? "/pricing" : `/${locale}/pricing`;
+  const freeLyricsGeneratorPath =
+    locale === defaultLocale
+      ? "/free-ai-lyrics-generator"
+      : `/${locale}/free-ai-lyrics-generator`;
   const heroText = (key: string, fallback: string) =>
     t.has(`hero.${key}`) ? t(`hero.${key}`) : fallback;
 
@@ -257,6 +263,12 @@ export default async function Home({ params }: HomePageProps) {
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
               {t("hero.subtitle")}
             </p>
+
+            <OneClickSongTemplates
+              templates={songTemplates.slice(0, 6)}
+              lyricsToSongPath={lyricsToSongPath}
+              allTemplatesPath={freeLyricsGeneratorPath}
+            />
 
             <HeroGeneratorForm
               textToSongPath={textToSongPath}

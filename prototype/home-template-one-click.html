@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calyra AI 首页模板概念稿</title>
+    <style>
+      :root {
+        --bg: #050509;
+        --panel: rgba(255, 255, 255, 0.07);
+        --panel-strong: rgba(255, 255, 255, 0.11);
+        --line: rgba(255, 255, 255, 0.14);
+        --text: #f8fafc;
+        --muted: #b8c0cf;
+        --soft: #7f899b;
+        --violet: #8b5cf6;
+        --pink: #db2777;
+        --cyan: #22d3ee;
+        --amber: #fbbf24;
+        --green: #34d399;
+        --radius-xl: 30px;
+        --shadow: 0 34px 120px rgba(0, 0, 0, 0.52);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 18% -4%, rgba(139, 92, 246, 0.26), transparent 34%),
+          radial-gradient(circle at 82% 4%, rgba(34, 211, 238, 0.12), transparent 30%),
+          radial-gradient(circle at 50% 42%, rgba(219, 39, 119, 0.09), transparent 31%),
+          linear-gradient(180deg, #07070b 0%, #050509 46%, #030306 100%);
+        color: var(--text);
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        background-size: 64px 64px;
+        content: "";
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 78%);
+      }
+
+      button,
+      textarea,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .page {
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 54px 0 34px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.88fr) minmax(380px, 1.12fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 8px 12px;
+        color: #d7ccff;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .signal {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--green);
+        box-shadow: 0 0 18px rgba(52, 211, 153, 0.8);
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(48px, 7vw, 84px);
+        font-weight: 950;
+        letter-spacing: 0;
+        line-height: 0.94;
+      }
+
+      .lead {
+        max-width: 640px;
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .primary,
+      .secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        border-radius: 18px;
+        padding: 0 18px;
+        font-weight: 900;
+        text-decoration: none;
+        transition:
+          transform 180ms ease,
+          filter 180ms ease,
+          background 180ms ease;
+      }
+
+      .primary {
+        border: 0;
+        background: linear-gradient(135deg, var(--violet), var(--pink));
+        color: white;
+        box-shadow: 0 22px 56px rgba(139, 92, 246, 0.25);
+      }
+
+      .secondary {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+      }
+
+      .primary:hover,
+      .secondary:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.08);
+      }
+
+      .proof {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 28px;
+      }
+
+      .pill {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 8px 11px;
+        color: #cfd6e4;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .featured-panel {
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--radius-xl);
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
+        padding: 18px;
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      .panel-kicker {
+        margin: 0;
+        color: #d8d2ff;
+        font-size: 13px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .panel-title {
+        margin: 3px 0 0;
+        font-size: 21px;
+        font-weight: 950;
+      }
+
+      .template-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.18);
+        padding: 8px 10px;
+        color: #dbeafe;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .templates {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .template-card {
+        position: relative;
+        min-height: 164px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.055);
+        padding: 15px;
+        color: inherit;
+        text-align: left;
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .template-card:hover,
+      .template-card.active {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.26);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .template-generate {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        min-height: 34px;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--violet), var(--pink));
+        padding: 0 12px;
+        color: white;
+        font-size: 12px;
+        font-weight: 900;
+        box-shadow: 0 14px 30px rgba(139, 92, 246, 0.22);
+        transition:
+          transform 180ms ease,
+          filter 180ms ease;
+      }
+
+      .template-generate:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.08);
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 12px;
+        padding-right: 72px;
+      }
+
+      .tag {
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.11);
+        padding: 5px 8px;
+        color: #dbe4f4;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .template-card h3 {
+        margin: 0;
+        font-size: 17px;
+        letter-spacing: 0;
+      }
+
+      .lyric-line {
+        display: -webkit-box;
+        margin: 10px 0 0;
+        overflow: hidden;
+        color: #aeb8cb;
+        font-size: 13px;
+        line-height: 1.55;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      .wide {
+        width: 100%;
+      }
+
+      .scratch {
+        padding: 30px 0 52px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 18px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 54px);
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .section-head p {
+        max-width: 520px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .generator {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--radius-xl);
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: var(--shadow);
+        padding: 18px;
+        backdrop-filter: blur(22px);
+      }
+
+      .tabs {
+        display: inline-flex;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 4px;
+      }
+
+      .tab {
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        padding: 9px 13px;
+        color: #cbd5e1;
+        font-weight: 850;
+      }
+
+      .tab.active {
+        background: white;
+        color: black;
+      }
+
+      label {
+        display: block;
+        margin: 16px 0 8px;
+        color: #e5e7eb;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.2);
+        color: white;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 176px;
+        resize: vertical;
+        padding: 14px 15px;
+        line-height: 1.6;
+      }
+
+      input {
+        height: 48px;
+        padding: 0 14px;
+      }
+
+      .quick-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .quick-tags button {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 8px 10px;
+        color: #cbd5e1;
+        font-size: 12px;
+        font-weight: 750;
+      }
+
+      .side-preview {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 22px;
+        background:
+          linear-gradient(180deg, rgba(34, 211, 238, 0.12), transparent 48%),
+          rgba(0, 0, 0, 0.2);
+        padding: 16px;
+      }
+
+      .wave {
+        display: flex;
+        align-items: end;
+        gap: 5px;
+        height: 90px;
+        margin: 16px 0;
+      }
+
+      .wave span {
+        flex: 1;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #e879f9, #22d3ee);
+        opacity: 0.9;
+      }
+
+      .small-copy {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .generator {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          align-items: start;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 840px) {
+        .templates {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 680px) {
+        .hero {
+          padding-top: 34px;
+        }
+
+        .templates {
+          grid-template-columns: 1fr;
+        }
+
+        .featured-panel,
+        .generator {
+          border-radius: 24px;
+          padding: 14px;
+        }
+
+        h1 {
+          font-size: 46px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow"><span class="signal"></span> 新功能：一键歌曲模板</p>
+            <h1>选择歌词模板，一键生成完整歌曲。</h1>
+            <p class="lead">
+              不用从空白提示词开始。直接选择精选歌词和匹配好的音乐风格，
+              预览歌曲方向，然后进入完整的 AI 歌曲生成流程。
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="/song-templates">查看全部模板</a>
+              <a class="secondary" href="#scratch">从空白开始创作</a>
+            </div>
+            <div class="proof">
+              <span class="pill">精选歌词</span>
+              <span class="pill">匹配风格</span>
+              <span class="pill">不用写提示词</span>
+              <span class="pill">免费体验</span>
+            </div>
+          </div>
+
+          <section id="templates" class="featured-panel" aria-label="精选歌曲模板">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">精选模板</p>
+                <p class="panel-title">为下一首歌准备好的灵感起点</p>
+              </div>
+              <div class="template-note">无需写歌词</div>
+            </div>
+
+            <div class="templates">
+              <article
+                class="template-card active"
+                data-title="Back in the Light"
+                data-title-cn="重回光里"
+                data-lyrics="我沉默了一阵子，把心调到最低。曾经迷失在阴影里，现在终于放手。"
+                data-style="现代夏日舞曲流行，自信女声，明亮鼓点，光泽钢琴和弦，强记忆点副歌"
+                data-meta="舞曲流行 / 自信治愈 / 女声"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">舞曲流行</span>
+                  <span class="tag">自信治愈</span>
+                </div>
+                <h3>重回光里</h3>
+                <p class="lyric-line">
+                  我沉默了一阵子，把心调到最低。曾经迷失在阴影里...
+                </p>
+              </article>
+
+              <article
+                class="template-card"
+                data-title="金色生日愿望"
+                data-title-cn="金色生日愿望"
+                data-lyrics="又一支蜡烛，又一片天空，又一年里你的名字依然闪闪发光。"
+                data-style="温暖庆祝流行抒情，真挚人声，柔和钢琴，轻鼓点，温柔上扬的最终副歌"
+                data-meta="生日礼物 / 温暖抒情 / 真挚人声"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">礼物</span>
+                  <span class="tag">抒情</span>
+                </div>
+                <h3>金色生日愿望</h3>
+                <p class="lyric-line">
+                  又一支蜡烛，又一片天空，又一年里你的名字依然闪闪发光。
+                </p>
+              </article>
+
+              <article
+                class="template-card"
+                data-title="深夜告别"
+                data-title-cn="深夜告别"
+                data-lyrics="街灯记得你的名字，可它们再也不会替你回应我。"
+                data-style="深夜 R&B 流行，贴近耳边的人声，干净低音，柔和鼓点，情绪化副歌，电影感铺底"
+                data-meta="R&B / 失恋 / 深夜情绪"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">R&B</span>
+                  <span class="tag">失恋</span>
+                </div>
+                <h3>深夜告别</h3>
+                <p class="lyric-line">
+                  街灯记得你的名字，可它们再也不会替你回应我。
+                </p>
+              </article>
+
+              <article
+                class="template-card"
+                data-title="开场镜头"
+                data-title-cn="开场镜头"
+                data-lyrics="奔过天际线，手心握着雷声，在清晨消失前追上它。"
+                data-style="动漫片头摇滚，快速鼓点，明亮吉他，热血旋律，能量人声，爆发副歌"
+                data-meta="动漫摇滚 / 热血 / 爆发副歌"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">动漫</span>
+                  <span class="tag">摇滚</span>
+                </div>
+                <h3>开场镜头</h3>
+                <p class="lyric-line">
+                  奔过天际线，手心握着雷声，在清晨消失前...
+                </p>
+              </article>
+
+              <article
+                class="template-card"
+                data-title="雨后情书"
+                data-title-cn="雨后情书"
+                data-lyrics="雨停以后，我把没说出口的话，折成一封寄不出的信。"
+                data-style="清透民谣流行，温柔女声，木吉他，轻柔弦乐，细腻情绪，温暖副歌"
+                data-meta="民谣流行 / 暗恋 / 温柔女声"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">民谣</span>
+                  <span class="tag">暗恋</span>
+                </div>
+                <h3>雨后情书</h3>
+                <p class="lyric-line">
+                  雨停以后，我把没说出口的话，折成一封寄不出的信。
+                </p>
+              </article>
+
+              <article
+                class="template-card"
+                data-title="午夜公路"
+                data-title-cn="午夜公路"
+                data-lyrics="把城市丢在后视镜里，让霓虹替我说再见。"
+                data-style="夜间合成器流行，低沉男声，复古鼓机，宽阔合成器，公路感，电影化副歌"
+                data-meta="Synth Pop / 公路 / 低沉男声"
+              >
+                <button class="template-generate" type="button">生成</button>
+                <div class="tag-row">
+                  <span class="tag">Synth Pop</span>
+                  <span class="tag">公路</span>
+                </div>
+                <h3>午夜公路</h3>
+                <p class="lyric-line">
+                  把城市丢在后视镜里，让霓虹替我说再见。
+                </p>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="scratch" class="scratch">
+        <div class="container">
+          <div class="section-head">
+            <h2>或者从你的想法开始</h2>
+            <p>
+              保留熟悉的 Text to Song 和 Lyrics to Song 流程，但把它作为第二入口。
+              模板负责降低首次创作门槛，自定义创作继续服务更明确的用户需求。
+            </p>
+          </div>
+
+          <section class="generator" aria-label="自定义歌曲生成器">
+            <div>
+              <div class="tabs">
+                <button class="tab active" type="button" data-mode="text">Text to Song</button>
+                <button class="tab" type="button" data-mode="lyrics">Lyrics to Song</button>
+              </div>
+
+              <label id="prompt-label" for="prompt">描述你的歌曲想法</label>
+              <textarea
+                id="prompt"
+                placeholder="一首明亮的夏日流行歌，讲述经历低谷后重新选择自己..."
+              ></textarea>
+
+              <label for="style">Style</label>
+              <input
+                id="style"
+                value="流行，情绪化女声，电影感鼓点"
+              />
+              <div class="quick-tags">
+                <button type="button">Pop</button>
+                <button type="button">EDM</button>
+                <button type="button">Anime</button>
+                <button type="button">Sad</button>
+                <button type="button">Female Vocal</button>
+              </div>
+
+              <label for="title">Title</label>
+              <input id="title" value="我的 AI 歌曲" />
+              <div class="hero-actions">
+                <button class="primary" type="button">创建歌曲</button>
+              </div>
+            </div>
+
+            <aside class="side-preview">
+              <div>
+                <p class="panel-kicker">当前方向</p>
+                <h3>从提示词到完整歌曲</h3>
+                <p class="small-copy">
+                  这个区域后续可以展示已选模板详情、生成额度消耗，或歌曲生成状态预览。
+                </p>
+              </div>
+              <div class="wave" aria-hidden="true">
+                <span style="height: 22%"></span>
+                <span style="height: 58%"></span>
+                <span style="height: 34%"></span>
+                <span style="height: 78%"></span>
+                <span style="height: 48%"></span>
+                <span style="height: 92%"></span>
+                <span style="height: 42%"></span>
+                <span style="height: 66%"></span>
+                <span style="height: 28%"></span>
+                <span style="height: 74%"></span>
+              </div>
+              <p class="small-copy">Text to Song 和 Lyrics to Song 仍然保留，但模板会成为最快的创作路径。</p>
+            </aside>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const cards = Array.from(document.querySelectorAll(".template-card"));
+
+      cards.forEach((card) => {
+        const button = card.querySelector(".template-generate");
+
+        button.addEventListener("click", () => {
+          cards.forEach((item) => item.classList.remove("active"));
+          card.classList.add("active");
+
+          button.textContent = "跳转中";
+          window.setTimeout(() => {
+            button.textContent = "生成";
+          }, 900);
+        });
+      });
+
+      const tabs = Array.from(document.querySelectorAll(".tab"));
+      const prompt = document.querySelector("#prompt");
+      const promptLabel = document.querySelector("#prompt-label");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((item) => item.classList.remove("active"));
+          tab.classList.add("active");
+
+          const isLyrics = tab.dataset.mode === "lyrics";
+          promptLabel.textContent = isLyrics
+            ? "粘贴你的歌词"
+            : "描述你的歌曲想法";
+          prompt.placeholder = isLyrics
+            ? "把完整歌词粘贴到这里，然后选择音乐风格..."
+            : "一首明亮的夏日流行歌，讲述经历低谷后重新选择自己...";
+        });
+      });
+    </script>
+  </body>
+</html>

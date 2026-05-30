@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...SEO_TOOL_PAGE_KEYS.flatMap((key) =>
       localizedEntries(SEO_TOOL_PAGE_PATHS[key], 0.9),
     ),
+    ...localizedEntries("/free-ai-lyrics-generator", 0.9),
     ...localizedEntries("/pricing", 0.85),
     ...songs.flatMap((song) =>
       seoLocales.map((locale: Locale) => ({
