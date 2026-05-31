@@ -2,37 +2,62 @@
 
 import { signOutAction } from "@/app/actions";
 import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Button } from "./ui/button";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 import { locales, type Locale } from "@/i18n/routing";
-
-interface HeaderProps {
-  user: any;
-}
+import { createClient } from "@/utils/supabase/client";
 
 interface NavItem {
   label: string;
   href: string;
+  prefetch?: false;
 }
 
-export default function Header({ user }: HeaderProps) {
+type AuthState = "loading" | "signed-in" | "signed-out";
+
+export default function Header() {
   const isDev = process.env.NODE_ENV === "development";
   const visibleLocales = isDev ? locales : locales.filter((l) => l !== "zh-CN");
+  const [authState, setAuthState] = useState<AuthState>("loading");
 
   const t = useTranslations("nav");
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale() as Locale;
   const isDashboard = pathname?.startsWith("/dashboard");
+  const isAuthenticated = authState === "signed-in";
+
+  useEffect(() => {
+    const supabase = createClient();
+    let isMounted = true;
+
+    void supabase.auth.getUser().then(({ data }) => {
+      if (isMounted) {
+        setAuthState(data.user ? "signed-in" : "signed-out");
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAuthState(session?.user ? "signed-in" : "signed-out");
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const mainNavItems: NavItem[] = [
-    { label: t("aiSongMaker"), href: "/ai-song-maker" },
-    { label: t("textToSong"), href: "/ai-text-to-song" },
-    { label: t("lyricsToSong"), href: "/ai-lyrics-to-song" },
+    { label: t("aiSongMaker"), href: "/ai-song-maker", prefetch: false },
+    { label: t("textToSong"), href: "/ai-text-to-song", prefetch: false },
+    { label: t("lyricsToSong"), href: "/ai-lyrics-to-song", prefetch: false },
     { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
-    { label: t("pricing"), href: "/pricing" },
+    { label: t("pricing"), href: "/pricing", prefetch: false },
     { label: t("about"), href: "/about" },
   ];
 
@@ -51,6 +76,7 @@ export default function Header({ user }: HeaderProps) {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={item.prefetch}
               className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary lg:text-base"
             >
               {item.label}
@@ -75,11 +101,13 @@ export default function Header({ user }: HeaderProps) {
               </option>
             ))}
           </select>
-          {user ? (
+          {authState === "loading" ? null : isAuthenticated ? (
             <div className="hidden md:flex items-center gap-2">
               {!isDashboard && (
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/dashboard">{t("dashboard")}</Link>
+                  <Link href="/dashboard" prefetch={false}>
+                    {t("dashboard")}
+                  </Link>
                 </Button>
               )}
               <form action={signOutAction}>
@@ -92,13 +120,16 @@ export default function Header({ user }: HeaderProps) {
           ) : (
             <div className="hidden md:flex gap-2">
               <Button asChild size="sm" variant="outline">
-                <Link href="/sign-in">{t("signIn")}</Link>
+                <Link href="/sign-in" prefetch={false}>
+                  {t("signIn")}
+                </Link>
               </Button>
             </div>
           )}
           <MobileNav
             items={navItems}
-            user={user}
+            isAuthenticated={isAuthenticated}
+            isAuthLoading={authState === "loading"}
             isDashboard={isDashboard}
             labels={{
               title: t("navigation"),

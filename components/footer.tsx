@@ -10,11 +10,15 @@ export function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("aiSongMaker"), href: "/ai-song-maker" },
-        { label: t("textToSong"), href: "/ai-text-to-song" },
-        { label: t("lyricsToSong"), href: "/ai-lyrics-to-song" },
+        { label: t("aiSongMaker"), href: "/ai-song-maker", prefetch: false },
+        { label: t("textToSong"), href: "/ai-text-to-song", prefetch: false },
+        {
+          label: t("lyricsToSong"),
+          href: "/ai-lyrics-to-song",
+          prefetch: false,
+        },
         { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
-        { label: t("pricing"), href: "/pricing" },
+        { label: t("pricing"), href: "/pricing", prefetch: false },
       ],
     },
     {
@@ -54,6 +58,7 @@ export function Footer() {
                     <Link
                       key={link.href}
                       href={link.href}
+                      prefetch={link.prefetch}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.label}

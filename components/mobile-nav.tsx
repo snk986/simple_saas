@@ -15,8 +15,9 @@ import { useLocale } from "next-intl";
 import { useState } from "react";
 
 interface MobileNavProps {
-  items: { label: string; href: string }[];
-  user: any;
+  items: { label: string; href: string; prefetch?: false }[];
+  isAuthenticated: boolean;
+  isAuthLoading: boolean;
   isDashboard: boolean;
   labels: {
     title: string;
@@ -30,7 +31,8 @@ interface MobileNavProps {
 
 export function MobileNav({
   items,
-  user,
+  isAuthenticated,
+  isAuthLoading,
   isDashboard,
   labels,
 }: MobileNavProps) {
@@ -54,6 +56,7 @@ export function MobileNav({
             <Link
               key={item.href}
               href={item.href}
+              prefetch={item.prefetch}
               onClick={() => setOpen(false)}
               className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
             >
@@ -62,11 +65,15 @@ export function MobileNav({
           ))}
         </nav>
         <div className="mt-auto pt-4 border-t">
-          {user ? (
+          {isAuthLoading ? null : isAuthenticated ? (
             <div className="flex flex-col gap-2">
               {!isDashboard && (
                 <Button asChild variant="outline" className="w-full">
-                  <Link href="/dashboard" onClick={() => setOpen(false)}>
+                  <Link
+                    href="/dashboard"
+                    prefetch={false}
+                    onClick={() => setOpen(false)}
+                  >
                     {labels.dashboard}
                   </Link>
                 </Button>
@@ -86,12 +93,20 @@ export function MobileNav({
           ) : (
             <div className="flex flex-col gap-2">
               <Button asChild variant="outline" className="w-full">
-                <Link href="/sign-in" onClick={() => setOpen(false)}>
+                <Link
+                  href="/sign-in"
+                  prefetch={false}
+                  onClick={() => setOpen(false)}
+                >
                   {labels.signIn}
                 </Link>
               </Button>
               <Button asChild variant="default" className="w-full">
-                <Link href="/sign-up" onClick={() => setOpen(false)}>
+                <Link
+                  href="/sign-up"
+                  prefetch={false}
+                  onClick={() => setOpen(false)}
+                >
                   {labels.signUp}
                 </Link>
               </Button>

@@ -35,6 +35,7 @@ export function RelatedSongs({ songs, labels }: RelatedSongsProps) {
           <Link
             key={song.id}
             href={`/song/${song.id}`}
+            prefetch={false}
             className="group overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] transition-all hover:-translate-y-0.5 hover:bg-white/[0.07]"
           >
             <div className="relative aspect-[4/3] bg-zinc-900">

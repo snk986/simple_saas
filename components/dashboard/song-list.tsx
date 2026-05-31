@@ -141,7 +141,9 @@ export function SongList({
           </p>
         </div>
         <Button asChild>
-          <Link href={createHref}>{labels.createSong}</Link>
+          <Link href={createHref} prefetch={false}>
+            {labels.createSong}
+          </Link>
         </Button>
       </div>
 
@@ -298,7 +300,7 @@ export function SongList({
                       variant="outline"
                       className="min-w-[120px] gap-2"
                     >
-                      <Link href={song.publicHref}>
+                      <Link href={song.publicHref} prefetch={false}>
                         {labels.preview}
                         <ExternalLink className="h-4 w-4" />
                       </Link>
@@ -320,7 +322,7 @@ export function SongList({
                     variant="outline"
                     className="min-w-[120px] gap-2"
                   >
-                    <Link href={song.reportHref}>
+                    <Link href={song.reportHref} prefetch={false}>
                       {labels.report}
                       <ExternalLink className="h-4 w-4" />
                     </Link>

@@ -235,7 +235,7 @@ export function SongActionBand({
           className="ml-0 h-9 rounded-full bg-white px-4 text-sm font-bold text-black hover:bg-zinc-100 sm:ml-1"
           onClick={() => void countSongEvent(songId, "cta_click")}
         >
-          <Link href={createHref}>
+          <Link href={createHref} prefetch={false}>
             <Sparkles className="mr-2 h-4 w-4" />
             {labels.create}
           </Link>

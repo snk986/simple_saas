@@ -89,7 +89,7 @@ export function AudioPlayer({
                   </div>
                   {track.publicHref ? (
                     <Button asChild type="button" size="sm" variant="outline">
-                      <Link href={track.publicHref}>
+                      <Link href={track.publicHref} prefetch={false}>
                         {t("openPage")}
                         <ExternalLink className="h-4 w-4" />
                       </Link>
@@ -118,13 +118,15 @@ export function AudioPlayer({
 
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">
             <Button asChild className="gap-2">
-              <Link href={`/song/${songId}`}>
+              <Link href={`/song/${songId}`} prefetch={false}>
                 {t("openPublicPage")}
                 <ExternalLink className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/dashboard">{t("viewDashboard")}</Link>
+              <Link href="/dashboard" prefetch={false}>
+                {t("viewDashboard")}
+              </Link>
             </Button>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">{t("rightsNotice")}</p>
