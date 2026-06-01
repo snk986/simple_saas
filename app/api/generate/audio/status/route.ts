@@ -19,6 +19,7 @@ import {
   logInfo,
 } from "@/lib/observability/log";
 import { validationError } from "@/lib/api/errors";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 const querySchema = z.object({
   songId: z.string().uuid(),
@@ -147,6 +148,20 @@ export async function GET(request: NextRequest) {
         description: "audio_generation_refund",
         metadata: { operation: "audio_generation" },
       });
+      await trackServerUserEvent({
+        userId: user.id,
+        eventName: "generate_audio_failed",
+        properties: {
+          locale: song.locale,
+          provider: song.audio_provider,
+          provider_status: "missing_provider_request_id",
+          route: "/api/generate/audio/status",
+          song_id: song.id,
+          status: "failed",
+          style_key: song.style_key,
+        },
+        pathname: "/api/generate/audio/status",
+      });
 
       logError("song_generate_failed", {
         request_id: requestId,
@@ -206,6 +221,20 @@ export async function GET(request: NextRequest) {
         creditCost: provider.creditCost,
         description: "audio_generation_refund",
         metadata: { operation: "audio_generation" },
+      });
+      await trackServerUserEvent({
+        userId: user.id,
+        eventName: "generate_audio_failed",
+        properties: {
+          locale: song.locale,
+          provider: song.audio_provider,
+          provider_status: result.providerStatus ?? "failed",
+          route: "/api/generate/audio/status",
+          song_id: song.id,
+          status: "failed",
+          style_key: song.style_key,
+        },
+        pathname: "/api/generate/audio/status",
       });
 
       logError("song_generate_timeout", {
@@ -363,6 +392,21 @@ export async function GET(request: NextRequest) {
       });
     });
 
+    await trackServerUserEvent({
+      userId: user.id,
+      eventName: "generate_audio_completed",
+      properties: {
+        locale: song.locale,
+        provider: song.audio_provider,
+        provider_status: result.providerStatus ?? "completed",
+        route: "/api/generate/audio/status",
+        song_id: song.id,
+        status: "completed",
+        style_key: song.style_key,
+      },
+      pathname: "/api/generate/audio/status",
+    });
+
     logInfo("song_generate_success", {
       request_id: requestId,
       user_id: user.id,
@@ -414,6 +458,18 @@ export async function GET(request: NextRequest) {
           .creditCost,
         description: "audio_generation_refund",
         metadata: { operation: "audio_generation" },
+      });
+      await trackServerUserEvent({
+        userId: currentUserId,
+        eventName: "generate_audio_failed",
+        properties: {
+          provider: currentSong.audio_provider,
+          provider_status: providerError.provider_error_code ?? "failed",
+          route: "/api/generate/audio/status",
+          song_id: currentSong.id,
+          status: "failed",
+        },
+        pathname: "/api/generate/audio/status",
       });
     }
 

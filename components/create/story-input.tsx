@@ -605,11 +605,20 @@ export function StoryInput({
       { once: true },
     );
 
-    void nextAudio.play().catch(() => {
-      if (playbackAudioRef.current === nextAudio) {
-        setPlayingSongId(null);
-      }
-    });
+    void nextAudio
+      .play()
+      .then(() => {
+        trackFunnelEvent("workspace_song_play_clicked", {
+          locale: params.locale ?? "en",
+          route: window.location.pathname,
+          song_id: song.id,
+        });
+      })
+      .catch(() => {
+        if (playbackAudioRef.current === nextAudio) {
+          setPlayingSongId(null);
+        }
+      });
   };
 
   return (
@@ -818,7 +827,18 @@ export function StoryInput({
                     )}
                   </Button>
                   <Button asChild type="button" size="sm" variant="outline">
-                    <Link href={`/report/${song.id}`}>{t("report")}</Link>
+                    <Link
+                      href={`/report/${song.id}`}
+                      onClick={() => {
+                        trackFunnelEvent("song_report_clicked", {
+                          locale: params.locale ?? "en",
+                          route: window.location.pathname,
+                          song_id: song.id,
+                        });
+                      }}
+                    >
+                      {t("report")}
+                    </Link>
                   </Button>
                   {song.audioUrl && canDownload ? (
                     <SongDownloadButton

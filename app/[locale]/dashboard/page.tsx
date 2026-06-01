@@ -11,6 +11,7 @@ import { achievements } from "@/config/achievements";
 import { defaultLocale, type Locale } from "@/config/i18n";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { getTranslations } from "next-intl/server";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 function localizedSongHref(locale: Locale, id: string) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/song/${id}`;
@@ -30,6 +31,10 @@ function localizedSignInHref(locale: Locale) {
 
 function localizedCreateHref(locale: Locale) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/ai-song-maker`;
+}
+
+function localizedDashboardHref(locale: Locale) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/dashboard`;
 }
 
 function normalizeRows<T>(value: T | T[] | null | undefined): T[] {
@@ -58,6 +63,13 @@ export default async function DashboardPage({
   if (!user) {
     return redirect(localizedSignInHref(locale));
   }
+
+  await trackServerUserEvent({
+    userId: user.id,
+    eventName: "dashboard_viewed",
+    properties: { locale, route: localizedDashboardHref(locale) },
+    pathname: localizedDashboardHref(locale),
+  });
 
   const entitlements = await getUserEntitlements(user.id);
   const { data: customerData } = await supabase

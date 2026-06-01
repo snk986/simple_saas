@@ -23,6 +23,7 @@ import {
   logInfo,
 } from "@/lib/observability/log";
 import { trackServerFunnelEvent } from "@/lib/analytics/funnel-server";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 const CREEM_WEBHOOK_SECRET = process.env.CREEM_WEBHOOK_SECRET;
 
@@ -73,6 +74,34 @@ function subscriptionWithCheckoutMetadata(
       ...(subscription.metadata ?? {}),
     },
   };
+}
+
+function metadataString(
+  metadata: Record<string, any> | undefined,
+  key: string,
+) {
+  const value = metadata?.[key];
+  return typeof value === "string" ? value : null;
+}
+
+async function trackSubscriptionActivated(
+  userId: string | null,
+  event: CreemWebhookEvent,
+  metadata: Record<string, any> | undefined,
+) {
+  await trackServerUserEvent({
+    userId,
+    eventName: "subscription_activated",
+    properties: {
+      billing_period: metadataString(metadata, "billing_period"),
+      event_type: event.eventType,
+      locale: metadataString(metadata, "locale"),
+      plan: metadataString(metadata, "plan"),
+      product_type: "subscription",
+      tier_id: metadataString(metadata, "tier_id"),
+    },
+    pathname: "/api/webhooks/creem",
+  });
 }
 
 async function grantSubscriptionCredits(
@@ -239,6 +268,13 @@ export async function POST(request: Request) {
           },
           { request: { headers: request.headers } },
         );
+        if (checkout.subscription) {
+          await trackSubscriptionActivated(
+            metadataString(metadata, "user_id"),
+            event,
+            metadata,
+          );
+        }
         logInfo("payment_success", {
           request_id: eventRequestId,
           stage: "payment_webhook",
@@ -251,9 +287,25 @@ export async function POST(request: Request) {
         break;
       case "subscription.active":
         await handleSubscriptionUpdate(event, false);
+        await trackSubscriptionActivated(
+          metadataString(
+            (event.object as CreemSubscription).metadata,
+            "user_id",
+          ),
+          event,
+          (event.object as CreemSubscription).metadata,
+        );
         break;
       case "subscription.paid":
         await handleSubscriptionUpdate(event, true);
+        await trackSubscriptionActivated(
+          metadataString(
+            (event.object as CreemSubscription).metadata,
+            "user_id",
+          ),
+          event,
+          (event.object as CreemSubscription).metadata,
+        );
         break;
       case "subscription.canceled":
       case "subscription.expired":

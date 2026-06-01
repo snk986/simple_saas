@@ -29,6 +29,7 @@ import {
   invalidRequest,
   validationError,
 } from "@/lib/api/errors";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 const requestSchema = z.object({
   mode: z.enum(["text", "lyrics"]).default("text"),
@@ -196,6 +197,23 @@ export async function POST(request: NextRequest) {
       throw updateError;
     }
 
+    await trackServerUserEvent({
+      userId: user.id,
+      eventName: "generate_request_created",
+      properties: {
+        credit_cost: creditCost,
+        locale,
+        mode,
+        provider: audioProvider.name,
+        provider_status: providerStatus ?? "submitted",
+        route: "/api/songs/generate",
+        song_id: song.id,
+        status: "generating",
+        style_key: prepared.style.key,
+      },
+      pathname: "/api/songs/generate",
+    });
+
     charged = false;
     logInfo("song_generate_success", {
       request_id: requestId,
@@ -240,6 +258,21 @@ export async function POST(request: NextRequest) {
     }
 
     const providerError = classifyProviderError(error);
+    if (userId && songId) {
+      await trackServerUserEvent({
+        userId,
+        eventName: "generate_audio_failed",
+        properties: {
+          provider: audioProvider.name,
+          provider_status: providerError.provider_error_code ?? "failed",
+          route: "/api/songs/generate",
+          song_id: songId,
+          status: "failed",
+        },
+        pathname: "/api/songs/generate",
+      });
+    }
+
     logError("song_generate_failed", {
       request_id: requestId,
       user_id: userId,

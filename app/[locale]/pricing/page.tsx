@@ -10,6 +10,7 @@ import { SubscriptionPlanGrid } from "@/components/pricing/subscription-plan-gri
 import { createClient } from "@/utils/supabase/server";
 import type { PlanTier } from "@/types/subscriptions";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 interface PricingPageProps {
   params: Promise<{ locale: Locale }>;
@@ -42,6 +43,10 @@ function localizedCreateHref(locale: Locale) {
   return `${locale === defaultLocale ? "" : `/${locale}`}/ai-song-maker`;
 }
 
+function localizedPricingHref(locale: Locale) {
+  return `${locale === defaultLocale ? "" : `/${locale}`}/pricing`;
+}
+
 export default async function PricingPage({ params }: PricingPageProps) {
   const { locale } = await params;
   const t = await getTranslations("pricingPage");
@@ -50,6 +55,14 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  if (user) {
+    await trackServerUserEvent({
+      userId: user.id,
+      eventName: "pricing_viewed",
+      properties: { locale, route: localizedPricingHref(locale) },
+      pathname: localizedPricingHref(locale),
+    });
+  }
 
   const creditPackKeys = ["standard", "pro_pack"] as const;
   const subscriptionMonthly = SUBSCRIPTION_TIERS.filter(

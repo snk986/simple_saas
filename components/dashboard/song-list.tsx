@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { SongDownloadButton } from "@/components/song/song-download-button";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 
 export interface DashboardSong {
   listId: string;
@@ -126,6 +127,11 @@ export function SongList({
     void nextAudio
       .play()
       .then(() => {
+        trackFunnelEvent("workspace_song_play_clicked", {
+          locale,
+          route: window.location.pathname,
+          song_id: song.listId,
+        });
         void countSongEvent(song.listId, "play_start");
       })
       .catch(clearIfCurrent);
@@ -284,6 +290,11 @@ export function SongList({
                           throw new Error("Clipboard unavailable");
                         }
                         await navigator.clipboard?.writeText(url.toString());
+                        trackFunnelEvent("song_share_clicked", {
+                          locale,
+                          route: window.location.pathname,
+                          song_id: song.listId,
+                        });
                         toast({ title: "Link copied", duration: 1000 });
                       } catch {
                         toast({ title: "Copy failed", duration: 1000 });
@@ -322,7 +333,17 @@ export function SongList({
                     variant="outline"
                     className="min-w-[120px] gap-2"
                   >
-                    <Link href={song.reportHref} prefetch={false}>
+                    <Link
+                      href={song.reportHref}
+                      prefetch={false}
+                      onClick={() => {
+                        trackFunnelEvent("song_report_clicked", {
+                          locale,
+                          route: window.location.pathname,
+                          song_id: song.listId,
+                        });
+                      }}
+                    >
                       {labels.report}
                       <ExternalLink className="h-4 w-4" />
                     </Link>

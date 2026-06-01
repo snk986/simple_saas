@@ -9,6 +9,7 @@ import { defaultLocale, isLocale, type Locale } from "@/i18n/routing";
 import { mapAuthErrorToKey } from "@/lib/auth/error-map";
 import { baseUrl } from "@/lib/i18n/urls";
 import { trackServerFunnelEvent } from "@/lib/analytics/funnel-server";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
@@ -51,7 +52,7 @@ export const signUpAction = async (formData: FormData) => {
     );
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -68,6 +69,12 @@ export const signUpAction = async (formData: FormData) => {
       { locale, method: "email" },
       { headers: requestHeaders },
     );
+    await trackServerUserEvent({
+      userId: data.user?.id,
+      eventName: "signup_success",
+      properties: { locale, method: "email" },
+      pathname: signUpPath,
+    });
     return encodedRedirect("success", homePath, "Thanks for signing up!");
   }
 };
@@ -100,6 +107,12 @@ export const signInAction = async (formData: FormData) => {
         ensureError,
       );
     }
+    await trackServerUserEvent({
+      userId: data.user.id,
+      eventName: "sign_in_success",
+      properties: { locale, method: "email" },
+      pathname: signInPath,
+    });
   }
 
   return redirect(redirectTo ?? localizedPath(locale, "/"));

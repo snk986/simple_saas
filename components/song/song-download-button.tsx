@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 
 interface SongDownloadButtonProps {
   songId: string;
@@ -62,6 +63,10 @@ export function SongDownloadButton({
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
+      trackFunnelEvent("song_download_clicked", {
+        route: window.location.pathname,
+        song_id: songId,
+      });
     } catch {
       toast({ title: "Download failed", duration: 1600 });
     }

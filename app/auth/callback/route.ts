@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { ensureCustomerInitialized } from "@/lib/auth/ensure-customer-initialized";
+import { trackServerUserEvent } from "@/lib/analytics/user-events-server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -25,6 +26,14 @@ export async function GET(request: Request) {
       } catch (error) {
         console.error("Failed to ensure customer initialization:", error);
       }
+      await trackServerUserEvent({
+        userId: user.id,
+        eventName: "auth_callback_completed",
+        properties: {
+          route: redirectTo ?? "/",
+        },
+        pathname: "/auth/callback",
+      });
     }
   }
 

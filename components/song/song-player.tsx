@@ -5,6 +5,7 @@ import { Pause, Play, Radio, Share2, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/analytics/funnel-client";
 
 interface SongPlayerProps {
   songId: string;
@@ -59,6 +60,10 @@ export function SongPlayer({
 
     if (!countedPlayRef.current) {
       countedPlayRef.current = true;
+      trackFunnelEvent("public_song_play_started", {
+        route: window.location.pathname,
+        song_id: songId,
+      });
       void countSongEvent(songId, "play_start");
     }
   };
@@ -87,6 +92,10 @@ export function SongPlayer({
 
     if (!countedCompleteRef.current && nextProgress >= 0.92) {
       countedCompleteRef.current = true;
+      trackFunnelEvent("public_song_play_completed", {
+        route: window.location.pathname,
+        song_id: songId,
+      });
       void countSongEvent(songId, "play_complete");
     }
   };
@@ -96,6 +105,10 @@ export function SongPlayer({
 
     if (!countedCompleteRef.current) {
       countedCompleteRef.current = true;
+      trackFunnelEvent("public_song_play_completed", {
+        route: window.location.pathname,
+        song_id: songId,
+      });
       void countSongEvent(songId, "play_complete");
     }
   };
@@ -181,6 +194,10 @@ export function SongPlayer({
                 variant="outline"
                 className="gap-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 onClick={() => {
+                  trackFunnelEvent("song_share_clicked", {
+                    route: window.location.pathname,
+                    song_id: songId,
+                  });
                   void navigator.share?.({
                     title,
                     url: window.location.href,
