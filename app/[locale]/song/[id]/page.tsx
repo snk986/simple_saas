@@ -43,17 +43,6 @@ function createHref() {
   return "/ai-song-maker";
 }
 
-function isIndexableSong(song: Awaited<ReturnType<typeof getPublicSong>>) {
-  if (!song?.isPublic) {
-    return false;
-  }
-
-  return (
-    (song.isFeatured && song.featuredActive) ||
-    (song.totalScore !== null && song.totalScore >= 80)
-  );
-}
-
 function moodColor(mood: string) {
   const normalized = mood.toLowerCase();
 
@@ -116,7 +105,7 @@ export async function generateMetadata({
   if (!song || !locales.includes(locale)) {
     return {
       title: t("notFoundTitle"),
-      robots: { index: false, follow: false },
+      robots: { index: false, follow: true },
     };
   }
 
@@ -125,7 +114,6 @@ export async function generateMetadata({
     t("description", values),
   );
   const url = songUrl(locale, song.id);
-  const shouldIndex = isIndexableSong(song);
 
   const ogImageUrl =
     song.reportData && song.totalScore !== null
@@ -140,7 +128,7 @@ export async function generateMetadata({
       languages: localizedAlternates(`/song/${song.id}`),
     },
     robots: {
-      index: shouldIndex,
+      index: false,
       follow: true,
     },
     openGraph: {
