@@ -1,9 +1,7 @@
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { defaultLocale, type Locale } from "@/i18n/routing";
 
 export const baseUrl = process.env.BASE_URL ?? "https://calyraai.com";
-export const seoLocales = locales.filter(
-  (locale): locale is Exclude<Locale, "zh-CN"> => locale !== "zh-CN",
-);
+export const seoLocales = [defaultLocale] as const satisfies readonly Locale[];
 
 export function localePath(locale: Locale, path = "") {
   const normalizedPath = path === "/" ? "" : path;

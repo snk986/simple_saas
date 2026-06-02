@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: "Song Report | Calyra AI",
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 };
 
