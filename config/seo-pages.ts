@@ -3,6 +3,7 @@ export const SEO_TOOL_PAGE_PATHS = {
   aiTextToSong: "/ai-text-to-song",
   aiLyricsToSong: "/ai-lyrics-to-song",
   aiLyricsGenerator: "/ai-lyrics-generator",
+  royaltyFreeAiMusicGenerator: "/royalty-free-ai-music-generator",
 } as const;
 
 export type SeoToolPageKey = keyof typeof SEO_TOOL_PAGE_PATHS;

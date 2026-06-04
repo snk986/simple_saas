@@ -31,6 +31,10 @@ export function Footer() {
           prefetch: false,
         },
         { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
+        {
+          label: "Royalty-Free AI Music",
+          href: "/royalty-free-ai-music-generator",
+        },
         { label: t("pricing"), href: "/pricing", prefetch: false },
       ],
     },
