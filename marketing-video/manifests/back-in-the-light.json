@@ -1,0 +1,58 @@
+{
+  "title": "Calyra Back in the Light Short",
+  "workDir": "marketing-video/shorts/back-in-the-light",
+  "output": "public/marketing/calyra-back-in-the-light-short.mp4",
+  "fps": 30,
+  "supabase": {
+    "songId": "971e16a7-bcba-48d4-a88d-052ff2223577"
+  },
+  "assets": {
+    "audioPath": "marketing-video/shorts/back-in-the-light/assets/song.mp3",
+    "coverPath": "marketing-video/shorts/back-in-the-light/assets/cover.jpg"
+  },
+  "inspectionTimestamps": [1, 6, 12, 18],
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "player",
+      "duration": 2,
+      "audioStart": 30,
+      "audioVolume": 1,
+      "caption": "This comeback became a song.",
+      "support": "Would yours sound like this?"
+    },
+    {
+      "id": "input",
+      "type": "input",
+      "duration": 3,
+      "audioStart": 32,
+      "audioVolume": 0.32,
+      "caption": "A low moment. A brighter version of me."
+    },
+    {
+      "id": "generate",
+      "type": "generate",
+      "duration": 3,
+      "audioStart": 35,
+      "audioVolume": 0.32,
+      "caption": "Calyra turned it into lyrics + music."
+    },
+    {
+      "id": "lyrics",
+      "type": "lyrics",
+      "duration": 7,
+      "audioStart": 38,
+      "audioVolume": 0.45,
+      "caption": "Back in the light. I never felt this alive."
+    },
+    {
+      "id": "cta",
+      "type": "player",
+      "duration": 4,
+      "audioStart": 30,
+      "audioVolume": 1,
+      "caption": "What would your comeback song sound like?",
+      "support": "Try Calyra AI"
+    }
+  ]
+}

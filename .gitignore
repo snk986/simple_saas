@@ -55,3 +55,6 @@ next-env.d.ts
 
 # local upload manifests
 scripts/featured-gallery.local.json
+
+# local marketing video exports
+/public/marketing/*.mp4
