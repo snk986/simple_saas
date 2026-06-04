@@ -4,9 +4,22 @@ import { Logo } from "./logo";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
+type FooterLink = {
+  href: string;
+  label: string;
+  prefetch?: boolean;
+  rel?: string;
+  target?: string;
+};
+
+type FooterLinkGroup = {
+  links: FooterLink[];
+  title: string;
+};
+
 export function Footer() {
   const t = useTranslations("footer");
-  const footerLinks = [
+  const footerLinks: FooterLinkGroup[] = [
     {
       title: t("product"),
       links: [
@@ -39,6 +52,17 @@ export function Footer() {
         { label: "support@calyraai.com", href: "mailto:support@calyraai.com" },
       ],
     },
+    {
+      title: "Featured on",
+      links: [
+        {
+          label: "Dang.ai",
+          href: "https://dang.ai",
+          target: "_blank",
+          rel: "dofollow noopener",
+        },
+      ],
+    },
   ];
 
   return (
@@ -59,6 +83,8 @@ export function Footer() {
                       key={link.href}
                       href={link.href}
                       prefetch={link.prefetch}
+                      target={link.target}
+                      rel={link.rel}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.label}
