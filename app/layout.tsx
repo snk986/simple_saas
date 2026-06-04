@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { Toaster } from "@/components/ui/toaster";
 import { baseUrl } from "@/lib/i18n/urls";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
         <div className="relative min-h-screen flex flex-col">{children}</div>
         <Toaster />
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );
