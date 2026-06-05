@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
 import { validationError } from "@/lib/api/errors";
+import { finalizeAudioGeneration } from "@/lib/audio/finalize-generation";
+import { getRequestId } from "@/lib/observability/log";
 
 interface RouteContext {
   params: Promise<{ songId: string }>;
@@ -60,23 +62,42 @@ export async function GET(request: NextRequest, context: RouteContext) {
   let statusPayload: SongStatusPayload | null = null;
 
   if (song.status === "generating") {
-    const statusUrl = new URL(
-      "/api/generate/audio/status",
-      request.nextUrl.origin,
-    );
-    statusUrl.searchParams.set("songId", parsedSongId.data);
-
-    const statusResponse = await fetch(statusUrl, {
-      method: "GET",
-      headers: {
-        cookie: request.headers.get("cookie") ?? "",
-      },
-      cache: "no-store",
+    const finalizerResult = await finalizeAudioGeneration({
+      songId: parsedSongId.data,
+      requestId: getRequestId(request.headers.get("x-request-id")),
+      source: "poll",
+      userId: user.id,
     });
 
-    statusPayload = statusResponse.ok
-      ? ((await statusResponse.json()) as SongStatusPayload)
-      : null;
+    if (finalizerResult.status !== "not_found") {
+      statusPayload = {
+        status: finalizerResult.status,
+        audioUrl:
+          finalizerResult.status === "completed"
+            ? finalizerResult.audioUrl
+            : null,
+        coverUrl:
+          finalizerResult.status === "completed"
+            ? finalizerResult.coverUrl
+            : null,
+        altSongId:
+          finalizerResult.status === "completed"
+            ? (finalizerResult.altSongId ?? null)
+            : null,
+        altAudioUrl:
+          finalizerResult.status === "completed"
+            ? (finalizerResult.altAudioUrl ?? null)
+            : null,
+        altCoverUrl:
+          finalizerResult.status === "completed"
+            ? (finalizerResult.altCoverUrl ?? null)
+            : null,
+        errorMessage:
+          finalizerResult.status === "failed"
+            ? finalizerResult.errorMessage
+            : null,
+      };
+    }
   }
 
   const status = statusPayload?.status ?? normalizeStatus(song.status);

@@ -1,13 +1,13 @@
 import { createHash, createPublicKey, verify } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { finalizeAudioGeneration } from "@/lib/audio/finalize-generation";
 import { ERROR_CODES } from "@/lib/observability/error-codes";
-import { falProvider } from "@/lib/audio/fal-provider";
-import { refundAudioGenerationCredit } from "@/lib/credits/audio-generation";
 import { getRequestId, logError, logInfo } from "@/lib/observability/log";
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 const FAL_JWKS_URL =
-  process.env.FAL_WEBHOOK_JWKS_URL ?? "https://rest.fal.ai/.well-known/jwks.json";
+  process.env.FAL_WEBHOOK_JWKS_URL ??
+  "https://rest.fal.ai/.well-known/jwks.json";
 const MAX_TIMESTAMP_DRIFT_SECONDS = 300;
 const JWKS_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
@@ -18,7 +18,8 @@ let jwksCache: { keys: JwksKey[]; expiresAt: number } | null = null;
 function base64UrlToBuffer(value: string) {
   const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
   const padding = normalized.length % 4;
-  const padded = padding === 0 ? normalized : normalized + "=".repeat(4 - padding);
+  const padded =
+    padding === 0 ? normalized : normalized + "=".repeat(4 - padding);
   return Buffer.from(padded, "base64");
 }
 
@@ -101,7 +102,12 @@ export async function POST(request: NextRequest) {
   const webhookTimestamp = request.headers.get("x-fal-webhook-timestamp");
   const webhookSignature = request.headers.get("x-fal-webhook-signature");
 
-  if (!webhookRequestId || !webhookUserId || !webhookTimestamp || !webhookSignature) {
+  if (
+    !webhookRequestId ||
+    !webhookUserId ||
+    !webhookTimestamp ||
+    !webhookSignature
+  ) {
     logError("webhook_failed", {
       request_id: requestId,
       stage: "webhook_received",
@@ -109,7 +115,10 @@ export async function POST(request: NextRequest) {
       error_code: ERROR_CODES.WEBHOOK_FAILED,
       failure_reason: "missing_fal_signature_headers",
     });
-    return NextResponse.json({ error: "Invalid signature headers" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid signature headers" },
+      { status: 401 },
+    );
   }
 
   try {
@@ -156,64 +165,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
-    if (providerStatus === "OK") {
-      await supabase
-        .from("songs")
-        .update({
-          audio_provider_status: providerStatus,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", song.id)
-        .eq("status", "generating");
+    const result = await finalizeAudioGeneration({
+      songId: song.id,
+      requestId,
+      source: "webhook",
+    });
 
-      logInfo("webhook_processed", {
-        request_id: requestId,
-        stage: "webhook_processed",
-        status: "succeeded",
-        song_id: song.id,
-        provider_task_id: providerTaskId,
-        provider_status: providerStatus,
-      });
-
-      return NextResponse.json({ received: true });
-    }
-
-    if (providerStatus === "ERROR") {
-      const { data: updatedSong } = await supabase
-        .from("songs")
-        .update({
-          status: "failed",
-          audio_provider_status: providerStatus,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", song.id)
-        .eq("status", "generating")
-        .select("id,user_id")
-        .maybeSingle();
-
-      if (updatedSong) {
-        await refundAudioGenerationCredit({
-          supabase,
-          userId: updatedSong.user_id,
-          requestId,
-          songId: updatedSong.id,
-          creditCost: falProvider.creditCost,
-          description: "audio_generation_refund",
-          metadata: { operation: "audio_generation" },
-          stage: "webhook_processed",
-        });
-      }
-
-      logError("webhook_failed", {
-        request_id: requestId,
-        stage: "webhook_processed",
-        status: "failed",
-        song_id: song.id,
-        provider_task_id: providerTaskId,
-        error_code: ERROR_CODES.WEBHOOK_FAILED,
-        failure_reason: payload.error ?? "fal_webhook_error_status",
-      });
-    }
+    logInfo("webhook_processed", {
+      request_id: requestId,
+      stage: "webhook_processed",
+      status: "succeeded",
+      song_id: song.id,
+      provider_task_id: providerTaskId,
+      provider_status: providerStatus,
+      finalizer_status: result.status,
+    });
 
     return NextResponse.json({ received: true });
   } catch (error) {

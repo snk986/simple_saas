@@ -41,6 +41,8 @@ const requestSchema = z.object({
   instrumental: z.boolean().optional(),
 });
 
+const DUPLICATE_GENERATION_WINDOW_MS = 20 * 1000;
+
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request.headers.get("x-request-id"));
   const requestStart = Date.now();
@@ -75,6 +77,43 @@ export async function POST(request: NextRequest) {
     }
 
     userId = user.id;
+    const duplicateCutoff = new Date(
+      Date.now() - DUPLICATE_GENERATION_WINDOW_MS,
+    ).toISOString();
+    const { data: recentGeneratingSong, error: recentGeneratingError } =
+      await supabase
+        .from("songs")
+        .select("id,title")
+        .eq("user_id", user.id)
+        .eq("status", "generating")
+        .not("audio_provider_task_id", "is", null)
+        .neq("audio_provider_task_id", "")
+        .gte("created_at", duplicateCutoff)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (recentGeneratingError) {
+      throw recentGeneratingError;
+    }
+
+    if (recentGeneratingSong) {
+      logInfo("song_generate_duplicate_reused", {
+        request_id: requestId,
+        user_id: user.id,
+        song_id: recentGeneratingSong.id,
+        stage: "generation_submit",
+        status: "succeeded",
+        ...client,
+      });
+
+      return NextResponse.json({
+        songId: recentGeneratingSong.id,
+        status: "generating",
+        title: recentGeneratingSong.title,
+      });
+    }
+
     const mode = parsed.data.mode;
     const locale = normalizeSongLocale(parsed.data.locale);
     const prompt = parsed.data.prompt?.trim() ?? "";
