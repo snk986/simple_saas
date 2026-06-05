@@ -1,9 +1,20 @@
 import { createServiceRoleClient } from "@/utils/supabase/service-role";
 
 const DEFAULT_BUCKET = "calyra-ai-media";
+const DEFAULT_COVER_PATH = "/og/calyra-ai-cover.jpg";
 
 function getBucketName() {
   return process.env.SUPABASE_MEDIA_BUCKET ?? DEFAULT_BUCKET;
+}
+
+export function getDefaultCoverUrl() {
+  const baseUrl = process.env.BASE_URL?.replace(/\/$/, "");
+
+  if (!baseUrl) {
+    return DEFAULT_COVER_PATH;
+  }
+
+  return `${baseUrl}${DEFAULT_COVER_PATH}`;
 }
 
 function extensionFromContentType(contentType: string, fallback: string) {
@@ -36,7 +47,10 @@ export async function uploadRemoteMedia(input: {
   fallbackExtension: string;
 }) {
   const { body, contentType } = await downloadFile(input.url);
-  const extension = extensionFromContentType(contentType, input.fallbackExtension);
+  const extension = extensionFromContentType(
+    contentType,
+    input.fallbackExtension,
+  );
   const path = `${input.pathPrefix}/${input.fileName}.${extension}`;
   const supabase = createServiceRoleClient();
   const bucket = getBucketName();
@@ -50,12 +64,10 @@ export async function uploadRemoteMedia(input: {
     });
   }
 
-  const { error } = await supabase.storage
-    .from(bucket)
-    .upload(path, body, {
-      contentType: contentType || undefined,
-      upsert: true,
-    });
+  const { error } = await supabase.storage.from(bucket).upload(path, body, {
+    contentType: contentType || undefined,
+    upsert: true,
+  });
 
   if (error) {
     throw error;

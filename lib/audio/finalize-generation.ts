@@ -1,6 +1,7 @@
 import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { getAudioProviderByName } from "@/lib/audio";
 import {
+  getDefaultCoverUrl,
   uploadPollinationsCover,
   uploadRemoteMedia,
 } from "@/lib/audio/storage";
@@ -348,6 +349,7 @@ async function markProviderCompleted(
           styleTags: song.style_tags ?? [],
         });
   } catch (coverError) {
+    coverUrl = getDefaultCoverUrl();
     logError("song_cover_upload_failed", {
       request_id: requestId,
       user_id: song.user_id,
