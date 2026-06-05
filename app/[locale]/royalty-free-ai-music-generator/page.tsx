@@ -194,7 +194,8 @@ export default async function RoyaltyFreeAiMusicGeneratorPage({
                   Commercial-use guide
                 </p>
                 <h1 className="mt-4 max-w-5xl text-4xl font-black leading-none tracking-normal md:text-6xl">
-                  Royalty-Free AI Music for Videos, Podcasts, Games, and Ads
+                  Royalty-Free AI Music Generator for Videos, Podcasts, Games,
+                  and Ads
                 </h1>
                 <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 md:text-lg">
                   Need music you can use in creator or commercial projects?
@@ -205,7 +206,7 @@ export default async function RoyaltyFreeAiMusicGeneratorPage({
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button asChild size="lg" className="gap-2">
                     <Link href={songMakerHref}>
-                      Make Music with AI Song Maker
+                      Start Creating Royalty-Free AI Music
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
@@ -215,7 +216,7 @@ export default async function RoyaltyFreeAiMusicGeneratorPage({
                     variant="outline"
                     className="border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white"
                   >
-                    <Link href={pricingHref}>View Plans</Link>
+                    <Link href={pricingHref}>View Commercial Use Plans</Link>
                   </Button>
                 </div>
               </div>
@@ -382,6 +383,21 @@ export default async function RoyaltyFreeAiMusicGeneratorPage({
                 guaranteed to be copyright-free or risk-free in every
                 situation.
               </p>
+              <div className="mt-6 rounded-lg border border-white/10 bg-white/[0.045] p-5">
+                <h3 className="text-lg font-semibold tracking-normal">
+                  Commercial use with paid plans
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  Paid users can use downloaded Calyra AI tracks in creator and
+                  commercial projects such as YouTube videos, TikTok content,
+                  podcasts, social media posts, ads, games, and brand videos,
+                  subject to Calyra AI Terms.
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-400">
+                  Free users can test song ideas, but commercial use and
+                  long-term downloads may depend on the selected plan.
+                </p>
+              </div>
               <Button asChild className="mt-6">
                 <Link href={termsHref}>Read Terms</Link>
               </Button>
