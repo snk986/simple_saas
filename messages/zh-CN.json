@@ -38,7 +38,8 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "aiSongMaker": "AI Song Maker",
+    "worldCupSongGenerator": "世界杯歌曲生成器"
   },
   "home": {
     "seo": {

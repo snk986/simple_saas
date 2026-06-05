@@ -2,7 +2,8 @@
 
 import { Logo } from "./logo";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { defaultLocale } from "@/i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
 
 type FooterLink = {
   href: string;
@@ -19,24 +20,34 @@ type FooterLinkGroup = {
 
 export function Footer() {
   const t = useTranslations("footer");
+  const locale = useLocale();
+  const productLinks: FooterLink[] = [
+    { label: t("aiSongMaker"), href: "/ai-song-maker", prefetch: false },
+    { label: t("textToSong"), href: "/ai-text-to-song", prefetch: false },
+    {
+      label: t("lyricsToSong"),
+      href: "/ai-lyrics-to-song",
+      prefetch: false,
+    },
+    { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
+    {
+      label: "Royalty-Free AI Music",
+      href: "/royalty-free-ai-music-generator",
+    },
+    ...(locale === defaultLocale
+      ? [
+          {
+            label: t("worldCupSongGenerator"),
+            href: "/world-cup-song-generator",
+          },
+        ]
+      : []),
+    { label: t("pricing"), href: "/pricing", prefetch: false },
+  ];
   const footerLinks: FooterLinkGroup[] = [
     {
       title: t("product"),
-      links: [
-        { label: t("aiSongMaker"), href: "/ai-song-maker", prefetch: false },
-        { label: t("textToSong"), href: "/ai-text-to-song", prefetch: false },
-        {
-          label: t("lyricsToSong"),
-          href: "/ai-lyrics-to-song",
-          prefetch: false,
-        },
-        { label: t("aiLyricsGenerator"), href: "/ai-lyrics-generator" },
-        {
-          label: "Royalty-Free AI Music",
-          href: "/royalty-free-ai-music-generator",
-        },
-        { label: t("pricing"), href: "/pricing", prefetch: false },
-      ],
+      links: productLinks,
     },
     {
       title: t("company"),

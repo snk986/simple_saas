@@ -4,6 +4,7 @@ export const SEO_TOOL_PAGE_PATHS = {
   aiLyricsToSong: "/ai-lyrics-to-song",
   aiLyricsGenerator: "/ai-lyrics-generator",
   royaltyFreeAiMusicGenerator: "/royalty-free-ai-music-generator",
+  worldCupSongGenerator: "/world-cup-song-generator",
 } as const;
 
 export type SeoToolPageKey = keyof typeof SEO_TOOL_PAGE_PATHS;

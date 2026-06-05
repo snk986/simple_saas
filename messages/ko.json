@@ -38,7 +38,8 @@
     "textToSong": "텍스트로 노래 만들기",
     "lyricsToSong": "가사로 노래 만들기",
     "aiLyricsGenerator": "AI 가사 생성기",
-    "aiSongMaker": "AI 노래 메이커"
+    "aiSongMaker": "AI 노래 메이커",
+    "worldCupSongGenerator": "월드컵 노래 생성기"
   },
   "home": {
     "seo": {

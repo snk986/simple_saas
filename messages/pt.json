@@ -38,7 +38,8 @@
     "textToSong": "Texto para música",
     "lyricsToSong": "Letra para música",
     "aiLyricsGenerator": "Gerador de letras com IA",
-    "aiSongMaker": "Criador de músicas com IA"
+    "aiSongMaker": "Criador de músicas com IA",
+    "worldCupSongGenerator": "Gerador de músicas da Copa do Mundo"
   },
   "home": {
     "seo": {
