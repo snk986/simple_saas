@@ -332,18 +332,34 @@ async function markProviderCompleted(
     fileName: "primary",
     fallbackExtension: "mp3",
   });
-  const coverUrl = primary.image_url
-    ? await uploadRemoteMedia({
-        url: primary.image_url,
-        pathPrefix: `songs/${song.id}/cover`,
-        fileName: "cover",
-        fallbackExtension: "jpg",
-      })
-    : await uploadPollinationsCover({
-        songId: song.id,
-        title: song.title,
-        styleTags: song.style_tags ?? [],
-      });
+  let coverUrl: string | null = null;
+
+  try {
+    coverUrl = primary.image_url
+      ? await uploadRemoteMedia({
+          url: primary.image_url,
+          pathPrefix: `songs/${song.id}/cover`,
+          fileName: "cover",
+          fallbackExtension: "jpg",
+        })
+      : await uploadPollinationsCover({
+          songId: song.id,
+          title: song.title,
+          styleTags: song.style_tags ?? [],
+        });
+  } catch (coverError) {
+    logError("song_cover_upload_failed", {
+      request_id: requestId,
+      user_id: song.user_id,
+      song_id: song.id,
+      stage: "audio_finalize",
+      status: "failed",
+      error_code: ERROR_CODES.BAD_RESPONSE,
+      failure_reason:
+        coverError instanceof Error ? coverError.message : String(coverError),
+      source,
+    });
+  }
 
   const readyUpdate: Record<string, unknown> = {
     audio_url: audioUrl,
