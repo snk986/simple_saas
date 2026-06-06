@@ -136,10 +136,7 @@ export default async function Home({ params }: HomePageProps) {
     locale === defaultLocale ? "/sign-in" : `/${locale}/sign-in`;
   const pricingPath =
     locale === defaultLocale ? "/pricing" : `/${locale}/pricing`;
-  const freeLyricsGeneratorPath =
-    locale === defaultLocale
-      ? "/free-ai-lyrics-generator"
-      : `/${locale}/free-ai-lyrics-generator`;
+  const freeLyricsGeneratorPath = "/free-ai-lyrics-generator";
   const heroText = (key: string, fallback: string) =>
     t.has(`hero.${key}`) ? t(`hero.${key}`) : fallback;
 
