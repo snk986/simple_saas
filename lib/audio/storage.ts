@@ -79,15 +79,3 @@ export async function uploadRemoteMedia(input: {
 
   return publicUrl;
 }
-
-export async function uploadFreeCover(input: { songId: string }) {
-  const seed = encodeURIComponent(`calyra-${input.songId}`);
-  const url = `https://picsum.photos/seed/${seed}/1024/1024`;
-
-  return uploadRemoteMedia({
-    url,
-    pathPrefix: `songs/${input.songId}/cover`,
-    fileName: "cover",
-    fallbackExtension: "jpg",
-  });
-}
