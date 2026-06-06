@@ -633,8 +633,8 @@ export function StoryInput({
         }}
       />
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <aside className="rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
+        <aside className="min-w-0 rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-xl font-semibold">{t("generatorTitle")}</h1>
           </div>
@@ -718,7 +718,7 @@ export function StoryInput({
           </Button>
         </aside>
 
-        <section className="rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">
+        <section className="min-w-0 rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">
           <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="relative w-full md:max-w-md">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />

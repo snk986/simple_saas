@@ -88,9 +88,9 @@ export function Footer() {
             <Logo />
             <p className="mt-4 text-sm text-muted-foreground">{t("tagline")}</p>
           </div>
-          <div className="col-span-2 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
+          <div className="col-span-2 grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
             {footerLinks.map((group) => (
-              <div key={group.title} className="flex flex-col gap-3">
+              <div key={group.title} className="min-w-0 flex flex-col gap-3">
                 <h3 className="text-sm font-medium">{group.title}</h3>
                 <nav className="flex flex-col gap-2">
                   {group.links.map((link) => (
@@ -100,7 +100,7 @@ export function Footer() {
                       prefetch={link.prefetch}
                       target={link.target}
                       rel={link.rel}
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="break-words text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.label}
                     </Link>
