@@ -80,22 +80,9 @@ export async function uploadRemoteMedia(input: {
   return publicUrl;
 }
 
-export async function uploadPollinationsCover(input: {
-  songId: string;
-  title: string;
-  styleTags: string[];
-}) {
-  const prompt = [
-    "square album cover art",
-    input.title,
-    input.styleTags.join(", "),
-    "cinematic lighting, clean typography-free composition",
-  ]
-    .filter(Boolean)
-    .join(", ");
-  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(
-    prompt,
-  )}?width=1024&height=1024&model=flux&nologo=true&safe=true`;
+export async function uploadFreeCover(input: { songId: string }) {
+  const seed = encodeURIComponent(`calyra-${input.songId}`);
+  const url = `https://picsum.photos/seed/${seed}/1024/1024`;
 
   return uploadRemoteMedia({
     url,

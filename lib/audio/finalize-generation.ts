@@ -2,7 +2,7 @@ import { checkAchievements } from "@/lib/achievements/check-achievements";
 import { getAudioProviderByName } from "@/lib/audio";
 import {
   getDefaultCoverUrl,
-  uploadPollinationsCover,
+  uploadFreeCover,
   uploadRemoteMedia,
 } from "@/lib/audio/storage";
 import type { TaskResult } from "@/lib/audio/types";
@@ -343,10 +343,8 @@ async function markProviderCompleted(
           fileName: "cover",
           fallbackExtension: "jpg",
         })
-      : await uploadPollinationsCover({
+      : await uploadFreeCover({
           songId: song.id,
-          title: song.title,
-          styleTags: song.style_tags ?? [],
         });
   } catch (coverError) {
     coverUrl = getDefaultCoverUrl();
