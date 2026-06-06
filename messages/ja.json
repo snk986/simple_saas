@@ -18,7 +18,8 @@
     "textToSong": "テキストから曲",
     "lyricsToSong": "歌詞から曲",
     "aiLyricsGenerator": "AI歌詞ジェネレーター",
-    "aiSongMaker": "AIソングメーカー"
+    "aiSongMaker": "AIソングメーカー",
+    "blog": "Blog"
   },
   "footer": {
     "tagline": "プロンプト、歌詞、アイデアからAI楽曲を作成します。",

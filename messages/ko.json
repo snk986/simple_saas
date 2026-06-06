@@ -18,7 +18,8 @@
     "textToSong": "텍스트로 노래 만들기",
     "lyricsToSong": "가사로 노래 만들기",
     "aiLyricsGenerator": "AI 가사 생성기",
-    "aiSongMaker": "AI 노래 메이커"
+    "aiSongMaker": "AI 노래 메이커",
+    "blog": "Blog"
   },
   "footer": {
     "tagline": "프롬프트, 가사, 간단한 아이디어로 AI 노래를 만드세요.",

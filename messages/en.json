@@ -18,7 +18,8 @@
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
     "about": "About",
-    "aiSongMaker": "AI Song Maker"
+    "aiSongMaker": "AI Song Maker",
+    "blog": "Blog"
   },
   "footer": {
     "tagline": "Create AI songs from prompts, lyrics, and simple ideas.",

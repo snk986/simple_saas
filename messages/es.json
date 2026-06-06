@@ -18,7 +18,8 @@
     "textToSong": "Texto a canción",
     "lyricsToSong": "Letra a canción",
     "aiLyricsGenerator": "Generador de letras con IA",
-    "aiSongMaker": "Creador de canciones con IA"
+    "aiSongMaker": "Creador de canciones con IA",
+    "blog": "Blog"
   },
   "footer": {
     "tagline": "Crea canciones con IA desde prompts, letras e ideas simples.",

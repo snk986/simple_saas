@@ -18,7 +18,8 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
-    "aiSongMaker": "AI Song Maker"
+    "aiSongMaker": "AI Song Maker",
+    "blog": "博客"
   },
   "footer": {
     "tagline": "用提示词、歌词和简单想法创作 AI 歌曲。",

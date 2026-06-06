@@ -9,13 +9,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { signOutAction } from "@/app/actions";
 import { useLocale } from "next-intl";
 import { useState } from "react";
 
 interface MobileNavProps {
-  items: { label: string; href: string; prefetch?: false }[];
+  items: {
+    label: string;
+    href: string;
+    englishOnly?: boolean;
+    prefetch?: false;
+  }[];
   isAuthenticated: boolean;
   isAuthLoading: boolean;
   isDashboard: boolean;
@@ -42,7 +48,7 @@ export function MobileNav({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="lg:hidden">
           <Menu className="h-5 w-5" />
           <span className="sr-only">{labels.toggle}</span>
         </Button>
@@ -52,17 +58,29 @@ export function MobileNav({
           <SheetTitle>{labels.title}</SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col gap-4 mt-4">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              prefetch={item.prefetch}
-              onClick={() => setOpen(false)}
-              className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {items.map((item) =>
+            item.englishOnly ? (
+              <NextLink
+                key={item.href}
+                href={item.href}
+                prefetch={item.prefetch}
+                onClick={() => setOpen(false)}
+                className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </NextLink>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                prefetch={item.prefetch}
+                onClick={() => setOpen(false)}
+                className="text-lg font-semibold text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
         <div className="mt-auto pt-4 border-t">
           {isAuthLoading ? null : isAuthenticated ? (
