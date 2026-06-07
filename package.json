@@ -8,7 +8,9 @@
     "dev": "next dev",
     "dev:webpack": "next dev --webpack",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "video:product-demo": "node scripts/create-calyra-short-demo-video.mjs",
+    "video:lyric": "node scripts/create-calyra-lyric-visualizer.mjs"
   },
   "dependencies": {
     "@fal-ai/client": "^1.10.1",
@@ -47,6 +49,8 @@
     "@types/node": "22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "19.0.2",
+    "ffprobe-static": "3.1.0",
+    "hyperframes": "0.6.79",
     "postcss": "8.4.49",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "3.4.17",

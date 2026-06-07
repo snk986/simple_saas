@@ -1,0 +1,5 @@
+assets/
+data/song-data.js
+data/transcript-*.json
+renders/
+check-frames/

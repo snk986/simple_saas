@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #08090b;
+        color: #f7f7f2;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+      }
+
+      #root {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .backdrop,
+      .shade,
+      .grain {
+        position: absolute;
+        inset: 0;
+      }
+
+      .backdrop {
+        background: url("assets/cover.jpg") center / cover no-repeat;
+        filter: blur(64px) saturate(0.75);
+        opacity: 0.42;
+        transform: scale(1.25);
+      }
+
+      .shade {
+        background: rgba(8, 9, 11, 0.72);
+      }
+
+      .grain {
+        opacity: 0.1;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      }
+
+      .layout {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        padding: 82px 76px 72px;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: rgba(247, 247, 242, 0.64);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border: 1px solid rgba(247, 247, 242, 0.24);
+        border-radius: 50%;
+        color: #fff;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .cover-wrap {
+        position: relative;
+        width: 720px;
+        height: 720px;
+        margin: 132px auto 0;
+      }
+
+      .cover-shadow {
+        position: absolute;
+        inset: 44px 30px -24px;
+        border-radius: 48px;
+        background: rgba(0, 0, 0, 0.72);
+        filter: blur(38px);
+      }
+
+      .cover {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 42px;
+        object-fit: cover;
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+      }
+
+      .song-meta {
+        margin-top: 52px;
+        text-align: center;
+      }
+
+      .song-title {
+        margin: 0;
+        font-size: 38px;
+        font-weight: 760;
+        letter-spacing: -0.035em;
+      }
+
+      .song-style {
+        margin-top: 14px;
+        color: rgba(247, 247, 242, 0.58);
+        font-size: 21px;
+        letter-spacing: 0.03em;
+      }
+
+      .lyric-stage {
+        position: relative;
+        display: grid;
+        min-height: 270px;
+        margin-top: 70px;
+        place-items: center;
+        text-align: center;
+      }
+
+      .lyric {
+        position: absolute;
+        width: 100%;
+        margin: 0;
+        opacity: 0;
+        color: rgba(247, 247, 242, 0.24);
+        font-size: 62px;
+        font-weight: 780;
+        line-height: 1.09;
+        letter-spacing: -0.045em;
+        text-wrap: balance;
+        transform: translateY(24px) scale(0.98);
+      }
+
+      .visualizer {
+        display: flex;
+        height: 112px;
+        margin-top: auto;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+      }
+
+      .bar {
+        width: 10px;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(247, 247, 242, 0.72);
+        transform-origin: center;
+      }
+
+      .progress {
+        height: 2px;
+        margin-top: 34px;
+        overflow: hidden;
+        background: rgba(247, 247, 242, 0.16);
+      }
+
+      .progress-fill {
+        width: 100%;
+        height: 100%;
+        background: #f7f7f2;
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+
+      .footer {
+        display: flex;
+        margin-top: 22px;
+        justify-content: space-between;
+        color: rgba(247, 247, 242, 0.48);
+        font-size: 18px;
+        font-weight: 650;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="minimal-lyric-wave"
+      data-start="0"
+      data-duration="15"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div class="backdrop"></div>
+      <div class="shade"></div>
+      <div class="grain"></div>
+
+      <main class="layout">
+        <header class="topline">
+          <div class="brand"><span class="mark">C</span><span>Calyra AI</span></div>
+          <span>Made from a story</span>
+        </header>
+
+        <section class="cover-wrap">
+          <div class="cover-shadow"></div>
+          <img class="cover" src="assets/cover.jpg" alt="" />
+        </section>
+
+        <section class="song-meta">
+          <h1 class="song-title"></h1>
+          <div class="song-style"></div>
+        </section>
+
+        <section class="lyric-stage"></section>
+
+        <section class="visualizer" aria-hidden="true"></section>
+        <div class="progress"><div class="progress-fill"></div></div>
+        <footer class="footer"><span class="time">0:00</span><span>calyra.ai</span></footer>
+      </main>
+
+      <audio
+        id="song-audio"
+        src="assets/song.mp3"
+        data-start="0"
+        data-duration="15"
+        data-media-start="0"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+    </div>
+
+    <script src="data/song-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      const data = window.CALYRA_VIDEO;
+      const duration = data.duration;
+      const cover = document.querySelector(".cover");
+      const coverShadow = document.querySelector(".cover-shadow");
+      const lyricStage = document.querySelector(".lyric-stage");
+      const visualizer = document.querySelector(".visualizer");
+      const progress = document.querySelector(".progress-fill");
+      const time = document.querySelector(".time");
+
+      document.querySelector(".song-title").textContent = data.title;
+      document.querySelector(".song-style").textContent = data.style;
+      document.getElementById("song-audio").dataset.mediaStart = String(data.audioStart);
+
+      const lyricElements = data.lyrics.map((lyric) => {
+        const element = document.createElement("p");
+        element.className = "lyric";
+        element.textContent = lyric.text;
+        lyricStage.appendChild(element);
+        return element;
+      });
+
+      const bars = Array.from({ length: data.waveform[0].length }, () => {
+        const element = document.createElement("i");
+        element.className = "bar";
+        visualizer.appendChild(element);
+        return element;
+      });
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function easeOut(value) {
+        return 1 - Math.pow(1 - clamp(value, 0, 1), 3);
+      }
+
+      function formatTime(seconds) {
+        return `0:${String(Math.floor(seconds)).padStart(2, "0")}`;
+      }
+
+      function renderAt(seconds) {
+        const frame = Math.floor(seconds * data.fps);
+        const audioFrame = data.waveform[clamp(frame, 0, data.waveform.length - 1)];
+        const rms = audioFrame.reduce((sum, value) => sum + value, 0) / audioFrame.length;
+        const pulse = 1 + rms * 0.035;
+
+        cover.style.transform = `scale(${pulse})`;
+        cover.style.filter = `saturate(${0.92 + rms * 0.35}) brightness(${0.94 + rms * 0.15})`;
+        coverShadow.style.opacity = String(0.62 + rms * 0.28);
+
+        bars.forEach((bar, index) => {
+          const height = 10 + audioFrame[index] * 92;
+          bar.style.height = `${height}px`;
+          bar.style.opacity = String(0.38 + audioFrame[index] * 0.62);
+        });
+
+        lyricElements.forEach((element, index) => {
+          const lyric = data.lyrics[index];
+          const enter = easeOut((seconds - lyric.start) / 0.32);
+          const exit = clamp((lyric.end - seconds) / 0.28, 0, 1);
+          const visibility = Math.min(enter, exit);
+          element.style.opacity = String(visibility);
+          element.style.color = `rgba(247, 247, 242, ${0.24 + visibility * 0.76})`;
+          element.style.transform = `translateY(${(1 - enter) * 24 - (1 - exit) * 18}px) scale(${0.98 + visibility * 0.02})`;
+        });
+
+        progress.style.transform = `scaleX(${clamp(seconds / duration, 0, 1)})`;
+        time.textContent = formatTime(seconds);
+      }
+
+      window.addEventListener("hf-seek", (event) => {
+        renderAt(event.detail.time);
+      });
+
+      renderAt(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["minimal-lyric-wave"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
