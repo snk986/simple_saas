@@ -70,19 +70,19 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-16 items-center justify-between px-4">
-        <div className="flex items-center">
+      <div className="container flex h-16 items-center justify-between gap-3 px-4 lg:grid lg:grid-cols-[minmax(160px,1fr)_auto_minmax(160px,1fr)]">
+        <div className="flex min-w-0 items-center justify-start">
           <Logo />
         </div>
 
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 transform items-center gap-5 lg:flex">
+        <nav className="hidden min-w-0 items-center justify-center gap-3 lg:flex xl:gap-5">
           {navItems.map((item) =>
             item.englishOnly ? (
               <NextLink
                 key={item.href}
                 href={item.href}
                 prefetch={item.prefetch}
-                className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary lg:text-base"
+                className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
               >
                 {item.label}
               </NextLink>
@@ -91,7 +91,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 prefetch={item.prefetch}
-                className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary lg:text-base"
+                className="whitespace-nowrap text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
               >
                 {item.label}
               </Link>
@@ -99,7 +99,7 @@ export default function Header() {
           )}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center justify-end gap-2">
           {!isBlog && (
             <select
               aria-label={t("language")}

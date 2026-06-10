@@ -18,6 +18,7 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
+    "aiBirthdaySongGenerator": "AI 生日歌生成器",
     "aiSongMaker": "AI Song Maker",
     "blog": "博客"
   },
@@ -39,6 +40,7 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
+    "aiBirthdaySongGenerator": "AI 生日歌生成器",
     "aiSongMaker": "AI Song Maker",
     "worldCupSongGenerator": "世界杯歌曲生成器"
   },
@@ -746,7 +748,7 @@
       "lastUpdated": "May 13, 2026",
       "relatedTitle": "Related legal pages",
       "contactTitle": "Need help?",
-      "contactBody": "For questions about these policies or your account, contact support at support@calyraai.com or through your dashboard support channel.",
+      "contactBody": "For questions about these policies or your account, contact support below or through your dashboard support channel.",
       "contactCta": "Go to pricing",
       "contactEmailLabel": "Email support",
       "links": {
@@ -1173,6 +1175,105 @@
       "finalCta": {
         "title": "Have Lyrics Ready?",
         "description": "Paste them into the AI Lyrics to Song workflow and shape the music around your words."
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "免费 AI 生日歌生成器，支持姓名定制 | Calyra AI",
+        "description": "用 Calyra AI 输入姓名、故事、情绪和音乐风格，生成一首个性化生日祝福歌。"
+      },
+      "hero": {
+        "eyebrow": "AI 生日歌生成器",
+        "title": "支持姓名定制的 AI 生日歌生成器",
+        "description": "为妈妈、爸爸、朋友、伴侣、孩子或同事生成专属生日歌。输入名字、一段回忆和音乐风格，就能开始创作。",
+        "proof": {
+          "withName": "姓名定制生日歌",
+          "personalized": "个性化歌词和风格",
+          "free": "免费开始"
+        }
+      },
+      "cta": {
+        "secondary": "试试 AI Song Maker"
+      },
+      "form": {
+        "badge": "生日歌设置",
+        "name": "姓名",
+        "namePlaceholder": "Alex",
+        "recipient": "这首歌送给谁？",
+        "message": "个人祝福",
+        "messagePlaceholder": "写下回忆、内部笑话、年龄节点或生日祝福。",
+        "vibe": "生日氛围",
+        "style": "音乐风格",
+        "styleDefault": "温暖流行生日歌，清晰人声，快乐且容易记住的副歌",
+        "submit": "创建生日歌",
+        "options": {
+          "mom": "妈妈",
+          "dad": "爸爸",
+          "partner": "伴侣",
+          "friend": "朋友",
+          "child": "孩子",
+          "coworker": "同事",
+          "warm": "温暖真诚",
+          "funny": "有趣俏皮",
+          "emotional": "感人走心",
+          "upbeat": "欢快派对感",
+          "surprise": "惊喜礼物"
+        }
+      },
+      "benefits": {
+        "title": "比普通生日祝福更有记忆点",
+        "description": "用生日歌生成器把姓名、回忆和关系细节变成更有个人感的歌曲提示词。",
+        "items": {
+          "name": {
+            "title": "自然唱出对方名字",
+            "description": "生成一首副歌里自然出现姓名的生日歌，而不是泛泛的生日歌词。"
+          },
+          "story": {
+            "title": "加入真实细节",
+            "description": "放入回忆、里程碑、玩笑或祝愿，让歌曲听起来像是专门为这个人写的。"
+          },
+          "gift": {
+            "title": "适合生日礼物场景",
+            "description": "可用于生日视频、惊喜消息、家庭聚会和社交媒体祝福。"
+          }
+        }
+      },
+      "steps": {
+        "title": "如何生成 AI 生日歌",
+        "description": "先填写生日相关细节，再带着准备好的提示词进入歌曲生成流程。",
+        "items": {
+          "personalize": {
+            "title": "填写姓名和对象",
+            "description": "告诉 Calyra AI 这首生日歌送给谁，让歌词可以直接对 TA 表达祝福。"
+          },
+          "style": {
+            "title": "选择氛围和风格",
+            "description": "选择有趣、温暖、感人、欢快或惊喜感，再调整音乐风格。"
+          },
+          "generate": {
+            "title": "生成歌曲",
+            "description": "继续进入 AI Text to Song 流程，生成带人声和伴奏的生日歌。"
+          }
+        }
+      },
+      "faq": {
+        "title": "AI 生日歌生成器 FAQ",
+        "one": {
+          "question": "可以生成带名字的生日歌吗？",
+          "answer": "可以。输入对方姓名后，Calyra AI 会准备一段个性化生日歌提示词，让名字自然出现在歌曲里。"
+        },
+        "two": {
+          "question": "可以生成搞笑或感人的生日歌吗？",
+          "answer": "可以。选择生日氛围并加入个人细节，就能引导歌曲的语气、歌词和音乐风格。"
+        },
+        "three": {
+          "question": "这个生日歌生成器可以免费试用吗？",
+          "answer": "可以免费开始并进入歌曲生成流程。更多生成次数和下载可能需要积分或付费计划。"
+        },
+        "four": {
+          "question": "生成的生日歌可以用于视频吗？",
+          "answer": "你可以根据自己的计划和 Calyra AI 条款，为生日视频、家庭祝福和社交媒体内容生成歌曲。"
+        }
       }
     },
     "aiLyricsGenerator": {

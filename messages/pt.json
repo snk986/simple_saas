@@ -18,6 +18,7 @@
     "textToSong": "Texto para música",
     "lyricsToSong": "Letra para música",
     "aiLyricsGenerator": "Gerador de letras com IA",
+    "aiBirthdaySongGenerator": "Gerador de música de aniversário com IA",
     "aiSongMaker": "Criador de músicas com IA",
     "blog": "Blog"
   },
@@ -39,6 +40,7 @@
     "textToSong": "Texto para música",
     "lyricsToSong": "Letra para música",
     "aiLyricsGenerator": "Gerador de letras com IA",
+    "aiBirthdaySongGenerator": "Gerador de música de aniversário com IA",
     "aiSongMaker": "Criador de músicas com IA",
     "worldCupSongGenerator": "Gerador de músicas da Copa do Mundo"
   },
@@ -746,7 +748,7 @@
       "lastUpdated": "13 de maio de 2026",
       "relatedTitle": "Páginas legais relacionadas",
       "contactTitle": "Precisa de ajuda?",
-      "contactBody": "Para dúvidas sobre estas políticas ou sua conta, fale com o suporte em support@calyraai.com ou pelo canal de suporte no painel.",
+      "contactBody": "Para dúvidas sobre estas políticas ou sua conta, fale com o suporte abaixo ou pelo canal de suporte no painel.",
       "contactCta": "Ir para preços",
       "contactEmailLabel": "Enviar email ao suporte",
       "links": {
@@ -1173,6 +1175,105 @@
       "finalCta": {
         "title": "Já tem letras prontas?",
         "description": "Cole-as no fluxo de letra para música com IA e molde a música ao redor das suas palavras."
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "Gerador gratuito de música de aniversário com IA e nome | Calyra AI",
+        "description": "Crie uma música de feliz aniversário personalizada com nome, história, clima e estilo musical usando o Calyra AI."
+      },
+      "hero": {
+        "eyebrow": "Gerador de música de aniversário com IA",
+        "title": "Gerador de música de aniversário com IA e nome",
+        "description": "Crie uma música de feliz aniversário personalizada para mãe, pai, amigo, parceiro, criança ou colega. Adicione o nome, uma lembrança curta e um estilo musical para começar.",
+        "proof": {
+          "withName": "Música de aniversário com nome",
+          "personalized": "Letra e estilo personalizados",
+          "free": "Grátis para começar"
+        }
+      },
+      "cta": {
+        "secondary": "Testar AI Song Maker"
+      },
+      "form": {
+        "badge": "Configuração da música de aniversário",
+        "name": "Nome",
+        "namePlaceholder": "Alex",
+        "recipient": "Para quem é?",
+        "message": "Mensagem pessoal",
+        "messagePlaceholder": "Compartilhe uma lembrança, piada interna, marco de idade ou desejo de aniversário.",
+        "vibe": "Clima de aniversário",
+        "style": "Estilo musical",
+        "styleDefault": "Música pop calorosa de aniversário, vocal claro, refrão feliz marcante",
+        "submit": "Criar música de aniversário",
+        "options": {
+          "mom": "Mãe",
+          "dad": "Pai",
+          "partner": "Parceiro",
+          "friend": "Amigo",
+          "child": "Criança",
+          "coworker": "Colega",
+          "warm": "Calorosa e sincera",
+          "funny": "Divertida e leve",
+          "emotional": "Emocionante e tocante",
+          "upbeat": "Música de festa animada",
+          "surprise": "Presente surpresa"
+        }
+      },
+      "benefits": {
+        "title": "Uma música de aniversário melhor que uma mensagem genérica",
+        "description": "Use o gerador de música de aniversário para transformar nomes, lembranças e detalhes da relação em um prompt pessoal.",
+        "items": {
+          "name": {
+            "title": "Use o nome naturalmente",
+            "description": "Crie uma música de feliz aniversário com o nome no refrão, em vez de uma letra genérica."
+          },
+          "story": {
+            "title": "Adicione detalhes reais",
+            "description": "Inclua lembranças, marcos, piadas ou desejos para que a música pareça feita para uma pessoa."
+          },
+          "gift": {
+            "title": "Pronta para virar presente",
+            "description": "Comece uma música para vídeos de aniversário, mensagens surpresa, festas em família e posts sociais."
+          }
+        }
+      },
+      "steps": {
+        "title": "Como criar uma música de aniversário com IA",
+        "description": "Comece com os detalhes do aniversário e continue para o gerador com o prompt já preparado.",
+        "items": {
+          "personalize": {
+            "title": "Adicione o nome e destinatário",
+            "description": "Diga ao Calyra AI para quem é a música para que a letra possa falar diretamente com essa pessoa."
+          },
+          "style": {
+            "title": "Escolha o clima e o estilo",
+            "description": "Escolha uma energia divertida, calorosa, emocional, animada ou de surpresa e ajuste o estilo musical."
+          },
+          "generate": {
+            "title": "Gere a música",
+            "description": "Continue para o fluxo de texto para música com IA e crie a faixa de aniversário com vozes e instrumentos."
+          }
+        }
+      },
+      "faq": {
+        "title": "Perguntas sobre o gerador de música de aniversário com IA",
+        "one": {
+          "question": "Posso fazer uma música de aniversário com nome?",
+          "answer": "Sim. Adicione o nome da pessoa e o Calyra AI preparará um prompt personalizado que usa o nome naturalmente."
+        },
+        "two": {
+          "question": "Posso criar uma música engraçada ou emocionante?",
+          "answer": "Sim. Escolha um clima de aniversário e adicione detalhes pessoais para guiar o tom, a letra e o estilo."
+        },
+        "three": {
+          "question": "Este gerador é grátis para testar?",
+          "answer": "Você pode começar grátis e continuar no gerador de músicas. Mais gerações e downloads podem exigir créditos ou um plano pago."
+        },
+        "four": {
+          "question": "Posso usar a música em um vídeo?",
+          "answer": "Você pode criar músicas para vídeos de aniversário, mensagens familiares e posts sociais conforme seu plano e os Termos do Calyra AI."
+        }
       }
     },
     "aiLyricsGenerator": {

@@ -3,6 +3,7 @@ export const SEO_TOOL_PAGE_PATHS = {
   aiTextToSong: "/ai-text-to-song",
   aiLyricsToSong: "/ai-lyrics-to-song",
   aiLyricsGenerator: "/ai-lyrics-generator",
+  aiBirthdaySongGenerator: "/ai-birthday-song-generator",
   royaltyFreeAiMusicGenerator: "/royalty-free-ai-music-generator",
   worldCupSongGenerator: "/world-cup-song-generator",
 } as const;

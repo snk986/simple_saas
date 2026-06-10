@@ -18,6 +18,7 @@
     "textToSong": "텍스트로 노래 만들기",
     "lyricsToSong": "가사로 노래 만들기",
     "aiLyricsGenerator": "AI 가사 생성기",
+    "aiBirthdaySongGenerator": "AI 생일 노래 생성기",
     "aiSongMaker": "AI 노래 메이커",
     "blog": "Blog"
   },
@@ -39,6 +40,7 @@
     "textToSong": "텍스트로 노래 만들기",
     "lyricsToSong": "가사로 노래 만들기",
     "aiLyricsGenerator": "AI 가사 생성기",
+    "aiBirthdaySongGenerator": "AI 생일 노래 생성기",
     "aiSongMaker": "AI 노래 메이커",
     "worldCupSongGenerator": "월드컵 노래 생성기"
   },
@@ -746,7 +748,7 @@
       "lastUpdated": "2026년 5월 13일",
       "relatedTitle": "관련 법적 페이지",
       "contactTitle": "도움이 필요하신가요?",
-      "contactBody": "이 정책이나 계정에 대해 궁금한 점이 있으면 support@calyraai.com 또는 대시보드의 지원 채널로 문의하세요.",
+      "contactBody": "이 정책이나 계정에 대해 궁금한 점이 있으면 아래 지원 연락처 또는 대시보드의 지원 채널로 문의하세요.",
       "contactCta": "요금 보기",
       "contactEmailLabel": "지원팀에 이메일 보내기",
       "links": {
@@ -1173,6 +1175,105 @@
       "finalCta": {
         "title": "가사가 준비되었나요?",
         "description": "AI 가사로 노래 워크플로에 붙여넣고 당신의 말을 중심으로 음악을 만들어보세요."
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "이름을 넣는 무료 AI 생일 노래 생성기 | Calyra AI",
+        "description": "이름, 이야기, 분위기, 음악 스타일을 넣어 개인화된 생일 축하 노래를 Calyra AI로 만들어 보세요."
+      },
+      "hero": {
+        "eyebrow": "AI 생일 노래 생성기",
+        "title": "이름을 넣는 AI 생일 노래 생성기",
+        "description": "엄마, 아빠, 친구, 연인, 아이, 동료를 위한 개인화된 생일 축하 노래를 만드세요. 이름, 짧은 추억, 음악 스타일을 추가해 시작할 수 있습니다.",
+        "proof": {
+          "withName": "이름이 들어간 생일 노래",
+          "personalized": "개인화된 가사와 스타일",
+          "free": "무료로 시작"
+        }
+      },
+      "cta": {
+        "secondary": "AI Song Maker 사용해보기"
+      },
+      "form": {
+        "badge": "생일 노래 설정",
+        "name": "이름",
+        "namePlaceholder": "Alex",
+        "recipient": "누구를 위한 노래인가요?",
+        "message": "개인 메시지",
+        "messagePlaceholder": "추억, 안에서만 통하는 농담, 나이의 의미, 생일 축하 메시지를 적어보세요.",
+        "vibe": "생일 분위기",
+        "style": "음악 스타일",
+        "styleDefault": "따뜻한 팝 생일 노래, 선명한 보컬, 기억에 남는 행복한 후렴",
+        "submit": "생일 노래 만들기",
+        "options": {
+          "mom": "엄마",
+          "dad": "아빠",
+          "partner": "연인",
+          "friend": "친구",
+          "child": "아이",
+          "coworker": "동료",
+          "warm": "따뜻하고 진심 어린",
+          "funny": "재미있고 장난스러운",
+          "emotional": "감동적이고 뭉클한",
+          "upbeat": "신나는 파티 노래",
+          "surprise": "서프라이즈 선물"
+        }
+      },
+      "benefits": {
+        "title": "평범한 인사보다 더 특별한 생일 노래",
+        "description": "생일 노래 생성기로 이름, 추억, 관계의 디테일을 개인적인 노래 프롬프트로 바꿔보세요.",
+        "items": {
+          "name": {
+            "title": "이름을 자연스럽게 사용",
+            "description": "일반적인 생일 가사가 아니라 후렴에 이름이 자연스럽게 들어간 생일 축하 노래를 만들 수 있습니다."
+          },
+          "story": {
+            "title": "진짜 디테일 추가",
+            "description": "추억, 이정표, 농담, 바람을 넣어 한 사람만을 위해 만든 노래처럼 만들 수 있습니다."
+          },
+          "gift": {
+            "title": "선물 순간에 바로 사용",
+            "description": "생일 영상, 서프라이즈 메시지, 가족 파티, 소셜 게시물에 쓸 노래를 시작할 수 있습니다."
+          }
+        }
+      },
+      "steps": {
+        "title": "AI 생일 노래 만드는 방법",
+        "description": "생일 정보를 입력하면 준비된 프롬프트로 노래 생성기로 이어집니다.",
+        "items": {
+          "personalize": {
+            "title": "이름과 대상을 추가",
+            "description": "누구를 위한 생일 노래인지 알려주면 가사가 그 사람에게 직접 말하듯 만들어집니다."
+          },
+          "style": {
+            "title": "분위기와 스타일 선택",
+            "description": "재미있는, 따뜻한, 감동적인, 신나는, 서프라이즈 분위기를 고르고 음악 스타일을 조정하세요."
+          },
+          "generate": {
+            "title": "노래 생성",
+            "description": "AI 텍스트 투 송 흐름으로 이동해 보컬과 악기가 포함된 생일 트랙을 만듭니다."
+          }
+        }
+      },
+      "faq": {
+        "title": "AI 생일 노래 생성기 FAQ",
+        "one": {
+          "question": "이름이 들어간 생일 노래를 만들 수 있나요?",
+          "answer": "네. 사람의 이름을 추가하면 Calyra AI가 이름을 자연스럽게 사용하는 개인화된 생일 노래 프롬프트를 준비합니다."
+        },
+        "two": {
+          "question": "재미있거나 감동적인 생일 노래도 만들 수 있나요?",
+          "answer": "네. 생일 분위기를 선택하고 개인적인 디테일을 추가해 톤, 가사, 스타일을 안내할 수 있습니다."
+        },
+        "three": {
+          "question": "이 생일 노래 생성기는 무료로 시도할 수 있나요?",
+          "answer": "무료로 시작해 노래 생성기로 이어갈 수 있습니다. 추가 생성과 다운로드에는 크레딧 또는 유료 플랜이 필요할 수 있습니다."
+        },
+        "four": {
+          "question": "생일 영상에 사용할 수 있나요?",
+          "answer": "플랜과 Calyra AI 약관에 따라 생일 영상, 가족 메시지, 소셜 게시물용 노래를 만들 수 있습니다."
+        }
       }
     },
     "aiLyricsGenerator": {

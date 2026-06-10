@@ -39,6 +39,7 @@
     "textToSong": "Text to Song",
     "lyricsToSong": "Lyrics to Song",
     "aiLyricsGenerator": "AI Lyrics Generator",
+    "aiBirthdaySongGenerator": "AI Birthday Song Generator",
     "aiSongMaker": "AI Song Maker",
     "worldCupSongGenerator": "World Cup Song Generator"
   },
@@ -509,6 +510,105 @@
       "finalCta": {
         "title": "Have Lyrics Ready?",
         "description": "Paste them into the AI Lyrics to Song workflow and shape the music around your words."
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "Free AI Birthday Song Generator with Name | Calyra AI",
+        "description": "Create a personalized happy birthday song with a name, story, mood, and music style using Calyra AI."
+      },
+      "hero": {
+        "eyebrow": "AI Birthday Song Generator",
+        "title": "AI Birthday Song Generator with Name",
+        "description": "Make a personalized happy birthday song for mom, dad, a friend, partner, child, or coworker. Add their name, a short memory, and a music style to start.",
+        "proof": {
+          "withName": "Birthday song with name",
+          "personalized": "Personalized lyrics and style",
+          "free": "Free to start"
+        }
+      },
+      "cta": {
+        "secondary": "Try AI Song Maker"
+      },
+      "form": {
+        "badge": "Birthday song setup",
+        "name": "Name",
+        "namePlaceholder": "Alex",
+        "recipient": "Who is it for?",
+        "message": "Personal message",
+        "messagePlaceholder": "Share a memory, inside joke, age milestone, or birthday wish.",
+        "vibe": "Birthday mood",
+        "style": "Music style",
+        "styleDefault": "Warm pop birthday song, clear vocal, memorable happy chorus",
+        "submit": "Create Birthday Song",
+        "options": {
+          "mom": "Mom",
+          "dad": "Dad",
+          "partner": "Partner",
+          "friend": "Friend",
+          "child": "Child",
+          "coworker": "Coworker",
+          "warm": "Warm and heartfelt",
+          "funny": "Funny and playful",
+          "emotional": "Emotional and touching",
+          "upbeat": "Upbeat party song",
+          "surprise": "Surprise gift"
+        }
+      },
+      "benefits": {
+        "title": "A Better Birthday Song Than a Generic Greeting",
+        "description": "Use the birthday song generator to turn names, memories, and relationship details into a song prompt that feels personal.",
+        "items": {
+          "name": {
+            "title": "Use their name naturally",
+            "description": "Create a happy birthday song with name mentions in the chorus instead of a generic birthday lyric."
+          },
+          "story": {
+            "title": "Add real details",
+            "description": "Include memories, milestones, jokes, or wishes so the song sounds made for one person."
+          },
+          "gift": {
+            "title": "Ready for a gift moment",
+            "description": "Start a song for birthday videos, surprise messages, family parties, and social posts."
+          }
+        }
+      },
+      "steps": {
+        "title": "How to Make an AI Birthday Song",
+        "description": "Start with the birthday details, then continue into the song generator with the prompt already prepared.",
+        "items": {
+          "personalize": {
+            "title": "Add the name and recipient",
+            "description": "Tell Calyra AI who the birthday song is for so the lyrics can address them directly."
+          },
+          "style": {
+            "title": "Choose the mood and style",
+            "description": "Pick funny, warm, emotional, upbeat, or surprise energy, then adjust the music style."
+          },
+          "generate": {
+            "title": "Generate the song",
+            "description": "Continue to the AI text to song workflow and create the birthday track with vocals and instruments."
+          }
+        }
+      },
+      "faq": {
+        "title": "AI Birthday Song Generator FAQ",
+        "one": {
+          "question": "Can I make a birthday song with a name?",
+          "answer": "Yes. Add the person's name and Calyra AI will prepare a personalized birthday song prompt that uses the name naturally."
+        },
+        "two": {
+          "question": "Can I make a funny or emotional birthday song?",
+          "answer": "Yes. Choose a birthday mood and add personal details to guide the tone, lyrics, and style."
+        },
+        "three": {
+          "question": "Is this birthday song generator free to try?",
+          "answer": "You can start for free and continue into the song generator. More generations and downloads may require credits or a paid plan."
+        },
+        "four": {
+          "question": "Can I use the birthday song in a video?",
+          "answer": "You can create songs for birthday videos, family messages, and social posts according to your plan and Calyra AI Terms."
+        }
       }
     },
     "aiLyricsGenerator": {

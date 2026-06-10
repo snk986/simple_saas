@@ -18,6 +18,7 @@
     "textToSong": "テキストから曲",
     "lyricsToSong": "歌詞から曲",
     "aiLyricsGenerator": "AI歌詞ジェネレーター",
+    "aiBirthdaySongGenerator": "AI誕生日ソングジェネレーター",
     "aiSongMaker": "AIソングメーカー",
     "blog": "Blog"
   },
@@ -39,6 +40,7 @@
     "textToSong": "テキストから曲",
     "lyricsToSong": "歌詞から曲",
     "aiLyricsGenerator": "AI歌詞ジェネレーター",
+    "aiBirthdaySongGenerator": "AI誕生日ソングジェネレーター",
     "aiSongMaker": "AIソングメーカー",
     "worldCupSongGenerator": "ワールドカップ曲ジェネレーター"
   },
@@ -746,7 +748,7 @@
       "lastUpdated": "2026年5月13日",
       "relatedTitle": "関連する法的ページ",
       "contactTitle": "お困りですか？",
-      "contactBody": "これらのポリシーやアカウントについて質問がある場合は、support@calyraai.com またはダッシュボードのサポート窓口からお問い合わせください。",
+      "contactBody": "これらのポリシーやアカウントについて質問がある場合は、下のサポート連絡先またはダッシュボードのサポート窓口からお問い合わせください。",
       "contactCta": "料金を見る",
       "contactEmailLabel": "サポートにメール",
       "links": {
@@ -1173,6 +1175,105 @@
       "finalCta": {
         "title": "歌詞は準備できていますか？",
         "description": "AI歌詞から曲のワークフローに貼り付け、言葉を中心に音楽を形にしましょう。"
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "名前入り無料AI誕生日ソングジェネレーター | Calyra AI",
+        "description": "名前、思い出、ムード、音楽スタイルを入れて、パーソナルなハッピーバースデーソングをCalyra AIで作成できます。"
+      },
+      "hero": {
+        "eyebrow": "AI誕生日ソングジェネレーター",
+        "title": "名前入りAI誕生日ソングジェネレーター",
+        "description": "母、父、友人、パートナー、子ども、同僚に向けたパーソナルな誕生日ソングを作れます。名前、短い思い出、音楽スタイルを入れて始めましょう。",
+        "proof": {
+          "withName": "名前入り誕生日ソング",
+          "personalized": "歌詞とスタイルをパーソナライズ",
+          "free": "無料で開始"
+        }
+      },
+      "cta": {
+        "secondary": "AI Song Makerを試す"
+      },
+      "form": {
+        "badge": "誕生日ソング設定",
+        "name": "名前",
+        "namePlaceholder": "Alex",
+        "recipient": "誰に贈りますか？",
+        "message": "個人的なメッセージ",
+        "messagePlaceholder": "思い出、内輪ネタ、年齢の節目、誕生日の願いを書いてください。",
+        "vibe": "誕生日のムード",
+        "style": "音楽スタイル",
+        "styleDefault": "温かいポップ誕生日ソング、明瞭なボーカル、覚えやすい楽しいサビ",
+        "submit": "誕生日ソングを作成",
+        "options": {
+          "mom": "母",
+          "dad": "父",
+          "partner": "パートナー",
+          "friend": "友人",
+          "child": "子ども",
+          "coworker": "同僚",
+          "warm": "温かく心のこもった",
+          "funny": "楽しくユーモラス",
+          "emotional": "感動的で心に残る",
+          "upbeat": "明るいパーティーソング",
+          "surprise": "サプライズギフト"
+        }
+      },
+      "benefits": {
+        "title": "ありきたりな挨拶より心に残る誕生日ソング",
+        "description": "名前、思い出、関係性のディテールを使って、個人的に感じられる誕生日ソングのプロンプトを作れます。",
+        "items": {
+          "name": {
+            "title": "名前を自然に入れる",
+            "description": "一般的な歌詞ではなく、サビの中で名前が自然に出てくるハッピーバースデーソングを作れます。"
+          },
+          "story": {
+            "title": "本当のディテールを追加",
+            "description": "思い出、節目、冗談、願いを入れて、その人のために作った曲らしくできます。"
+          },
+          "gift": {
+            "title": "ギフトの瞬間に使いやすい",
+            "description": "誕生日動画、サプライズメッセージ、家族のパーティー、SNS投稿に向けて曲を始められます。"
+          }
+        }
+      },
+      "steps": {
+        "title": "AI誕生日ソングの作り方",
+        "description": "誕生日の詳細を入力すると、準備済みのプロンプトでソングジェネレーターへ進めます。",
+        "items": {
+          "personalize": {
+            "title": "名前と相手を追加",
+            "description": "誰に向けた誕生日ソングかを伝えることで、歌詞が相手に直接語りかける形になります。"
+          },
+          "style": {
+            "title": "ムードとスタイルを選ぶ",
+            "description": "楽しい、温かい、感動的、明るい、サプライズなどの雰囲気を選び、音楽スタイルを調整します。"
+          },
+          "generate": {
+            "title": "曲を生成",
+            "description": "AIテキストから曲へのワークフローに進み、ボーカルと楽器入りの誕生日トラックを作成します。"
+          }
+        }
+      },
+      "faq": {
+        "title": "AI誕生日ソングジェネレーターFAQ",
+        "one": {
+          "question": "名前入りの誕生日ソングを作れますか？",
+          "answer": "はい。相手の名前を入れると、Calyra AIが名前を自然に使うパーソナルな誕生日ソングのプロンプトを準備します。"
+        },
+        "two": {
+          "question": "面白い曲や感動的な曲にできますか？",
+          "answer": "はい。誕生日のムードを選び、個人的な詳細を加えることで、トーン、歌詞、スタイルを導けます。"
+        },
+        "three": {
+          "question": "無料で試せますか？",
+          "answer": "無料で開始してソングジェネレーターへ進めます。追加生成やダウンロードにはクレジットまたは有料プランが必要な場合があります。"
+        },
+        "four": {
+          "question": "誕生日動画に使えますか？",
+          "answer": "プランとCalyra AIの利用規約に従って、誕生日動画、家族へのメッセージ、SNS投稿向けの曲を作成できます。"
+        }
       }
     },
     "aiLyricsGenerator": {

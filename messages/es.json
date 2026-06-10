@@ -18,6 +18,7 @@
     "textToSong": "Texto a canción",
     "lyricsToSong": "Letra a canción",
     "aiLyricsGenerator": "Generador de letras con IA",
+    "aiBirthdaySongGenerator": "Generador de cumpleaños con IA",
     "aiSongMaker": "Creador de canciones con IA",
     "blog": "Blog"
   },
@@ -39,6 +40,7 @@
     "textToSong": "Texto a canción",
     "lyricsToSong": "Letra a canción",
     "aiLyricsGenerator": "Generador de letras con IA",
+    "aiBirthdaySongGenerator": "Generador de cumpleaños con IA",
     "aiSongMaker": "Creador de canciones con IA",
     "worldCupSongGenerator": "Generador de canciones del Mundial"
   },
@@ -746,7 +748,7 @@
       "lastUpdated": "13 de mayo de 2026",
       "relatedTitle": "Páginas legales relacionadas",
       "contactTitle": "¿Necesitas ayuda?",
-      "contactBody": "Si tienes preguntas sobre estas políticas o tu cuenta, contacta con soporte en support@calyraai.com o desde el canal de soporte del panel.",
+      "contactBody": "Si tienes preguntas sobre estas políticas o tu cuenta, contacta con soporte abajo o desde el canal de soporte del panel.",
       "contactCta": "Ir a precios",
       "contactEmailLabel": "Enviar email a soporte",
       "links": {
@@ -1173,6 +1175,105 @@
       "finalCta": {
         "title": "¿Ya tienes letra?",
         "description": "Pégala en el flujo de letra a canción con IA y da forma a la música alrededor de tus palabras."
+      }
+    },
+    "aiBirthdaySongGenerator": {
+      "seo": {
+        "title": "Generador gratuito de canciones de cumpleaños con IA y nombre | Calyra AI",
+        "description": "Crea una canción de feliz cumpleaños personalizada con nombre, historia, emoción y estilo musical usando Calyra AI."
+      },
+      "hero": {
+        "eyebrow": "Generador de canciones de cumpleaños con IA",
+        "title": "Generador de canciones de cumpleaños con IA y nombre",
+        "description": "Crea una canción de feliz cumpleaños personalizada para mamá, papá, una amistad, pareja, niño o compañero. Añade su nombre, un recuerdo breve y un estilo musical para empezar.",
+        "proof": {
+          "withName": "Canción de cumpleaños con nombre",
+          "personalized": "Letra y estilo personalizados",
+          "free": "Gratis para empezar"
+        }
+      },
+      "cta": {
+        "secondary": "Probar AI Song Maker"
+      },
+      "form": {
+        "badge": "Configuración de canción de cumpleaños",
+        "name": "Nombre",
+        "namePlaceholder": "Alex",
+        "recipient": "¿Para quién es?",
+        "message": "Mensaje personal",
+        "messagePlaceholder": "Comparte un recuerdo, broma interna, edad especial o deseo de cumpleaños.",
+        "vibe": "Ánimo de cumpleaños",
+        "style": "Estilo musical",
+        "styleDefault": "Canción pop cálida de cumpleaños, voz clara, estribillo feliz memorable",
+        "submit": "Crear canción de cumpleaños",
+        "options": {
+          "mom": "Mamá",
+          "dad": "Papá",
+          "partner": "Pareja",
+          "friend": "Amistad",
+          "child": "Niño",
+          "coworker": "Compañero",
+          "warm": "Cálida y sincera",
+          "funny": "Divertida y juguetona",
+          "emotional": "Emotiva y conmovedora",
+          "upbeat": "Canción de fiesta animada",
+          "surprise": "Regalo sorpresa"
+        }
+      },
+      "benefits": {
+        "title": "Una canción de cumpleaños mejor que un saludo genérico",
+        "description": "Usa el generador de canciones de cumpleaños para convertir nombres, recuerdos y detalles de relación en una idea de canción personal.",
+        "items": {
+          "name": {
+            "title": "Usa su nombre de forma natural",
+            "description": "Crea una canción de feliz cumpleaños con el nombre en el estribillo, no una letra genérica."
+          },
+          "story": {
+            "title": "Añade detalles reales",
+            "description": "Incluye recuerdos, hitos, bromas o deseos para que la canción suene hecha para una persona."
+          },
+          "gift": {
+            "title": "Lista para un momento de regalo",
+            "description": "Empieza una canción para videos de cumpleaños, mensajes sorpresa, fiestas familiares y publicaciones sociales."
+          }
+        }
+      },
+      "steps": {
+        "title": "Cómo hacer una canción de cumpleaños con IA",
+        "description": "Empieza con los detalles del cumpleaños y continúa al generador con el prompt preparado.",
+        "items": {
+          "personalize": {
+            "title": "Añade el nombre y destinatario",
+            "description": "Dile a Calyra AI para quién es la canción para que la letra pueda hablarle directamente."
+          },
+          "style": {
+            "title": "Elige el ánimo y estilo",
+            "description": "Elige una energía divertida, cálida, emotiva, animada o de sorpresa, y ajusta el estilo musical."
+          },
+          "generate": {
+            "title": "Genera la canción",
+            "description": "Continúa al flujo de texto a canción con IA y crea la canción de cumpleaños con voces e instrumentos."
+          }
+        }
+      },
+      "faq": {
+        "title": "Preguntas sobre el generador de canciones de cumpleaños con IA",
+        "one": {
+          "question": "¿Puedo hacer una canción de cumpleaños con nombre?",
+          "answer": "Sí. Añade el nombre de la persona y Calyra AI preparará un prompt de canción personalizada que usa el nombre de forma natural."
+        },
+        "two": {
+          "question": "¿Puedo hacer una canción divertida o emotiva?",
+          "answer": "Sí. Elige un ánimo de cumpleaños y añade detalles personales para guiar el tono, la letra y el estilo."
+        },
+        "three": {
+          "question": "¿Este generador es gratis para probar?",
+          "answer": "Puedes empezar gratis y continuar en el generador de canciones. Más generaciones y descargas pueden requerir créditos o un plan de pago."
+        },
+        "four": {
+          "question": "¿Puedo usar la canción en un video?",
+          "answer": "Puedes crear canciones para videos de cumpleaños, mensajes familiares y publicaciones sociales según tu plan y los Términos de Calyra AI."
+        }
       }
     },
     "aiLyricsGenerator": {

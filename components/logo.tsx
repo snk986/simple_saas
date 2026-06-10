@@ -10,7 +10,7 @@ export function Logo() {
         <div className="absolute inset-y-2 left-2.5 w-1 rounded-full bg-white/95" />
         <div className="absolute inset-y-2 right-2.5 w-1 rounded-full bg-white/60" />
       </div>
-      <div className="flex items-baseline gap-2">
+      <div className="flex items-center gap-2">
         <span className="text-xl font-black tracking-normal text-foreground">
           Calyra AI
         </span>
