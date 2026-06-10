@@ -1,299 +1,176 @@
-# Calyra AI 项目 SOP V1
+# Calyra AI 项目 SOP
 
-版本：V1  
-日期：2026-05-31  
-用途：给自己复盘、给团队执行、后续整理文章/课程、未来复制第二个 SaaS 项目。  
-原则：先记录当前已确认事实；不确定内容标记为“待补充”或“待确认”；等 ChatGPT 网页导出数据到位后再整理 V2。
+版本：合并版  
+生成时间：2026-06-10  
+来源：`CALYRA_SOP_V1.md`、`CALYRA_SOP_V2.md`  
+使用对象：项目 owner、Codex、GPT 网页版、Claude Code、后续项目 Agent  
 
-## 0. V1 信息来源
+核心原则：
 
-本版 SOP 已吸收：
+- 以最近已经执行或确认的方案为准，旧方案只作为历史参考。
+- 不确定项标记为“待确认”，不要编造项目里没有的信息。
+- 重复内容只保留一处，优先保留 V2 中更接近当前状态的表述。
+- SOP 只记录流程、决策和经验，不写真实密钥、后台敏感参数、完整私密 URL。
 
-- 当前仓库扫描：PRD、架构文档、阶段计划、排障记录、API 路由、数据库迁移、Git 提交记录。
-- 附件复制页：`Calyra AI 项目 SOP V1`。
-- Codex 本地会话记录：`C:\Users\Admin\.codex\sessions\2026\05\*.jsonl` 和 `C:\Users\Admin\.codex\session_index.jsonl`。
-- 人工补充信息：
-  - 起点来自竞品观察、SEO 词机会，以及 Semrush Keyword Magic 热词查询。
-  - Suno 提供生成歌曲流程启发。
-  - AIMakeSong 和其他 AI song maker 站点提供 SEO 页面结构启发。
-  - `ai song maker` SEO 方向、隐藏中文入口参考了竞品做法。
-  - 其他页面排版、流程和技术方案主要由自己和 AI 多轮沟通后确定。
-  - 所有坑都值得记录，应该从申请 Google 邮箱这类早期账户动作开始记录。
+---
 
-本版暂未吸收：
+## 1. 项目总览
 
-- ChatGPT 网页完整对话导出。
-- Semrush 完整关键词表。
-- 竞品截图、竞品页面结构明细。
-- Google / Creem / Supabase / Vercel 等账号申请和配置全过程截图。
+### 1.1 当前项目
 
-安全说明：Codex 会话里出现过环境变量、后台页面、错误日志和临时 key 信息。SOP 只沉淀过程和经验，不复制任何真实密钥、完整后台 URL 参数或可复用敏感值。
-
-## 1. 总链路地图
-
-Calyra AI 的项目过程可以拆成 10 段 SOP 链路：
-
-1. 机会发现：看竞品、看 SEO 热词、确认 AI music / AI song maker 方向。
-2. 调研验证：用 Semrush 查关键词热度，用竞品页验证搜索意图和页面结构。
-3. 产品定位：确定面向欧美英语用户，先做简单好懂的 AI Song Maker 工具站。
-4. 基础模板：从 simple_saas 出发，保留登录、支付、积分、Supabase、Vercel 这些 SaaS 底座。
-5. PRD 和架构：先写 `hit-song-prd.md` 和 `hit-song-architecture.md`，再按 Phase / Task 执行。
-6. MVP 闭环：输入故事或歌词 -> 生成歌词 -> 生成音频 -> 展示歌曲 -> 生成报告 -> 分享/下载。
-7. 商业闭环：积分扣减/退款、Creem checkout、webhook 幂等、订阅权益、歌曲保存期限。
-8. SEO 增长闭环：首页、工具页、公开歌曲页、sitemap、canonical、Search Console、精选歌曲。
-9. 上线排障：Supabase migration、RLS、Vercel 环境变量、Google OAuth、Provider 405/422、线上 500。
-10. 复盘复制：把每一步的判断、提示词、坑、命令、验证方式沉淀成可复用 SOP。
-
-## 1.1 Codex 会话时间线补充
-
-本节来自本地 Codex 会话记录，用来补齐 Git log 看不出来的过程性决策。
-
-### 2026-05-06：从 Claude 工作流切到 Codex 工作流
-
-关键动作：
-
-- 讨论 `CLAUDE.md` 和 `AGENTS.md` 的关系。
-- 让 Codex 先读 `AGENTS.md`、`hit-song-architecture.md`、`hit-song-prd.md`。
-- 审查 PRD 和架构是否合理。
-- 明确公开页不能匿名读取整行 `songs`，只能取公开投影数据。
-- 询问为了高效开发需要哪些插件/skill。
-
-沉淀成 SOP：
-
-- 每个新项目都要有 AI agent 入口文档。
-- 入口文档要告诉 AI：项目背景、技术栈、目录约定、验证命令、禁止事项。
-- 在正式开发前，先让 AI 审查 PRD 和架构，而不是直接写代码。
-- 涉及公开页时，先定义公开投影数据，避免把私有字段暴露给匿名访问。
-
-### 2026-05-06 至 2026-05-07：Task 1-16 快速推进
-
-关键动作：
-
-- 按 `hit-song-architecture.md` 执行 Task 2、Task 3a、Task 3b。
-- 执行 Task 4：歌曲公开页 + SEO 闭环 MVP。
-- 把“SEO 闭环第一，视觉第二但必须精致”写成全站公开增长页原则。
-- 拆分 Phase 2：评判与情绪价值。
-- 执行 Task 5：歌词评判后端。
-- 执行 Task 6：综合报告页。
-- 执行 Task 7：分享卡片与 OG 图。
-- 执行 Task 8：成就系统。
-- 拆分并执行 Phase 3：多语言、公开增长页 SEO、召回邮件、归因、发布门禁。
-- 拆分 Phase 4：商业化与增长。
-- 执行 Task 14：商业套餐配置与定价页。
-- 执行 Task 15：Creem 订阅与积分包支付闭环。
-- 执行 Task 16：订阅权益、积分账本与存储生命周期。
-
-沉淀成 SOP：
-
-- 大项目不要让 AI 一口气“做完整个产品”，要拆 Phase 和 Task。
-- 每个 Task 都要有目标、边界、涉及文件、构建门禁。
-- 每个 Phase 完成后要有 release checklist。
-- 商业化、积分、webhook、RLS、SEO 这类高风险模块要单独拆任务。
-
-### 2026-05-07 至 2026-05-08：dev 环境上线验证
-
-关键动作：
-
-- 讨论个人开发者是否直接上生产环境，最终选择先走 dev 验证完整流程。
-- 创建并推送 dev 分支。
-- 创建或确认 Supabase dev 项目。
-- 执行 Supabase migrations。
-- 配置 Supabase Storage bucket。
-- 配置 Vercel Preview / Dev 环境。
-- 固定 dev 域名。
-- 手动验证首页、注册、登录、新用户 300 credits、Creem 订阅和一次性购买。
-- 记录 `docs/checklists/2026-05-08-dev-release-troubleshooting.md`。
-
-典型坑：
-
-- Supabase 后台字段名变化，环境变量命名和项目代码不一致。
-- migration 中提前引用 `credits_balance`。
-- 初始积分设计为 300，但旧 trigger 仍是 3。
-- Vercel 构建缺少 `pnpm-lock.yaml`。
-- Vercel 默认预览域名可能被 deployment protection 拦住，需要调整访问策略。
-- 环境变量修改后必须重新部署，部署快照不会自动拿到新值。
-
-沉淀成 SOP：
-
-- 个人项目也建议先走 dev 环境，不要直接在 production 上验证全链路。
-- dev/prod 的 Supabase、Creem、Vercel 环境变量要分开。
-- 每次手动配置后台都要同步写 checklist。
-- 线上排障文档按“问题、原因、解决办法”记录。
-
-### 2026-05-08 至 2026-05-09：AI Provider 和音频 Provider 摸索
-
-关键动作：
-
-- 讨论前期是否能用免费大模型生成歌词。
-- 尝试 Gemini，并讨论 2.5 Pro / Flash / fallback 策略。
-- 遇到 Gemini 403 和项目访问风控。
-- 短暂考虑 OpenRouter，但因为充值门槛等因素转向 GitHub Models。
-- 跑通 GitHub Models `gpt-4.1` 歌词生成。
-- 接入 kie.ai，并从 V4_5 Plus / V5_5 中选择。
-- 处理 Kie callback URL 等生成歌曲问题。
-
-沉淀成 SOP：
-
-- 早期 Provider 选择不能只看“免费”，还要看地区、风控、额度、接入稳定性。
-- AI Provider 一定要抽象，方便 Claude / GitHub Models / 其他 provider 切换。
-- 音频 Provider 一定要抽象，方便 Kie / FAL / Wavespeed 切换。
-- Provider 切换时要同步清理旧环境变量、旧代码和旧日志，避免线上仍调用旧 provider。
-
-### 2026-05-09 至 2026-05-10：核心链路跑通后的体验重构
-
-已跑通链路：
-
-- 注册/登录。
-- 新用户 credits。
-- 歌词生成：GitHub Models。
-- 音频生成：kie.ai V5_5。
-- 双版本音频：`audio_url` + `audio_url_alt`。
-- Supabase Storage 上传。
-- 公开 song 页。
-- 评判报告。
-- Creem 支付 + webhook 发放权益。
-
-关键讨论：
-
-- 核心链路跑通后，下一步不是继续堆功能，而是把不满意的流程和细节写出来。
-- 可先做一个演示流程 HTML，让 AI 按理想流程改真实项目。
-- 双版本音频不应共享播放/分享/CTA 统计。
-- 与其做 take 级计数，不如后续把两个版本拆成两首独立歌曲，降低理解成本。
-- 积分不足要用弹窗引导登录或充值。
-
-沉淀成 SOP：
-
-- MVP 跑通后，立刻做“手动体验复盘”。
-- 不满意的地方要先写成流程原型或清单，再改代码。
-- 不要把临时实现误当长期架构；双版本、计数、公开展示这类设计要尽快简化。
-
-### 2026-05-13 至 2026-05-15：上线前扫描、安全和品牌切换
-
-关键动作：
-
-- dev 线上测试后，提出上线前 AI 代码扫描计划。
-- 扫描范围包括构建、类型、API 鉴权、积分/支付/webhook、RLS/migration、环境变量、i18n/SEO/公开页面。
-- 固定 Next 和 Node/pnpm 版本，避免 Vercel 构建不可复现。
-- 删除未使用且高风险的客户端订阅 hook。
-- 统一 Creem webhook 日志。
-- 补齐 Supabase authenticated grants。
-- 检查 API key、service role key、webhook secret 是否进入仓库。
-- 讨论 dev 密钥泄露风险和生产密钥重新生成。
-- 全站从 Hit-Song 改名为 Calyra AI。
-- Supabase 环境变量从旧命名切到新命名。
-
-沉淀成 SOP：
-
-- 上线前一定要做一次 AI 辅助扫描，但不能触发真实 AI、音频、支付消费。
-- 扫描输出必须分 `Must Fix / Should Fix / Watch`。
-- 生产密钥和 dev 密钥必须分开生成。
-- 品牌改名要覆盖 UI、metadata、结构化数据、邮件/召回文案、法务页。
-- 内部历史文档和数据库表名可以不急着改，避免破坏稳定性。
-
-### 2026-05-16 至 2026-05-23：SEO 页面和首页工作台化
-
-关键动作：
-
-- 修复 `zh-CN` 线上仍可访问的问题。
-- 增加 `support@calyraai.com` 显性入口。
-- OAuth provider 未启用时改友好错误提示。
-- 首页第一屏改为工具型生成器。
-- 首页顺序调整为 Hero Generator、Music Gallery、Popular AI Music Styles、How It Works、Commercial Use、Pricing、FAQ。
-- 讨论 SEO block 是否保留，结论是保留精简版语义密度。
-- 生成按钮尽量直接复用已有生成流程，避免 localStorage 中转后让用户再点一次。
-- 简化 Create 页面，移除 Simple / Advanced，因为它和 Text to Song / Lyrics to Song 概念冲突。
-- 拆分 SEO 功能页：Text to Song、Lyrics to Song、AI Lyrics Generator。
-- 检查首页前三屏是否完成定位、场景、信任、行动。
-- 参考 AIMakeSong，但不照抄其页面和文案。
-
-沉淀成 SOP：
-
-- 首页不是纯介绍页，第一屏要尽量变成可用工具。
-- SEO 页面可以复用同一个工作台组件，但路由、metadata、默认 mode、文案要独立。
-- 不要让模式层级过多，新手只需要知道 Text to Song 和 Lyrics to Song。
-- 竞品提出的方法论不一定自己遵守，要参考但不能迷信。
-
-### 2026-05-19 至 2026-05-28：FAL、Creem、错误日志和增长数据
-
-关键动作：
-
-- 完成多语言 SEO 页面。
-- 修复 FAL audio poll 405。
-- 重构 song generation flow。
-- 调整 FAL 生成扣费规则。
-- 检查 `CREEM_API_URL`。
-- 查找生成报错原因。
-- 修复桌面端登录无响应。
-- 增加关键漏斗埋点：访问、生成、注册、付费。
-
-沉淀成 SOP：
-
-- FAL 这类异步队列 Provider 必须区分 status 和 result。
-- 生成失败定位需要 request id、user id、song id、provider status、积分操作日志。
-- 关键增长路径要早埋点：访问 -> 生成 -> 注册 -> 付费。
-- 错误提示要对用户友好，对开发者可定位。
-
-### 2026-05-28 至 2026-05-31：内容资产、营销素材和 SOP 意识
-
-关键动作：
-
-- 创建 producer brief。
-- 审核和修改歌曲歌词风险。
-- 生成 World Cup anthem、slime love lyrics 等 demo 内容。
-- 审核 4 首歌。
-- 制作歌曲生成说明视频。
-- 查 JS 内存溢出原因。
-- 准备 X 发帖素材。
-- 开始整理项目 SOP 大纲。
-
-沉淀成 SOP：
-
-- AI 音乐产品不只是代码，还需要 demo 歌曲、歌词资产、说明视频、社媒素材。
-- Demo 内容要有审核流程，避免版权、低质歌词、不可商用表达。
-- SOP 应该从开发中同步沉淀，而不是项目结束后凭记忆补。
-
-## 2. 项目定位 SOP
-
-当前项目：Calyra AI，一个面向欧美市场的 AI 音乐生成网站。  
+项目名称：`Calyra AI`  
 官网：`https://calyraai.com`  
-核心定位：`AI Song Maker` / `AI Music Generator`
+早期名称：`Hit-Song`
 
-用户可以输入：
+`Hit-Song` 是早期 PRD 和工程文档里的项目名。正式品牌已经切换为 `Calyra AI`。历史文档里出现 `Hit-Song` 时，应理解为 Calyra AI 的前身，不要再用于正式品牌、页面文案、metadata、邮件或对外材料。
 
-- 文字想法。
-- 歌词。
-- 风格提示词。
-- 歌曲标题。
+### 1.2 产品定位
 
-然后生成完整歌曲，包括人声和伴奏。
+Calyra AI 是面向欧美英语用户的 AI 音乐生成网站。
 
-目标用户：
+核心定位：
 
-- 美国、欧洲等英语用户。
-- 普通创作者。
-- 短视频创作者。
-- YouTube / Reels / TikTok 内容创作者。
-- 独立音乐兴趣用户。
-- 需要 royalty-free music 的创作者。
+- `AI Song Maker`
+- `AI Music Generator`
+- `AI Song Generator`
+- `Text to Song`
+- `Lyrics to Song`
 
-第一阶段核心价值：
+用户可以输入文字想法、歌词、风格描述和歌曲标题，生成带人声和伴奏的完整歌曲。
 
-- 简单。
-- 快速。
-- 好理解。
-- 适合新手。
-- 能生成带人声和伴奏的完整歌曲。
+第一阶段目标不是做专业 DAW，也不是正面对抗 Suno / Udio 的模型能力，而是先做一个稳定、清晰、能被 Google 理解、能让欧美用户快速生成歌曲的工具站。
 
-第一阶段不追求：
+当前优先顺序：
+
+1. 生成流程稳定。
+2. 支付和 credits 稳定。
+3. SEO 页面稳定。
+4. 首页 demo 建立信任。
+5. Product Hunt / 目录站补充曝光。
+6. 再考虑高级功能。
+
+### 1.3 第一阶段不追求
 
 - 专业 DAW。
 - 复杂音乐编辑器。
+- 多轨混音。
+- 自动母带。
 - 完整音乐社区。
-- 高级版权/发行平台。
+- 高级版权或发行平台。
 
-## 3. 调研 SOP
+---
 
-### 3.1 机会发现
+## 2. 历史链路和关键决策
+
+### 2.1 总链路地图
+
+Calyra AI 的项目过程可以拆成 10 段：
+
+1. 机会发现：看竞品、看 SEO 热词、确认 AI music / AI song maker 方向。
+2. 调研验证：用 Semrush 查关键词热度，用竞品页验证搜索意图和页面结构。
+3. 产品定位：面向欧美英语用户，先做简单好懂的 AI Song Maker 工具站。
+4. 基础模板：从 simple_saas 出发，保留登录、支付、credits、Supabase、Vercel 等 SaaS 底座。
+5. PRD 和架构：先写 `hit-song-prd.md` 和 `hit-song-architecture.md`，再按 Phase / Task 执行。
+6. MVP 闭环：输入故事或歌词 -> 生成歌词 -> 生成音频 -> 展示歌曲 -> 生成报告 -> 分享/下载。
+7. 商业闭环：credits 扣除/退款、Creem checkout、webhook 幂等、订阅权益、歌曲保存期限。
+8. SEO 增长闭环：首页、工具页、公开歌曲页、sitemap、canonical、Search Console、精选歌曲。
+9. 上线排障：Supabase migration、RLS、Vercel 环境变量、Google OAuth、Provider 405/422、线上 500。
+10. 复盘复制：把判断、提示词、坑、命令、验证方式沉淀成可复用 SOP。
+
+### 2.2 Codex 会话时间线
+
+2026-05-06：从 Claude 工作流切到 Codex 工作流
+
+- 明确 Codex 先读 `AGENTS.md`、`hit-song-architecture.md`、`hit-song-prd.md`。
+- 公开页不能匿名读取整行 `songs`，只能取公开投影数据。
+- 新项目要有 AI agent 入口文档，写清项目背景、技术栈、目录约定、验证命令和禁止事项。
+
+2026-05-06 至 2026-05-07：Task 1-16 快速推进
+
+- 按架构文档推进公开歌曲页、SEO 闭环、报告页、分享卡片、成就系统、多语言、召回、商业化。
+- 大任务必须拆 Phase / Task，每个 Task 要有目标、边界、涉及文件和构建门禁。
+- 支付、credits、webhook、RLS、SEO 这类高风险模块要单独拆任务。
+
+2026-05-07 至 2026-05-08：dev 环境上线验证
+
+- 个人项目也建议先走 dev 环境，不要直接在 production 验证全链路。
+- dev/prod 的 Supabase、Creem、Vercel 环境变量要分开。
+- 后台配置动作要同步写 checklist。
+- 线上排障文档按“问题、原因、解决办法”记录。
+
+2026-05-08 至 2026-05-09：AI Provider 和音频 Provider 摸索
+
+- Provider 选择不能只看免费，还要看地区、风控、额度和接入稳定性。
+- AI Provider 和音频 Provider 都必须抽象，方便 Claude / GitHub Models / OpenAI / FAL / Kie / Wavespeed 切换。
+- Provider 切换时要同步清理旧环境变量、旧代码和旧日志，避免线上仍调用旧 provider。
+
+2026-05-09 至 2026-05-10：核心链路跑通后的体验重构
+
+- MVP 跑通后，不是继续堆功能，而是先复盘体验问题。
+- 不满意的地方先写流程原型或清单，再改代码。
+- 双版本音频、计数、公开展示这类临时实现要尽快简化，不能误当长期架构。
+
+2026-05-13 至 2026-05-15：上线前扫描、安全和品牌切换
+
+- 上线前要做 AI 辅助扫描，但不能触发真实 AI、音频、支付消费。
+- 扫描输出分 `Must Fix / Should Fix / Watch`。
+- 生产密钥和 dev 密钥必须分开。
+- 品牌改名要覆盖 UI、metadata、结构化数据、邮件/召回文案和法务页。
+
+2026-05-16 至 2026-05-23：SEO 页面和首页工作台化
+
+- 首页第一屏改成工具型生成器，不做纯介绍页。
+- SEO 页面可以复用同一个工作台组件，但路由、metadata、默认 mode 和文案要独立。
+- Simple / Advanced 和 Text to Song / Lyrics to Song 概念冲突，第一版移除 Simple / Advanced。
+- 参考 AIMakeSong 的 SEO 结构，但不照抄页面和文案。
+
+2026-05-19 至 2026-05-28：FAL、Creem、错误日志和增长数据
+
+- FAL 这类异步队列 Provider 必须区分 status 和 result。
+- 生成失败定位需要 request id、user id、song id、provider status、credits 操作日志。
+- 关键增长路径要早埋点：访问 -> 生成 -> 注册 -> 付费。
+- 错误提示要对用户友好，对开发者可定位。
+
+2026-05-28 至 2026-05-31：内容资产、营销素材和 SOP 意识
+
+- AI 音乐产品不只是代码，还需要 demo 歌曲、歌词资产、说明视频和社媒素材。
+- Demo 内容要有审核流程，避免版权、低质歌词、不可商用表达。
+- SOP 应从开发中同步沉淀，不要项目结束后凭记忆补。
+
+---
+
+## 3. 用户、市场和调研
+
+### 3.1 目标用户
+
+主要面向：
+
+- 欧美英语用户。
+- 普通内容创作者。
+- YouTube / TikTok / Instagram Reels 创作者。
+- 短视频创作者。
+- 独立音乐兴趣用户。
+- 需要 royalty-free music 的创作者。
+
+### 3.2 产品价值表达
+
+第一版不要讲太专业的音乐理论。
+
+更适合的表达：
+
+- Create songs from text.
+- Turn lyrics into music.
+- Generate AI music with vocals and instruments.
+- Make royalty-free songs for videos and social content.
+
+不建议第一版强调：
+
+- 专业编曲。
+- 复杂混音。
+- 高级音乐制作。
+- DAW 级编辑。
+
+### 3.3 机会发现
 
 触发点：
 
@@ -301,17 +178,15 @@ Calyra AI 的项目过程可以拆成 10 段 SOP 链路：
 - 看到相关 SEO 词有搜索需求。
 - 通过 Semrush Keyword Magic 查询热词。
 
-第一版需要记录的调研产物：
+第一版需要记录：
 
 - 主关键词：`AI Song Maker`、`AI Music Generator`、`AI Song Generator`。
 - 功能词：`Text to Song`、`Lyrics to Song`、`AI Lyrics to Song`。
 - 场景词：`royalty-free AI music`、`YouTube music generator`、`TikTok song generator` 等待确认。
-- 竞品列表：Suno、AIMakeSong、其他 AI song maker 站点。
-- 每个竞品给项目的启发，而不是只记录竞品名字。
+- 竞品：Suno、AIMakeSong、其他 AI song maker 站点。
+- 每个竞品给项目的启发，而不是只记录名字。
 
-### 3.2 竞品启发记录格式
-
-每个竞品按这个格式记录：
+### 3.4 竞品启发记录格式
 
 ```text
 竞品名称：
@@ -330,11 +205,8 @@ Calyra AI 的项目过程可以拆成 10 段 SOP 链路：
 
 - Suno：主要给生成歌曲工作流启发，包括输入、风格、生成中状态、作品列表、播放器氛围。
 - AIMakeSong：主要给 SEO 页面结构启发，包括首页关键词、工具页、长尾词页面、CTA 链路。
-- 其他 AI song maker：待补充完整列表和截图。
 
-### 3.3 Semrush 关键词记录格式
-
-每次查词都记录：
+### 3.5 Semrush 关键词记录格式
 
 ```text
 查询日期：
@@ -352,25 +224,60 @@ CPC：
 备注：
 ```
 
-V1 暂定页面映射：
+---
 
-- `AI Song Maker` -> `/` 和 `/ai-song-maker`
-- `AI Music Generator` -> `/` 和后续独立页面，待确认
-- `Text to Song` -> `/ai-text-to-song`
-- `Lyrics to Song` -> `/ai-lyrics-to-song`
-- `AI Lyrics Generator` -> `/ai-lyrics-generator`
-- `royalty-free AI music` -> 待确认，不急着硬做
+## 4. 技术栈和工程原则
 
-## 4. 产品页面 SOP
+### 4.1 当前技术栈
 
-当前仓库已存在的核心页面：
+- Frontend：Next.js / React / TypeScript。
+- Hosting：Vercel。
+- Database/Auth：Supabase。
+- Payment：Creem。
+- Audio Generation：FAL / `fal-ai/minimax-music/v2`。
+- Lyrics / Text AI：按当前代码为准，历史上讨论过 Claude、GitHub Models、OpenAI、OpenRouter。
+- Analytics：GA4。
+- Email：Cloudflare Email Routing。
+- i18n：next-intl。
+- UI：shadcn/ui、Tailwind CSS、Framer Motion。
+- 包管理：pnpm。
+
+注意：历史文档可能写 Next.js 15，但当前代码版本应以 `package.json` 为准。
+
+### 4.2 核心目录
+
+- `app/[locale]/`：页面路由。
+- `app/api/`：API Routes。
+- `lib/ai/`：AI Provider 抽象和歌词/报告能力。
+- `lib/audio/`：音频 Provider 抽象层。
+- `lib/credits/`：credits 冻结、扣除和退款。
+- `lib/song/`：歌曲公开数据和歌词生成。
+- `components/song-maker/`：生成工作台。
+- `messages/`：多语言文案。
+- `supabase/migrations/`：数据库迁移。
+- `docs/`：计划、清单、SOP。
+
+### 4.3 工程开发原则
+
+- 不要只靠 PRD 直接让 Codex/Claude 写代码。
+- PRD 要先拆成轻量工程文档，至少包含数据结构、API 设计、页面和状态流、边界条件。
+- Codex 工作流：读文档和现有代码 -> 输出修改计划 -> 每次只改一个明确问题 -> 修改后给验证方式。
+- 涉及支付、credits、数据库结构、RLS、SEO 的修改必须谨慎，优先小步验证。
+
+---
+
+## 5. 页面结构和 SEO
+
+### 5.1 当前核心页面
 
 - `/`：首页。
-- `/ai-song-maker`：主生成页。
+- `/ai-song-maker`：主生成页 / 主 SEO 功能页。
 - `/ai-text-to-song`：Text to Song 页面。
 - `/ai-lyrics-to-song`：Lyrics to Song 页面。
 - `/ai-lyrics-generator`：只生成歌词的 SEO 工具页。
-- `/free-ai-lyrics-generator`：当前工作区有新增目录，状态待确认。
+- `/free-ai-lyrics-generator`：歌词模板/免费歌词生成相关页面，状态以当前代码为准。
+- `/royalty-free-ai-music-generator`：Royalty-Free 场景页。
+- `/world-cup-song-generator`：世界杯/球迷歌曲场景页。
 - `/song/[id]`：公开歌曲页。
 - `/report/[id]`：私有报告页。
 - `/dashboard`：用户歌曲和账户页。
@@ -378,97 +285,20 @@ V1 暂定页面映射：
 - `/about`：关于页。
 - `/privacy`、`/terms`、`/refund`：法务页面。
 
-附件复制页中提到但当前仓库未确认的页面：
+V2 中提到 `/contact`、`/faq`，但是否已落地以当前代码为准。
 
-- `/contact`
-- `/faq`
+### 5.2 首页职责
 
-这两个页面后续是否要做，等 V2 根据实际 SEO 和信任需求确认。
+首页承担四件事：
 
-### 4.1 首页 SOP
+1. 承接 SEO。
+2. 解释产品是什么。
+3. 展示 demo 歌曲建立信任。
+4. 引导用户进入 `/ai-song-maker`。
 
-首页主要承担：
+首页不是纯介绍页，第一屏应尽量成为可用工具。当前首页方向是暗色、高级感、音乐产品氛围，但结构上学习 SEO 工具站逻辑。
 
-- SEO 入口。
-- 产品信任感。
-- Demo 歌曲展示。
-- 引导用户进入生成页。
-
-首页不应该太复杂。第一屏要让欧美用户马上知道：
-
-- 这是 AI Song Maker。
-- 可以从 text / lyrics 生成歌曲。
-- 生成结果是完整音乐，不只是歌词。
-- CTA 指向 `/ai-song-maker` 或具体工具页。
-
-当前首页方向：
-
-- 暗色高级感。
-- 类似 Suno 的音乐产品氛围。
-- 结合 AIMakeSong 的 SEO 结构。
-- Music Gallery 用精选歌曲建立信任。
-
-### 4.2 生成页 SOP
-
-生成页目标：让用户真正完成创作，而不是只看营销内容。
-
-当前方向：
-
-- 参考 Suno 工作台。
-- 左侧或主区域放生成表单。
-- 右侧或下方放歌曲列表/历史作品。
-- 保持新手友好，不把参数做得过复杂。
-
-生成表单应包含：
-
-- Credits 显示。
-- Text to Song / Lyrics to Song 模式。
-- Prompt / Lyrics 输入框。
-- Style 输入框。
-- Title 输入框。
-- Instrumental 开关，当前第一阶段可以隐藏或弱化。
-- Generate Song 按钮。
-
-第一版原则：
-
-- 不做复杂 draft 恢复。
-- 不做复杂服务端筛选。
-- 不做专业音乐参数编辑器。
-- 失败提示要明确，积分退回要可靠。
-
-### 4.3 公开歌曲页 SOP
-
-公开歌曲页的目标不是单纯展示，而是 SEO + 分享 + 回流：
-
-- SSR 可索引内容。
-- title / description / canonical / hreflang。
-- JSON-LD。
-- 可播放音频。
-- 可展示歌词。
-- 可展示报告摘要。
-- CTA 回到 `/ai-song-maker`。
-
-索引原则：
-
-- 普通生成默认 `private` 或 `unlisted`。
-- 普通分享链接可以访问，但不一定 index。
-- 用户明确发布、官方精选、或高分作品才进入 sitemap / 首页 Gallery。
-
-## 5. SEO SOP
-
-SEO 是本项目第一阶段的重要增长策略，但不能为了堆词牺牲产品可信度。
-
-主关键词：
-
-- AI Song Maker
-- AI Music Generator
-- AI Song Generator
-- Text to Song
-- Lyrics to Song
-- AI Lyrics to Song
-- AI Lyrics Generator
-
-首页建议方向：
+首页核心 SEO 方向：
 
 ```text
 Title:
@@ -481,288 +311,559 @@ Description:
 Create AI songs from text, lyrics, and simple ideas. Use our AI song maker to generate music with vocals and instruments in minutes.
 ```
 
-工具页策略：
+首页模块可包含：
 
-- `/ai-song-maker`：承接 AI Song Maker 搜索意图。
-- `/ai-text-to-song`：默认进入 Text to Song 模式。
-- `/ai-lyrics-to-song`：默认进入 Lyrics to Song 模式。
-- `/ai-lyrics-generator`：先解决歌词生成，再引导转成歌曲。
+- Hero Generator。
+- Music Gallery / Demo Songs。
+- Popular AI Music Styles。
+- How It Works。
+- Commercial Use。
+- Pricing。
+- FAQ。
+- CTA。
 
-多语言 SEO 策略：
+首页主 CTA 指向 `/ai-song-maker`。
 
-- 英文优先。
-- 其他语言可以保留，但入口可以弱化或隐藏。
-- 翻译质量不稳定时，不主动推多语言 SEO。
-- 避免西语、葡语、日语、韩语页面混入大量英文。
+### 5.3 SEO 页面策略
 
-隐藏中文的原因：
+核心原则：SEO 闭环第一，视觉第二但必须精致。公开增长页必须保证 SSR 可索引内容、结构化数据、内链、首屏核心信息、分享预览和 CTA 转化。
 
-- 当前目标市场是欧美英语用户。
-- 中文入口会弱化 Google 对站点主题和目标市场的理解。
-- 这是参考竞品后的策略，同时结合项目定位做出的选择。
+主 SEO 页面：
 
-## 6. 生成主流程 SOP
+- `/ai-song-maker` 承接 AI Song Maker / AI Music Generator 搜索意图。
+- 强调 create songs from text and lyrics、vocals and instruments、fast generation。
 
-推荐基础流程：
+功能 SEO 页面：
 
-1. 用户进入首页或 SEO 工具页。
-2. 用户输入 prompt / lyrics / style / title。
-3. 点击 Generate。
-4. 检查登录状态。
-5. 检查 credits。
-6. 文本模式下先生成歌词；歌词模式下直接使用用户歌词。
-7. 创建 `songs` 记录，状态为 `generating`。
-8. 冻结/扣减积分。
-9. 调用音频 Provider。
-10. 保存 provider task id。
-11. 前端轮询歌曲状态。
-12. Provider 完成后下载/转存音频和封面到 Supabase Storage。
-13. 更新 `songs` 为 `ready`。
-14. 用户播放、下载、分享、生成报告。
-15. 失败时标记 `failed` 并退回 credits。
+- `/ai-text-to-song` 默认进入 Text to Song 模式，承接“把一个想法或 prompt 变成歌曲”的意图。
+- `/ai-lyrics-to-song` 默认进入 Lyrics to Song 模式，承接“已有歌词，想变成完整歌曲”的意图。
+- `/ai-lyrics-generator` 先解决歌词生成，再引导转成歌曲。
 
-当前重要原则：
+场景 SEO 页面：
 
-- `songId` 直接复用 `songs.id`。
-- 第一版不新建复杂 job 表。
-- 未登录用户优先跳登录，不做复杂未登录草稿。
-- 生成失败必须能退积分。
-- Provider 错误不要直接暴露给普通用户。
+- `/royalty-free-ai-music-generator` 适合作为“商用/创作者场景页”，不要做成第四个重复生成器页。
+- 内容重点包括 YouTube、TikTok、Reels、ads、podcast、game/app background music、commercial use、licensing/rights FAQ。
+- 后续长尾词优先考虑 `YouTube music generator`、`TikTok song generator`，需结合真实搜索数据确认。
 
-## 7. 技术栈 SOP
+### 5.4 多语言 SEO
 
-当前项目基础：
+当前策略：
 
-- Next.js App Router。
-- TypeScript。
-- Supabase Auth / Postgres / Storage。
-- Creem 支付。
-- next-intl 国际化。
-- shadcn/ui + Tailwind CSS + Framer Motion。
-- pnpm。
+- 英文为主。
+- 其他语言可以保留，但不要强推。
+- 翻译质量不完整的语言入口可以隐藏或 noindex。
+- 等英文流量和转化稳定后，再做多语言 SEO。
 
-注意：项目约定文档仍写着 Next.js 15，但当前 `package.json` 中 Next.js 版本是 `16.2.6`。V2 需要统一文档说法。
+已出现或支持过的语言：
 
-核心目录：
+- `zh-CN`
+- `es`
+- `pt`
+- `ja`
+- `ko`
 
-- `app/[locale]/`：页面路由。
-- `app/api/`：API Routes。
-- `lib/ai/`：AI Provider 抽象和歌词/报告能力。
-- `lib/audio/`：音频 Provider 抽象层。
-- `lib/credits/`：积分冻结和退款。
-- `lib/song/`：歌曲公开数据和歌词生成。
-- `components/seo/`：SEO 工具页组件。
-- `components/song-maker/`：生成工作台。
-- `messages/`：多语言文案。
-- `supabase/migrations/`：数据库迁移。
-- `docs/`：计划、清单、SOP。
+原则：
 
-## 8. Provider SOP
+1. 英文页面先完整。
+2. 非英文页面如果残留大量英文，不主动做 SEO。
+3. 避免低质量多语言页面拖累站点质量。
 
-### 8.1 AI Provider
+### 5.5 公开歌曲页
 
-当前代码支持：
+公开歌曲页目标不是单纯展示，而是 SEO + 分享 + 回流：
 
-- Claude。
-- GitHub Models。
+- 用户能访问。
+- 搜索引擎能理解。
+- 能播放试听。
+- 能看到歌曲标题、歌词、风格、创建信息。
+- 能 CTA 回到 `/ai-song-maker`。
+
+索引原则：
+
+- 普通生成默认 private 或 unlisted。
+- 分享链接可以访问，但不一定 index。
+- 用户明确发布、官方精选或高分作品才进入 sitemap / 首页 Gallery。
+
+---
+
+## 6. 生成页和歌曲生成流程
+
+### 6.1 生成页目标
+
+生成页是用户真正创作歌曲的主工作台。
+
+推荐结构：
+
+- 左侧：生成面板。
+- 右侧：歌曲列表 / 当前生成结果 / 历史记录。
+
+左侧生成面板包含：
+
+- Credits 显示。
+- Text to Song / Lyrics to Song 切换。
+- Prompt / Lyrics 输入框。
+- Style 输入框。
+- Title 输入框。
+- Instrumental 开关。
+- Generate Song 按钮。
+
+### 6.2 Simple / Advanced 决策
+
+历史上讨论过两个方案：
+
+- 方案 A：保留 Simple / Advanced UI。
+- 方案 B：移除 Simple / Advanced，只保留 Text to Song / Lyrics to Song，复杂参数作为 optional settings。
+
+当前采用方案 B。
+
+原因：Simple / Advanced 和 Text to Song / Lyrics to Song 会让新手困惑。第一版只保留两个核心入口：
+
+1. Text to Song。
+2. Lyrics to Song。
+
+Style / Title / Instrumental 作为可选字段，不命名为 Advanced。
+
+### 6.3 右侧歌曲列表
+
+第一版可包含：
+
+- Search。
+- Filters。
+- Sort: Newest。
+- Liked。
+- Public。
+- Uploads。
+- Song list。
+
+落地原则：
+
+- 先做前端本地筛选。
+- 不要一开始做复杂服务端筛选。
+- 没有真实字段的数据不要硬做复杂 UI。
+
+### 6.4 登录用户生成流程
+
+```text
+用户输入 prompt / lyrics / style / title
+-> 点击 Generate
+-> 检查登录状态
+-> 检查 credits 是否足够
+-> 创建 song 记录
+-> 提交 AI 歌词或使用用户歌词
+-> 提交 FAL 音频生成
+-> 返回 songId / jobId
+-> 前端轮询状态
+-> 成功后展示歌曲
+-> 失败则标记 failed 并退回 credits
+```
+
+### 6.5 jobId 原则
+
+- `jobId` 复用 `songs.id`。
+- 第一版不单独新建复杂 job 表。
+
+### 6.6 未登录用户流程
+
+当前推荐：
+
+- 未登录用户点击 Generate 后直接跳登录。
+- 第一版不做复杂 draft 保存和登录后恢复。
+
+原因：draftId 流程开发成本高，容易出现状态丢失、参数回填、支付后回跳等问题。
+
+### 6.7 Credits 原则
+
+- 生成前检查 credits。
+- 生成前冻结/扣除或按当前代码实现扣费。
+- 生成失败必须退款。
+- 失败状态必须写入日志。
+- 前端必须给用户明确提示。
+- credits 相关操作必须走 RPC，禁止客户端直接 UPDATE `credits_balance`。
+
+---
+
+## 7. Provider、音频和歌词生成
+
+### 7.1 AI Provider
 
 原则：
 
 - AI 调用只放服务端。
-- 内容审核、歌词生成、报告生成都经 `lib/ai/provider.ts` 抽象。
-- 外部 API 失败最多自动重试 1 次，仍失败再返回错误。
+- 内容审核、歌词生成、报告生成走统一 provider 抽象。
+- 外部 API 失败最多自动重试 1 次，仍失败才返回错误。
 - 不把敏感 key 暴露到客户端。
 
-### 8.2 音频 Provider
+历史上讨论或使用过 Claude、GitHub Models、OpenAI、OpenRouter，当前以代码实现为准。
 
-当前代码支持：
-
-- `kie`
-- `fal`
-- `wavespeed`
+### 7.2 音频 Provider
 
 当前重点 Provider：
 
-- FAL `fal-ai/minimax-music/v2`。
+- FAL。
+- `fal-ai/minimax-music/v2`。
 
-FAL 正确流程：
+历史上涉及过：
 
-1. submit task。
-2. 拿到 request id。
-3. 轮询 queue status。
-4. `IN_QUEUE` / `IN_PROGRESS` 只返回 processing。
-5. `COMPLETED` / `OK` 后再请求 result。
-6. `FAILED` 则标记 failed 并退款。
+- Kie。
+- FAL。
+- Wavespeed。
 
-禁止做法：
-
-- 任务未完成时直接请求 result。
-- Provider 失败但 song 仍保持 generating。
-- 失败后不退 credits。
-- 把完整 provider 错误直接展示给普通用户。
-
-已遇到问题：
+### 7.3 FAL 已踩坑
 
 - FAL 405。
 - FAL 422。
-- `queue.status` 和 `queue.result` 调用时机错误。
-- Provider SDK 和拼 URL 方式切换。
+- 轮询状态未完成时提前取 result。
+- 生产环境未使用最新代码。
+- fallback result URL 错误。
 
-## 9. 支付与积分 SOP
+### 7.4 FAL 正确轮询流程
 
-支付 Provider：Creem。
+```text
+1. submit task
+2. 保存 request_id
+3. 轮询 queue.status
+4. 如果状态是 IN_QUEUE / IN_PROGRESS：
+   - 返回 processing
+   - 不取 result
+5. 如果状态是 COMPLETED / OK：
+   - 请求 response / result
+   - 保存 audio_url
+   - 更新 song.status
+6. 如果状态是 FAILED / ERROR：
+   - 更新 song.status = failed
+   - 退回 credits
+   - 记录 provider_error
+```
 
-环境必须区分：
+禁止做法：
 
-- Test Mode。
-- Live Mode。
+- IN_QUEUE / IN_PROGRESS 时请求 result。
+- Provider 失败后让 song 长期停留在 generating。
+- 失败后不退 credits。
+- 把完整 provider 原始错误暴露给普通用户。
 
-关键环境变量：
+### 7.5 日志字段
+
+后端日志建议包含：
+
+- `song_id`
+- `user_id`
+- `request_id`
+- `provider_status`
+- `queue_position`
+- `response_url_exists`
+- `provider_error`
+- `credit_refund_amount`
+- `balance_before`
+- `balance_after`
+
+前端错误提示保持简单：
+
+```text
+Song generation failed. Please try again.
+```
+
+### 7.6 歌词生成产品原则
+
+不要直接“仿某首歌”。更安全的方式是：
+
+- 模仿某类流行写法。
+- 模仿风格结构。
+- 模仿情绪和歌曲类型。
+- 不抄歌词、旋律或独特表达。
+
+适合研究的方向：
+
+- 大情歌。
+- Country pop。
+- 情绪流行摇滚。
+- 轻柔 alt-pop。
+- 真诚型 pop ballad。
+- Rap 口号型 hook。
+- 搞笑恶搞方向。
+
+产品里应输出原创歌词、可用 style prompt、适合 AI music model 的简短风格描述。
+
+---
+
+## 8. 支付、订阅和 Creem
+
+### 8.1 支付供应商
+
+当前支付供应商：Creem。
+
+历史记录：
+
+- Test Mode 跑通过。
+- Checkout 能跳转。
+- Webhook `checkout.completed` 能收到。
+- 生产环境切换、Sumsub/身份审核、Alipay payout 都讨论过。
+
+### 8.2 环境变量
+
+关键变量：
 
 - `CREEM_API_KEY`
-- `CREEM_API_URL`
 - `CREEM_WEBHOOK_SECRET`
 - `CREEM_SUCCESS_URL`
+- `CREEM_TEST_MODE`
 - `BASE_URL`
 
 当前生产 BASE URL：
 
-- `https://calyraai.com`
+```text
+https://calyraai.com
+```
 
-已遇到问题：
+### 8.3 已踩坑
 
-- Creem 401 Invalid API Key。
-- Test Mode 和 Live Mode key 混用。
+- 401 Invalid API Key。
+- Test Mode / Live Mode key 混用。
 - 环境变量修改后没有重新部署。
-- Creem API 404。
+- 生产与本地配置不一致。
+- Creem API URL 或产品配置不匹配。
 
-处理原则：
+### 8.4 操作规范
 
-- Creem 环境变量修改后必须重新部署 Vercel。
-- Test Mode 和 Live Mode 不要混用。
-- webhook 必须验证签名。
-- 支付发放 credits 必须幂等。
-- credits 不允许客户端直接改数据库。
+1. 修改 Creem 环境变量后必须重新部署 Vercel。
+2. Test Mode 和 Live Mode key 不要混用。
+3. 支付成功只能通过 webhook 增加 credits。
+4. 支付失败不能增加 credits。
+5. Webhook 必须校验签名。
+6. 支付发放 credits 必须幂等。
+7. 价格页月付/年付切换后，checkout 产品必须正确。
 
-积分原则：
+### 8.5 真实支付测试
 
-- 注册初始积分当前设计为 300。
-- 音频生成前冻结/扣减积分。
-- 报告生成前冻结/扣减积分。
-- 生成失败必须退款。
-- 积分操作走 RPC：`freeze_credit` / `unfreeze_credit`。
-- 禁止直接 UPDATE `credits_balance`。
+Test Mode 通过后，早期可以不急着真实支付。正式 Product Hunt / 大规模推广前，建议做一次真实小额支付测试。
 
-上线前至少确认：
+注意：
 
-- 价格页能打开。
-- 点击支付按钮能跳转 Creem Checkout。
-- Test Mode webhook 能收到 `checkout.completed`。
-- 支付成功后 credits 能到账。
-- 重复 webhook 不会重复发 credits。
-- 支付失败不会错误加 credits。
+- 真实支付可能产生税费。
+- 退款不一定 100% 回到账户。
 
-正式发布前建议做一次真实小额支付测试，尤其是 Product Hunt 或正式投放前。
+### 8.6 价格策略
 
-## 10. Supabase SOP
+历史调研参考过 Suno、Udio、AIMakeSong、Soundraw、AIVA。
+
+大致结论：
+
+- 主流用户心理价位多在 `$8 - $15 / month`。
+- 超过 `$20` 需要强调商业价值。
+- 第一阶段不要靠低价硬卷 Suno / Udio。
+- 重点是简单工作流、SEO 入口、创作者场景、版权/商用解释。
+
+---
+
+## 9. Supabase、Vercel、OAuth 和邮件
+
+### 9.1 Supabase 职责
+
+Supabase 负责：
+
+- 用户认证。
+- 用户资料。
+- 歌曲记录。
+- credits。
+- 支付记录。
+- 生成日志。
 
 核心数据：
 
-- `customers`：用户、Creem customer、积分。
-- `credits_history`：积分流水。
-- `subscriptions`：订阅。
-- `songs`：歌曲、音频、封面、公开状态、SEO 数据。
-- `achievements`：成就。
-- `email_log`：召回邮件频控。
+- `customers`
+- `credits_history`
+- `subscriptions`
+- `songs`
+- `achievements`
+- `email_log`
 
-上线前必须检查：
+### 9.2 Supabase 权限原则
 
-- RLS。
-- authenticated grants。
-- service role 只在服务端使用。
-- Storage bucket 是否存在。
-- migration 顺序是否正确。
-- RPC 函数是否存在且参数和代码一致。
+- 前端只能使用 anon key。
+- service role 只能在服务端使用。
+- RLS 必须检查。
+- authenticated grants 必须检查。
+- 客户端禁止使用 service role key。
 
-已遇到问题：
+上线前 Must Check：
 
-- migration 提前引用不存在字段。
-- `handle_new_user()` 初始积分和架构不一致。
-- authenticated grants 不完整导致线上功能异常。
-- Dashboard 客户端直接读表被 RLS 拒绝。
-- 新用户没有 300 credits。
+1. migrations 是否完整。
+2. profiles / credits 初始化是否正常。
+3. songs 状态字段是否覆盖 draft / processing / completed / failed 或当前代码实际状态。
+4. 失败 refund 是否事务安全。
+5. webhook 写入 credits 是否幂等。
+6. Storage bucket 是否存在。
+7. RPC 函数是否存在且参数和代码一致。
 
-失败退款原则：
+### 9.3 Vercel / 环境变量
 
-```text
-生成失败 -> song.status = failed
-生成失败 -> 写日志
-生成失败 -> unfreeze_credit
-```
+核心原则：
 
-## 11. Vercel / 环境变量 SOP
+- 本地正常不代表线上正常。
+- 线上出问题，优先查 Vercel 环境变量和部署版本。
+- 修改变量后必须 redeploy。
 
-修改环境变量后必须重新部署 Vercel，否则线上仍可能使用旧快照。
+检查清单：
 
-上线前检查：
-
-- Production 环境变量。
-- Preview 环境变量。
-- 本地 `.env.local`。
-- Supabase URL。
-- Supabase anon key。
-- Supabase service role key。
-- Creem key。
-- FAL key。
-- AI provider key。
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `FAL_KEY`
+- `CREEM_API_KEY`
+- `CREEM_WEBHOOK_SECRET`
+- `CREEM_TEST_MODE`
+- `BASE_URL`
 - Google OAuth callback。
-- `BASE_URL`。
-- `CRON_SECRET`。
+- OpenAI / OpenRouter / 当前 AI provider key。
 
-常见现象：
+如果 Vercel 同时有 Preview 和 Production，必须确认变量作用范围，不要只改 Preview 却以为 Production 已生效。
+
+### 9.4 Google OAuth
+
+已遇到的问题：
 
 ```text
-本地正常，线上不正常
+redirect_uri_mismatch
 ```
 
-优先怀疑：
+处理原则：
 
-- 环境变量不一致。
-- 环境变量更新后没重新部署。
-- Supabase 回调地址不一致。
-- Vercel deployment protection。
-- Node / pnpm 版本不一致。
+1. Google Cloud Console 里的 Authorized redirect URI 必须和 Supabase / 站点实际回调地址完全一致。
+2. http / https、www / non-www、路径、尾部斜杠都要一致。
+3. 修改后重新测试登录。
+4. OAuth provider 未启用时，前端给友好错误提示。
 
-## 12. Google / Bing 收录 SOP
+### 9.5 Cloudflare Email Routing
 
-提交前检查：
+正式联系邮箱：
+
+```text
+support@calyraai.com
+```
+
+用途：
+
+- Contact 页面。
+- Creem 审核。
+- Product Hunt。
+- 用户反馈。
+- 平台审核。
+
+已踩坑：
+
+- 测试邮件进入 Gmail 垃圾箱。
+
+处理：
+
+- 检查垃圾箱。
+- 标记为非垃圾邮件。
+- 确认转发成功。
+
+---
+
+## 10. 收录、robots 和 GA4
+
+### 10.1 Google Search Console / Bing 提交前检查
 
 - 正式域名可访问。
 - `/sitemap.xml` 可访问。
-- `/robots.txt` 可访问。
+- `/robots.txt` 没有误屏蔽。
 - 核心页面没有错误 noindex。
 - 首页 title / description 正确。
 - canonical 正确。
 - hreflang 正确。
-- 404 页面不进入 sitemap。
+- 404 页面不进 sitemap。
 
-已遇到情况：
+### 10.2 已遇到的 GSC 状态
 
-- Search Console URL 404。
-- Discovered but not crawled。
-- Crawled currently not indexed。
-- Duplicate canonical。
-- Excluded by noindex。
+- Discovered - currently not indexed。
+- Crawled - currently not indexed。
+- Excluded by noindex tag。
+- Page with redirect。
+- Duplicate, Google chose different canonical than user。
+- Not found 404。
 
-处理原则：
+### 10.3 处理优先级
 
-- 新站早期没数据正常。
-- 不要频繁大改 URL。
-- 优先处理 404、错误 noindex、canonical 错误、sitemap 缺失、重要页面不可访问。
+优先处理：
 
-## 13. 首页 Demo 歌曲 SOP
+1. 重要页面 404。
+2. 重要页面错误 noindex。
+3. canonical 明显错误。
+4. sitemap 缺失。
+5. 重要页面无法访问。
 
-首页 Demo 歌曲用于提升信任和转化，不是单纯展示音乐。
+不用急：
+
+- 新站上线几天 0 点击。
+- Discovered currently not indexed。
+- Bing discovered but not crawled。
+- 非核心页面 noindex。
+- 正常 redirect。
+
+### 10.4 canonical 原则
+
+如果 GSC 显示 `Duplicate, Google chose different canonical than user`，先检查：
+
+- 是否是重复参数页。
+- 是否是旧 URL。
+- canonical 是否错误指向首页。
+- sitemap 是否提交了不该提交的 URL。
+- 页面内容是否太相似。
+
+不要一看到 Duplicate 就乱改。
+
+### 10.5 robots / AI 爬虫
+
+已讨论过：
+
+- Googlebot。
+- Bingbot。
+- OAI-SearchBot。
+- ChatGPT-User。
+
+原则：
+
+- 核心公开页面应允许搜索引擎抓取。
+- 登录页、价格页不一定要强推。
+- 生成结果页质量不可控时，谨慎让搜索收录。
+
+### 10.6 GA4
+
+当前状态：
+
+- GA4 Realtime 已经收到访问数据。
+- 基础部署成功。
+- 不要继续折腾基础部署。
+
+后续更有价值的是事件埋点：
+
+- `click_generate`
+- `sign_in_start`
+- `sign_in_success`
+- `checkout_start`
+- `checkout_success`
+- `song_generate_start`
+- `song_generate_success`
+- `song_generate_failed`
+- `play_demo_song`
+- `click_pricing`
+
+早期只看：
+
+- 有没有真实用户。
+- 用户从哪里来。
+- 访问了哪些页面。
+- 是否点击生成。
+- 是否进入支付。
+
+---
+
+## 11. 首页 Demo 歌曲和内容资产
+
+### 11.1 Demo 歌曲目标
+
+首页 Demo 歌曲不是随便放音乐，而是用来证明 Calyra AI 能生成听起来像样、适合欧美用户的歌曲。
 
 Demo 歌曲应满足：
 
@@ -773,37 +874,58 @@ Demo 歌曲应满足：
 - 商业友好。
 - 适合短视频 / YouTube / Reels。
 
-已规划方向：
+### 11.2 已规划 Demo 歌曲
 
-1. Back in the Light：Modern Dance Pop / Summer Pop
-2. Still Missing You：Emotional Pop Ballad
-3. Not That Serious：Playful Viral Pop
-4. Run Until the Morning：Pop Rock / Indie Pop
-5. Summer on Your Skin：Afro / Latin Pop
-6. New Day Feeling：Chill Pop / Lifestyle Pop
+1. Back in the Light：Modern Dance Pop / Summer Pop。
+2. Still Missing You：Emotional Pop Ballad。
+3. Not That Serious：Playful Viral Pop。
+4. Run Until the Morning：Pop Rock / Indie Pop。
+5. Summer on Your Skin：Afro / Latin Pop。
+6. New Day Feeling：Chill Pop / Lifestyle Pop。
 
-Suno 生成原则：
+### 11.3 Suno / AI 音乐生成标准
 
-- 避免 intro 太长。
-- 避免 outro 太长。
-- 避免副歌来得太慢。
-- 避免歌词太复杂。
-- 避免伴奏太乱。
-- 避免音质失真。
-- 推荐 2:40 - 3:05 左右。
+推荐：
+
+- 短 intro。
 - 快速进入 chorus。
-- hook phrase 可重复。
+- hook phrase 明显。
+- 歌词简单。
+- 适合欧美主流用户。
+- 适合 YouTube / Reels / vlog / lifestyle / brand content。
+- 时长约 2:40 - 3:05。
 
-## 14. Product Hunt SOP
+避免：
 
-当前策略：不要一上来直接发布。
+- intro 太长。
+- outro 太长。
+- 副歌来得太慢。
+- 歌词太复杂。
+- 伴奏太杂。
+- 音质失真。
+- 生成 3:30 - 4:00 以上。
+
+### 11.4 Demo 歌曲工作流
+
+1. Producer Brief：先定歌曲方向、目标用户、hook、风格，不直接写完整歌词。
+2. Lyric Writer：根据 brief 写英文歌词和 style prompt。
+3. Reviewer：检查歌词长度、结构、hook、风格、时长风险、是否适合首页 demo。
+4. Revision：不合格时压缩歌词、减少段落、强化 hook、降低编曲复杂度。
+
+---
+
+## 12. Product Hunt、目录站和外部渠道
+
+### 12.1 Product Hunt 策略
+
+不要一上来直接发布。
 
 推荐顺序：
 
-1. 先创建草稿。
+1. 创建草稿。
 2. 准备素材。
-3. 确认生成流程稳定。
-4. 确认支付流程稳定。
+3. 检查生成流程。
+4. 检查支付流程。
 5. 确认首页 demo 歌曲和截图好看。
 6. 再正式发布。
 
@@ -811,48 +933,114 @@ Suno 生成原则：
 
 - 生成流程稳定。
 - 支付流程稳定。
-- 首页 demo 歌曲能播放。
+- 首页 demo 歌曲好听。
 - 首页截图好看。
 - 准备 4 张图。
 - 准备 Maker Comment。
+- 登录和 credits 正常。
+- 移动端首页不崩。
 
-暂不优先：
+Product Hunt 第一阶段作用：
 
-- 大量社交媒体运营。
-- 复杂品牌故事。
-- 过度打磨非核心页面。
+- 获得第一波曝光。
+- 获得外链和品牌信任。
+- 测试转化。
 
-## 15. Codex 工作 SOP
+不要期待 Product Hunt 一次发布带来长期稳定流量。长期主线仍然是 SEO。
 
-每次让 Codex 做项目任务前，优先让它读取：
+### 12.2 目录站 / 外部渠道
+
+已讨论过：
+
+- Product Hunt。
+- OpenHunts。
+- G2。
+- Dang.ai。
+- AI 工具目录站。
+
+优先级：
+
+1. Product Hunt。
+2. 免费 AI 工具目录。
+3. OpenHunts 等 launch 平台。
+4. G2 等信任背书平台。
+5. 付费目录暂缓。
+
+原则：
+
+- 免费能提交就提交。
+- 收费目录前期谨慎。
+- 目录站不是核心增长引擎，只是外链和曝光补充。
+- G2 更多是信任背书和后期 review 资产，不一定马上有流量。
+
+---
+
+## 13. 上线前 Must Fix
+
+历史 Must Fix：
+
+- 生产依赖存在高危漏洞。
+- Next.js 版本需要升级。
+- `basic-ftp` 漏洞来自 puppeteer 链路。
+- Supabase migration / grants 风险。
+
+审计原则：
+
+```bash
+pnpm audit --prod --registry=https://registry.npmjs.org
+```
+
+如果 pnpm audit 网络失败，可以试：
+
+```bash
+npm audit --omit=dev
+```
+
+判断原则：
+
+- 构建通过不代表可以上线。
+- 支付、生成、credits、登录、数据库权限必须重点检查。
+- 审计命令可能因为 registry 或网络原因失败，需要区分工具失败和真实漏洞。
+
+---
+
+## 14. Codex 工作 SOP
+
+### 14.1 任务大小
+
+经验：
+
+- 不要一次塞 100k 的大任务。
+- 单次任务控制在 30k - 60k 更稳。
+- 复杂任务拆成多个小任务。
+- 每次只处理一个问题。
+
+### 14.2 Codex 必读文件
+
+建议 Codex 每次任务前读取：
 
 - `AGENTS.md`
 - `docs/CALYRA_SOP.md`
 - 相关 `docs/plans/*`
 - 相关代码文件
 
-推荐固定提示词：
+V2 中建议后续补充这些文件：
 
-```text
-请先阅读 AGENTS.md 和 docs/CALYRA_SOP.md，再阅读本次任务相关代码。
-本次任务只处理一个问题，不要顺手大改。
-如果发现 SOP 和代码不一致，先指出，不要直接改。
+- `/docs/CALYRA_PROJECT_CONTEXT.md`
+- `/docs/CODEX_RULES.md`
+- `/docs/CALYRA_ISSUES_HISTORY.md`
 
-请按以下格式输出：
-1. 你理解的当前问题
-2. 你准备修改的文件
-3. 修改方案
-4. 验收方式
-5. 风险点
-```
+是否创建这些文件待确认。
 
-Codex 修改原则：
+### 14.3 Codex 修改代码规则
 
-- 每次只解决一个问题。
-- 不重构无关代码。
-- 不改动未要求的业务逻辑。
-- 支付、credits、数据库结构要特别谨慎。
-- 修改后说明影响范围。
+- 先读 docs。
+- 先看现有代码。
+- 先说明理解的问题和修改范围。
+- 不要顺手大改。
+- 不要重构无关文件。
+- 不要擅自改支付、credits、数据库结构，除非任务明确要求。
+- 修改后给验证方式。
 - 能跑构建就跑 `pnpm build`。
 - 工作结束看 `git diff`，确认没有误改。
 
@@ -865,7 +1053,77 @@ Codex 修改原则：
 - 为了美观大改已跑通功能。
 - 把 Test Mode 和 Live Mode 混在一起。
 
-### 15.1 Codex 会话记录挖掘 SOP
+### 14.4 Codex 卡死处理
+
+已遇到现象：
+
+- session 一直转圈。
+- 对话不显示。
+- reconnecting。
+- stream disconnected。
+- backend-api 超时。
+
+处理：
+
+1. 不要在卡死 session 里继续硬等。
+2. 新开 Codex session。
+3. 让新 session 先检查 `git diff` 和已修改文件。
+4. 不要重新实现。
+5. 从已落地代码继续完成。
+
+给新 session 的提示：
+
+```text
+上一个 session 卡死。不要重新实现。
+请先检查当前 git diff 和已修改文件，继续完成未完成部分。
+不要运行大范围重构。
+先告诉我你看到哪些改动。
+```
+
+### 14.5 给 Codex 的固定任务模板
+
+```text
+请先阅读：
+/docs/CALYRA_SOP.md
+以及本次任务相关代码。
+
+本次任务只处理一个问题，不要顺手大改。
+
+请按以下格式输出：
+1. 你理解的当前问题
+2. 你准备修改的文件
+3. 修改方案
+4. 验收方式
+5. 风险点
+
+注意：
+- 不要擅自改支付逻辑
+- 不要擅自改 credits 逻辑
+- 不要擅自改数据库结构
+- 不要把 Test Mode 和 Live Mode 混用
+- 不要删除已有可用功能
+- 如果发现 SOP 和代码不一致，先指出，不要直接改
+```
+
+### 14.6 给 GPT 网页版的固定任务模板
+
+```text
+请基于 Calyra AI 项目 SOP，帮我分析一个问题。
+
+回答格式必须是：
+1. 问题
+2. 解决方案
+3. 为什么这样做
+
+要求：
+- 每次只讲一个重点
+- 用大白话
+- 不要一次给太多建议
+- 不确定就标记“待确认”
+- 不要编造我项目里没有的信息
+```
+
+### 14.7 Codex 会话记录挖掘
 
 用途：
 
@@ -900,121 +1158,161 @@ Codex 修改原则：
 V2 是否要展开：
 ```
 
-注意事项：
+---
 
-- 不要把真实密钥、后台参数、完整私密 URL 写进 SOP。
-- 不要直接粘贴大段原始对话，只提炼“问题、原因、决策、结果”。
-- 会话标题可能比 Git commit 更接近真实任务意图，要和 Git log 互相校验。
-- 如果会话与当前代码不一致，以当前代码为准，并标记历史方案已废弃。
+## 15. 当前优先级
 
-## 16. 当前优先级 SOP
+### P0：稳定性
 
-P0：稳定性
-
-- 生成歌曲流程稳定。
+- 生成流程稳定。
+- FAL 轮询稳定。
 - 失败退款稳定。
-- 支付流程稳定。
+- 支付 webhook 稳定。
 - 登录流程稳定。
+- Vercel 环境变量正确。
+- Supabase 权限正确。
 - 核心页面可访问。
 
-P1：SEO 基础
+### P1：SEO 基础
 
-- 首页 SEO。
+- 首页 title / H1 / description。
 - `/ai-song-maker`。
 - `/ai-text-to-song`。
 - `/ai-lyrics-to-song`。
 - `/ai-lyrics-generator`。
+- `/royalty-free-ai-music-generator`。
 - sitemap。
 - robots。
 - canonical。
+- GSC / Bing 提交。
 
-P2：首页转化
+### P2：首页转化
 
 - 首页 demo 歌曲。
 - 首页截图。
-- CTA 到 `/ai-song-maker`。
-- Music Gallery 展示。
+- Music Gallery。
+- 清晰 CTA 到 `/ai-song-maker`。
+- FAQ。
 - 底部播放器体验。
+- 移动端体验。
 
-P3：Product Hunt
+### P3：外部发布
 
-- 草稿。
-- 截图。
+- Product Hunt 草稿。
+- 截图素材。
 - Maker Comment。
 - 测试流程。
-- 正式发布。
+- 免费目录站提交。
+- G2 / OpenHunts 等低成本渠道。
 
-P4：扩展功能
+### P4：扩展
 
 - 复杂筛选。
 - 用户公开主页。
 - 更完整音乐广场。
 - 高级歌词智能体。
 - 风格模板库。
+- 评判报告增强。
+- 视频 MV / 对口型方向调研。
+- 高级音乐工作流。
 - 多语言 SEO。
 
-## 17. 暂不做事项 SOP
+---
 
-第一版暂不优先：
+## 16. 暂缓或废弃方案
 
-- 复杂 draft 恢复流程。
-- 复杂服务端筛选。
-- 完整社交系统。
-- 复杂音乐编辑器。
-- 专业 DAW 功能。
-- 过多多语言 SEO 页面。
-- 大规模社交媒体运营。
-- 过度品牌包装。
+### 16.1 复杂 draft 流程
 
-原因：
+暂缓：
 
-当前阶段最重要的是：
+- 未登录生成 draft。
+- 登录后恢复 draftId。
+- 支付后回填参数。
 
-- 用户能进来。
-- 用户能生成。
-- 用户能支付。
-- Google 能理解页面。
-- 项目能稳定运行。
+原因：第一版复杂度太高，容易引入状态 bug。
 
-## 18. 已知风险 SOP
+### 16.2 复杂筛选系统
 
-技术风险：
+暂缓：
 
-- FAL 返回状态处理错误。
-- Creem 环境变量混用。
-- Supabase RLS 权限错误。
-- Vercel 没有重新部署。
-- Google OAuth callback 不一致。
-- Next.js 版本和项目文档不一致。
+- 服务端 Search / Filters / Liked / Public / Uploads。
+
+原因：第一版前端本地筛选即可。
+
+### 16.3 专业音乐编辑器
+
+暂缓：
+
+- DAW。
+- 多轨编辑。
+- 复杂混音。
+- 自动母带。
+
+原因：偏离第一阶段核心。
+
+### 16.4 大规模社媒运营
+
+当前判断：
+
+- AIMakeSong 不主要依赖社媒。
+- Calyra 早期应优先 SEO、目录站、Product Hunt。
+- 大规模社媒运营暂缓。
+
+### 16.5 过多多语言 SEO
+
+暂缓原因：
+
+- 非英文翻译质量不稳定时会拖累 SEO。
+- 当前目标市场是欧美英语用户。
+- 英文页面和生成链路稳定后再扩展。
+
+---
+
+## 17. 风险清单
+
+### 17.1 技术风险
+
+- FAL 状态处理错误。
+- Creem key 混用。
+- Webhook 未幂等。
+- Credits 重复扣 / 漏退。
+- Supabase RLS 错误。
+- Vercel 变量没重新部署。
+- Google OAuth 回调地址错误。
+- Next.js 依赖漏洞。
 - 音频 Provider 改动影响退款逻辑。
 
-产品风险：
+### 17.2 产品风险
 
-- 生成页太复杂，新手不会用。
+- Create 页模式太复杂。
+- 用户不知道 Text to Song 和 Lyrics to Song 区别。
 - 首页 SEO 太重，视觉不够高级。
-- Demo 歌曲质量不稳定。
-- 用户生成失败后信任下降。
+- 首页 Demo 歌曲质量一般。
+- 生成失败导致用户信任下降。
+- 价格页和 checkout 不一致。
 
-SEO 风险：
+### 17.3 SEO 风险
 
-- 新站关键词竞争太大。
-- 过早做高难度词。
-- 频繁改 URL。
-- 多语言翻译质量差。
+- 新站竞争词太难。
+- 页面内容重复。
 - 页面内容堆词。
+- 多语言质量差。
+- 频繁改 URL。
+- canonical 配错。
+- 生成结果页低质量被收录。
 
-流程风险：
+### 17.4 流程风险
 
 - 只记录结果，不记录过程。
 - 忘记记录账号申请、API key、配置路径。
 - 忘记保存 GPT 网页中的关键推理。
 - 没有把错误和修复方式写入排障文档。
 
-## 19. 坑记录 SOP
+---
 
-原则：所有坑都值得记录，从最早的账号申请开始。
+## 18. 坑记录格式
 
-每个坑按这个格式写：
+所有坑都值得记录，从最早的账号申请开始。
 
 ```text
 日期：
@@ -1042,35 +1340,17 @@ SEO 风险：
 - i18n：locale 路由、隐藏中文、多语言翻译质量。
 - Codex：误改、过度重构、上下文不足。
 
-## 20. V2 待补充内容
+---
 
-等 ChatGPT 导出包到位后，补充：
+## 19. 最终一句话
 
-- 最早调研完整过程。
-- 完整 GPT 问答链路。
-- Codex 会话逐条复盘表，尤其是 2026-05-06 至 2026-05-15 的架构、上线和排障会话。
-- 完整 Semrush 关键词表。
-- 完整竞品列表和截图。
-- 为什么最终选 `AI Song Maker` 作为主线。
-- Google 邮箱 / Google Console / Search Console 申请和配置过程。
-- Supabase 项目创建和 migration 完整过程。
-- Creem 配置历史。
-- FAL 405 / 422 完整修复过程。
-- SEO 页面迭代历史。
-- Product Hunt 发布材料。
-- 首页 Demo 歌曲资料。
-- i18n 页面问题记录。
-- 上线前完整 checklist。
-- Codex 错误处理记录。
+Calyra AI 当前阶段不是做复杂音乐平台，而是先做一个稳定、清晰、能被 Google 理解、能让欧美用户快速生成完整歌曲的 AI Song Maker 工具站。
 
-## 一句话总结
-
-Calyra AI 当前第一阶段目标不是做复杂音乐平台，而是先做成一个稳定可用、SEO 结构清楚、欧美用户能理解的 AI Song Maker 工具站。
-
-当前最重要的顺序是：
+当前最重要的顺序：
 
 1. 生成稳定。
 2. 支付稳定。
 3. SEO 页面稳定。
-4. 首页 demo 好看。
-5. 再做 Product Hunt 和扩展功能。
+4. 首页 demo 可信。
+5. Product Hunt / 目录站补充曝光。
+6. 再考虑高级功能。
