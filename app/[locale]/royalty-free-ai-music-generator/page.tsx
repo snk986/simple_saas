@@ -16,7 +16,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { SEO_TOOL_PAGE_PATHS } from "@/config/seo-pages";
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { locales, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl, localizedAlternates } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
 
@@ -129,10 +129,6 @@ const faqs = [
   },
 ];
 
-function localeHref(locale: Locale, path: string) {
-  return locale === defaultLocale ? path : `/${locale}${path}`;
-}
-
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -158,12 +154,12 @@ export async function generateMetadata({
 export default async function RoyaltyFreeAiMusicGeneratorPage({
   params,
 }: RoyaltyFreeAiMusicGeneratorPageProps) {
-  const { locale } = await params;
-  const songMakerHref = localeHref(locale, SEO_TOOL_PAGE_PATHS.aiSongMaker);
-  const textToSongHref = localeHref(locale, SEO_TOOL_PAGE_PATHS.aiTextToSong);
-  const lyricsToSongHref = localeHref(locale, SEO_TOOL_PAGE_PATHS.aiLyricsToSong);
-  const pricingHref = localeHref(locale, "/pricing");
-  const termsHref = localeHref(locale, "/terms");
+  await params;
+  const songMakerHref = SEO_TOOL_PAGE_PATHS.aiSongMaker;
+  const textToSongHref = SEO_TOOL_PAGE_PATHS.aiTextToSong;
+  const lyricsToSongHref = SEO_TOOL_PAGE_PATHS.aiLyricsToSong;
+  const pricingHref = "/pricing";
+  const termsHref = "/terms";
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
