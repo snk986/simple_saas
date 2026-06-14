@@ -223,11 +223,11 @@
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/month - 30 songs/month for steady creators."
+          "description": "$8.99/month - 30 songs/month for steady creators."
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/month - 100 songs/month for higher-volume creation."
+          "description": "$18.99/month - 100 songs/month for higher-volume creation."
         }
       }
     },

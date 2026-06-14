@@ -224,11 +224,11 @@
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/month - 每月 30 首，适合稳定创作。"
+          "description": "$8.99/month - 每月 30 首，适合稳定创作。"
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/month - 每月 100 首，适合高频创作。"
+          "description": "$18.99/month - 每月 100 首，适合高频创作。"
         }
       }
     },

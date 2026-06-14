@@ -224,11 +224,11 @@
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/mês - 30 músicas/mês para criadores constantes."
+          "description": "$8.99/mês - 30 músicas/mês para criadores constantes."
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/mês - 100 músicas/mês para maior volume de criação."
+          "description": "$18.99/mês - 100 músicas/mês para maior volume de criação."
         }
       }
     },

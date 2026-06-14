@@ -224,11 +224,11 @@
         },
         "basic": {
           "title": "Basic",
-          "description": "$9/mes - 30 canciones/mes para creadores constantes."
+          "description": "$8.99/mes - 30 canciones/mes para creadores constantes."
         },
         "pro": {
           "title": "Pro",
-          "description": "$19/mes - 100 canciones/mes para creación de mayor volumen."
+          "description": "$18.99/mes - 100 canciones/mes para creación de mayor volumen."
         }
       }
     },
