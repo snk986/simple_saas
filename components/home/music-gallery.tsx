@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
@@ -201,7 +202,14 @@ export function MusicGallery({ songs }: { songs: FeaturedGallerySong[] }) {
                   </button>
                 </div>
                 <h3 className="mt-4 truncate text-lg font-black tracking-normal text-white">
-                  {song.title}
+                  <Link
+                    href={`/song/${song.id}`}
+                    prefetch={false}
+                    onClick={(event) => event.stopPropagation()}
+                    className="hover:underline"
+                  >
+                    {song.title}
+                  </Link>
                 </h3>
                 <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-400">
                   <img
