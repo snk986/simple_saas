@@ -93,6 +93,12 @@ function buildDescription(
   });
 }
 
+function buildSeoDescription(lyrics: string) {
+  const preview = lyrics.replace(/\s+/g, " ").trim().slice(0, 150);
+
+  return `${preview} | AI-generated song on Calyra AI`;
+}
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -109,11 +115,15 @@ export async function generateMetadata({
     };
   }
 
-  const title = t("title", { title: song.title, style: song.styleLabel });
-  const description = buildDescription(song, (values) =>
-    t("description", values),
-  );
-  const url = songUrl(locale, song.id);
+  const primaryStyleTag = song.styleTags[0] ?? "AI";
+  const title = `"${song.title}" - ${primaryStyleTag} Song | Calyra AI`;
+  const description = buildSeoDescription(song.lyrics);
+  const url = absoluteLocaleUrl("en", `/song/${id}`);
+  const shouldIndex =
+    song.isPublic &&
+    song.status === "ready" &&
+    ((song.isFeatured && song.featuredActive !== false) ||
+      (song.totalScore ?? 0) >= 80);
 
   const ogImageUrl =
     song.reportData && song.totalScore !== null
@@ -128,7 +138,7 @@ export async function generateMetadata({
       languages: localizedAlternates(`/song/${song.id}`),
     },
     robots: {
-      index: false,
+      index: shouldIndex,
       follow: true,
     },
     openGraph: {

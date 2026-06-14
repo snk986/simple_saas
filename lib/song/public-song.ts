@@ -7,6 +7,7 @@ export type PublicSongTake = "primary" | "alt";
 export interface PublicSong {
   id: string;
   title: string;
+  status: "generating" | "ready" | "failed" | "expired";
   lyrics: string;
   lyricsPreview: string;
   storySummary: string;
@@ -47,6 +48,7 @@ type RawSong = {
   id: string;
   user_id: string;
   title: string;
+  status: "generating" | "ready" | "failed" | "expired";
   lyrics: string;
   user_input: string;
   audio_url: string | null;
@@ -79,6 +81,7 @@ const publicProjection = `
   id,
   user_id,
   title,
+  status,
   lyrics,
   user_input,
   audio_url,
@@ -145,6 +148,7 @@ function mapPublicSong(
   return {
     id: song.id,
     title: song.title,
+    status: song.status,
     lyrics: song.lyrics,
     lyricsPreview: makeLyricsPreview(song.lyrics),
     storySummary: compactText(song.user_input, 220),
