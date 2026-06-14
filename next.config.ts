@@ -3,11 +3,27 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./config/i18n.ts");
 
+const legacyPricingUnitRedirects = [
+  "/mes",
+  "/ano",
+  "/mo",
+  "/yr",
+  "/月",
+  "/年",
+  "/월",
+  "/년",
+].map((source) => ({
+  source,
+  destination: "/pricing",
+  permanent: true,
+}));
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["198.18.0.1"],
   devIndicators: {},
   async redirects() {
     return [
+      ...legacyPricingUnitRedirects,
       {
         source: "/create",
         destination: "/ai-song-maker",
