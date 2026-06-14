@@ -4,10 +4,10 @@ export const baseUrl = process.env.BASE_URL ?? "https://calyraai.com";
 export const seoLocales = [defaultLocale] as const satisfies readonly Locale[];
 
 export function localePath(locale: Locale, path = "") {
-  const normalizedPath = path === "/" ? "" : path;
   const prefix = locale === defaultLocale ? "" : `/${locale}`;
+  const normalizedPath = path === "/" ? "" : path;
 
-  return `${prefix}${normalizedPath || "/"}`;
+  return prefix ? `${prefix}${normalizedPath}` : normalizedPath || "/";
 }
 
 export function absoluteLocaleUrl(locale: Locale, path = "") {
