@@ -55,16 +55,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/zh-CN/lyrics-to-song",
-        destination: "/zh-CN/ai-lyrics-to-song",
-        permanent: true,
-      },
-      {
-        source: "/zh-CN/text-to-song",
-        destination: "/zh-CN/ai-text-to-song",
-        permanent: true,
-      },
-      {
         source: "/pt/create",
         destination: "/pt/ai-song-maker",
         permanent: true,
@@ -77,11 +67,6 @@ const nextConfig: NextConfig = {
       {
         source: "/ko/create",
         destination: "/ko/ai-song-maker",
-        permanent: true,
-      },
-      {
-        source: "/zh-CN/create",
-        destination: "/zh-CN/ai-song-maker",
         permanent: true,
       },
     ];
