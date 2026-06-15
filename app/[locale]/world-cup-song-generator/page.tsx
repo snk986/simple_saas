@@ -5,7 +5,6 @@ import {
   BadgeCheck,
   Clapperboard,
   Download,
-  Flag,
   Gamepad2,
   Megaphone,
   Mic2,
@@ -23,6 +22,7 @@ import { SEO_TOOL_PAGE_PATHS } from "@/config/seo-pages";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { absoluteLocaleUrl } from "@/lib/i18n/urls";
 import { buildMarketingMetadata } from "@/lib/seo/metadata";
+import { WorldCupPromptCard } from "@/components/seo/world-cup-prompt-card";
 
 interface WorldCupSongGeneratorPageProps {
   params: Promise<{ locale: Locale }>;
@@ -176,20 +176,8 @@ function songMakerPrompt(country: string, vibe: string) {
   ].join(" ");
 }
 
-function songMakerHref(locale: Locale, country: string, vibe: string) {
-  const prompt = songMakerPrompt(country, vibe);
-  const style =
-    "Soccer fan chant, stadium drums, crowd vocals, energetic pop anthem, short-video hook";
-  const title = `${country} Fan Song`;
-  const params = new URLSearchParams({
-    prompt,
-    style,
-    title,
-    utm_campaign: "world_cup_song_generator",
-  });
-
-  return `${localeHref(locale, SEO_TOOL_PAGE_PATHS.aiSongMaker)}?${params.toString()}`;
-}
+const songMakerStyle =
+  "Soccer fan chant, stadium drums, crowd vocals, energetic pop anthem, short-video hook";
 
 export function generateStaticParams() {
   return [{ locale: defaultLocale }];
@@ -334,26 +322,21 @@ export default async function WorldCupSongGeneratorPage({
               </p>
             </div>
             <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {countryPrompts.map((item) => (
-                <Link
-                  key={item.country}
-                  href={songMakerHref(locale, item.country, item.vibe)}
-                  prefetch={false}
-                  className="group rounded-lg border border-white/10 bg-white/[0.045] p-5 transition-colors hover:border-emerald-300/50 hover:bg-white/[0.075]"
-                >
-                  <Flag className="h-5 w-5 text-emerald-200" />
-                  <h3 className="mt-4 text-lg font-semibold tracking-normal">
-                    {item.country} Fan Song
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">
-                    {item.vibe}
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-emerald-200">
-                    Use this prompt
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              ))}
+              {countryPrompts.map((item) => {
+                const title = `${item.country} Fan Song`;
+
+                return (
+                  <WorldCupPromptCard
+                    key={item.country}
+                    href={aiSongMakerHref}
+                    country={item.country}
+                    vibe={item.vibe}
+                    prompt={songMakerPrompt(item.country, item.vibe)}
+                    style={songMakerStyle}
+                    title={title}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
