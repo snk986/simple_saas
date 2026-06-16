@@ -282,27 +282,49 @@ export async function SongMakerRoutePage({
           "@type": "HowTo",
           name: "How to Use AI Song Maker",
           description:
-            "Step-by-step guide to generating AI music from prompts or lyrics",
+            "Complete step-by-step guide to creating original songs with AI. Generate music from text prompts or your own lyrics in under 2 minutes. Perfect for content creators, musicians, and anyone who wants to make music without production experience.",
+          totalTime: "PT2M",
+          estimatedCost: {
+            "@type": "MonetaryAmount",
+            currency: "USD",
+            value: "0",
+          },
+          supply: [
+            {
+              "@type": "HowToSupply",
+              name: "Free Calyra AI account",
+            },
+          ],
+          tool: [
+            {
+              "@type": "HowToTool",
+              name: "Web browser",
+            },
+          ],
           step: [
             {
               "@type": "HowToStep",
               name: "Choose your input mode",
-              text: "Select Text to Song for prompts or Lyrics to Song if you already have words",
+              text: "Start by selecting your creation method on the AI Song Maker page. Choose 'Text to Song' to generate both lyrics and music from a description, story, or mood. This mode is ideal if you want AI to handle the complete creative process. Select 'Lyrics to Song' if you already have written lyrics and want to transform them into a full song with vocals, melody, and instrumentation. Both modes produce broadcast-quality results.",
+              url: absoluteLocaleUrl(locale, routePath),
             },
             {
               "@type": "HowToStep",
               name: "Write your prompt or paste lyrics",
-              text: "Describe the mood, genre, vocal tone, and where you'll use the music",
+              text: "For Text to Song, describe your musical vision in detail. Include the emotional tone (uplifting, melancholic, energetic), the theme or story (road trip, lost love, victory), and the intended use case (YouTube intro, podcast theme, personal gift). For Lyrics to Song, paste your complete lyrics in the input field. Add context about the song's mood and genre to help the AI choose appropriate musical arrangements and vocal delivery.",
+              url: absoluteLocaleUrl(locale, routePath),
             },
             {
               "@type": "HowToStep",
               name: "Add style direction",
-              text: "Specify genre, instruments, tempo, and vocal characteristics",
+              text: "Customize your song's musical style with precision. Select the genre (pop, rock, hip-hop, electronic, folk, jazz), specify instrumentation preferences (acoustic guitar, synth pads, orchestral strings, drum machine), set the tempo (fast-paced, moderate, slow ballad), and choose vocal characteristics (male/female voice, energetic/soft delivery, harmonies). You can also reference specific artists or songs as style inspiration to guide the AI's creative direction.",
+              url: absoluteLocaleUrl(locale, routePath),
             },
             {
               "@type": "HowToStep",
               name: "Generate and download",
-              text: "Click generate, listen to the result, and download if you have a paid plan",
+              text: "Click the generate button to start the AI music creation process. The system typically takes 60-90 seconds to compose and produce your complete song with vocals, instruments, mixing, and mastering. Preview the result directly in your browser to evaluate the quality. Paid plan users can download the song in MP3 (standard quality) or WAV (high quality) format for commercial use in videos, podcasts, or streaming platforms. Free users can generate up to 3 songs per day.",
+              url: absoluteLocaleUrl(locale, routePath),
             },
           ],
         }
