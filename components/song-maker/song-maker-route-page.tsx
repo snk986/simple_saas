@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import {
+  BadgeDollarSign,
+  FileText,
+  Gamepad2,
+  Mic2,
+  Radio,
+  SlidersHorizontal,
+  Type,
+  Youtube,
+  Zap,
+} from "lucide-react";
 import { StoryInput } from "@/components/create/story-input";
 import { SEO_TOOL_PAGE_PATHS } from "@/config/seo-pages";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
@@ -43,6 +54,39 @@ interface InitialWorkspaceSong {
   audio_url: string | null;
   created_at: string;
 }
+
+type AiSongMakerSectionContent = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: Record<string, { title: string; description: string }>;
+};
+
+const howItWorksKeys = ["prompt", "style", "generate"] as const;
+const useCaseKeys = [
+  "youtube",
+  "tiktok",
+  "podcast",
+  "games",
+  "ads",
+  "social",
+] as const;
+const whyChooseKeys = ["modes", "controls", "license"] as const;
+
+const useCaseIcons = {
+  youtube: Youtube,
+  tiktok: Zap,
+  podcast: Mic2,
+  games: Gamepad2,
+  ads: BadgeDollarSign,
+  social: Radio,
+} as const;
+
+const whyChooseIcons = {
+  modes: Type,
+  controls: SlidersHorizontal,
+  license: FileText,
+} as const;
 
 function localePrefix(locale: Locale) {
   return locale === defaultLocale ? "" : `/${locale}`;
@@ -114,6 +158,80 @@ export async function SongMakerRoutePage({
     question: t(`faq.${key}.question`),
     answer: t(`faq.${key}.answer`),
   }));
+  const aiSongMakerSections =
+    routeKey === "aiSongMaker"
+      ? {
+          howItWorks: {
+            eyebrow: t("howItWorks.eyebrow"),
+            title: t("howItWorks.title"),
+            description: t("howItWorks.description"),
+            items: {
+              prompt: {
+                title: t("howItWorks.items.prompt.title"),
+                description: t("howItWorks.items.prompt.description"),
+              },
+              style: {
+                title: t("howItWorks.items.style.title"),
+                description: t("howItWorks.items.style.description"),
+              },
+              generate: {
+                title: t("howItWorks.items.generate.title"),
+                description: t("howItWorks.items.generate.description"),
+              },
+            },
+          },
+          useCases: {
+            eyebrow: t("useCases.eyebrow"),
+            title: t("useCases.title"),
+            description: t("useCases.description"),
+            items: {
+              youtube: {
+                title: t("useCases.items.youtube.title"),
+                description: t("useCases.items.youtube.description"),
+              },
+              tiktok: {
+                title: t("useCases.items.tiktok.title"),
+                description: t("useCases.items.tiktok.description"),
+              },
+              podcast: {
+                title: t("useCases.items.podcast.title"),
+                description: t("useCases.items.podcast.description"),
+              },
+              games: {
+                title: t("useCases.items.games.title"),
+                description: t("useCases.items.games.description"),
+              },
+              ads: {
+                title: t("useCases.items.ads.title"),
+                description: t("useCases.items.ads.description"),
+              },
+              social: {
+                title: t("useCases.items.social.title"),
+                description: t("useCases.items.social.description"),
+              },
+            },
+          },
+          whyChoose: {
+            eyebrow: t("whyChoose.eyebrow"),
+            title: t("whyChoose.title"),
+            description: t("whyChoose.description"),
+            items: {
+              modes: {
+                title: t("whyChoose.items.modes.title"),
+                description: t("whyChoose.items.modes.description"),
+              },
+              controls: {
+                title: t("whyChoose.items.controls.title"),
+                description: t("whyChoose.items.controls.description"),
+              },
+              license: {
+                title: t("whyChoose.items.license.title"),
+                description: t("whyChoose.items.license.description"),
+              },
+            },
+          },
+        }
+      : null;
   const softwareJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -173,6 +291,10 @@ export async function SongMakerRoutePage({
           </div>
         )}
 
+        {aiSongMakerSections ? (
+          <AiSongMakerMarketingContent sections={aiSongMakerSections} />
+        ) : null}
+
         <StoryInput
           recallCampaign={cleanUrl ? null : (searchParams.utm_campaign ?? null)}
           canDownload={canDownload}
@@ -213,5 +335,139 @@ export async function SongMakerRoutePage({
         </section>
       </div>
     </>
+  );
+}
+
+function AiSongMakerMarketingContent({
+  sections,
+}: {
+  sections: {
+    howItWorks: AiSongMakerSectionContent;
+    useCases: AiSongMakerSectionContent;
+    whyChoose: AiSongMakerSectionContent;
+  };
+}) {
+  const { howItWorks, useCases, whyChoose } = sections;
+
+  return (
+    <div className="mx-auto mb-10 max-w-6xl overflow-hidden rounded-[36px] border border-white/10 bg-[#050509] text-white shadow-[0_34px_120px_rgba(0,0,0,0.34)]">
+      <MarketingSection
+        eyebrow={howItWorks.eyebrow}
+        title={howItWorks.title}
+        description={howItWorks.description}
+      >
+        <div className="grid gap-5 md:grid-cols-3">
+          {howItWorksKeys.map((key, index) => {
+            const item = howItWorks.items[key];
+
+            return (
+              <article
+                key={item.title}
+                className="rounded-[26px] border border-white/10 bg-[radial-gradient(circle_at_90%_0%,rgba(139,92,246,0.2),transparent_36%),rgba(255,255,255,0.055)] p-6"
+              >
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-base font-black text-black">
+                  {index + 1}
+                </div>
+                <h3 className="text-xl font-black tracking-normal">
+                  {item.title}
+                </h3>
+                <p className="mt-3 leading-7 text-slate-400">
+                  {item.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      </MarketingSection>
+
+      <MarketingSection
+        eyebrow={useCases.eyebrow}
+        title={useCases.title}
+        description={useCases.description}
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {useCaseKeys.map((key) => {
+            const item = useCases.items[key];
+            const Icon = useCaseIcons[key];
+
+            return (
+              <article
+                key={item.title}
+                className="group min-h-40 rounded-[26px] border border-white/10 bg-white/[0.055] p-5 transition hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.085]"
+              >
+                <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 text-white">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-black tracking-normal">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-400">
+                  {item.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      </MarketingSection>
+
+      <MarketingSection
+        eyebrow={whyChoose.eyebrow}
+        title={whyChoose.title}
+        description={whyChoose.description}
+      >
+        <div className="grid gap-5 md:grid-cols-3">
+          {whyChooseKeys.map((key) => {
+            const item = whyChoose.items[key];
+            const Icon = whyChooseIcons[key];
+
+            return (
+              <article
+                key={item.title}
+                className="rounded-[26px] border border-white/10 bg-[radial-gradient(circle_at_18%_0%,rgba(34,211,238,0.16),transparent_34%),radial-gradient(circle_at_92%_12%,rgba(219,39,119,0.16),transparent_32%),rgba(255,255,255,0.055)] p-6"
+              >
+                <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-white/[0.09] text-cyan-300">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-xl font-black tracking-normal">
+                  {item.title}
+                </h3>
+                <p className="mt-3 leading-7 text-slate-400">
+                  {item.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      </MarketingSection>
+    </div>
+  );
+}
+
+function MarketingSection({
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="py-12 first:pt-10 md:py-14">
+      <div className="px-4 md:px-6">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-sm font-black uppercase text-violet-300">
+            {eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-black leading-tight tracking-normal md:text-5xl">
+            {title}
+          </h2>
+          <p className="mt-4 leading-8 text-slate-400">{description}</p>
+        </div>
+        {children}
+      </div>
+    </section>
   );
 }

@@ -932,6 +932,75 @@
         "title": "AI Song Maker for Text, Lyrics, and Music",
         "description": "Start from a prompt or lyrics, choose a style, and generate a complete AI song with vocals, instruments, and a shareable report."
       },
+      "howItWorks": {
+        "eyebrow": "工作方式",
+        "title": "AI Song Maker 如何工作",
+        "description": "Calyra 的 AI Song Maker 会把创作简报变成清晰的制作流程，让你更顺畅地从想法走到音频。",
+        "items": {
+          "prompt": {
+            "title": "写出提示词",
+            "description": "描述氛围、故事、受众和用途，让 AI Song Maker 理解你想要的歌曲。"
+          },
+          "style": {
+            "title": "选择风格",
+            "description": "先选定风格、能量、乐器、演唱和编曲方向，再让 AI Song Maker 展开曲目方案。"
+          },
+          "generate": {
+            "title": "生成歌曲",
+            "description": "生成歌词和音频，查看结果后继续编辑或分享成品。"
+          }
+        }
+      },
+      "useCases": {
+        "eyebrow": "使用场景",
+        "title": "创作者的使用场景",
+        "description": "用 AI Song Maker 为视频、节目、游戏、活动和社交内容创作音乐，而不用从空白界面开始。",
+        "items": {
+          "youtube": {
+            "title": "YouTube 片头音乐",
+            "description": "用 AI Song Maker 制作有记忆点的开场、频道主题或过渡音。"
+          },
+          "tiktok": {
+            "title": "TikTok 爆款音效",
+            "description": "做出短促钩子、好跟唱的句子和高能循环，适合竖屏内容。"
+          },
+          "podcast": {
+            "title": "播客主题曲",
+            "description": "搭建符合节目气质的主题、过渡底乐或收尾音乐。"
+          },
+          "games": {
+            "title": "游戏 BGM",
+            "description": "生成菜单、关卡、预告片和独立游戏原型的背景音乐思路。"
+          },
+          "ads": {
+            "title": "广告 jingle",
+            "description": "把活动信息转成简短的音乐钩子，适合产品广告和创作者推广。"
+          },
+          "social": {
+            "title": "社交内容",
+            "description": "为 reels、story、发布和社群时刻制作可复用的声音素材。"
+          }
+        }
+      },
+      "whyChoose": {
+        "eyebrow": "为什么选择 Calyra",
+        "title": "为什么选择 Calyra AI Song Maker",
+        "description": "Calyra 的 AI Song Maker 让你在保持创作效率的同时，清晰控制歌词、风格和商用授权。",
+        "items": {
+          "modes": {
+            "title": "文本与歌词双模式",
+            "description": "既可以从灵感开始，也可以直接粘贴完整歌词，使用适合素材的 AI Song Maker 流程。"
+          },
+          "controls": {
+            "title": "细致的音乐参数控制",
+            "description": "可在生成前引导风格、情绪、演唱、乐器、速度、结构和制作细节。"
+          },
+          "license": {
+            "title": "清晰的商业授权",
+            "description": "了解订阅下载可如何用于创作者项目、客户工作和变现内容。"
+          }
+        }
+      },
       "cta": {
         "primary": "Start AI Song Maker",
         "secondary": "View Pricing"

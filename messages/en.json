@@ -285,6 +285,75 @@
         "title": "AI Song Maker for Text, Lyrics, and Music",
         "description": "Start from a prompt or lyrics, choose a style, and generate a complete AI song with vocals, instruments, and a shareable report."
       },
+      "howItWorks": {
+        "eyebrow": "How it works",
+        "title": "How AI Song Maker Works",
+        "description": "Calyra's ai song maker turns a creative brief into a structured song workflow, so you can move from idea to audio with less friction.",
+        "items": {
+          "prompt": {
+            "title": "Write your prompt",
+            "description": "Describe the mood, story, audience, vocal tone, and purpose so the generator understands the song you want."
+          },
+          "style": {
+            "title": "Choose a style",
+            "description": "Select genre, energy, instruments, vocals, and arrangement details before the AI song maker builds the track direction."
+          },
+          "generate": {
+            "title": "Generate the song",
+            "description": "Create lyrics and audio, review the result, then continue editing or sharing the finished song."
+          }
+        }
+      },
+      "useCases": {
+        "eyebrow": "Creator use cases",
+        "title": "Use Cases for Creators",
+        "description": "Use an ai song maker to create music for videos, shows, games, campaigns, and social feeds without starting from a blank timeline.",
+        "items": {
+          "youtube": {
+            "title": "YouTube intro music",
+            "description": "Create a memorable opener, channel theme, or segment sting with the ai song maker."
+          },
+          "tiktok": {
+            "title": "TikTok viral sounds",
+            "description": "Draft short hooks, chantable lines, and energetic loops for fast-moving vertical content."
+          },
+          "podcast": {
+            "title": "Podcast theme",
+            "description": "Build a consistent theme, transition bed, or outro cue that matches your show's tone."
+          },
+          "games": {
+            "title": "Game BGM",
+            "description": "Generate background music ideas for menus, levels, trailers, and indie game prototypes."
+          },
+          "ads": {
+            "title": "Ad jingles",
+            "description": "Turn campaign messages into concise musical hooks for product spots and creator ads."
+          },
+          "social": {
+            "title": "Social content",
+            "description": "Make repeatable sounds for reels, story posts, launches, and community moments."
+          }
+        }
+      },
+      "whyChoose": {
+        "eyebrow": "Why Calyra",
+        "title": "Why Choose Calyra AI Song Maker",
+        "description": "Calyra's ai song maker gives creators practical control over lyrics, style, and usage rights while keeping the workflow fast.",
+        "items": {
+          "modes": {
+            "title": "Text and lyrics modes",
+            "description": "Start with a loose idea or paste finished lyrics, then use the AI song maker workflow that fits your source material."
+          },
+          "controls": {
+            "title": "Detailed music controls",
+            "description": "Guide genre, mood, vocals, instruments, tempo, structure, and production details before generation."
+          },
+          "license": {
+            "title": "Clear commercial licensing",
+            "description": "Know how subscriber downloads can be used in creator projects, client work, and monetized content."
+          }
+        }
+      },
       "cta": {
         "primary": "Start AI Song Maker",
         "secondary": "View Pricing"

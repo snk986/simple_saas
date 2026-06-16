@@ -932,6 +932,75 @@
         "title": "テキスト、歌詞、音楽のためのAIソングメーカー",
         "description": "プロンプトや歌詞から始め、スタイルを選び、ボーカル、楽器、共有できるレポート付きのAI楽曲を生成します。"
       },
+      "howItWorks": {
+        "eyebrow": "仕組み",
+        "title": "AI Song Maker の使い方",
+        "description": "Calyra の AI Song Maker は、創作ブリーフを明確な制作フローに変え、アイデアから音声までの移行を滑らかにします。",
+        "items": {
+          "prompt": {
+            "title": "プロンプトを書く",
+            "description": "ムード、ストーリー、対象、用途を説明して、AI Song Maker に作りたい曲を伝えます。"
+          },
+          "style": {
+            "title": "スタイルを選ぶ",
+            "description": "ジャンル、エネルギー、楽器、ボーカル、アレンジを選び、AI Song Maker に方向性を渡します。"
+          },
+          "generate": {
+            "title": "曲を生成する",
+            "description": "歌詞と音声を作成し、結果を確認してから編集や共有を続けます。"
+          }
+        }
+      },
+      "useCases": {
+        "eyebrow": "利用シーン",
+        "title": "クリエイター向けの活用シーン",
+        "description": "AI Song Maker を使えば、動画、番組、ゲーム、キャンペーン、SNS 向けの音楽をゼロから作れます。",
+        "items": {
+          "youtube": {
+            "title": "YouTube のイントロ音楽",
+            "description": "AI Song Maker で、印象に残るオープニング、チャンネルテーマ、区切り音を作れます。"
+          },
+          "tiktok": {
+            "title": "TikTok のバイラル音源",
+            "description": "短いフックや口ずさみやすいラインで、縦型コンテンツ向けの勢いを作れます。"
+          },
+          "podcast": {
+            "title": "Podcast のテーマ",
+            "description": "番組のトーンに合うテーマ、転換用のベッド、エンディングを組み立てられます。"
+          },
+          "games": {
+            "title": "ゲーム BGM",
+            "description": "メニュー、ステージ、トレーラー、インディー試作向けの背景音楽案を生成できます。"
+          },
+          "ads": {
+            "title": "広告ジングル",
+            "description": "キャンペーンメッセージを、短い音楽フックに変えて訴求できます。"
+          },
+          "social": {
+            "title": "SNS コンテンツ",
+            "description": "リール、ストーリー、ローンチ、コミュニティ施策用の音を再利用しやすく作れます。"
+          }
+        }
+      },
+      "whyChoose": {
+        "eyebrow": "Calyra を選ぶ理由",
+        "title": "Calyra AI Song Maker が選ばれる理由",
+        "description": "Calyra の AI Song Maker は、歌詞、スタイル、利用権を実用的にコントロールしながら高速に制作できます。",
+        "items": {
+          "modes": {
+            "title": "テキストと歌詞の両対応",
+            "description": "アイデアから始めても、完成歌詞から始めても、素材に合う AI Song Maker の流れを使えます。"
+          },
+          "controls": {
+            "title": "詳細な音楽コントロール",
+            "description": "ジャンル、雰囲気、ボーカル、楽器、テンポ、構成、制作感を細かく指定できます。"
+          },
+          "license": {
+            "title": "明確な商用ライセンス",
+            "description": "サブスクのダウンロードを、クリエイター案件、クライアントワーク、収益化コンテンツでどう使えるか把握できます。"
+          }
+        }
+      },
       "cta": {
         "primary": "AIソングメーカーを始める",
         "secondary": "料金を見る"

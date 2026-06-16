@@ -932,6 +932,75 @@
         "title": "텍스트, 가사, 음악을 위한 AI 노래 메이커",
         "description": "프롬프트나 가사에서 시작해 스타일을 선택하고 보컬, 악기, 공유 가능한 리포트가 포함된 AI 노래를 생성하세요."
       },
+      "howItWorks": {
+        "eyebrow": "작동 방식",
+        "title": "AI Song Maker 사용 방법",
+        "description": "Calyra의 AI Song Maker는 창작 브리프를 명확한 제작 흐름으로 바꿔, 아이디어에서 오디오까지 더 적은 마찰로 이어 줍니다.",
+        "items": {
+          "prompt": {
+            "title": "프롬프트 작성",
+            "description": "분위기, 스토리, 대상, 사용 목적을 설명해 AI Song Maker가 원하는 곡을 이해하게 합니다."
+          },
+          "style": {
+            "title": "스타일 선택",
+            "description": "장르, 에너지, 악기, 보컬, 편곡을 정해 AI Song Maker가 곡의 방향을 잡게 합니다."
+          },
+          "generate": {
+            "title": "곡 생성",
+            "description": "가사와 오디오를 만들고 결과를 검토한 뒤 계속 편집하거나 공유합니다."
+          }
+        }
+      },
+      "useCases": {
+        "eyebrow": "활용 사례",
+        "title": "크리에이터를 위한 활용 사례",
+        "description": "AI Song Maker로 영상, 프로그램, 게임, 캠페인, 소셜 콘텐츠용 음악을 빈 화면에서 시작하지 않고 만들 수 있습니다.",
+        "items": {
+          "youtube": {
+            "title": "YouTube 오프닝 음악",
+            "description": "AI Song Maker로 기억에 남는 오프닝, 채널 테마, 구간 전환음을 만들 수 있습니다."
+          },
+          "tiktok": {
+            "title": "TikTok 바이럴 사운드",
+            "description": "짧은 훅과 따라 부르기 쉬운 라인으로 세로형 콘텐츠의 에너지를 만들 수 있습니다."
+          },
+          "podcast": {
+            "title": "팟캐스트 테마",
+            "description": "쇼의 분위기에 맞는 테마, 전환용 베드, 엔딩을 구성할 수 있습니다."
+          },
+          "games": {
+            "title": "게임 BGM",
+            "description": "메뉴, 스테이지, 트레일러, 인디 프로토타입용 배경음악 아이디어를 만들 수 있습니다."
+          },
+          "ads": {
+            "title": "광고 징글",
+            "description": "캠페인 메시지를 짧은 음악 훅으로 바꿔 제품과 크리에이터 광고에 활용할 수 있습니다."
+          },
+          "social": {
+            "title": "소셜 콘텐츠",
+            "description": "릴스, 스토리, 출시, 커뮤니티 순간에 쓸 반복 가능한 사운드를 만들 수 있습니다."
+          }
+        }
+      },
+      "whyChoose": {
+        "eyebrow": "Calyra를 선택하는 이유",
+        "title": "Calyra AI Song Maker를 선택하는 이유",
+        "description": "Calyra의 AI Song Maker는 가사, 스타일, 사용 권한을 실용적으로 제어하면서도 빠른 제작 흐름을 유지합니다.",
+        "items": {
+          "modes": {
+            "title": "텍스트와 가사 모드",
+            "description": "느슨한 아이디어로 시작하거나 완성된 가사를 붙여 넣고, 소재에 맞는 AI Song Maker 흐름을 사용할 수 있습니다."
+          },
+          "controls": {
+            "title": "세부 음악 제어",
+            "description": "장르, 분위기, 보컬, 악기, 템포, 구조, 프로덕션 디테일까지 안내할 수 있습니다."
+          },
+          "license": {
+            "title": "명확한 상업용 라이선스",
+            "description": "구독자 다운로드를 크리에이터 프로젝트, 클라이언트 작업, 수익화 콘텐츠에 어떻게 쓸 수 있는지 이해할 수 있습니다."
+          }
+        }
+      },
       "cta": {
         "primary": "AI 노래 메이커 시작",
         "secondary": "요금 보기"

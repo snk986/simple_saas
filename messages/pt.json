@@ -932,6 +932,75 @@
         "title": "Criador de músicas com IA para texto, letras e música",
         "description": "Comece com uma instrução ou letra, escolha um estilo e gere uma música completa com vozes, instrumentos e relatório compartilhável."
       },
+      "howItWorks": {
+        "eyebrow": "Como funciona",
+        "title": "Como funciona o AI Song Maker",
+        "description": "O AI Song Maker da Calyra transforma um briefing criativo em um fluxo claro para ir da ideia ao áudio com menos atrito.",
+        "items": {
+          "prompt": {
+            "title": "Escreva seu prompt",
+            "description": "Descreva o clima, a história, o público e o uso para que o AI Song Maker entenda a música que você quer."
+          },
+          "style": {
+            "title": "Escolha um estilo",
+            "description": "Selecione gênero, energia, instrumentos, vozes e arranjo antes que o AI Song Maker construa a direção da faixa."
+          },
+          "generate": {
+            "title": "Gere a música",
+            "description": "Crie letra e áudio, revise o resultado e continue editando ou compartilhando a faixa final."
+          }
+        }
+      },
+      "useCases": {
+        "eyebrow": "Casos de uso",
+        "title": "Casos de uso para criadores",
+        "description": "Use o AI Song Maker para criar música para vídeos, programas, jogos, campanhas e redes sociais sem começar do zero.",
+        "items": {
+          "youtube": {
+            "title": "Música de abertura para YouTube",
+            "description": "Crie uma abertura marcante, tema de canal ou vinheta com o AI Song Maker."
+          },
+          "tiktok": {
+            "title": "Sons virais para TikTok",
+            "description": "Crie ganchos curtos, frases cantáveis e loops energéticos para conteúdo vertical."
+          },
+          "podcast": {
+            "title": "Tema de podcast",
+            "description": "Monte uma trilha de marca, um fundo de transição ou uma saída que combine com seu programa."
+          },
+          "games": {
+            "title": "BGM para jogos",
+            "description": "Gere ideias de música de fundo para menus, fases, trailers e protótipos indie."
+          },
+          "ads": {
+            "title": "Jingles para anúncios",
+            "description": "Transforme mensagens de campanha em ganchos musicais curtos para spots e anúncios de criadores."
+          },
+          "social": {
+            "title": "Conteúdo social",
+            "description": "Crie sons reutilizáveis para reels, stories, lançamentos e momentos da comunidade."
+          }
+        }
+      },
+      "whyChoose": {
+        "eyebrow": "Por que a Calyra",
+        "title": "Por que escolher o AI Song Maker da Calyra",
+        "description": "O AI Song Maker da Calyra oferece controle prático sobre letra, estilo e uso comercial sem travar o fluxo criativo.",
+        "items": {
+          "modes": {
+            "title": "Modos de texto e letras",
+            "description": "Comece com uma ideia solta ou cole letras prontas e use o fluxo do AI Song Maker que melhor se adapta ao seu material."
+          },
+          "controls": {
+            "title": "Controles musicais detalhados",
+            "description": "Guie gênero, clima, vozes, instrumentos, tempo, estrutura e produção antes de gerar."
+          },
+          "license": {
+            "title": "Licença comercial clara",
+            "description": "Entenda como os downloads de assinantes podem ser usados em projetos de criadores, trabalhos para clientes e conteúdo monetizado."
+          }
+        }
+      },
       "cta": {
         "primary": "Abrir criador de músicas",
         "secondary": "Ver preços"
