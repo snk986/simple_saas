@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import {
@@ -60,6 +61,10 @@ type AiSongMakerSectionContent = {
   title: string;
   description: string;
   items: Record<string, { title: string; description: string }>;
+  link: {
+    href: string;
+    label: string;
+  };
 };
 
 const howItWorksKeys = ["prompt", "style", "generate"] as const;
@@ -165,6 +170,10 @@ export async function SongMakerRoutePage({
             eyebrow: t("howItWorks.eyebrow"),
             title: t("howItWorks.title"),
             description: t("howItWorks.description"),
+            link: {
+              href: localePrefix(locale) || "/",
+              label: "explore all tools",
+            },
             items: {
               prompt: {
                 title: t("howItWorks.items.prompt.title"),
@@ -184,6 +193,10 @@ export async function SongMakerRoutePage({
             eyebrow: t("useCases.eyebrow"),
             title: t("useCases.title"),
             description: t("useCases.description"),
+            link: {
+              href: `${localePrefix(locale)}/pricing`,
+              label: "view pricing",
+            },
             items: {
               youtube: {
                 title: t("useCases.items.youtube.title"),
@@ -215,6 +228,10 @@ export async function SongMakerRoutePage({
             eyebrow: t("whyChoose.eyebrow"),
             title: t("whyChoose.title"),
             description: t("whyChoose.description"),
+            link: {
+              href: `${localePrefix(locale)}/about`,
+              label: "learn more",
+            },
             items: {
               modes: {
                 title: t("whyChoose.items.modes.title"),
@@ -258,6 +275,38 @@ export async function SongMakerRoutePage({
       },
     })),
   };
+  const howToJsonLd =
+    routeKey === "aiSongMaker"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: "How to Use AI Song Maker",
+          description:
+            "Step-by-step guide to generating AI music from prompts or lyrics",
+          step: [
+            {
+              "@type": "HowToStep",
+              name: "Choose your input mode",
+              text: "Select Text to Song for prompts or Lyrics to Song if you already have words",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Write your prompt or paste lyrics",
+              text: "Describe the mood, genre, vocal tone, and where you'll use the music",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Add style direction",
+              text: "Specify genre, instruments, tempo, and vocal characteristics",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Generate and download",
+              text: "Click generate, listen to the result, and download if you have a paid plan",
+            },
+          ],
+        }
+      : null;
 
   return (
     <>
@@ -269,6 +318,12 @@ export async function SongMakerRoutePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      {howToJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+        />
+      ) : null}
       <div className="container px-4 py-8 md:px-6 md:py-12">
         <section className="mx-auto mb-8 max-w-4xl text-center">
           <p className="text-sm font-semibold uppercase tracking-normal text-primary">
@@ -355,6 +410,7 @@ function AiSongMakerMarketingContent({
         eyebrow={howItWorks.eyebrow}
         title={howItWorks.title}
         description={howItWorks.description}
+        link={howItWorks.link}
       >
         <div className="grid gap-5 md:grid-cols-3">
           {howItWorksKeys.map((key, index) => {
@@ -384,6 +440,7 @@ function AiSongMakerMarketingContent({
         eyebrow={useCases.eyebrow}
         title={useCases.title}
         description={useCases.description}
+        link={useCases.link}
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {useCaseKeys.map((key) => {
@@ -414,6 +471,7 @@ function AiSongMakerMarketingContent({
         eyebrow={whyChoose.eyebrow}
         title={whyChoose.title}
         description={whyChoose.description}
+        link={whyChoose.link}
       >
         <div className="grid gap-5 md:grid-cols-3">
           {whyChooseKeys.map((key) => {
@@ -447,11 +505,16 @@ function MarketingSection({
   eyebrow,
   title,
   description,
+  link,
   children,
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  link: {
+    href: string;
+    label: string;
+  };
   children: React.ReactNode;
 }) {
   return (
@@ -464,7 +527,12 @@ function MarketingSection({
           <h2 className="mt-3 text-3xl font-black leading-tight tracking-normal md:text-5xl">
             {title}
           </h2>
-          <p className="mt-4 leading-8 text-slate-400">{description}</p>
+          <p className="mt-4 leading-8 text-slate-400">
+            {description}{" "}
+            <Link href={link.href} className="text-primary hover:underline">
+              {link.label}
+            </Link>
+          </p>
         </div>
         {children}
       </div>

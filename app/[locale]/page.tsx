@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { HeroGeneratorForm } from "@/components/home/hero-generator-form";
 import { OneClickSongTemplates } from "@/components/home/one-click-song-templates";
@@ -123,7 +124,10 @@ export function generateStaticParams() {
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations("home");
-  const seoContent = await getTranslations({ locale: "en", namespace: "home.seo" });
+  const seoContent = await getTranslations({
+    locale: "en",
+    namespace: "home.seo",
+  });
   const gallerySongs = await getFeaturedGallerySongs();
   const textToSongPath =
     locale === defaultLocale
@@ -137,6 +141,9 @@ export default async function Home({ params }: HomePageProps) {
     locale === defaultLocale ? "/sign-in" : `/${locale}/sign-in`;
   const pricingPath =
     locale === defaultLocale ? "/pricing" : `/${locale}/pricing`;
+  const songMakerPath =
+    locale === defaultLocale ? "/ai-song-maker" : `/${locale}/ai-song-maker`;
+  const aboutPath = locale === defaultLocale ? "/about" : `/${locale}/about`;
   const freeLyricsGeneratorPath = "/free-ai-lyrics-generator";
   const heroText = (key: string, fallback: string) =>
     t.has(`hero.${key}`) ? t(`hero.${key}`) : fallback;
@@ -205,13 +212,31 @@ export default async function Home({ params }: HomePageProps) {
   }));
 
   const seoSections = [
-    "howToUse",
-    "creators",
-    "whyChoose",
-    "commercialLicensing",
-  ].map((key) => ({
+    {
+      key: "howToUse",
+      href: songMakerPath,
+      linkLabel: "Try the AI song maker",
+    },
+    {
+      key: "creators",
+      href: pricingPath,
+      linkLabel: "View creator pricing",
+    },
+    {
+      key: "whyChoose",
+      href: aboutPath,
+      linkLabel: "Learn about Calyra",
+    },
+    {
+      key: "commercialLicensing",
+      href: pricingPath,
+      linkLabel: "See commercial plans",
+    },
+  ].map(({ key, href, linkLabel }) => ({
     title: seoContent(`sections.${key}.title`),
     body: seoContent(`sections.${key}.body`),
+    href,
+    linkLabel,
   }));
 
   const faqItems = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"].map((key) => ({
@@ -246,6 +271,35 @@ export default async function Home({ params }: HomePageProps) {
       },
     })),
   };
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to Create AI Music with Calyra AI",
+    description:
+      "Step-by-step guide to generating AI music from prompts or lyrics",
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Choose your input mode",
+        text: "Select Text to Song for prompts or Lyrics to Song if you already have words",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Write your prompt or paste lyrics",
+        text: "Describe the mood, genre, vocal tone, and where you'll use the music",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Add style direction",
+        text: "Specify genre, instruments, tempo, and vocal characteristics",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Generate and download",
+        text: "Click generate, listen to the result, and download if you have a paid plan",
+      },
+    ],
+  };
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#050509] text-slate-50">
@@ -256,6 +310,10 @@ export default async function Home({ params }: HomePageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
 
       <section
@@ -363,7 +421,7 @@ export default async function Home({ params }: HomePageProps) {
           {styleCards.map((item) => {
             const Icon = item.icon;
             return (
-              <Link
+              <LocaleLink
                 key={item.title}
                 href="/ai-song-maker"
                 className="group min-h-40 rounded-[26px] border border-white/10 bg-white/[0.055] p-5 transition hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.085]"
@@ -377,7 +435,7 @@ export default async function Home({ params }: HomePageProps) {
                 <p className="mt-2 text-sm leading-6 text-slate-400">
                   {item.description}
                 </p>
-              </Link>
+              </LocaleLink>
             );
           })}
         </div>
@@ -424,14 +482,16 @@ export default async function Home({ params }: HomePageProps) {
                 asChild
                 className="h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 px-5 font-black"
               >
-                <Link href="/pricing">{t("commercial.pricingCta")}</Link>
+                <LocaleLink href="/pricing">
+                  {t("commercial.pricingCta")}
+                </LocaleLink>
               </Button>
               <Button
                 asChild
                 variant="outline"
                 className="h-12 rounded-2xl border-white/15 bg-white/[0.06] px-5 font-bold text-white hover:bg-white/10 hover:text-white"
               >
-                <Link href="#faq">{t("commercial.faqCta")}</Link>
+                <LocaleLink href="#faq">{t("commercial.faqCta")}</LocaleLink>
               </Button>
             </div>
           </div>
@@ -482,16 +542,18 @@ export default async function Home({ params }: HomePageProps) {
                 asChild
                 className="h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 px-5 font-black"
               >
-                <Link href="/ai-song-maker">
+                <LocaleLink href="/ai-song-maker">
                   {t("pricingPreview.primaryCta")}
-                </Link>
+                </LocaleLink>
               </Button>
               <Button
                 asChild
                 variant="outline"
                 className="h-12 rounded-2xl border-white/15 bg-white/[0.06] px-5 font-bold text-white hover:bg-white/10 hover:text-white"
               >
-                <Link href="/pricing">{t("pricingPreview.secondaryCta")}</Link>
+                <LocaleLink href="/pricing">
+                  {t("pricingPreview.secondaryCta")}
+                </LocaleLink>
               </Button>
             </div>
           </div>
@@ -546,7 +608,13 @@ export default async function Home({ params }: HomePageProps) {
                   {section.title}
                 </h2>
                 <p className="mt-2 text-sm leading-7 text-slate-400">
-                  {section.body}
+                  {section.body}{" "}
+                  <Link
+                    href={section.href}
+                    className="text-primary hover:underline"
+                  >
+                    {section.linkLabel}
+                  </Link>
                 </p>
               </section>
             ))}
