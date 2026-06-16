@@ -123,6 +123,7 @@ export function generateStaticParams() {
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations("home");
+  const seoContent = await getTranslations({ locale: "en", namespace: "home.seo" });
   const gallerySongs = await getFeaturedGallerySongs();
   const textToSongPath =
     locale === defaultLocale
@@ -201,6 +202,16 @@ export default async function Home({ params }: HomePageProps) {
   const priceCards = ["free", "basic", "pro"].map((key) => ({
     title: t(`pricingPreview.plans.${key}.title`),
     description: t(`pricingPreview.plans.${key}.description`),
+  }));
+
+  const seoSections = [
+    "howToUse",
+    "creators",
+    "whyChoose",
+    "commercialLicensing",
+  ].map((key) => ({
+    title: seoContent(`sections.${key}.title`),
+    body: seoContent(`sections.${key}.body`),
   }));
 
   const faqItems = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"].map((key) => ({
@@ -525,16 +536,20 @@ export default async function Home({ params }: HomePageProps) {
 
       <section className="bg-[#050509] pb-16">
         <div className="container px-4 md:px-6">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 md:px-6">
-            <h2 className="text-base font-bold text-slate-100">
-              {t("seoBlock.title")}
-            </h2>
-            <p className="mt-2 text-sm leading-7 text-slate-400 line-clamp-2">
-              {t("seoBlock.p1")}
-            </p>
-            <p className="mt-2 text-sm leading-7 text-slate-400 line-clamp-2">
-              {t("seoBlock.p2")}
-            </p>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {seoSections.map((section) => (
+              <section
+                key={section.title}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 md:px-6"
+              >
+                <h2 className="text-base font-bold text-slate-100">
+                  {section.title}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-slate-400">
+                  {section.body}
+                </p>
+              </section>
+            ))}
           </div>
         </div>
       </section>

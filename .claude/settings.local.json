@@ -8,7 +8,15 @@
       "Bash(git:diff)",
       "Bash(git:log)",
       "WebSearch",
-      "WebFetch(domain:aimakesong.com)"
+      "WebFetch(domain:aimakesong.com)",
+      "Bash(curl -s https://calyraai.com/)",
+      "Bash(curl -s https://calyraai.com/ai-song-maker)",
+      "Bash(curl -s https://suno.com/)",
+      "Bash(curl -s https://www.udio.com/)",
+      "Bash(curl *)",
+      "Bash(sed 's/<[^>]*>//g')",
+      "WebFetch(domain:aimakesong.ai)",
+      "WebFetch(domain:www.aimakesong.com)"
     ],
     "deny": [
       "Bash(rm:*)",

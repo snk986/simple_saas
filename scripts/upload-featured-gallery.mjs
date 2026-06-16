@@ -147,6 +147,20 @@ function validateSong(song, index) {
   }
 }
 
+function getTitleFilter() {
+  const titleIndex = process.argv.indexOf("--title");
+  if (titleIndex === -1) {
+    return null;
+  }
+
+  const title = process.argv[titleIndex + 1]?.trim();
+  if (!title) {
+    throw new Error("--title requires a song title");
+  }
+
+  return title;
+}
+
 async function main() {
   loadDotEnvLocal();
 
@@ -158,6 +172,15 @@ async function main() {
   }
 
   const { ownerUserId, songs } = readManifest(resolve(manifestPath));
+  const titleFilter = getTitleFilter();
+  const songsToUpload = titleFilter
+    ? songs.filter((song) => song.title === titleFilter)
+    : songs;
+
+  if (titleFilter && songsToUpload.length === 0) {
+    throw new Error(`No song found with title: ${titleFilter}`);
+  }
+
   const supabase = createClient(
     requireEnv("NEXT_PUBLIC_SUPABASE_URL"),
     requireEnv("SUPABASE_SECRET_KEY"),
@@ -172,7 +195,7 @@ async function main() {
 
   await ensureBucket(supabase, bucket);
 
-  for (const [index, song] of songs.entries()) {
+  for (const [index, song] of songsToUpload.entries()) {
     validateSong(song, index);
 
     const existingSongId = await findExistingOfficialSong(supabase, song);

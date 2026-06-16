@@ -25,6 +25,14 @@ type RecallTemplate = {
   footer: string;
 };
 
+type RecallMessages = {
+  email: {
+    recall: {
+      fallbackSongTitle: string;
+    } & Record<RecallScenario, RecallTemplate>;
+  };
+};
+
 const messagesByLocale = {
   en: enMessages,
   es: esMessages,
@@ -32,7 +40,7 @@ const messagesByLocale = {
   ja: jaMessages,
   ko: koMessages,
   "zh-CN": zhCNMessages,
-} satisfies Record<Locale, typeof enMessages>;
+} satisfies Record<Locale, RecallMessages>;
 
 function escapeHtml(value: string) {
   return value
