@@ -16,7 +16,16 @@
       "Bash(curl *)",
       "Bash(sed 's/<[^>]*>//g')",
       "WebFetch(domain:aimakesong.ai)",
-      "WebFetch(domain:www.aimakesong.com)"
+      "WebFetch(domain:www.aimakesong.com)",
+      "Bash(git add *)",
+      "Bash(git diff *)",
+      "Bash(git reset *)",
+      "Bash(git commit *)",
+      "Bash(node *)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(awk '/slug: \"how-to-make-ai-music-for-free-in-2026\"/,/slug: \"ai-song-maker-guide\"/' config/blog-articles.ts)",
+      "Bash(awk '/slug: \"ai-song-maker-guide\"/,/slug: \"ai-music-generator-for-creators\"/' config/blog-articles.ts)",
+      "Bash(awk '/slug: \"ai-music-generator-for-creators\"/,/^export function/' config/blog-articles.ts)"
     ],
     "deny": [
       "Bash(rm:*)",

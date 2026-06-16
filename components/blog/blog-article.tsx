@@ -11,6 +11,30 @@ import type { BlogArticle as BlogArticleData } from "@/config/blog-articles";
 import { Button } from "@/components/ui/button";
 import { formatBlogDate } from "@/lib/blog/date";
 
+function InlineMarkdown({ text }: { text: string }) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+
+        if (!match) return <span key={`${part}-${index}`}>{part}</span>;
+
+        return (
+          <Link
+            key={`${match[2]}-${index}`}
+            href={match[2]}
+            className="font-bold text-primary underline-offset-4 hover:underline"
+          >
+            {match[1]}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
 function ArticleParagraphs({ paragraphs }: { paragraphs?: string[] }) {
   if (!paragraphs) return null;
 
@@ -19,7 +43,7 @@ function ArticleParagraphs({ paragraphs }: { paragraphs?: string[] }) {
       key={paragraph}
       className="text-base leading-8 text-slate-300 md:text-lg"
     >
-      {paragraph}
+      <InlineMarkdown text={paragraph} />
     </p>
   ));
 }
@@ -106,7 +130,7 @@ export function BlogArticle({ article }: { article: BlogArticleData }) {
                 key={paragraph}
                 className="text-lg leading-8 text-slate-200 md:text-xl md:leading-9"
               >
-                {paragraph}
+                <InlineMarkdown text={paragraph} />
               </p>
             ))}
           </div>
@@ -131,10 +155,48 @@ export function BlogArticle({ article }: { article: BlogArticleData }) {
                         className="flex gap-3 text-base leading-7 text-slate-300 md:text-lg"
                       >
                         <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-primary" />
-                        <span>{bullet}</span>
+                        <span>
+                          <InlineMarkdown text={bullet} />
+                        </span>
                       </li>
                     ))}
                   </ul>
+                )}
+
+                {section.table && (
+                  <div className="overflow-x-auto rounded-lg border border-white/10">
+                    <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+                      <thead className="bg-white/[0.045] text-slate-200">
+                        <tr>
+                          {section.table.columns.map((column) => (
+                            <th
+                              key={column}
+                              className="border-b border-white/10 px-4 py-3 font-black"
+                            >
+                              {column}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {section.table.rows.map((row) => (
+                          <tr
+                            key={row.join("-")}
+                            className="border-b border-white/10 last:border-b-0"
+                          >
+                            {row.map((cell) => (
+                              <td
+                                key={cell}
+                                className="px-4 py-3 leading-6 text-slate-300"
+                              >
+                                <InlineMarkdown text={cell} />
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
 
                 {section.steps && (
@@ -153,7 +215,7 @@ export function BlogArticle({ article }: { article: BlogArticleData }) {
                               {step.title}
                             </h3>
                             <p className="mt-2 leading-7 text-slate-300">
-                              {step.body}
+                              <InlineMarkdown text={step.body} />
                             </p>
                           </div>
                         </div>
@@ -188,7 +250,7 @@ export function BlogArticle({ article }: { article: BlogArticleData }) {
                         {section.note.title}
                       </h3>
                       <p className="mt-2 font-mono text-sm leading-7 text-slate-300">
-                        {section.note.body}
+                        <InlineMarkdown text={section.note.body} />
                       </p>
                     </div>
                   </div>
@@ -213,7 +275,9 @@ export function BlogArticle({ article }: { article: BlogArticleData }) {
                   <summary className="cursor-pointer list-none pr-6 text-lg font-black text-white">
                     {item.question}
                   </summary>
-                  <p className="mt-3 leading-7 text-slate-300">{item.answer}</p>
+                  <p className="mt-3 leading-7 text-slate-300">
+                    <InlineMarkdown text={item.answer} />
+                  </p>
                 </details>
               ))}
             </div>

@@ -52,17 +52,34 @@ export default async function BlogArticlePage({
   if (locale !== defaultLocale || !article) notFound();
 
   const url = absoluteLocaleUrl(defaultLocale, `/blog/${article.slug}`);
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.metaDescription,
-    datePublished: article.publishedAt,
-    dateModified: article.updatedAt ?? article.publishedAt,
-    mainEntityOfPage: url,
-    author: { "@type": "Organization", name: "Calyra AI" },
-    publisher: { "@type": "Organization", name: "Calyra AI" },
-  };
+  const articleJsonLd =
+    article.schemaType === "HowTo"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: article.title,
+          description: article.metaDescription,
+          mainEntityOfPage: url,
+          step: article.sections
+            .flatMap((section) => section.steps ?? [])
+            .map((step, index) => ({
+              "@type": "HowToStep",
+              position: index + 1,
+              name: step.title,
+              text: step.body,
+            })),
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.title,
+          description: article.metaDescription,
+          datePublished: article.publishedAt,
+          dateModified: article.updatedAt ?? article.publishedAt,
+          mainEntityOfPage: url,
+          author: { "@type": "Organization", name: "Calyra AI" },
+          publisher: { "@type": "Organization", name: "Calyra AI" },
+        };
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
