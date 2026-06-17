@@ -1,5 +1,26 @@
 {
-  "private": true,
+  "name": "calyra-ai",
+  "version": "0.1.0",
+  "description": "Self-hostable open-source AI music generation platform built with Next.js, Supabase, and pluggable AI/audio providers.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snk986/simple_saas.git"
+  },
+  "homepage": "https://github.com/snk986/simple_saas#readme",
+  "bugs": {
+    "url": "https://github.com/snk986/simple_saas/issues"
+  },
+  "keywords": [
+    "ai-music",
+    "ai-song-generator",
+    "nextjs",
+    "supabase",
+    "self-hosted",
+    "open-source",
+    "audio-generation",
+    "lyrics-generator"
+  ],
   "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": ">=20 <25"

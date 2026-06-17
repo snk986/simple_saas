@@ -1,218 +1,201 @@
-# Simple Saas Starter Kit
+# Calyra AI
 
-全网最极简的SAAS网站模板！
-帮助开发者快速搭建支持全球用户登录和支付的网站系统。
+Open-source AI music generation platform built with Next.js, Supabase, and
+pluggable AI/audio providers.
 
-基于raphael-starterkit-v1做了简化重构，面向小白的启动套件，进一步降低学习成本。
-功能仅包括登录（用户管理）、支付，没了。
+Calyra AI is a self-hostable starter for building products that turn prompts,
+stories, and lyrics into generated songs. It includes the production pieces that
+many AI music prototypes skip: authentication, credits, audio provider
+abstraction, public song pages, creator dashboards, i18n, SEO pages, payments,
+webhooks, and storage.
 
-别对中国大陆开发者友好。
+The hosted Calyra product can be commercial, but this repository is maintained
+as an open-source application template for developers who want to study, fork,
+self-host, or extend an AI music workflow with their own provider keys.
 
+## What You Can Build
 
-## 🌟 简介
+- Text-to-song and lyrics-to-song generation flows.
+- AI lyrics generation and editable drafts.
+- Audio generation with provider adapters.
+- Public song pages with sharing, cover art, and SEO metadata.
+- User dashboards for generated songs, credits, and subscriptions.
+- Multilingual marketing pages with `next-intl`.
+- Payment and credit flows for commercial deployments.
+- Provider-backed webhooks and background finalization jobs.
 
-基于 Next.js、Supabase 、vercel和 Creem.io 生产就绪的启动套件
-快速构建具有身份验证、订阅和积分系统的 SaaS 应用程序。
+## Tech Stack
 
-中国版参见，支持微信支付https://github.com/fishfl/simple_saas_cn
+- Next.js App Router and TypeScript.
+- Supabase Postgres, Auth, Storage, and Row Level Security.
+- Provider-based AI text generation in `lib/ai/`.
+- Provider-based audio generation in `lib/audio/`.
+- Creem.io payment integration.
+- next-intl for English, Spanish, Portuguese, Japanese, and Korean routes.
+- shadcn/ui, Tailwind CSS, and Framer Motion.
+- pnpm for package management.
 
-## 核心特色功能
+## Architecture
 
-- 🔐 **全面的身份验证系统**
-  - 基于Supabase
-  - 电子邮件登录支持
-  - Google 登录支持
+```text
+app/[locale]/          localized public and product routes
+app/api/               API routes, webhooks, cron jobs, generation endpoints
+components/            shared UI, home, create, dashboard, song, pricing views
+config/                static product, style, subscription, and SEO config
+lib/ai/                AI provider contracts and prompt generation
+lib/audio/             audio provider abstraction and finalization helpers
+messages/              next-intl translation files
+supabase/              database migrations and schema assets
+utils/supabase/        browser, server, middleware, and service-role clients
+types/                 shared TypeScript domain types
+```
 
-- 💳 **完整的支付与订阅系统**
-  - 与Creem.io集成，支持全球信用卡收款，支持支付宝
+The most important extension point is the provider layer. UI and API routes
+should call `lib/audio/index.ts` and `lib/ai/provider.ts` instead of importing a
+single vendor directly. This keeps the application usable with different
+generation services.
 
-- 📱 **响应式设计**
+## Provider Model
 
+Calyra AI is designed around bring-your-own-provider deployments.
 
+| Area | Current support | Notes |
+| --- | --- | --- |
+| AI text and lyrics | GitHub Models, Claude-compatible provider path | Configure with environment variables. |
+| Audio generation | fal.ai, kie.ai, wavespeed.ai adapters | Route through `lib/audio/index.ts`. |
+| Database and auth | Supabase | Uses client, server, middleware, and service-role clients. |
+| Storage | Supabase Storage | Generated audio and cover art can be stored in buckets. |
+| Payments | Creem.io | Optional for self-hosted non-commercial demos. |
+| Email | Resend | Optional depending on auth and notification flows. |
 
-## 快速开始
+## Quick Start
 
-![alt text](topology.png)
+### Prerequisites
 
-### 前提条件
+- Node.js 20 or newer.
+- pnpm 10 or newer.
+- Supabase project.
+- At least one AI text provider key.
+- At least one audio generation provider key.
 
-- Node.js 18+ 和 npm
-- Supabase 账户
-- Creem.io 账户
+Payments, analytics, email, and cron are optional for local development.
 
-### 步骤 1: 克隆仓库
+### Install
 
 ```bash
-git clone https://github.com/fishfl/simple_saas.git
-cd simple_saas
+git clone https://github.com/snk986/simple_saas.git calyra-ai
+cd calyra-ai
+pnpm install
+cp .env.example .env.local
 ```
 
-@@@
+### Configure Environment
 
-强烈建议，先fork代码到自己的仓库里，再执行clone。毕竟你后续还要完善你自己的业务代码。
-直接clone这个代码库仅用作演示。
+Edit `.env.local` and add your own keys.
 
-@@@
-
-
-### 步骤 2: 安装依赖
+Required for most local flows:
 
 ```bash
-npm i
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
+SUPABASE_MEDIA_BUCKET=songs
+
+AI_PROVIDER=github
+AUDIO_PROVIDER=fal
+
+GITHUB_MODELS_API_KEY=
+FAL_API_KEY=
+BASE_URL=http://localhost:3000
 ```
 
-### 步骤 3: 开启环境变量
-   ```bash
-   cp .env.example .env.local
-   ```
+Optional production integrations include Creem.io, Resend, Google Analytics,
+kie.ai, wavespeed.ai, and provider webhook URLs. See `.env.example` for the
+full list.
 
+### Database
 
-### 步骤 4: 设置 Supabase
+Create a Supabase project and run the migrations in `supabase/migrations`.
 
-1. 在 [Supabase](https://app.supabase.com) 上创建一个新项目
-   - 点击"新建项目"
-   - 填写基本信息（项目名称、密码等）
+Recommended Supabase checks:
 
-2. Settings > Data API
-   - 复制API URL, 粘贴到.env文件中NEXT_PUBLIC_SUPABASE_URL
+- Enable email auth or the auth providers you need.
+- Create the configured media bucket.
+- Review Row Level Security policies before production use.
+- Keep the service-role key server-side only.
 
-   同样，Settings > API Keys 
-   Legacy anon, service_role API keys
-   - 复制anon public 粘贴到NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-   - 复制service_role 粘贴到SUPABASE_SECRET_KEY
-
-3. 配置登录方式
-   - 选择【Authentication】>【Sign In / Providers】
-   - 开启email登录、开启谷歌登录
-
-4. *设置Google登录
-   - 进入[Google 开发者控制台](https://console.cloud.google.com)，创建新项目
-   - 配置项目权限
-   - 前往【API与服务】>【凭据】
-   - 创建OAuth客户端ID（可能要先创建品牌塑造）
-   - 添加授权来源URL和重定向URI
-   - 重定向URI格式: `https://<项目ID>.supabase.co/auth/v1/callback`
-     （注意是id不是name，在Supabase项目setting页面复制）
-   - 复制OAuth客户端ID和密钥
-
-   回到Supabase配置Google登录
-   - 选择【Authentication】>【Sign In / Providers】
-   - 点击Google登录
-   - 填写从Google开发者控制台获取的客户端ID和密钥
-
-5. 创建数据库表结构
-   - 打开supabase/migrations/20250101000000_init_schema.sql
-   - 复制SQL代码到Supabase SQL编辑器
-   - 执行SQL创建表结构
-
-
-### 步骤 5: 设置 Creem.io
-
-1. 登录到 [Creem.io 仪表板](https://www.creem.io/)
-2. 初始设置
-   - 创建一个商店，填写各种基本信息
-   - 打开测试mode
-   - Developers > API & Webhooks
-   - 复制API Key并粘贴到.env文件中CREEM_API_KEY
-
-3. 创建Webhooks
-   - Developers > API & Webhooks
-   - 创建新的Webhook
-   - 填写URL: `https://你的域名/api/webhooks/creem`
-   - 复制Webhook密钥并粘贴到.env文件中CREEM_WEBHOOK_SECRET
-   这时，你可能还没有域名，没关系，随便填一个，我们稍后回来再改
-
-
-4. 测试API地址和生产地址
-   我们前期都在测试模式，所以这个地址不用改
-   ```
-   CREEM_API_URL=https://test-api.creem.io/v1
-   ```
-
-5. 创建收费Product
-   
-   - 在在Products里创建两个产品，一个订阅项目和一个积分项目
-   - 复制产品ID并配置到代码config/subscriptions.ts中，订阅项目先用同一个id，积分项目先用另一个id
-
-
-### 步骤 6: 运行开发服务器
+### Run Locally
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-访问 [http://localhost:3000](http://localhost:3000) 查看你的应用程序。
+Open `http://localhost:3000`.
 
+### Verify
 
-
-```
-恭喜，整个开发环境已经跑起来了！！！
-
-接下来我们开始部署到线上！
+```bash
+pnpm build
 ```
 
+## Deployment
 
-现在，可以去买个自己域名了，或者用Vercel生成的子域名，下面不再提示，都称‘你的域名’
-（Vercel生成的子域名访问性不佳，国内有时需要梯子才能访问到）
+The app is designed for Vercel-style deployments, but it can run anywhere that
+supports Next.js, Node.js, environment variables, and outbound provider calls.
 
+For production:
 
+- Set `BASE_URL` to your public site URL.
+- Configure provider webhook URLs under `/api/webhooks/*`.
+- Use production Supabase credentials and storage buckets.
+- Configure Creem.io product IDs only if payments are enabled.
+- Keep `SKIP_CREDIT_CHECK` disabled outside dev and preview environments.
 
-### 步骤 7: Vercel部署
+## Commercial Use and Open Source Scope
 
-1. 将代码推送到GitHub
-2. 将仓库导入到[Vercel](https://vercel.com)
-3. 添加导入所有环境变量
-4. 完成部署
-5. 修改环境变量BASE_URL、CREEM_SUCCESS_URL，指向你的域名
+This repository is MIT licensed. You can fork it, self-host it, modify it, and
+use it as the base for commercial products, subject to the licenses and terms of
+the third-party providers you configure.
 
-### 步骤 8: 更新Webhook回调地址
+The open-source scope includes the application code, provider contracts, UI,
+API routes, docs, and setup patterns in this repository. Hosted service data,
+private deployment secrets, third-party models, generated media, and commercial
+provider accounts are not included.
 
-1. 进入Creem.io，进入开发者模式
-2. 更新Webhooks配置
-   - Developers > API & Webhooks
-   - 将URL更新为: `https://你的域名/api/webhooks/creem`
+## Contributing
 
+Contributions are welcome. Good starting areas include:
 
-### 步骤 9: 更新Supabase回调地址
-1. 进入Supabase，Authentication > URL Configuration
-2. 更新Site URL为：`https://你的域名/`
+- Provider adapters and contract tests.
+- Supabase migration documentation.
+- Generation flow reliability.
+- i18n improvements.
+- Security hardening for webhooks and private routes.
+- Setup guides for self-hosted deployments.
 
+Read `CONTRIBUTING.md` before opening a pull request.
 
+## Roadmap
 
-### 后续步骤：
+- Add contract tests for audio providers.
+- Document a clean local Supabase seed flow.
+- Improve webhook verification examples for each audio provider.
+- Add more self-hosting deployment guides.
+- Add provider comparison docs for cost, latency, webhook behavior, and output
+  format.
+- Improve accessibility and mobile layout coverage across public song pages and
+  generation flows.
 
-1. 测试用户登录功能
-2. 测试订阅支付、积分购买功能（测试信用卡号: 4242 4242 4242 4242）
-3. 切换Creem.io到正式付款，更新环境变量
-   ```
-   CREEM_TEST_MODE=false
-   CREEM_API_URL=https://api.creem.io
-   ```
+## Maintainer Notes
 
-   
+This project started as a fork of a SaaS starter and has been substantially
+rebuilt into an AI music generation platform. The current maintainer focus is
+to make the repository useful as open-source software: clear setup docs,
+replaceable providers, public issue triage, security review, release notes, and
+repeatable deployment guidance.
 
+See `docs/OPEN_SOURCE_MAINTENANCE.md` for the open-source maintenance plan.
 
-## 项目结构
+## License
 
-```
-├── app/                   # Next.js 应用目录 (App Router)
-│   ├── (auth-pages)/     # 身份验证相关页面 (登录/注册)
-│   ├── api/             # API 路由 (支付回调/积分接口等)
-│   ├── dashboard/        # 用户仪表板页面
-│   ├── auth/            # Auth 回调处理
-│   ├── globals.css      # 全局样式文件
-│   ├── layout.tsx       # 根布局文件
-│   └── page.tsx         # 落地页 (Landing Page)
-├── components/           # React 组件
-│   ├── dashboard/      # 仪表板业务组件
-│   ├── ui/             # Shadcn/ui 通用组件库
-│   ├── header.tsx      # 顶部导航栏
-│   └── ...             # 其他共享组件
-├── config/              # 配置文件 (订阅计划/积分套餐)
-├── hooks/               # 自定义 React Hooks (use-user, use-toast)
-├── lib/                # 第三方库配置 (utils)
-├── public/             # 静态资源 (图片/图标)
-├── supabase/           # Supabase 迁移脚本和类型
-├── types/              # TypeScript 类型定义
-└── utils/              # 工具函数和中间件辅助
-```
+MIT. See `LICENSE`.
