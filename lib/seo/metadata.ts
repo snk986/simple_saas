@@ -8,6 +8,7 @@ type BuildMarketingMetadataInput = {
   description: string;
   url: string;
   alternates?: Metadata["alternates"];
+  robots?: Metadata["robots"];
   locale?: string;
   openGraph?: Partial<NonNullable<Metadata["openGraph"]>>;
   twitter?: Partial<NonNullable<Metadata["twitter"]>>;
@@ -18,6 +19,7 @@ export function buildMarketingMetadata({
   description,
   url,
   alternates,
+  robots,
   locale,
   openGraph,
   twitter,
@@ -33,6 +35,7 @@ export function buildMarketingMetadata({
     title,
     description,
     alternates,
+    robots,
     openGraph: {
       title,
       description,

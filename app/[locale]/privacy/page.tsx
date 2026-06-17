@@ -30,6 +30,10 @@ export async function generateMetadata({
     description: t("seo.description"),
     url,
     locale,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: url,
       languages: localizedAlternates("/privacy"),

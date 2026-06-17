@@ -138,7 +138,7 @@ export async function generateMetadata({
       languages: localizedAlternates(`/song/${song.id}`),
     },
     robots: {
-      index: shouldIndex,
+      index: locale === defaultLocale && shouldIndex,
       follow: true,
     },
     openGraph: {
