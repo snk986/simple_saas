@@ -63,3 +63,8 @@ pnpm build
 - Server Component 用 `getTranslations()`，Client Component 用 `useTranslations()`
 - 硬编码中文字符串只允许出现在 `messages/` 翻译文件中，其他地方必须用 t('key')
 - URL 结构：英语不带前缀（`/create`），其他语言带前缀（`/es/create`）
+
+## 前端设计规范
+- 全站页面和组件设计必须遵守 `DESIGN.md`
+- 修改 UI 时优先统一现有页面细节，再新增视觉规则
+- 不做模板感 landing page，不使用大面积渐变、装饰性 orb、过度卡片堆叠
