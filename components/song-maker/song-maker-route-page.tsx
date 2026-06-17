@@ -368,10 +368,6 @@ export async function SongMakerRoutePage({
           </div>
         )}
 
-        {aiSongMakerSections ? (
-          <AiSongMakerMarketingContent sections={aiSongMakerSections} />
-        ) : null}
-
         <StoryInput
           recallCampaign={cleanUrl ? null : (searchParams.utm_campaign ?? null)}
           canDownload={canDownload}
@@ -388,6 +384,12 @@ export async function SongMakerRoutePage({
             lyrics: `${localePrefix(locale)}${SEO_TOOL_PAGE_PATHS.aiLyricsToSong}`,
           }}
         />
+
+        {aiSongMakerSections ? (
+          <div className="mt-12 md:mt-16">
+            <AiSongMakerMarketingContent sections={aiSongMakerSections} />
+          </div>
+        ) : null}
 
         <section className="mx-auto mt-12 max-w-4xl">
           <h2 className="text-3xl font-bold tracking-normal">
@@ -427,7 +429,7 @@ function AiSongMakerMarketingContent({
   const { howItWorks, useCases, whyChoose } = sections;
 
   return (
-    <div className="mx-auto mb-10 max-w-6xl overflow-hidden rounded-[36px] border border-white/10 bg-[#050509] text-white shadow-[0_34px_120px_rgba(0,0,0,0.34)]">
+    <div className="mx-auto mb-10 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-[#050509] text-white shadow-[0_34px_120px_rgba(0,0,0,0.34)] md:rounded-[36px]">
       <MarketingSection
         eyebrow={howItWorks.eyebrow}
         title={howItWorks.title}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Pause, Play, Search, SlidersHorizontal, Wand2 } from "lucide-react";
@@ -166,6 +166,8 @@ export function StoryInput({
   const [filter, setFilter] = useState<WorkspaceFilter>("all");
   const [durations, setDurations] = useState<Record<string, number | null>>({});
   const [playingSongId, setPlayingSongId] = useState<string | null>(null);
+  const [generatorHeight, setGeneratorHeight] = useState<number | null>(null);
+  const generatorPanelRef = useRef<HTMLElement | null>(null);
   const pollAttemptsRef = useRef<Record<string, number>>({});
   const pollInFlightRef = useRef<Record<string, boolean>>({});
   const playbackAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -251,6 +253,27 @@ export function StoryInput({
   useEffect(() => {
     setMode(initialMode);
   }, [initialMode]);
+
+  useEffect(() => {
+    const panel = generatorPanelRef.current;
+
+    if (!panel) {
+      return;
+    }
+
+    const updateHeight = () => {
+      setGeneratorHeight(Math.ceil(panel.getBoundingClientRect().height));
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(panel);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const mapped: WorkspaceSongItem[] = initialWorkspaceSongs.flatMap(
@@ -633,8 +656,11 @@ export function StoryInput({
         }}
       />
 
-      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
-        <aside className="min-w-0 rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24 lg:self-start">
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2 lg:items-start">
+        <aside
+          ref={generatorPanelRef}
+          className="min-w-0 rounded-xl border border-white/10 bg-card/90 p-5 shadow-sm shadow-black/20 lg:sticky lg:top-24"
+        >
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-semibold">{t("generatorTitle")}</h2>
           </div>
@@ -718,8 +744,17 @@ export function StoryInput({
           </Button>
         </aside>
 
-        <section className="min-w-0 rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20">
-          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <section
+          className="flex min-w-0 flex-col rounded-xl border border-white/10 bg-card p-5 shadow-sm shadow-black/20 lg:h-[var(--song-generator-height)] lg:min-h-0 lg:overflow-hidden"
+          style={
+            generatorHeight
+              ? ({
+                  "--song-generator-height": `${generatorHeight}px`,
+                } as CSSProperties)
+              : undefined
+          }
+        >
+          <div className="mb-4 flex shrink-0 flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="relative w-full md:max-w-md">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
@@ -757,7 +792,7 @@ export function StoryInput({
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="min-h-0 space-y-3 [scrollbar-color:hsl(var(--muted-foreground)/0.28)_transparent] [scrollbar-width:thin] lg:flex-1 lg:overflow-y-auto lg:pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-muted-foreground/25 hover:[&::-webkit-scrollbar-thumb]:bg-muted-foreground/40 [&::-webkit-scrollbar-track]:bg-transparent">
             {filteredSongs.map((song) => (
               <article
                 key={song.id}
