@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { getPublicSong } from "@/lib/song/public-song";
+import { getPublicSong, getSongById } from "@/lib/song/public-song";
 import { getUserEntitlements } from "@/lib/subscription/entitlements";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 import { LyricsDisplay } from "@/components/song/lyrics-display";
@@ -106,9 +106,17 @@ export async function generateMetadata({
   const { locale, id } = await params;
   const query = searchParams ? await searchParams : {};
   const t = await getTranslations({ locale, namespace: "songPublic.seo" });
-  const song = await getPublicSong(id, normalizeTake(query.take));
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const song = await getSongById(id, normalizeTake(query.take));
 
-  if (!song || !locales.includes(locale)) {
+  if (
+    !song ||
+    !locales.includes(locale) ||
+    (!song.isPublic && user?.id !== song.userId)
+  ) {
     return {
       title: t("notFoundTitle"),
       robots: { index: false, follow: true },
@@ -183,16 +191,15 @@ export default async function SongPage({
   if (!locales.includes(locale)) {
     notFound();
   }
-
-  const song = await getPublicSong(id, normalizeTake(query.take));
-
-  if (!song) {
-    notFound();
-  }
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const song = await getSongById(id, normalizeTake(query.take));
+
+  if (!song || (!song.isPublic && user?.id !== song.userId)) {
+    notFound();
+  }
   let canDownload = false;
   if (user?.id === song.userId) {
     const entitlements = await getUserEntitlements(user.id);

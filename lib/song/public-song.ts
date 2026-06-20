@@ -185,6 +185,7 @@ export const getPublicSong = cache(
       .from("songs")
       .select(publicProjection)
       .eq("id", id)
+      .eq("is_public", true)
       .eq("status", "ready")
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
       .single();
@@ -196,6 +197,23 @@ export const getPublicSong = cache(
     return mapPublicSong(data as RawSong, take);
   },
 );
+
+export const getSongById = cache(async (id: string, take?: PublicSongTake) => {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase
+    .from("songs")
+    .select(publicProjection)
+    .eq("id", id)
+    .eq("status", "ready")
+    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+    .single();
+
+  if (error || !data) {
+    return null;
+  }
+
+  return mapPublicSong(data as RawSong, take);
+});
 
 export async function getRelatedPublicSongs(song: PublicSong, limit = 3) {
   const supabase = createServiceRoleClient();

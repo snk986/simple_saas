@@ -146,6 +146,7 @@ export function StoryInput({
   const params = useParams<{ locale?: string }>();
   const localePrefix =
     params.locale && params.locale !== "en" ? `/${params.locale}` : "";
+  const songDetailHref = (songId: string) => `${localePrefix}/song/${songId}`;
 
   const [mode, setMode] = useState<"text" | "lyrics">(initialMode);
   const [prompt, setPrompt] = useState(initialPrompt ?? "");
@@ -793,105 +794,154 @@ export function StoryInput({
           </div>
 
           <div className="min-h-0 space-y-3 [scrollbar-color:hsl(var(--muted-foreground)/0.28)_transparent] [scrollbar-width:thin] lg:flex-1 lg:overflow-y-auto lg:pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-muted-foreground/25 hover:[&::-webkit-scrollbar-thumb]:bg-muted-foreground/40 [&::-webkit-scrollbar-track]:bg-transparent">
-            {filteredSongs.map((song) => (
-              <article
-                key={song.id}
-                className="rounded-lg border border-border bg-muted/20 p-3"
-              >
-                <div className="flex gap-3">
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
-                    {song.coverUrl ? (
-                      <img
-                        src={song.coverUrl}
-                        alt={song.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : null}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="truncate text-sm font-semibold">
-                        {song.title}
-                      </h3>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-[11px] ${
-                          song.status === "completed"
-                            ? "bg-emerald-500/15 text-emerald-300"
-                            : "bg-amber-500/15 text-amber-300"
-                        }`}
+            {filteredSongs.map((song) => {
+              const canViewSongDetail = song.status === "completed";
+
+              return (
+                <article
+                  key={song.id}
+                  className="rounded-lg border border-border bg-muted/20 p-3"
+                >
+                  <div className="flex gap-3">
+                    {canViewSongDetail ? (
+                      <Link
+                        href={songDetailHref(song.id)}
+                        prefetch={false}
+                        className="block h-16 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-muted transition-colors hover:border-primary/60"
+                        onClick={() => {
+                          trackFunnelEvent("workspace_song_detail_clicked", {
+                            locale: params.locale ?? "en",
+                            route: window.location.pathname,
+                            song_id: song.id,
+                          });
+                        }}
                       >
-                        {song.status === "completed"
-                          ? t("status.completed")
-                          : t("status.generating")}
-                      </span>
-                    </div>
-                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {song.versionTag
-                        ? t("versionDurationMeta", {
-                            version: song.versionTag,
-                            duration: formatDuration(
-                              durations[song.id] ?? null,
-                            ),
-                          })
-                        : t("durationMeta", {
-                            duration: formatDuration(
-                              durations[song.id] ?? null,
-                            ),
-                          })}
-                    </p>
-                    <p className="mt-1 truncate text-xs text-muted-foreground">
-                      {song.styleSummary || song.promptSummary}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    disabled={!song.audioUrl}
-                    onClick={() => toggleWorkspacePlayback(song)}
-                    aria-label={
-                      playingSongId === song.id ? t("pauseSong") : t("playSong")
-                    }
-                  >
-                    {playingSongId === song.id ? (
-                      <Pause className="h-3.5 w-3.5" />
+                        {song.coverUrl ? (
+                          <img
+                            src={song.coverUrl}
+                            alt={song.title}
+                            className="h-full w-full object-cover transition-transform duration-200 hover:scale-[1.03]"
+                          />
+                        ) : null}
+                      </Link>
                     ) : (
-                      <Play className="h-3.5 w-3.5" />
+                      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
+                        {song.coverUrl ? (
+                          <img
+                            src={song.coverUrl}
+                            alt={song.title}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : null}
+                      </div>
                     )}
-                  </Button>
-                  <Button asChild type="button" size="sm" variant="outline">
-                    <Link
-                      href={`/report/${song.id}`}
-                      onClick={() => {
-                        trackFunnelEvent("song_report_clicked", {
-                          locale: params.locale ?? "en",
-                          route: window.location.pathname,
-                          song_id: song.id,
-                        });
-                      }}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="truncate text-sm font-semibold">
+                          {canViewSongDetail ? (
+                            <Link
+                              href={songDetailHref(song.id)}
+                              prefetch={false}
+                              className="transition-colors hover:text-primary"
+                              onClick={() => {
+                                trackFunnelEvent(
+                                  "workspace_song_detail_clicked",
+                                  {
+                                    locale: params.locale ?? "en",
+                                    route: window.location.pathname,
+                                    song_id: song.id,
+                                  },
+                                );
+                              }}
+                            >
+                              {song.title}
+                            </Link>
+                          ) : (
+                            song.title
+                          )}
+                        </h3>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[11px] ${
+                            song.status === "completed"
+                              ? "bg-emerald-500/15 text-emerald-300"
+                              : "bg-amber-500/15 text-amber-300"
+                          }`}
+                        >
+                          {song.status === "completed"
+                            ? t("status.completed")
+                            : t("status.generating")}
+                        </span>
+                      </div>
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                        {song.versionTag
+                          ? t("versionDurationMeta", {
+                              version: song.versionTag,
+                              duration: formatDuration(
+                                durations[song.id] ?? null,
+                              ),
+                            })
+                          : t("durationMeta", {
+                              duration: formatDuration(
+                                durations[song.id] ?? null,
+                              ),
+                            })}
+                      </p>
+                      <p className="mt-1 truncate text-xs text-muted-foreground">
+                        {song.styleSummary || song.promptSummary}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      disabled={!song.audioUrl}
+                      onClick={() => toggleWorkspacePlayback(song)}
+                      aria-label={
+                        playingSongId === song.id
+                          ? t("pauseSong")
+                          : t("playSong")
+                      }
                     >
-                      {t("report")}
-                    </Link>
-                  </Button>
-                  {song.audioUrl && canDownload ? (
-                    <SongDownloadButton
-                      songId={song.id}
-                      size="sm"
-                      iconClassName="h-3.5 w-3.5"
-                    />
-                  ) : (
-                    <SongDownloadButton
-                      songId={song.id}
-                      size="sm"
-                      iconClassName="h-3.5 w-3.5"
-                      disabled
-                    />
-                  )}
-                </div>
-              </article>
-            ))}
+                      {playingSongId === song.id ? (
+                        <Pause className="h-3.5 w-3.5" />
+                      ) : (
+                        <Play className="h-3.5 w-3.5" />
+                      )}
+                    </Button>
+                    <Button asChild type="button" size="sm" variant="outline">
+                      <Link
+                        href={`/report/${song.id}`}
+                        onClick={() => {
+                          trackFunnelEvent("song_report_clicked", {
+                            locale: params.locale ?? "en",
+                            route: window.location.pathname,
+                            song_id: song.id,
+                          });
+                        }}
+                      >
+                        {t("report")}
+                      </Link>
+                    </Button>
+                    {song.audioUrl && canDownload ? (
+                      <SongDownloadButton
+                        songId={song.id}
+                        size="sm"
+                        iconClassName="h-3.5 w-3.5"
+                      />
+                    ) : (
+                      <SongDownloadButton
+                        songId={song.id}
+                        size="sm"
+                        iconClassName="h-3.5 w-3.5"
+                        disabled
+                      />
+                    )}
+                  </div>
+                </article>
+              );
+            })}
 
             {filteredSongs.length === 0 ? (
               <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
